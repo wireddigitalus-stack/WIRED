@@ -586,6 +586,74 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
   };
 }
 
+const ORB_SECRET_MOODS = [
+  {
+    id: 'smile',
+    badge: 'MOOD: 100% STOKED // 64-BIT GRIN',
+    quip: '⚡ 64-BIT DOPAMINE SURGE // Always stoked to build something legendary with you.',
+    subtext: 'Tip: Double-click my orb anytime to cycle secret 64-bit hardware moods—or ask me anything below!'
+  },
+  {
+    id: 'wink',
+    badge: 'MOOD: LOCKED IN // CHEEKY WINK',
+    quip: '😉 SIGNAL LOCKED // Zero middlemen. Just 25+ years of custom firepower under one roof.',
+    subtext: 'Direct access to Creative Director Rob Neilson—custom web, AI, apps, and 4K video.'
+  },
+  {
+    id: 'shades',
+    badge: 'MOOD: BOUTIQUE BOSS // CYBER VISOR',
+    quip: '😎 64-BIT CYBER VISOR ENGAGED // High-impact engineering. Zero bargain-bin templates.',
+    subtext: 'Built to dominate ChatGPT, Google AI Overviews, and modern conversion.'
+  },
+  {
+    id: 'turbo',
+    badge: 'MOOD: OVERCLOCKED // 64-BIT TURBO IQ',
+    quip: '🚀 OVERCLOCKED AT 60FPS // Maximum voltage across Web, AI Agents & 4K Broadcast.',
+    subtext: 'Drop your website URL or project idea below and let’s run a live diagnostic.'
+  }
+];
+
+/**
+ * Web Audio API 64-Bit Happy Synthesizer Chirp (Zero external audio files required)
+ */
+function playWired64Chirp(mood = 'smile') {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const notesByMood = {
+      smile: [523.25, 659.25, 783.99, 1046.5], // C5 -> E5 -> G5 -> C6
+      wink: [587.33, 880.0, 1174.66],          // D5 -> A5 -> D6
+      shades: [440.0, 554.37, 659.25, 880.0],  // A4 -> C#5 -> E5 -> A5
+      turbo: [523.25, 659.25, 783.99, 987.77, 1318.51] // C5 -> E5 -> G5 -> B5 -> E6
+    };
+    const freqs = notesByMood[mood] || notesByMood.smile;
+    const now = ctx.currentTime;
+
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = idx === freqs.length - 1 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+
+      gain.gain.setValueAtTime(0.001, now + idx * 0.055);
+      gain.gain.exponentialRampToValueAtTime(0.045, now + idx * 0.055 + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.055 + 0.13);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + idx * 0.055);
+      osc.stop(now + idx * 0.055 + 0.14);
+    });
+
+    setTimeout(() => {
+      if (ctx.state !== 'closed') ctx.close().catch(() => {});
+    }, 650);
+  } catch {
+    // Ignore audio context restrictions if blocked by browser autoplay policy
+  }
+}
+
 export default function WiredOrbChatbot() {
   const dockRef = useRef(null);
   const orbButtonRef = useRef(null);
@@ -599,10 +667,17 @@ export default function WiredOrbChatbot() {
   const isDraggingThumbRef = useRef(false);
   const dragStartYRef = useRef(0);
   const dragStartScrollTopRef = useRef(0);
+  const moodTimeoutRef = useRef(null);
+  const doubleClickIdxRef = useRef(0);
+  const hasShownEasterEggRef = useRef(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
   const [isOverYellowFooter, setIsOverYellowFooter] = useState(false);
+  const [isOrbHovered, setIsOrbHovered] = useState(false);
+  const [orbMood, setOrbMood] = useState('idle'); // 'idle' | 'smile' | 'wink' | 'shades' | 'turbo' | 'scan'
+  const [orbMoodBadge, setOrbMoodBadge] = useState('');
+  const [sparkBurstKey, setSparkBurstKey] = useState(0);
   const [scrollMetrics, setScrollMetrics] = useState({
     thumbHeightPct: 100,
     thumbTopPct: 0,
@@ -872,8 +947,60 @@ export default function WiredOrbChatbot() {
     el.scrollBy({ top: direction * 150, behavior: 'smooth' });
   };
 
+  const triggerOrbJoySurge = (forcedMoodObj = null, announceInChat = false) => {
+    const selected =
+      forcedMoodObj || ORB_SECRET_MOODS[doubleClickIdxRef.current % ORB_SECRET_MOODS.length];
+    if (!forcedMoodObj) {
+      doubleClickIdxRef.current += 1;
+    }
+
+    setOrbMood(selected.id);
+    setOrbMoodBadge(selected.badge);
+    setSparkBurstKey((prev) => prev + 1);
+    playWired64Chirp(selected.id);
+
+    if (moodTimeoutRef.current) {
+      clearTimeout(moodTimeoutRef.current);
+    }
+    moodTimeoutRef.current = setTimeout(() => {
+      setOrbMood('idle');
+      setOrbMoodBadge('');
+    }, 3400);
+
+    if (announceInChat && !hasShownEasterEggRef.current) {
+      hasShownEasterEggRef.current = true;
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `msg_easter_${Date.now()}`,
+          sender: 'bot',
+          time: 'WIRED_64 // JOY SURGE',
+          cartridge: activeCartridge,
+          text: selected.quip,
+          subtext: selected.subtext,
+          chips: [
+            { label: '⚡ SCAN MY WEBSITE URL', prompt: 'Run a diagnostic scan on my current website.', cartridge: 'scan' },
+            { label: '💎 BOUTIQUE PRICING', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
+            { label: '🚀 START A PROJECT', prompt: 'I want to start a project with Creative Director Rob Neilson.', cartridge: 'geo' }
+          ]
+        }
+      ]);
+    }
+  };
+
+  const handleStageOrbDoubleClick = (e) => {
+    e.stopPropagation();
+    triggerOrbJoySurge(null, true);
+    logTelemetryEvent(
+      'ORB_64_DOUBLE_CLICK_SMILE',
+      'Visitor double-clicked WIRED-64 stage orb to trigger 64-Bit Smile & Mood Surge',
+      'engagement'
+    );
+  };
+
   const handleOpenOrb = () => {
     setIsOpen(true);
+    triggerOrbJoySurge(ORB_SECRET_MOODS[0], false);
     logTelemetryEvent(
       'ORB_64_CHAT_OPEN',
       'Visitor opened WIRED-64 Shiny Black Orb 64-Bit Terminal',
@@ -891,6 +1018,11 @@ export default function WiredOrbChatbot() {
 
     setMessages((prev) => [...prev, userMsg]);
     setIsBotTyping(true);
+
+    if (extractDomainUrl(userText)) {
+      setOrbMood('scan');
+      setOrbMoodBadge('SCANNING DOMAIN // 64-BIT TELEMETRY');
+    }
 
     setTimeout(() => {
       const response = generateWired64Response(userText, chatStep, leadDraft, lastTopic);
@@ -920,6 +1052,9 @@ export default function WiredOrbChatbot() {
           notes: 'Captured automatically via WIRED-64 64-Bit Full-Screen Orb Terminal.'
         });
         setPacketSubmitted(true);
+        triggerOrbJoySurge(ORB_SECRET_MOODS[0], false);
+      } else if (orbMood === 'scan') {
+        triggerOrbJoySurge(ORB_SECRET_MOODS[1], false);
       }
 
       const botMsg = {
@@ -970,6 +1105,7 @@ export default function WiredOrbChatbot() {
 
     setPacketSubmitted(true);
     setShowPacketForm(false);
+    triggerOrbJoySurge(ORB_SECRET_MOODS[0], false);
     setMessages((prev) => [
       ...prev,
       {
@@ -982,6 +1118,8 @@ export default function WiredOrbChatbot() {
       }
     ]);
   };
+
+  const isSmilingNow = isOrbHovered || ['smile', 'wink', 'shades', 'turbo'].includes(orbMood);
 
   return (
     <>
@@ -1006,31 +1144,33 @@ export default function WiredOrbChatbot() {
         <button
           ref={orbButtonRef}
           type="button"
-          className="shiny-black-orb-btn"
+          className={`shiny-black-orb-btn ${isSmilingNow ? 'is-smiling' : ''} mood-${orbMood}`}
           onClick={handleOpenOrb}
+          onMouseEnter={() => setIsOrbHovered(true)}
+          onMouseLeave={() => setIsOrbHovered(false)}
           aria-label="Open WIRED-64 AI Lead Concierge"
-          title="Click to launch WIRED-64 Full-Screen 64-Bit AI Concierge"
+          title="Hover to see WIRED-64 smile • Click to launch 64-Bit AI Concierge"
         >
           {/* Backlit Electric-Yellow Halo Rings */}
           <span className="orb-backlit-yellow-aura" aria-hidden="true" />
           <span className="orb-backlit-pulse-ring" aria-hidden="true" />
 
           {/* 3D Glossy Piano-Black Sphere */}
-          <span className="orb-black-sphere">
+          <span className={`orb-black-sphere ${isSmilingNow ? 'is-smiling' : ''} mood-${orbMood}`}>
             {/* Curved Top Specular Glass Reflection */}
             <span className="orb-glass-crown" aria-hidden="true" />
 
             {/* Upper Hemisphere Mouse-Tracking Reflective White Eye-Dots */}
             <span className="orb-eyes-upper-zone" aria-hidden="true">
-              <span ref={floatLeftEyeRef} className="orb-reflective-eye">
+              <span ref={floatLeftEyeRef} className="orb-reflective-eye left-eye">
                 <span className="eye-micro-glint" />
               </span>
-              <span ref={floatRightEyeRef} className="orb-reflective-eye">
+              <span ref={floatRightEyeRef} className="orb-reflective-eye right-eye">
                 <span className="eye-micro-glint" />
               </span>
             </span>
 
-            {/* Subtle Lower Equator 64-Bit Voltage Line */}
+            {/* Lower Equator 64-Bit Yellow Voltage Line (Morphs into Glowing Smile on Hover/Double-Click) */}
             <span className="orb-lower-equator-glow" aria-hidden="true" />
           </span>
         </button>
@@ -1088,6 +1228,11 @@ export default function WiredOrbChatbot() {
               <aside className="wired64-graphics-deck">
                 {/* Giant Living Shiny Black Orb over 64-Bit Phosphor-Green Perspective Grid */}
                 <div className="w64-orb-holo-stage">
+                  {/* Live Mood Badge or Interactive Hint */}
+                  <div className={`w64-stage-mood-hud ${orbMoodBadge ? 'is-active' : ''}`}>
+                    {orbMoodBadge || 'HOVER OR DOUBLE-CLICK ORB // 64-BIT SMILE'}
+                  </div>
+
                   <svg
                     viewBox="0 0 360 200"
                     className="w64-wireframe-grid-svg"
@@ -1113,25 +1258,48 @@ export default function WiredOrbChatbot() {
                     ))}
                   </svg>
 
-                  {/* Giant Stage Shiny Black Orb with Mouse-Following Reflective White Eyes */}
-                  <div className={`w64-stage-orb-wrap ${isBotTyping ? 'is-speaking' : ''}`}>
+                  {/* Floating 64-Bit Pixel Sparks on Double-Click Joy Surge */}
+                  {orbMood !== 'idle' && (
+                    <div key={sparkBurstKey} className="w64-joy-sparks" aria-hidden="true">
+                      <span className="w64-pixel-spark s1">⚡</span>
+                      <span className="w64-pixel-spark s2">+64 IQ</span>
+                      <span className="w64-pixel-spark s3">✦</span>
+                      <span className="w64-pixel-spark s4">⚡</span>
+                      <span className="w64-pixel-spark s5">★</span>
+                      <span className="w64-pixel-spark s6">✦</span>
+                    </div>
+                  )}
+
+                  {/* Giant Stage Shiny Black Orb with Mouse-Following Reflective White Eyes & Smiling Yellow Mouth */}
+                  <div
+                    className={`w64-stage-orb-wrap ${isBotTyping ? 'is-speaking' : ''} ${isSmilingNow ? 'is-smiling' : ''} mood-${orbMood}`}
+                    onMouseEnter={() => setIsOrbHovered(true)}
+                    onMouseLeave={() => setIsOrbHovered(false)}
+                    onDoubleClick={handleStageOrbDoubleClick}
+                    role="button"
+                    tabIndex={0}
+                    title="Hover to smile • Double-click for 64-Bit Joy Surge & Secret Moods!"
+                    aria-label="WIRED-64 Interactive Orb — Hover or double-click to make him smile"
+                  >
                     <div className="orb-backlit-yellow-aura stage-aura" />
-                    <div className="orb-black-sphere stage-sphere">
+                    <div className={`orb-black-sphere stage-sphere ${isSmilingNow ? 'is-smiling' : ''} mood-${orbMood}`}>
                       <span className="orb-glass-crown" />
                       <div className="orb-eyes-upper-zone stage-eyes">
-                        <span ref={stageLeftEyeRef} className="orb-reflective-eye stage-eye">
+                        <span ref={stageLeftEyeRef} className="orb-reflective-eye stage-eye left-eye">
                           <span className="eye-micro-glint" />
                         </span>
-                        <span ref={stageRightEyeRef} className="orb-reflective-eye stage-eye">
+                        <span ref={stageRightEyeRef} className="orb-reflective-eye stage-eye right-eye">
                           <span className="eye-micro-glint" />
                         </span>
+                        {/* Optional 64-Bit Cyber Visor Overlay for 'shades' secret mood */}
+                        <span className="orb-cyber-visor" aria-hidden="true" />
                       </div>
                       <span className="orb-lower-equator-glow" />
                     </div>
                   </div>
 
                   {/* 64-Bit Yellow & Green Neural Waveform Equalizer */}
-                  <div className={`w64-voice-eq ${isBotTyping ? 'active' : ''}`}>
+                  <div className={`w64-voice-eq ${isBotTyping || orbMood !== 'idle' ? 'active' : ''}`}>
                     {Array.from({ length: 16 }).map((_, idx) => (
                       <span
                         key={idx}

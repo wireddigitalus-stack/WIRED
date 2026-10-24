@@ -6265,11 +6265,85 @@ a {
 
 .orb-lower-equator-glow {
   position: absolute;
-  bottom: 7px;
-  width: 32px;
+  bottom: 8px;
+  width: 28px;
   height: 3px;
   border-radius: 999px;
+  border-bottom: 2.5px solid rgba(255, 238, 0, 0.85);
   background: linear-gradient(90deg, transparent, rgba(255, 238, 0, 0.7), transparent);
+  box-shadow: 0 1px 6px rgba(255, 238, 0, 0.35);
+  transition:
+    width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    bottom 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-radius 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.25s ease,
+    transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.25s ease;
+  pointer-events: none;
+}
+
+.orb-lower-equator-glow::before,
+.orb-lower-equator-glow::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #00ff66;
+  box-shadow: 0 0 6px #00ff66;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.orb-lower-equator-glow::before {
+  left: -3px;
+}
+
+.orb-lower-equator-glow::after {
+  right: -3px;
+}
+
+/* Hover & Active Smile Transformation on Floating & Stage Orb */
+.shiny-black-orb-btn:hover .orb-lower-equator-glow,
+.orb-black-sphere.is-smiling .orb-lower-equator-glow {
+  bottom: 9px;
+  width: 26px;
+  height: 11px;
+  background: transparent;
+  border-bottom: 3px solid #ffee00;
+  border-left: 1.5px solid rgba(255, 238, 0, 0.45);
+  border-right: 1.5px solid rgba(255, 238, 0, 0.45);
+  border-radius: 0 0 55% 55%;
+  box-shadow: 0 4px 10px rgba(255, 238, 0, 0.55);
+  filter: drop-shadow(0 0 5px rgba(255, 238, 0, 0.9));
+}
+
+.shiny-black-orb-btn:hover .orb-lower-equator-glow::before,
+.shiny-black-orb-btn:hover .orb-lower-equator-glow::after,
+.orb-black-sphere.is-smiling .orb-lower-equator-glow::before,
+.orb-black-sphere.is-smiling .orb-lower-equator-glow::after {
+  opacity: 0.95;
+  transform: scale(1);
+}
+
+/* Playful Head-Tilt & Happy Eye Squint on Smile */
+.shiny-black-orb-btn:hover .orb-black-sphere,
+.orb-black-sphere.is-smiling {
+  border-color: #ffee00;
+  box-shadow:
+    inset 0 3px 8px rgba(255, 255, 255, 0.45),
+    inset 0 -10px 20px rgba(255, 238, 0, 0.42),
+    0 12px 28px rgba(0, 0, 0, 0.94);
+}
+
+.orb-black-sphere.is-smiling .orb-reflective-eye {
+  border-radius: 55% 55% 42% 42%;
+  box-shadow:
+    0 0 10px #ffffff,
+    0 0 18px #ffee00;
 }
 
 /* ==========================================================================
@@ -6477,6 +6551,33 @@ a {
   height: 100%;
 }
 
+.w64-stage-mood-hud {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(0, 255, 102, 0.78);
+  background: rgba(4, 10, 6, 0.85);
+  border: 1px solid rgba(0, 255, 102, 0.35);
+  padding: 2px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+.w64-stage-mood-hud.is-active {
+  color: #050505;
+  background: #ffee00;
+  border-color: #ffee00;
+  box-shadow: 0 0 14px rgba(255, 238, 0, 0.75);
+}
+
 .w64-stage-orb-wrap {
   position: relative;
   z-index: 2;
@@ -6485,16 +6586,192 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.w64-stage-orb-wrap:hover {
+  transform: translateY(-3px) scale(1.07) rotate(-3.5deg);
+}
+
+.w64-stage-orb-wrap.mood-smile,
+.w64-stage-orb-wrap.mood-wink,
+.w64-stage-orb-wrap.mood-shades,
+.w64-stage-orb-wrap.mood-turbo {
+  animation: w64HappyHop 0.62s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes w64HappyHop {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-13px) scale(1.12) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(2px) scale(0.97) rotate(4deg);
+  }
+  82% {
+    transform: translateY(-5px) scale(1.04) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(0) scale(1.03) rotate(0deg);
+  }
 }
 
 .orb-backlit-yellow-aura.stage-aura {
   inset: -12px;
 }
 
+.w64-stage-orb-wrap:hover .orb-backlit-yellow-aura.stage-aura,
+.w64-stage-orb-wrap.is-smiling .orb-backlit-yellow-aura.stage-aura {
+  inset: -18px;
+  filter: blur(11px);
+  background: radial-gradient(
+    circle,
+    rgba(255, 238, 0, 1) 0%,
+    rgba(255, 238, 0, 0.72) 52%,
+    rgba(0, 255, 102, 0.35) 72%,
+    rgba(255, 238, 0, 0) 86%
+  );
+}
+
 .orb-black-sphere.stage-sphere {
   width: 82px;
   height: 82px;
   border-width: 2px;
+}
+
+.orb-black-sphere.stage-sphere .orb-lower-equator-glow {
+  bottom: 11px;
+  width: 36px;
+}
+
+/* Stage Orb Smile Arc (Hover or Double-Click) */
+.w64-stage-orb-wrap:hover .orb-black-sphere.stage-sphere .orb-lower-equator-glow,
+.orb-black-sphere.stage-sphere.is-smiling .orb-lower-equator-glow {
+  bottom: 12px;
+  width: 36px;
+  height: 15px;
+  background: transparent;
+  border-bottom: 3.5px solid #ffee00;
+  border-left: 2px solid rgba(255, 238, 0, 0.55);
+  border-right: 2px solid rgba(255, 238, 0, 0.55);
+  border-radius: 0 0 58% 58%;
+  box-shadow: 0 5px 14px rgba(255, 238, 0, 0.65);
+  filter: drop-shadow(0 0 7px #ffee00);
+}
+
+/* Secret Mood 2: Cheeky Asymmetrical Wink & Smirk */
+.orb-black-sphere.mood-wink .orb-lower-equator-glow {
+  transform: rotate(-7deg) translateX(2px);
+}
+
+.orb-black-sphere.mood-wink .orb-reflective-eye.right-eye {
+  height: 3px !important;
+  width: 13px !important;
+  border-radius: 999px;
+  background: #ffee00;
+  box-shadow: 0 0 10px #ffee00;
+}
+
+/* Secret Mood 3: 64-Bit Cyber Visor Shades */
+.orb-cyber-visor {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 54px;
+  height: 14px;
+  background: linear-gradient(90deg, #00ff66 0%, #ffee00 50%, #00ff66 100%);
+  border: 1.5px solid #ffffff;
+  border-radius: 3px 3px 9px 9px;
+  box-shadow:
+    0 0 14px #ffee00,
+    0 0 24px rgba(0, 255, 102, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.orb-black-sphere.mood-shades .orb-cyber-visor {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 1;
+}
+
+/* Secret Mood 4: Overclocked Turbo Voltage */
+.orb-black-sphere.mood-turbo .orb-reflective-eye {
+  background: #ffee00;
+  box-shadow:
+    0 0 12px #ffee00,
+    0 0 22px #00ff66;
+}
+
+.orb-black-sphere.mood-turbo .orb-lower-equator-glow {
+  width: 42px !important;
+  height: 17px !important;
+  border-bottom-width: 4px !important;
+}
+
+/* Scanning URL Wave State */
+.orb-black-sphere.mood-scan .orb-lower-equator-glow {
+  width: 40px;
+  height: 4px;
+  background: linear-gradient(90deg, #00ff66, #ffee00, #00ff66);
+  animation: orbScanMouthPulse 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes orbScanMouthPulse {
+  0% {
+    transform: scaleX(0.75);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scaleX(1.18);
+    opacity: 1;
+  }
+}
+
+/* Floating 64-Bit Pixel Sparks on Double-Click Joy Surge */
+.w64-joy-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.w64-pixel-spark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #ffee00;
+  text-shadow: 0 0 8px #ffee00;
+  animation: w64SparkFloat 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.w64-pixel-spark.s1 { left: 26%; top: 55%; animation-delay: 0s; }
+.w64-pixel-spark.s2 { right: 18%; top: 48%; color: #00ff66; text-shadow: 0 0 8px #00ff66; font-size: 0.58rem; animation-delay: 0.06s; }
+.w64-pixel-spark.s3 { left: 34%; top: 34%; color: #00ff66; animation-delay: 0.1s; }
+.w64-pixel-spark.s4 { right: 28%; top: 60%; animation-delay: 0.14s; }
+.w64-pixel-spark.s5 { left: 20%; top: 40%; animation-delay: 0.18s; }
+.w64-pixel-spark.s6 { right: 33%; top: 32%; color: #00ff66; animation-delay: 0.22s; }
+
+@keyframes w64SparkFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.5);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-34px) scale(0.85);
+  }
 }
 
 .orb-eyes-upper-zone.stage-eyes {

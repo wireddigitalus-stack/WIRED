@@ -3,7 +3,6 @@ import { X, ExternalLink, Play, ShieldCheck } from 'lucide-react';
 
 const VEVO_RESTRICTED_VIDEO_IDS = new Set([
   'DkTGpDq6Pcg',
-  '-uM3mZFoUrU',
   'GCzKaAv8aFA',
   'v55qwxhF1UA',
   'w54CeorgMu4',

@@ -534,11 +534,11 @@ export const FEATURED_WORK = [
   },
   {
     id: 'full-devil-jacket-music-video',
-    title: 'Full Devil Jacket - Music Video',
+    title: 'Full Devil Jacket - Valley of Bones (Official Music Video)',
     shortTitle: 'Full Devil Jacket — "Valley of Bones" (VEVO / eOne)',
     client: 'Full Devil Jacket / eOne Music',
     role: 'Flagship Commission — Directed & Edited by Rob Neilson',
-    date: 'VEVO Official Release',
+    date: 'VEVO / eOne Official Release',
     category: 'FLAGSHIP COMMISSIONED PRODUCTION',
     youtubeId: 'DkTGpDq6Pcg',
     youtubeUrl: 'https://www.youtube.com/watch?v=DkTGpDq6Pcg',
@@ -548,6 +548,22 @@ export const FEATURED_WORK = [
     description:
       'Stark, high-contrast black-and-white performance blended with custom-illustrated graphic novel sequences—the flagship music video that helped land the band\'s deal with eOne.',
     tags: ['Flagship Directing & Edit', '2D Animation Hybrid', 'VEVO / eOne']
+  },
+  {
+    id: 'full-devil-jacket-killers-video',
+    title: 'Full Devil Jacket - Killers (Official Music Video)',
+    shortTitle: 'Full Devil Jacket — "Killers" (VEVO / eOne)',
+    client: 'Full Devil Jacket / eOne Music',
+    role: 'Flagship Commission — Directed & Edited by Rob Neilson',
+    date: 'VEVO / eOne Official Release',
+    category: 'FLAGSHIP COMMISSIONED PRODUCTION',
+    youtubeId: '-uM3mZFoUrU',
+    youtubeUrl: 'https://youtu.be/-uM3mZFoUrU?si=xFjTCZA7TyakEIsH',
+    thumbnail: 'https://i.ytimg.com/vi/-uM3mZFoUrU/maxresdefault.jpg',
+    fallbackThumb: 'https://i.ytimg.com/vi/-uM3mZFoUrU/hqdefault.jpg',
+    description:
+      'Cinematic rock performance and dark visual storytelling directed and edited by Rob Neilson for Full Devil Jacket’s official eOne / VEVO release "Killers".',
+    tags: ['Flagship Directing & Edit', 'Cinematic Rock Production', 'VEVO / eOne']
   }
 ];
 
@@ -715,10 +731,9 @@ export const YOUTUBE_CHANNEL_DATA = {
       title: 'Full Devil Jacket - Killers (Official VEVO Video)',
       artist: 'Full Devil Jacket / eOne',
       category: 'music-videos',
-      badge: 'VEVO OFFICIAL • DIRECT STREAM',
+      badge: 'OFFICIAL MUSIC VIDEO',
       views: '27K+ Views',
       duration: '3:39',
-      vevoRestricted: true,
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
     },
     {

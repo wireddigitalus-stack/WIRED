@@ -7,7 +7,8 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
   const [likedIds, setLikedIds] = useState({
     'halestorm-shooting-star': true,
     'alice-cooper-lyric-video': true,
-    'full-devil-jacket-music-video': true
+    'full-devil-jacket-music-video': true,
+    'full-devil-jacket-killers-video': true
   });
 
   const toggleLike = (id) => {

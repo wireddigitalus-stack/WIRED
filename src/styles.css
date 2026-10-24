@@ -9604,3 +9604,44 @@ a {
     font-size: 0.44rem;
   }
 }
+
+/* ============================================================================
+   WIRED-64 // 24/7 IQ DEEP-DIVE FOLLOW-UP CHIPS INSIDE BOT MESSAGES
+   ============================================================================ */
+.w64-msg-chips {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed rgba(0, 255, 102, 0.28);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.w64-chip-btn {
+  appearance: none;
+  background: rgba(0, 255, 102, 0.08);
+  border: 1px solid rgba(255, 238, 0, 0.55);
+  color: #ffee00;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.w64-chip-btn:hover {
+  background: #ffee00;
+  border-color: #00ff66;
+  color: #030704;
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(255, 238, 0, 0.45);
+}
+
+.w64-chip-btn:active {
+  transform: translateY(0);
+}

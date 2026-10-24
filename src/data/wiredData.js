@@ -546,7 +546,7 @@ export const FEATURED_WORK = [
     thumbnail: 'https://i.ytimg.com/vi/DkTGpDq6Pcg/maxresdefault.jpg',
     fallbackThumb: 'https://i.ytimg.com/vi/DkTGpDq6Pcg/hqdefault.jpg',
     description:
-      'Stark, high-contrast black-and-white performance blended with custom-illustrated graphic novel sequences—the flagship music video that helped land the band\'s deal with eOne.',
+      'The music video that helped land the band\'s deal with eOne.',
     tags: ['Flagship Directing & Edit', '2D Animation Hybrid', 'VEVO / eOne']
   },
   {

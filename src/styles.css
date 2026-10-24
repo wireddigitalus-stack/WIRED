@@ -8791,6 +8791,12 @@ a {
 
 .home-grader-strip {
   margin-top: 28px;
+  margin-bottom: 72px;
+}
+
+.home-grader-strip + .tricities-casestudies-block {
+  margin-top: 68px;
+  padding-top: 16px;
 }
 
 .grader-console-card {

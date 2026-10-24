@@ -111,11 +111,18 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; AI MODERNIZATION
           </h1>
           <p className="subview-hero-lead">
-            Built to keep pace with how search engines work in the age of AI. Backed by{' '}
-            <strong>25+ years of staying ahead of the technology curve (Est. 1999)</strong>,
-            we bridge rock-and-roll creative direction with custom software engineering—bringing
-            web, apps, AI, video, and full-service digital marketing together{' '}
-            <strong>under one roof</strong>.
+            Built to keep pace with how search engines work in the age of AI. When you partner with
+            Wired Digital, you are investing in{' '}
+            <strong>25+ years of real-world experience (Est. 1999)</strong> and a relentless track
+            record of <strong>staying ahead of every major technology wave</strong>—from early web
+            and mobile to 4K broadcast media, custom apps, and AI-era search. We aren&apos;t cheap
+            bargain-bin template builders, and we aren&apos;t a bloated agency marking up 10
+            middlemen: we deliver{' '}
+            <span className="text-yellow">
+              high-impact custom engineering and creative at straightforward, real-world
+              pricing—with web, apps, software, AI, video &amp; digital marketing all under one roof
+            </span>{' '}
+            working directly with Creative Director <strong>Rob Neilson</strong>.
           </p>
 
           <div className="subview-hero-actions">
@@ -129,112 +136,6 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             >
               VIEW CLIENT ROSTER
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================================================
-          NEW PILLAR 1: 25+ YEARS AHEAD OF THE TECH CURVE • ALL SKILLS UNDER 1 ROOF
-         ==================================================================== */}
-      <section className="boutique-under-one-roof-section">
-        <div className="section-container">
-          <div className="boutique-roof-shell">
-            <div className="boutique-roof-top">
-              <div className="boutique-roof-title-col">
-                <span className="eyebrow-tag">
-                  <ShieldCheck size={14} />
-                  <span>EST. 1999 // 25+ YEARS AHEAD OF THE TECHNOLOGY CURVE</span>
-                </span>
-                <h2 className="section-title-tracked">
-                  ALL TECHNICAL &amp; CREATIVE SKILLS <span className="text-yellow">UNDER ONE ROOF</span>
-                </h2>
-                <p className="boutique-roof-lead">
-                  When you hire Wired Digital Creative, you are paying for{' '}
-                  <strong>25+ years of real-world experience</strong> and a proven ability to{' '}
-                  <strong>stay ahead of every major technology shift</strong>—from the early web
-                  and mobile revolution to 4K broadcast production, custom business software, and
-                  today&apos;s AI &amp; Generative Search (GEO) era.
-                </p>
-                <p className="boutique-roof-sublead">
-                  We aren&apos;t a cheap bargain-bin template shop that leaves you invisible on
-                  Google, and we aren&apos;t a bloated agency charging you for 10 layers of
-                  middlemen. We deliver{' '}
-                  <span className="text-yellow">
-                    high-impact custom engineering and creative at straightforward, real-world
-                    pricing—with web, apps, software, AI, video &amp; digital marketing all under
-                    one roof
-                  </span>{' '}
-                  working directly with Creative Director <strong>Rob Neilson</strong>.
-                </p>
-              </div>
-
-              <div className="boutique-value-comparison-box">
-                <div className="boutique-compare-tier muted-tier">
-                  <span className="tier-pill bad">CHEAP TEMPLATE BUILDERS</span>
-                  <p>Slow Wix/WordPress bloat, zero custom code, invisible to ChatGPT &amp; Google AI.</p>
-                </div>
-                <div className="boutique-compare-tier highlight-tier">
-                  <span className="tier-pill gold">
-                    <Zap size={12} fill="#050505" /> WIRED DIGITAL BOUTIQUE VALUE
-                  </span>
-                  <p>
-                    <strong>25+ Years Experience • Reasonable Investment • Zero Middlemen.</strong>{' '}
-                    Custom web, apps, software, 24/7 AI bots, live dashboards, 4K video &amp;
-                    marketing all under 1 roof.
-                  </p>
-                </div>
-                <div className="boutique-compare-tier muted-tier">
-                  <span className="tier-pill bad">BLOATED BIG AGENCIES</span>
-                  <p>3x–5x markup paying for account reps, slow handoffs, and disconnected vendors.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* 6 Under-One-Roof Capabilities Matrix */}
-            <div className="under-one-roof-grid">
-              <div className="roof-skill-card">
-                <Cpu size={18} className="text-yellow" />
-                <div>
-                  <h4>AI-Modernized Websites</h4>
-                  <p>Sub-0.4s custom React &amp; Edge platforms engineered for maximum conversion.</p>
-                </div>
-              </div>
-              <div className="roof-skill-card">
-                <Code2 size={18} className="text-yellow" />
-                <div>
-                  <h4>Custom Web Apps &amp; Software</h4>
-                  <p>Bespoke client portals, calculators, inventory engines, and workflow automation.</p>
-                </div>
-              </div>
-              <div className="roof-skill-card">
-                <Activity size={18} className="text-yellow" />
-                <div>
-                  <h4>Live Admin Telemetry Dashboards</h4>
-                  <p>Real-time click-streams, lead CRM vaults, and custom analytics like Fast Track.</p>
-                </div>
-              </div>
-              <div className="roof-skill-card">
-                <Bot size={18} className="text-yellow" />
-                <div>
-                  <h4>24/7 Custom-Trained AI Agents</h4>
-                  <p>AI concierges trained on your exact business &amp; inventory like Team Vision LLC.</p>
-                </div>
-              </div>
-              <div className="roof-skill-card">
-                <Megaphone size={18} className="text-yellow" />
-                <div>
-                  <h4>Full-Service Digital Marketing &amp; GEO</h4>
-                  <p>Local Tri-Cities SEO, Generative AI Search (GEO), ad creative, and brand growth.</p>
-                </div>
-              </div>
-              <div className="roof-skill-card">
-                <Film size={18} className="text-yellow" />
-                <div>
-                  <h4>Broadcast 4K Video &amp; AI Visuals</h4>
-                  <p>Major-label 4K video editing, motion graphics, and next-gen AI-assisted visual production.</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

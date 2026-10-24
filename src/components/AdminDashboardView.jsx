@@ -39,6 +39,8 @@ import {
   AI_ENGINE_SHARE,
   ANALYTICS_TIMEFRAMES,
   GEO_TRAFFIC_REGIONS,
+  SUPABASE_PROJECT_URL,
+  SUPABASE_SQL_SCHEMA,
   TRACKED_SEO_KEYWORDS,
   WEEKLY_HEATMAP_DATA,
   addLead,
@@ -48,12 +50,15 @@ import {
   getClientHardwareSignature,
   getLeads,
   getSectionCounts,
+  getSupabaseConfig,
   getTelemetryEvents,
   isStudioDeviceAuthorized,
   logTelemetryEvent,
   resetDemoLeads,
   revokeStudioDevice,
   runLiveSiteSeoAudit,
+  saveSupabaseConfig,
+  syncLeadsWithSupabase,
   updateLead
 } from '../utils/telemetry';
 
@@ -199,6 +204,45 @@ export default function AdminDashboardView({ onExitDashboard }) {
   const [prospectCity, setProspectCity] = useState('Bristol, TN/VA');
   const [prospectAudited, setProspectAudited] = useState(true);
 
+  // Supabase Cloud Database State (https://urzkegplrgskzfejgudc.supabase.co)
+  const [sbConfig, setSbConfig] = useState(() => getSupabaseConfig());
+  const [sbKeyInput, setSbKeyInput] = useState(() => getSupabaseConfig().anonKey || '');
+  const [sbSyncStatus, setSbSyncStatus] = useState('');
+  const [isSbSyncing, setIsSbSyncing] = useState(false);
+  const [showSbSqlModal, setShowSbSqlModal] = useState(false);
+  const [copiedSbSql, setCopiedSbSql] = useState(false);
+
+  const handleSupabaseSync = async () => {
+    setIsSbSyncing(true);
+    setSbSyncStatus('Connecting to https://urzkegplrgskzfejgudc.supabase.co...');
+    const res = await syncLeadsWithSupabase();
+    setIsSbSyncing(false);
+    setSbSyncStatus(res.message || '');
+    if (res.leads) {
+      setLeads([...res.leads]);
+      if (res.leads.length > 0 && !selectedLeadId) {
+        setSelectedLeadId(res.leads[0].id);
+      }
+    }
+    if (res.needsTable) {
+      setShowSbSqlModal(true);
+    }
+  };
+
+  const handleSaveSupabaseKey = async (e) => {
+    e.preventDefault();
+    const updated = saveSupabaseConfig({
+      url: SUPABASE_PROJECT_URL,
+      anonKey: sbKeyInput
+    });
+    setSbConfig(updated);
+    if (updated.isConfigured) {
+      await handleSupabaseSync();
+    } else {
+      setSbSyncStatus('Cleared Supabase Anon Key (using local storage fallback).');
+    }
+  };
+
   useEffect(() => {
     const currentLeads = getLeads();
     setLeads(currentLeads);
@@ -208,6 +252,15 @@ export default function AdminDashboardView({ onExitDashboard }) {
     setTelemetryEvents(getTelemetryEvents());
     setSectionCounts(getSectionCounts());
     setSeoAudit(runLiveSiteSeoAudit());
+
+    if (getSupabaseConfig().isConfigured) {
+      syncLeadsWithSupabase().then((res) => {
+        if (res.ok && res.leads) {
+          setLeads([...res.leads]);
+          setSbSyncStatus(res.message);
+        }
+      });
+    }
   }, []);
 
   const handleUnlockWithPin = (code) => {
@@ -1111,6 +1164,99 @@ export default function AdminDashboardView({ onExitDashboard }) {
            ================================================================== */}
         {activeModule === 'leads' && (
           <div className="wos-module-stack">
+            {/* SUPABASE CLOUD DATABASE CONNECTION & LIVE SYNC PANEL */}
+            <div className="wos-glass-panel" style={{ border: '1px solid rgba(48, 209, 88, 0.4)', padding: '18px 22px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                <div>
+                  <span className="wos-panel-kicker" style={{ color: '#30D158' }}>
+                    ⚡ SUPABASE CLOUD POSTGRES // {SUPABASE_PROJECT_URL}
+                  </span>
+                  <h3 className="wos-panel-title" style={{ fontSize: '1.05rem', marginTop: '2px' }}>
+                    {sbConfig.isConfigured
+                      ? 'Cloud Leads & Contact Forms Synced to Supabase (public.wired_leads)'
+                      : 'Connect Your Supabase Anon / Publishable Key to Store All Leads in Cloud Postgres'}
+                  </h3>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  <button
+                    type="button"
+                    className="btn-mini-yellow"
+                    onClick={handleSupabaseSync}
+                    disabled={isSbSyncing || !sbConfig.isConfigured}
+                  >
+                    <RefreshCw size={13} />
+                    <span>{isSbSyncing ? 'SYNCING...' : 'SYNC CLOUD LEADS'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-mini-outline"
+                    onClick={() => setShowSbSqlModal(!showSbSqlModal)}
+                  >
+                    <Layers size={13} />
+                    <span>{showSbSqlModal ? 'HIDE SQL SETUP' : 'SQL TABLE SCRIPT'}</span>
+                  </button>
+                  <a
+                    href="https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/editor"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-mini-outline"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span>OPEN SUPABASE</span>
+                    <ExternalLink size={12} />
+                  </a>
+                </div>
+              </div>
+
+              <form
+                onSubmit={handleSaveSupabaseKey}
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '12px', alignItems: 'center' }}
+              >
+                <input
+                  type="password"
+                  placeholder="Paste Supabase anon / publishable key (eyJ... or sb_publishable_...) for urzkegplrgskzfejgudc.supabase.co"
+                  value={sbKeyInput}
+                  onChange={(e) => setSbKeyInput(e.target.value)}
+                  className="wos-crm-search-input"
+                  style={{ flex: 1, minWidth: '260px', background: 'rgba(0,0,0,0.55)', padding: '9px 14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.16)' }}
+                />
+                <button type="submit" className="btn-mini-yellow" style={{ padding: '9px 16px' }}>
+                  <Check size={13} />
+                  <span>SAVE KEY &amp; CONNECT</span>
+                </button>
+              </form>
+
+              {sbSyncStatus && (
+                <div style={{ marginTop: '10px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#FFEE00' }}>
+                  &gt; {sbSyncStatus}
+                </div>
+              )}
+
+              {showSbSqlModal && (
+                <div style={{ marginTop: '14px', padding: '14px', borderRadius: '12px', background: 'rgba(0,0,0,0.65)', border: '1px solid rgba(255,238,0,0.35)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#FFEE00' }}>
+                      RUN THIS ONCE IN SUPABASE SQL EDITOR (https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/sql/new):
+                    </span>
+                    <button
+                      type="button"
+                      className="btn-mini-yellow"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(SUPABASE_SQL_SCHEMA);
+                        setCopiedSbSql(true);
+                        setTimeout(() => setCopiedSbSql(false), 2500);
+                      }}
+                    >
+                      <span>{copiedSbSql ? 'COPIED TO CLIPBOARD!' : 'COPY SQL SCRIPT'}</span>
+                    </button>
+                  </div>
+                  <pre style={{ margin: 0, fontSize: '0.68rem', color: '#30D158', overflowX: 'auto', fontFamily: 'var(--font-mono)', lineHeight: 1.45 }}>
+                    {SUPABASE_SQL_SCHEMA}
+                  </pre>
+                </div>
+              )}
+            </div>
+
             {/* CRM Controls Bar */}
             <div className="wos-glass-panel wos-crm-toolbar">
               <div className="wos-crm-search-wrap">

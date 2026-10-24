@@ -165,32 +165,6 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
           </div>
         </div>
       </div>
-
-      {/* SEPARATE STANDALONE CARD DIRECTLY UNDER THE ABOUT CARD WITH VIDEO */}
-      <div className="since-under-video-card-wrap">
-        <div className="since-boutique-standalone-card">
-          <div className="since-boutique-header">
-            <span className="since-boutique-badge">
-              <ShieldCheck size={14} />
-              <span>25+ YEARS AHEAD OF THE TECH CURVE // ALL SKILLS UNDER 1 ROOF</span>
-            </span>
-          </div>
-          <p className="since-boutique-copy">
-            When you partner with Wired Digital, you are investing in{' '}
-            <strong>25+ years of real-world experience</strong> and a relentless track
-            record of <strong>staying ahead of every major technology wave</strong>—from
-            early web and mobile to 4K broadcast media, custom apps, and AI-era search.
-            We aren&apos;t cheap bargain-bin template builders, and we aren&apos;t a
-            bloated agency marking up 10 middlemen: we deliver{' '}
-            <span className="highlight-yellow">
-              high-impact custom engineering and creative at straightforward,
-              real-world pricing—with web, apps, software, AI, video &amp; digital
-              marketing all under one roof
-            </span>{' '}
-            working directly with Creative Director <strong>Rob Neilson</strong>.
-          </p>
-        </div>
-      </div>
     </section>
   );
 }

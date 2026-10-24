@@ -5,6 +5,281 @@ const TELEMETRY_EVENTS_KEY = 'wired_site_telemetry_events';
 const TELEMETRY_COUNTS_KEY = 'wired_site_telemetry_counts';
 const SEEDED_FLAG_KEY = 'wired_digital_leads_seeded_v1';
 
+// ============================================================================
+// SUPABASE CLOUD DATABASE ENGINE (https://urzkegplrgskzfejgudc.supabase.co)
+// ============================================================================
+export const SUPABASE_PROJECT_URL = 'https://urzkegplrgskzfejgudc.supabase.co';
+export const SUPABASE_PROJECT_REF = 'urzkegplrgskzfejgudc';
+const SUPABASE_URL_STORAGE_KEY = 'wired_supabase_project_url';
+const SUPABASE_ANON_KEY_STORAGE_KEY = 'wired_supabase_anon_key';
+
+export const SUPABASE_SQL_SCHEMA = `-- Run this once in your Supabase SQL Editor:
+-- https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/sql/new
+
+create table if not exists public.wired_leads (
+  id text primary key,
+  created_at timestamptz default now(),
+  source text,
+  status text default 'NEW',
+  priority text default 'HIGH',
+  name text,
+  contact text,
+  company_url text,
+  service text,
+  urgency text,
+  value_estimate text,
+  details text,
+  notes text
+);
+
+create table if not exists public.wired_telemetry_events (
+  id text primary key,
+  created_at timestamptz default now(),
+  type text,
+  detail text,
+  category text,
+  location text,
+  device text
+);
+
+alter table public.wired_leads enable row level security;
+alter table public.wired_telemetry_events enable row level security;
+
+drop policy if exists "Allow public lead insert and CRM sync" on public.wired_leads;
+create policy "Allow public lead insert and CRM sync"
+  on public.wired_leads for all
+  using (true)
+  with check (true);
+
+drop policy if exists "Allow public telemetry logging" on public.wired_telemetry_events;
+create policy "Allow public telemetry logging"
+  on public.wired_telemetry_events for all
+  using (true)
+  with check (true);`;
+
+export function getSupabaseConfig() {
+  let envUrl = '';
+  let envKey = '';
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
+      envUrl = import.meta.env.VITE_SUPABASE_URL || '';
+      envKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+    }
+  } catch {
+    // Ignore
+  }
+
+  let storedUrl = '';
+  let storedKey = '';
+  try {
+    if (typeof localStorage !== 'undefined') {
+      storedUrl = localStorage.getItem(SUPABASE_URL_STORAGE_KEY) || '';
+      storedKey = localStorage.getItem(SUPABASE_ANON_KEY_STORAGE_KEY) || '';
+    }
+  } catch {
+    // Ignore
+  }
+
+  const url = (storedUrl || envUrl || SUPABASE_PROJECT_URL).replace(/\/+$/, '');
+  const anonKey = (storedKey || envKey || '').trim();
+  return {
+    url,
+    anonKey,
+    isConfigured: Boolean(url && anonKey)
+  };
+}
+
+export function saveSupabaseConfig({ url, anonKey }) {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      if (url) {
+        localStorage.setItem(SUPABASE_URL_STORAGE_KEY, url.trim().replace(/\/+$/, ''));
+      }
+      if (typeof anonKey === 'string') {
+        localStorage.setItem(SUPABASE_ANON_KEY_STORAGE_KEY, anonKey.trim());
+      }
+    }
+  } catch {
+    // Ignore
+  }
+  return getSupabaseConfig();
+}
+
+function mapLeadToDbRow(lead) {
+  return {
+    id: String(lead.id || `lead_${Date.now()}`),
+    created_at: lead.createdAt || new Date().toISOString(),
+    source: lead.source || 'WiredDigitalCreative.com',
+    status: lead.status || 'NEW',
+    priority: lead.priority || 'HIGH',
+    name: lead.name || '',
+    contact: lead.contact || '',
+    company_url: lead.companyUrl || '',
+    service: lead.service || '',
+    urgency: lead.urgency || '',
+    value_estimate: lead.ValueEstimate || '$5,500',
+    details: lead.details || '',
+    notes: lead.notes || ''
+  };
+}
+
+function mapDbRowToLead(row) {
+  return {
+    id: row.id,
+    createdAt: row.created_at || new Date().toISOString(),
+    source: row.source || 'Supabase Cloud CRM',
+    status: row.status || 'NEW',
+    priority: row.priority || 'HIGH',
+    name: row.name || '',
+    contact: row.contact || '',
+    companyUrl: row.company_url || '',
+    service: row.service || '',
+    urgency: row.urgency || '',
+    ValueEstimate: row.value_estimate || '$5,500',
+    details: row.details || '',
+    notes: row.notes || ''
+  };
+}
+
+export async function pushLeadToSupabase(lead) {
+  const { url, anonKey, isConfigured } = getSupabaseConfig();
+  if (!isConfigured || typeof fetch === 'undefined') return { ok: false, reason: 'missing_key' };
+  try {
+    const res = await fetch(`${url}/rest/v1/wired_leads`, {
+      method: 'POST',
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(mapLeadToDbRow(lead))
+    });
+    return { ok: res.ok, status: res.status };
+  } catch (err) {
+    return { ok: false, reason: err?.message || 'network_error' };
+  }
+}
+
+export async function patchLeadInSupabase(id, patch) {
+  const { url, anonKey, isConfigured } = getSupabaseConfig();
+  if (!isConfigured || typeof fetch === 'undefined') return { ok: false };
+  const dbPatch = {};
+  if (patch.status !== undefined) dbPatch.status = patch.status;
+  if (patch.priority !== undefined) dbPatch.priority = patch.priority;
+  if (patch.name !== undefined) dbPatch.name = patch.name;
+  if (patch.contact !== undefined) dbPatch.contact = patch.contact;
+  if (patch.companyUrl !== undefined) dbPatch.company_url = patch.companyUrl;
+  if (patch.service !== undefined) dbPatch.service = patch.service;
+  if (patch.urgency !== undefined) dbPatch.urgency = patch.urgency;
+  if (patch.ValueEstimate !== undefined) dbPatch.value_estimate = patch.ValueEstimate;
+  if (patch.details !== undefined) dbPatch.details = patch.details;
+  if (patch.notes !== undefined) dbPatch.notes = patch.notes;
+
+  try {
+    const res = await fetch(`${url}/rest/v1/wired_leads?id=eq.${encodeURIComponent(id)}`, {
+      method: 'PATCH',
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify(dbPatch)
+    });
+    return { ok: res.ok, status: res.status };
+  } catch {
+    return { ok: false };
+  }
+}
+
+export async function deleteLeadFromSupabase(id) {
+  const { url, anonKey, isConfigured } = getSupabaseConfig();
+  if (!isConfigured || typeof fetch === 'undefined') return { ok: false };
+  try {
+    const res = await fetch(`${url}/rest/v1/wired_leads?id=eq.${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`
+      }
+    });
+    return { ok: res.ok, status: res.status };
+  } catch {
+    return { ok: false };
+  }
+}
+
+export async function syncLeadsWithSupabase() {
+  const { url, anonKey, isConfigured } = getSupabaseConfig();
+  if (!isConfigured || typeof fetch === 'undefined') {
+    return { ok: false, message: 'Add your Supabase Anon / Publishable Key to connect.' };
+  }
+  try {
+    // 1. Push any local leads up to Supabase (upsert)
+    const localLeads = getLeads();
+    if (localLeads.length > 0) {
+      await fetch(`${url}/rest/v1/wired_leads`, {
+        method: 'POST',
+        headers: {
+          apikey: anonKey,
+          Authorization: `Bearer ${anonKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'resolution=merge-duplicates,return=minimal'
+        },
+        body: JSON.stringify(localLeads.map(mapLeadToDbRow))
+      });
+    }
+
+    // 2. Pull all leads ordered by created_at desc from Supabase
+    const res = await fetch(`${url}/rest/v1/wired_leads?select=*&order=created_at.desc`, {
+      method: 'GET',
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        Accept: 'application/json'
+      }
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      if (res.status === 404 || errText.includes('wired_leads')) {
+        return {
+          ok: false,
+          needsTable: true,
+          message: 'Connected to Supabase! Run the SQL Table Script once in your Supabase SQL Editor to create public.wired_leads.'
+        };
+      }
+      return {
+        ok: false,
+        message: `Supabase returned HTTP ${res.status}: ${errText.slice(0, 120)}`
+      };
+    }
+
+    const rows = await res.json();
+    if (Array.isArray(rows) && rows.length > 0) {
+      const mapped = rows.map(mapDbRowToLead);
+      saveLeads(mapped);
+      return {
+        ok: true,
+        leads: mapped,
+        message: `Synced ${mapped.length} leads with ${url}`
+      };
+    }
+
+    return {
+      ok: true,
+      leads: localLeads,
+      message: `Connected to ${url} (0 cloud rows, local leads synced).`
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      message: `Network error connecting to Supabase: ${err?.message || 'check key & CORS'}`
+    };
+  }
+}
+
 export const INITIAL_DEMO_LEADS = [
   {
     id: 'lead_demo_1',
@@ -161,18 +436,21 @@ export function addLead(leadData) {
   saveLeads(updated);
   logTelemetryEvent('LEAD_SUBMITTED', `${newLead.name} (${newLead.service})`, 'conversion');
   dispatchLeadNotification(newLead);
+  pushLeadToSupabase(newLead);
   return updated;
 }
 
 export function updateLead(id, patch) {
   const current = getLeads();
   const updated = current.map((item) => (item.id === id ? { ...item, ...patch } : item));
+  patchLeadInSupabase(id, patch);
   return saveLeads(updated);
 }
 
 export function deleteLead(id) {
   const current = getLeads();
   const updated = current.filter((item) => item.id !== id);
+  deleteLeadFromSupabase(id);
   return saveLeads(updated);
 }
 
@@ -354,6 +632,29 @@ export function logTelemetryEvent(type, detail, category = 'engagement', section
       const counts = getSectionCounts();
       counts[sectionKey] = (counts[sectionKey] || 0) + 1;
       localStorage.setItem(TELEMETRY_COUNTS_KEY, JSON.stringify(counts));
+    }
+
+    // Stream live event to Supabase if configured
+    const { url, anonKey, isConfigured } = getSupabaseConfig();
+    if (isConfigured && typeof fetch !== 'undefined') {
+      fetch(`${url}/rest/v1/wired_telemetry_events`, {
+        method: 'POST',
+        headers: {
+          apikey: anonKey,
+          Authorization: `Bearer ${anonKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        },
+        body: JSON.stringify({
+          id: newEv.id,
+          created_at: newEv.timestamp,
+          type: newEv.type,
+          detail: newEv.detail,
+          category: newEv.category,
+          location: newEv.location,
+          device: newEv.device
+        })
+      }).catch(() => {});
     }
   } catch {
     // Ignore storage errors

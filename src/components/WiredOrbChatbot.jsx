@@ -251,10 +251,21 @@ export default function WiredOrbChatbot() {
   const stageLeftEyeRef = useRef(null);
   const stageRightEyeRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const chatViewportRef = useRef(null);
+  const scrollTrackRef = useRef(null);
+  const isDraggingThumbRef = useRef(false);
+  const dragStartYRef = useRef(0);
+  const dragStartScrollTopRef = useRef(0);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
   const [isOverYellowFooter, setIsOverYellowFooter] = useState(false);
+  const [scrollMetrics, setScrollMetrics] = useState({
+    thumbHeightPct: 100,
+    thumbTopPct: 0,
+    scrollPct: 100,
+    canScroll: false
+  });
   const [isMobileViewport, setIsMobileViewport] = useState(() => {
     if (typeof window === 'undefined') return false;
     return window.innerWidth <= 768;
@@ -416,6 +427,106 @@ export default function WiredOrbChatbot() {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isBotTyping, isOpen]);
+
+  // Sync Custom 64-Bit Graphic Scrollbar Metrics
+  const updateCustomScrollMetrics = () => {
+    const el = chatViewportRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const maxScroll = Math.max(0, scrollHeight - clientHeight);
+    if (maxScroll <= 2) {
+      setScrollMetrics({
+        thumbHeightPct: 100,
+        thumbTopPct: 0,
+        scrollPct: 100,
+        canScroll: false
+      });
+      return;
+    }
+    const rawThumbPct = (clientHeight / scrollHeight) * 100;
+    const thumbHeightPct = Math.max(18, Math.min(92, rawThumbPct));
+    const ratio = Math.min(1, Math.max(0, scrollTop / maxScroll));
+    const thumbTopPct = ratio * (100 - thumbHeightPct);
+    const scrollPct = Math.round(ratio * 100);
+    setScrollMetrics({
+      thumbHeightPct,
+      thumbTopPct,
+      scrollPct,
+      canScroll: true
+    });
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const timer = setTimeout(updateCustomScrollMetrics, 60);
+    const el = chatViewportRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') {
+      return () => clearTimeout(timer);
+    }
+    const ro = new ResizeObserver(() => updateCustomScrollMetrics());
+    ro.observe(el);
+    return () => {
+      clearTimeout(timer);
+      ro.disconnect();
+    };
+  }, [isOpen, isFullScreen, messages, showPacketForm, isBotTyping]);
+
+  useEffect(() => {
+    const onPointerMove = (e) => {
+      if (!isDraggingThumbRef.current) return;
+      const el = chatViewportRef.current;
+      const track = scrollTrackRef.current;
+      if (!el || !track) return;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const deltaY = clientY - dragStartYRef.current;
+      const trackRect = track.getBoundingClientRect();
+      const maxScroll = Math.max(1, el.scrollHeight - el.clientHeight);
+      const usableTrackPx = Math.max(1, trackRect.height * (1 - scrollMetrics.thumbHeightPct / 100));
+      const scrollDelta = (deltaY / usableTrackPx) * maxScroll;
+      el.scrollTop = dragStartScrollTopRef.current + scrollDelta;
+      updateCustomScrollMetrics();
+    };
+
+    const onPointerUp = () => {
+      isDraggingThumbRef.current = false;
+    };
+
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+    window.addEventListener('touchmove', onPointerMove, { passive: true });
+    window.addEventListener('touchend', onPointerUp);
+    return () => {
+      window.removeEventListener('mousemove', onPointerMove);
+      window.removeEventListener('mouseup', onPointerUp);
+      window.removeEventListener('touchmove', onPointerMove);
+      window.removeEventListener('touchend', onPointerUp);
+    };
+  }, [scrollMetrics.thumbHeightPct]);
+
+  const handleThumbPointerDown = (e) => {
+    e.stopPropagation();
+    const el = chatViewportRef.current;
+    if (!el) return;
+    isDraggingThumbRef.current = true;
+    dragStartYRef.current = e.touches ? e.touches[0].clientY : e.clientY;
+    dragStartScrollTopRef.current = el.scrollTop;
+  };
+
+  const handleTrackClick = (e) => {
+    const el = chatViewportRef.current;
+    const track = scrollTrackRef.current;
+    if (!el || !track) return;
+    const rect = track.getBoundingClientRect();
+    const clickRatio = Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height));
+    const maxScroll = Math.max(0, el.scrollHeight - el.clientHeight);
+    el.scrollTo({ top: clickRatio * maxScroll, behavior: 'smooth' });
+  };
+
+  const handleScrollStep = (direction) => {
+    const el = chatViewportRef.current;
+    if (!el) return;
+    el.scrollBy({ top: direction * 150, behavior: 'smooth' });
+  };
 
   const handleOpenOrb = () => {
     setIsOpen(true);
@@ -833,126 +944,180 @@ export default function WiredOrbChatbot() {
 
               {/* RIGHT PANEL: 64-BIT YELLOW & GREEN CONVERSATION STREAM + INSTANT LEAD PACKET */}
               <div className="wired64-chat-column">
-                {/* Scrollable Retro Terminal Log */}
-                <div className="wired64-messages-viewport">
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`w64-msg-block ${msg.sender === 'user' ? 'user-msg' : 'bot-msg'}`}
-                    >
-                      <div className="w64-msg-meta">
-                        <span className="w64-msg-author">
-                          {msg.sender === 'user' ? '> VISITOR_INPUT' : '⚡ WIRED_64_CORE'}
+                {/* Scrollable Retro Terminal Log + Custom 64-Bit Graphic Vector Scrollbar */}
+                <div className="wired64-chat-scroll-shell">
+                  <div
+                    ref={chatViewportRef}
+                    onScroll={updateCustomScrollMetrics}
+                    className="wired64-messages-viewport"
+                  >
+                    {messages.map((msg) => (
+                      <div
+                        key={msg.id}
+                        className={`w64-msg-block ${msg.sender === 'user' ? 'user-msg' : 'bot-msg'}`}
+                      >
+                        <div className="w64-msg-meta">
+                          <span className="w64-msg-author">
+                            {msg.sender === 'user' ? '> VISITOR_INPUT' : '⚡ WIRED_64_CORE'}
+                          </span>
+                          <span className="w64-msg-time">{msg.time}</span>
+                        </div>
+                        <div className="w64-msg-text">{msg.text}</div>
+                        {msg.subtext && <div className="w64-msg-subtext">{msg.subtext}</div>}
+                      </div>
+                    ))}
+
+                    {isBotTyping && (
+                      <div className="w64-msg-block bot-msg typing">
+                        <span className="w64-typing-cursor">
+                          WIRED_64 COMPUTING RESPONSE [■■■■□□] ...
                         </span>
-                        <span className="w64-msg-time">{msg.time}</span>
                       </div>
-                      <div className="w64-msg-text">{msg.text}</div>
-                      {msg.subtext && <div className="w64-msg-subtext">{msg.subtext}</div>}
-                    </div>
-                  ))}
+                    )}
 
-                  {isBotTyping && (
-                    <div className="w64-msg-block bot-msg typing">
-                      <span className="w64-typing-cursor">
-                        WIRED_64 COMPUTING RESPONSE [■■■■□□] ...
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Inline 64-Bit Quick Lead Packet Drawer */}
-                  {showPacketForm && (
-                    <form className="w64-inline-packet-form" onSubmit={handlePacketSubmit}>
-                      <div className="w64-packet-head">
-                        <span>[ 64-BIT DIRECT LEAD PACKET → ROB NEILSON ]</span>
-                        <button
-                          type="button"
-                          onClick={() => setShowPacketForm(false)}
-                          className="w64-packet-close"
-                        >
-                          [X]
-                        </button>
-                      </div>
-
-                      <div className="w64-packet-grid">
-                        <div className="w64-field">
-                          <label>YOUR NAME / ARTIST / COMPANY *</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="Enter Name or Business"
-                            value={leadDraft.name}
-                            onChange={(e) =>
-                              setLeadDraft({ ...leadDraft, name: e.target.value })
-                            }
-                          />
-                        </div>
-                        <div className="w64-field">
-                          <label>BEST EMAIL OR PHONE *</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="you@company.com or (423) 555-0199"
-                            value={leadDraft.contact}
-                            onChange={(e) =>
-                              setLeadDraft({ ...leadDraft, contact: e.target.value })
-                            }
-                          />
-                        </div>
-                        <div className="w64-field">
-                          <label>WEBSITE URL (OPTIONAL)</label>
-                          <input
-                            type="text"
-                            placeholder="https://yourbusiness.com"
-                            value={leadDraft.companyUrl}
-                            onChange={(e) =>
-                              setLeadDraft({ ...leadDraft, companyUrl: e.target.value })
-                            }
-                          />
-                        </div>
-                        <div className="w64-field">
-                          <label>MISSION / SERVICE</label>
-                          <select
-                            value={leadDraft.service}
-                            onChange={(e) =>
-                              setLeadDraft({ ...leadDraft, service: e.target.value })
-                            }
+                    {/* Inline 64-Bit Quick Lead Packet Drawer */}
+                    {showPacketForm && (
+                      <form className="w64-inline-packet-form" onSubmit={handlePacketSubmit}>
+                        <div className="w64-packet-head">
+                          <span>[ 64-BIT DIRECT LEAD PACKET → ROB NEILSON ]</span>
+                          <button
+                            type="button"
+                            onClick={() => setShowPacketForm(false)}
+                            className="w64-packet-close"
                           >
-                            <option value="AI Website Design, Redesign & Modernization + GEO">
-                              AI Website Modernization &amp; GEO
-                            </option>
-                            <option value="Custom Live Dashboard / 24/7 AI Lead Chatbot">
-                              Custom Live Dashboard / 24/7 AI Bot
-                            </option>
-                            <option value="Tri-Cities Local SEO & AI Search (GEO)">
-                              Tri-Cities Local &amp; AI Search (GEO)
-                            </option>
-                            <option value="Global Remote Music & Lyric Video Editing">
-                              Global Remote Music / Lyric Video Editing
-                            </option>
-                          </select>
+                            [X]
+                          </button>
                         </div>
+
+                        <div className="w64-packet-grid">
+                          <div className="w64-field">
+                            <label>YOUR NAME / ARTIST / COMPANY *</label>
+                            <input
+                              type="text"
+                              required
+                              placeholder="Enter Name or Business"
+                              value={leadDraft.name}
+                              onChange={(e) =>
+                                setLeadDraft({ ...leadDraft, name: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div className="w64-field">
+                            <label>BEST EMAIL OR PHONE *</label>
+                            <input
+                              type="text"
+                              required
+                              placeholder="you@company.com or (423) 555-0199"
+                              value={leadDraft.contact}
+                              onChange={(e) =>
+                                setLeadDraft({ ...leadDraft, contact: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div className="w64-field">
+                            <label>WEBSITE URL (OPTIONAL)</label>
+                            <input
+                              type="text"
+                              placeholder="https://yourbusiness.com"
+                              value={leadDraft.companyUrl}
+                              onChange={(e) =>
+                                setLeadDraft({ ...leadDraft, companyUrl: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div className="w64-field">
+                            <label>MISSION / SERVICE</label>
+                            <select
+                              value={leadDraft.service}
+                              onChange={(e) =>
+                                setLeadDraft({ ...leadDraft, service: e.target.value })
+                              }
+                            >
+                              <option value="AI Website Design, Redesign & Modernization + GEO">
+                                AI Website Modernization &amp; GEO
+                              </option>
+                              <option value="Custom Live Dashboard / 24/7 AI Lead Chatbot">
+                                Custom Live Dashboard / 24/7 AI Bot
+                              </option>
+                              <option value="Tri-Cities Local SEO & AI Search (GEO)">
+                                Tri-Cities Local &amp; AI Search (GEO)
+                              </option>
+                              <option value="Global Remote Music & Lyric Video Editing">
+                                Global Remote Music / Lyric Video Editing
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="w64-field" style={{ marginTop: '8px' }}>
+                          <label>PROJECT GOALS / NOTES</label>
+                          <input
+                            type="text"
+                            placeholder="Tell Rob what you want to build or modernize..."
+                            value={leadDraft.details}
+                            onChange={(e) =>
+                              setLeadDraft({ ...leadDraft, details: e.target.value })
+                            }
+                          />
+                        </div>
+
+                        <button type="submit" className="w64-transmit-btn">
+                          <Zap size={14} fill="#050505" color="#050505" />
+                          <span>[ TRANSMIT LEAD TO WIRED_OS VAULT ]</span>
+                        </button>
+                      </form>
+                    )}
+
+                    <div ref={messagesEndRef} />
+                  </div>
+
+                  {/* Custom 64-Bit Graphic Vector Scrollbar Rail (Replaces Default Browser Scrollbar) */}
+                  <div className="w64-graphic-scrollbar" aria-label="Terminal scroll rail">
+                    <button
+                      type="button"
+                      className="w64-scroll-step-btn"
+                      onClick={() => handleScrollStep(-1)}
+                      title="Scroll Up"
+                      aria-label="Scroll Up"
+                    >
+                      ▲
+                    </button>
+
+                    <div
+                      ref={scrollTrackRef}
+                      className="w64-scroll-track"
+                      onClick={handleTrackClick}
+                    >
+                      <div className="w64-scroll-track-ticks" aria-hidden="true" />
+                      <div
+                        className={`w64-scroll-thumb ${scrollMetrics.canScroll ? 'is-scrollable' : 'is-locked'}`}
+                        style={{
+                          height: `${scrollMetrics.thumbHeightPct}%`,
+                          top: `${scrollMetrics.thumbTopPct}%`
+                        }}
+                        onMouseDown={handleThumbPointerDown}
+                        onTouchStart={handleThumbPointerDown}
+                      >
+                        <span className="w64-thumb-grip" />
+                        <span className="w64-thumb-grip" />
+                        <span className="w64-thumb-grip" />
                       </div>
+                    </div>
 
-                      <div className="w64-field" style={{ marginTop: '8px' }}>
-                        <label>PROJECT GOALS / NOTES</label>
-                        <input
-                          type="text"
-                          placeholder="Tell Rob what you want to build or modernize..."
-                          value={leadDraft.details}
-                          onChange={(e) =>
-                            setLeadDraft({ ...leadDraft, details: e.target.value })
-                          }
-                        />
-                      </div>
+                    <button
+                      type="button"
+                      className="w64-scroll-step-btn"
+                      onClick={() => handleScrollStep(1)}
+                      title="Scroll Down"
+                      aria-label="Scroll Down"
+                    >
+                      ▼
+                    </button>
 
-                      <button type="submit" className="w64-transmit-btn">
-                        <Zap size={14} fill="#050505" color="#050505" />
-                        <span>[ TRANSMIT LEAD TO WIRED_OS VAULT ]</span>
-                      </button>
-                    </form>
-                  )}
-
-                  <div ref={messagesEndRef} />
+                    <span className="w64-scroll-readout">
+                      {String(scrollMetrics.scrollPct).padStart(2, '0')}%
+                    </span>
+                  </div>
                 </div>
 
                 {/* Quick Action Arcade Strip + Command Line Input */}

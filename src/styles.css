@@ -9419,3 +9419,188 @@ a {
     font-size: 0.78rem;
   }
 }
+
+/* ==========================================================================
+   CUSTOM 64-BIT GRAPHIC VECTOR SCROLLBAR FOR WIRED-64 TERMINAL WINDOW
+   ========================================================================== */
+.wired64-chat-scroll-shell {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide default browser scrollbar completely in the chat viewport */
+.wired64-messages-viewport {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wired64-messages-viewport::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Custom 64-Bit Graphic Vector Scrollbar Rail on the Right Edge */
+.w64-graphic-scrollbar {
+  width: 28px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #030704 0%, #061009 50%, #030704 100%);
+  border-left: 1.5px solid rgba(0, 255, 102, 0.42);
+  padding: 6px 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+  box-shadow: inset 2px 0 10px rgba(0, 0, 0, 0.75);
+}
+
+.w64-scroll-step-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: rgba(0, 255, 102, 0.08);
+  border: 1px solid #00ff66;
+  color: #ffee00;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.w64-scroll-step-btn:hover {
+  background: #ffee00;
+  border-color: #ffee00;
+  color: #040805;
+  box-shadow: 0 0 10px rgba(255, 238, 0, 0.5);
+}
+
+.w64-scroll-track {
+  flex: 1;
+  width: 16px;
+  position: relative;
+  border-radius: 6px;
+  background: #020503;
+  border: 1px solid rgba(0, 255, 102, 0.35);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: inset 0 0 8px rgba(0, 255, 102, 0.15);
+}
+
+/* Retro 64-Bit Laser Calibration Tick Marks Along the Track */
+.w64-scroll-track-ticks {
+  position: absolute;
+  inset: 4px 2px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 102, 0.28) 0px,
+    rgba(0, 255, 102, 0.28) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+  pointer-events: none;
+}
+
+/* Draggable 64-Bit Graphic Thumb */
+.w64-scroll-thumb {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  min-height: 28px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ffee00 0%, #d4c300 100%);
+  border: 1.5px solid #00ff66;
+  box-shadow:
+    0 0 12px rgba(255, 238, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5px;
+  cursor: grab;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.w64-scroll-thumb:active {
+  cursor: grabbing;
+  background: #00ff66;
+  border-color: #ffee00;
+  box-shadow: 0 0 16px rgba(0, 255, 102, 0.75);
+}
+
+.w64-scroll-thumb.is-locked {
+  background: linear-gradient(180deg, rgba(0, 255, 102, 0.22) 0%, rgba(255, 238, 0, 0.18) 100%);
+  border: 1px solid rgba(255, 238, 0, 0.55);
+  box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.2);
+}
+
+.w64-thumb-grip {
+  width: 8px;
+  height: 1.5px;
+  background: #040805;
+  border-radius: 1px;
+}
+
+.w64-scroll-thumb.is-locked .w64-thumb-grip {
+  background: #ffee00;
+}
+
+.w64-scroll-readout {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 800;
+  color: #00ff66;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding-top: 1px;
+}
+
+/* Custom 64-Bit Graphic Scrollbar for Left Graphics Deck (When Docked/Compact) */
+.wired64-graphics-deck {
+  scrollbar-width: thin;
+  scrollbar-color: #ffee00 #030604;
+}
+
+.wired64-graphics-deck::-webkit-scrollbar {
+  width: 8px;
+}
+
+.wired64-graphics-deck::-webkit-scrollbar-track {
+  background: #030604;
+  border-left: 1px solid rgba(0, 255, 102, 0.35);
+}
+
+.wired64-graphics-deck::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffee00 0%, #00ff66 100%);
+  border: 1px solid #040805;
+  border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+  .w64-graphic-scrollbar {
+    width: 22px;
+    padding: 4px 2px;
+  }
+  .w64-scroll-step-btn {
+    width: 16px;
+    height: 16px;
+    font-size: 0.48rem;
+  }
+  .w64-scroll-track {
+    width: 12px;
+  }
+  .w64-scroll-readout {
+    font-size: 0.44rem;
+  }
+}

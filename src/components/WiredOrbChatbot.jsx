@@ -223,6 +223,7 @@ function generateWired64Response(input, currentStep, leadDraft) {
 }
 
 export default function WiredOrbChatbot() {
+  const dockRef = useRef(null);
   const orbButtonRef = useRef(null);
   const floatLeftEyeRef = useRef(null);
   const floatRightEyeRef = useRef(null);
@@ -232,6 +233,7 @@ export default function WiredOrbChatbot() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
+  const [isOverYellowFooter, setIsOverYellowFooter] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(() => {
     if (typeof window === 'undefined') return false;
     return (
@@ -278,7 +280,7 @@ export default function WiredOrbChatbot() {
     };
   }, []);
 
-  // Update whisper prompt based on scroll position
+  // Update whisper prompt and detect when floating orb overlaps the yellow footer
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
@@ -291,9 +293,24 @@ export default function WiredOrbChatbot() {
       } else {
         setWhisperText('Chat with WIRED-64');
       }
+
+      const footerEl = document.querySelector('.yellow-finale-footer');
+      const dockEl = dockRef.current;
+      if (footerEl && dockEl) {
+        const footerRect = footerEl.getBoundingClientRect();
+        const dockRect = dockEl.getBoundingClientRect();
+        setIsOverYellowFooter(footerRect.top < dockRect.bottom - 12 && footerRect.bottom > dockRect.top);
+      } else {
+        setIsOverYellowFooter(false);
+      }
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   // 60FPS Spring-Damped Eye-Tracking Physics Loop for Both the Floating Orb & Full-Screen Orb
@@ -499,7 +516,10 @@ export default function WiredOrbChatbot() {
       {/* ====================================================================
           FLOATING SHINY BLACK ORB WITH BACKLIT YELLOW GLOW & MOUSE-TRACKING EYES
          ==================================================================== */}
-      <div className={`wired-orb-dock ${isOpen ? 'orb-hidden' : ''} ${isNearOrb ? 'orb-proximity-surge' : ''}`}>
+      <div
+        ref={dockRef}
+        className={`wired-orb-dock ${isOpen ? 'orb-hidden' : ''} ${isNearOrb ? 'orb-proximity-surge' : ''} ${isOverYellowFooter ? 'over-yellow-footer' : ''}`}
+      >
         {!whisperDismissed && (
           <div className="orb-organic-whisper" onClick={handleOpenOrb}>
             <div className="orb-whisper-stack">

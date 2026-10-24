@@ -5976,40 +5976,6 @@ a {
   transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
-/* Refined Atmospheric Dual-Radial Shadow Cushion (Zero Blob Edge, Pure Feather Fade) */
-.wired-orb-dock::before {
-  content: '';
-  position: absolute;
-  top: -42px;
-  right: -52px;
-  width: 210px;
-  height: 240px;
-  background:
-    radial-gradient(
-      circle 74px at 56% 29%,
-      rgba(0, 0, 0, 0.82) 0%,
-      rgba(0, 0, 0, 0.56) 34%,
-      rgba(0, 0, 0, 0.22) 64%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    radial-gradient(
-      circle 68px at 64% 72%,
-      rgba(0, 0, 0, 0.76) 0%,
-      rgba(0, 0, 0, 0.44) 38%,
-      rgba(0, 0, 0, 0.14) 68%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  filter: blur(12px);
-  z-index: -1;
-  pointer-events: none;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.wired-orb-dock.orb-proximity-surge::before,
-.wired-orb-dock:hover::before {
-  transform: scale(1.06);
-}
-
 .wired-orb-dock.orb-hidden {
   opacity: 0;
   pointer-events: none;
@@ -6044,10 +6010,6 @@ a {
   text-align: right;
   line-height: 1.08;
   gap: 2px;
-  text-shadow:
-    0 1px 4px rgba(0, 0, 0, 1),
-    0 2px 10px rgba(0, 0, 0, 1),
-    0 0 18px rgba(0, 0, 0, 0.98);
 }
 
 .orb-whisper-line-1 {
@@ -6056,9 +6018,7 @@ a {
   font-weight: 800;
   letter-spacing: 0.22em;
   color: rgba(255, 255, 255, 0.95);
-  text-shadow:
-    0 1px 4px rgba(0, 0, 0, 1),
-    0 2px 10px rgba(0, 0, 0, 1);
+  transition: color 0.22s ease, text-shadow 0.22s ease;
 }
 
 .orb-whisper-line-2 {
@@ -6068,10 +6028,7 @@ a {
   letter-spacing: 0.08em;
   color: var(--wired-yellow);
   white-space: nowrap;
-  text-shadow:
-    0 1px 4px rgba(0, 0, 0, 1),
-    0 2px 10px rgba(0, 0, 0, 1),
-    0 0 14px rgba(255, 238, 0, 0.55);
+  transition: color 0.22s ease, text-shadow 0.22s ease;
 }
 
 .orb-whisper-line-3 {
@@ -6081,10 +6038,7 @@ a {
   letter-spacing: 0.14em;
   color: #00ff66;
   white-space: nowrap;
-  text-shadow:
-    0 1px 4px rgba(0, 0, 0, 1),
-    0 2px 10px rgba(0, 0, 0, 1),
-    0 0 10px rgba(0, 255, 102, 0.45);
+  transition: color 0.22s ease, text-shadow 0.22s ease;
 }
 
 .orb-whisper-tether {
@@ -6093,6 +6047,39 @@ a {
   margin-right: 24px;
   background: linear-gradient(180deg, rgba(255, 238, 0, 0.15), rgba(255, 238, 0, 0.9));
   box-shadow: 0 0 8px rgba(255, 238, 0, 0.55);
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+
+/* Auto-Flip to Crisp Solid Jet-Black Over the Electric-Yellow Footer (Zero Dirty Gradient Cloud) */
+.wired-orb-dock.over-yellow-footer .orb-whisper-stack,
+.wired-orb-dock.over-yellow-footer .orb-whisper-line-1,
+.wired-orb-dock.over-yellow-footer .orb-whisper-line-2,
+.wired-orb-dock.over-yellow-footer .orb-whisper-line-3 {
+  color: #050505;
+  text-shadow: none;
+}
+
+.wired-orb-dock.over-yellow-footer .orb-whisper-tether {
+  background: #050505;
+  box-shadow: none;
+}
+
+.wired-orb-dock.over-yellow-footer .orb-backlit-yellow-aura {
+  opacity: 0;
+  animation: none;
+}
+
+.wired-orb-dock.over-yellow-footer .orb-backlit-pulse-ring {
+  border-color: rgba(5, 5, 5, 0.35);
+  box-shadow: none;
+}
+
+.wired-orb-dock.over-yellow-footer .orb-black-sphere {
+  border-color: #050505;
+  box-shadow:
+    inset 0 3px 7px rgba(255, 255, 255, 0.38),
+    inset 0 -8px 16px rgba(255, 238, 0, 0.25),
+    0 3px 8px rgba(0, 0, 0, 0.16);
 }
 
 /* 3D Glossy Piano-Black Orb Trigger Button with Backlit Yellow Glow */

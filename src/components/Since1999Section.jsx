@@ -28,6 +28,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               ref={videoRef}
               className="since-bg-video"
               poster={BRAND_INFO.reelPoster}
+              preload="metadata"
               autoPlay
               muted
               loop
@@ -35,7 +36,6 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               onClick={togglePlay}
             >
               <source src={BRAND_INFO.reelMp4} type="video/mp4" />
-              <source src={BRAND_INFO.reelMov} type="video/quicktime" />
             </video>
 
             {/* Halftone Dot Matrix Overlay */}
@@ -86,6 +86,8 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 src={BRAND_INFO.roundStampSrc}
                 alt="Wired Digital — Creative + Intelligent + Fast — Est. 1999"
                 className="wired-round-stamp-img"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
 

@@ -235,10 +235,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       className="ft-screen-card"
                       onClick={() =>
                         setLightboxImage({
-                          src: '/fasttrack-frontend.png',
+                          src: '/fasttrack-frontend.jpg',
                           title: 'Fast Track Automotive — Customer Front-End Website',
                           subtitle: '2528 Volunteer Pkwy, Bristol, TN • High-Speed AI/GEO Dealership Platform',
-                          altSrc: '/fasttrack-admin-dash.png',
+                          altSrc: '/fasttrack-admin-dash.jpg',
                           altTitle: 'Fast Track Automotive — Custom Live Admin & Telemetry Dashboard',
                           altSubtitle: 'Real-Time Visitor Click Stream, Credit App Alerts, Hourly Traffic & Lot Rankings',
                           swapLabel: 'Switch to Live Admin Dashboard'
@@ -258,8 +258,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
 
                       <div className="ft-screen-viewport">
                         <img
-                          src="/fasttrack-frontend.png"
+                          src="/fasttrack-frontend.jpg"
                           alt="Fast Track Automotive Bristol TN Public Website Front-End"
+                          loading="lazy"
+                          decoding="async"
                           className="ft-cropped-ui-img"
                         />
                       </div>
@@ -288,10 +290,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       className="ft-screen-card highlight-dash"
                       onClick={() =>
                         setLightboxImage({
-                          src: '/fasttrack-admin-dash.png',
+                          src: '/fasttrack-admin-dash.jpg',
                           title: 'Fast Track Automotive — Custom Live Admin & Telemetry Dashboard',
                           subtitle: 'Real-Time Visitor Click Stream, Credit App Alerts, Hourly Traffic & Lot Rankings',
-                          altSrc: '/fasttrack-frontend.png',
+                          altSrc: '/fasttrack-frontend.jpg',
                           altTitle: 'Fast Track Automotive — Customer Front-End Website',
                           altSubtitle: '2528 Volunteer Pkwy, Bristol, TN • High-Speed AI/GEO Dealership Platform',
                           swapLabel: 'Switch to Public Front-End'
@@ -311,8 +313,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
 
                       <div className="ft-screen-viewport">
                         <img
-                          src="/fasttrack-admin-dash.png"
+                          src="/fasttrack-admin-dash.jpg"
                           alt="Fast Track Automotive Custom Live Admin Dashboard"
+                          loading="lazy"
+                          decoding="async"
                           className="ft-cropped-ui-img"
                         />
                       </div>
@@ -336,19 +340,19 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                         setLightboxImage(
                           fastTrackView === 'dash'
                             ? {
-                                src: '/fasttrack-admin-dash.png',
+                                src: '/fasttrack-admin-dash.jpg',
                                 title: 'Fast Track Automotive — Custom Live Admin & Telemetry Dashboard',
                                 subtitle: 'Real-Time Visitor Click Stream, Credit App Alerts, Hourly Traffic & Lot Rankings',
-                                altSrc: '/fasttrack-frontend.png',
+                                altSrc: '/fasttrack-frontend.jpg',
                                 altTitle: 'Fast Track Automotive — Customer Front-End Website',
                                 altSubtitle: '2528 Volunteer Pkwy, Bristol, TN',
                                 swapLabel: 'Switch to Public Front-End'
                               }
                             : {
-                                src: '/fasttrack-frontend.png',
+                                src: '/fasttrack-frontend.jpg',
                                 title: 'Fast Track Automotive — Customer Front-End Website',
                                 subtitle: '2528 Volunteer Pkwy, Bristol, TN • High-Speed AI/GEO Dealership Platform',
-                                altSrc: '/fasttrack-admin-dash.png',
+                                altSrc: '/fasttrack-admin-dash.jpg',
                                 altTitle: 'Fast Track Automotive — Custom Live Admin & Telemetry Dashboard',
                                 altSubtitle: 'Real-Time Visitor Click Stream, Credit App Alerts, Hourly Traffic & Lot Rankings',
                                 swapLabel: 'Switch to Live Admin Dashboard'
@@ -379,10 +383,12 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                         <img
                           src={
                             fastTrackView === 'dash'
-                              ? '/fasttrack-admin-dash.png'
-                              : '/fasttrack-frontend.png'
+                              ? '/fasttrack-admin-dash.jpg'
+                              : '/fasttrack-frontend.jpg'
                           }
                           alt="Fast Track Automotive Platform Screen"
+                          loading="lazy"
+                          decoding="async"
                           className="ft-cropped-ui-img"
                         />
                       </div>
@@ -474,10 +480,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       className="ft-screen-card"
                       onClick={() =>
                         setLightboxImage({
-                          src: '/teamvision-frontend.png',
+                          src: '/teamvision-frontend.jpg',
                           title: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
                           subtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
-                          altSrc: '/teamvision-ai-advisor.png',
+                          altSrc: '/teamvision-ai-advisor.jpg',
                           altTitle: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
                           altSubtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
                           swapLabel: 'Switch to 24/7 AI Space Advisor'
@@ -497,9 +503,11 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
 
                       <div className="ft-screen-viewport">
                         <img
-                          src="/teamvision-frontend.png"
+                          src="/teamvision-frontend.jpg"
                           alt="Team Vision LLC Commercial Real Estate Front-End"
                           className="ft-cropped-ui-img"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
 
@@ -525,10 +533,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       className="ft-screen-card highlight-dash"
                       onClick={() =>
                         setLightboxImage({
-                          src: '/teamvision-ai-advisor.png',
+                          src: '/teamvision-ai-advisor.jpg',
                           title: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
                           subtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-                          altSrc: '/teamvision-frontend.png',
+                          altSrc: '/teamvision-frontend.jpg',
                           altTitle: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
                           altSubtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
                           swapLabel: 'Switch to Flagship Front-End'
@@ -548,9 +556,11 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
 
                       <div className="ft-screen-viewport">
                         <img
-                          src="/teamvision-ai-advisor.png"
+                          src="/teamvision-ai-advisor.jpg"
                           alt="Team Vision LLC Ask VISION 24/7 AI Chatbot and Portfolio"
                           className="ft-cropped-ui-img"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
 
@@ -573,19 +583,19 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                         setLightboxImage(
                           visionView === 'ai'
                             ? {
-                                src: '/teamvision-ai-advisor.png',
+                                src: '/teamvision-ai-advisor.jpg',
                                 title: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
                                 subtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-                                altSrc: '/teamvision-frontend.png',
+                                altSrc: '/teamvision-frontend.jpg',
                                 altTitle: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
                                 altSubtitle: '#1 Commercial Property Owner in Downtown Bristol',
                                 swapLabel: 'Switch to Flagship Front-End'
                               }
                             : {
-                                src: '/teamvision-frontend.png',
+                                src: '/teamvision-frontend.jpg',
                                 title: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
                                 subtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
-                                altSrc: '/teamvision-ai-advisor.png',
+                                altSrc: '/teamvision-ai-advisor.jpg',
                                 altTitle: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
                                 altSubtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
                                 swapLabel: 'Switch to 24/7 AI Space Advisor'
@@ -612,11 +622,13 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                         <img
                           src={
                             visionView === 'ai'
-                              ? '/teamvision-ai-advisor.png'
-                              : '/teamvision-frontend.png'
+                              ? '/teamvision-ai-advisor.jpg'
+                              : '/teamvision-frontend.jpg'
                           }
                           alt="Team Vision LLC Platform Screen"
                           className="ft-cropped-ui-img"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1025,11 +1037,15 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                             src={mainImg}
                             alt={`${cs.name} primary preview`}
                             className="cs-primary-screen-img"
+                            loading="lazy"
+                            decoding="async"
                           />
                           <img
                             src={pipImg}
                             alt={`${cs.name} secondary preview`}
                             className="cs-secondary-pip-img"
+                            loading="lazy"
+                            decoding="async"
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleCardMode(cs.id, isPrimary ? 'secondary' : 'primary');

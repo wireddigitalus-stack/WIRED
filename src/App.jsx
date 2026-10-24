@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Menu, X, Zap, Cpu, MapPin, Film, Crown } from 'lucide-react';
 import { BRAND_INFO } from './data/wiredData';
 import SpiralHero from './components/SpiralHero';
@@ -6,12 +6,7 @@ import Since1999Section from './components/Since1999Section';
 import AiSeoDashboardShowcase from './components/AiSeoDashboardShowcase';
 import LegendsWall from './components/LegendsWall';
 import WorkScreeningRoom from './components/WorkScreeningRoom';
-import VideoProductionView from './components/VideoProductionView';
-import WebCreationView from './components/WebCreationView';
 import YellowFooter from './components/YellowFooter';
-import VideoLightboxModal from './components/VideoLightboxModal';
-import ContactModal from './components/ContactModal';
-import AdminDashboardView from './components/AdminDashboardView';
 import WiredOrbChatbot from './components/WiredOrbChatbot';
 import SeoSiteTreeAuthority from './components/SeoSiteTreeAuthority';
 import {
@@ -20,6 +15,12 @@ import {
   applySeoRouteMeta,
   resolveInitialSeoNodeFromUrl
 } from './utils/telemetry';
+
+const WebCreationView = lazy(() => import('./components/WebCreationView'));
+const VideoProductionView = lazy(() => import('./components/VideoProductionView'));
+const AdminDashboardView = lazy(() => import('./components/AdminDashboardView'));
+const VideoLightboxModal = lazy(() => import('./components/VideoLightboxModal'));
+const ContactModal = lazy(() => import('./components/ContactModal'));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => {
@@ -47,6 +48,18 @@ export default function App() {
         }, 220);
       }
     }
+
+    // Warm-prefetch secondary tab views during browser idle time so tab clicks are 0ms instant
+    const prefetchSecondaryViews = () => {
+      import('./components/WebCreationView').catch(() => {});
+      import('./components/VideoProductionView').catch(() => {});
+    };
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(prefetchSecondaryViews, { timeout: 2500 });
+      return () => window.cancelIdleCallback?.(idleId);
+    }
+    const timerId = setTimeout(prefetchSecondaryViews, 1800);
+    return () => clearTimeout(timerId);
   }, []);
 
   useEffect(() => {
@@ -146,6 +159,8 @@ export default function App() {
                 src={BRAND_INFO.logoSrc}
                 alt="Wired Digital Raven Logo"
                 className="island-raven-logo"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
             <span className="island-brand-title">
@@ -334,29 +349,31 @@ export default function App() {
         )}
 
         {activeTab === 'web' && (
-          <>
+          <Suspense fallback={null}>
             <WebCreationView
               onOpenContact={() => setContactOpen(true)}
               onNavigateTab={handleNavigateTab}
             />
             <AiSeoDashboardShowcase onOpenContact={() => setContactOpen(true)} />
             <LegendsWall />
-          </>
+          </Suspense>
         )}
 
         {activeTab === 'video' && (
-          <>
+          <Suspense fallback={null}>
             <VideoProductionView
               onOpenVideoModal={(proj) => setActiveVideoModal(proj)}
               onOpenContact={() => setContactOpen(true)}
               onNavigateTab={handleNavigateTab}
             />
             <LegendsWall />
-          </>
+          </Suspense>
         )}
 
         {activeTab === 'admin' && (
-          <AdminDashboardView onExitDashboard={() => handleNavigateTab('home')} />
+          <Suspense fallback={null}>
+            <AdminDashboardView onExitDashboard={() => handleNavigateTab('home')} />
+          </Suspense>
         )}
       </main>
 
@@ -378,16 +395,24 @@ export default function App() {
       )}
 
       {/* Cinema Video Lightbox Modal */}
-      <VideoLightboxModal
-        project={activeVideoModal}
-        onClose={() => setActiveVideoModal(null)}
-      />
+      {activeVideoModal && (
+        <Suspense fallback={null}>
+          <VideoLightboxModal
+            project={activeVideoModal}
+            onClose={() => setActiveVideoModal(null)}
+          />
+        </Suspense>
+      )}
 
       {/* Project Inquiry / Contact Modal */}
-      <ContactModal
-        isOpen={contactOpen}
-        onClose={() => setContactOpen(false)}
-      />
+      {contactOpen && (
+        <Suspense fallback={null}>
+          <ContactModal
+            isOpen={contactOpen}
+            onClose={() => setContactOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {/* Floating Shiny Black Orb Lead-Capture Bot + 64-Bit Yellow/Green Retro Terminal */}
       {activeTab !== 'admin' && <WiredOrbChatbot />}

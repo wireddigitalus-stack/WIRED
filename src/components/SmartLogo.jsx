@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // In-memory cache so each logo is processed & auto-cropped only once per mode
 const processedCache = new Map();
@@ -286,12 +286,42 @@ function processLogoToDataUrl(img, item, mode) {
 }
 
 export default function SmartLogo({ item, mode = 'dark', className = '' }) {
-  const [renderedSrc, setRenderedSrc] = useState(null);
+  const cacheKey = `${item.id}:${mode}:v2`;
+  const [renderedSrc, setRenderedSrc] = useState(() => processedCache.get(cacheKey) || null);
+  const [shouldProcess, setShouldProcess] = useState(() => processedCache.has(cacheKey));
+  const imgRef = useRef(null);
 
   useEffect(() => {
-    if (!item.src || item.processMode === 'svg-custom') return;
+    if (processedCache.has(cacheKey)) {
+      setRenderedSrc(processedCache.get(cacheKey));
+      setShouldProcess(true);
+      return;
+    }
+    if (shouldProcess) return;
 
-    const cacheKey = `${item.id}:${mode}:v2`;
+    const el = imgRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setShouldProcess(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldProcess(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '550px 0px' }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [cacheKey, shouldProcess]);
+
+  useEffect(() => {
+    if (!shouldProcess || !item.src || item.processMode === 'svg-custom') return;
+
     if (processedCache.has(cacheKey)) {
       setRenderedSrc(processedCache.get(cacheKey));
       return;
@@ -303,15 +333,26 @@ export default function SmartLogo({ item, mode = 'dark', className = '' }) {
     }
 
     let isMounted = true;
+    let idleHandle = null;
     const img = new Image();
     img.crossOrigin = 'anonymous';
+    img.decoding = 'async';
     img.onload = () => {
       if (!isMounted) return;
-      try {
-        const dataUrl = processLogoToDataUrl(img, item, mode);
-        setRenderedSrc(dataUrl);
-      } catch {
-        setRenderedSrc(item.src);
+      const runProcess = () => {
+        if (!isMounted) return;
+        try {
+          const dataUrl = processLogoToDataUrl(img, item, mode);
+          setRenderedSrc(dataUrl);
+        } catch {
+          setRenderedSrc(item.src);
+        }
+      };
+
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        idleHandle = window.requestIdleCallback(runProcess, { timeout: 250 });
+      } else {
+        idleHandle = setTimeout(runProcess, 0);
       }
     };
     img.onerror = () => {
@@ -321,8 +362,15 @@ export default function SmartLogo({ item, mode = 'dark', className = '' }) {
 
     return () => {
       isMounted = false;
+      if (idleHandle !== null) {
+        if (typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
+          window.cancelIdleCallback(idleHandle);
+        } else {
+          clearTimeout(idleHandle);
+        }
+      }
     };
-  }, [item, mode]);
+  }, [shouldProcess, item, mode, cacheKey]);
 
   const customScale = item.scale || 1;
 
@@ -390,9 +438,11 @@ export default function SmartLogo({ item, mode = 'dark', className = '' }) {
 
   return (
     <img
+      ref={imgRef}
       src={renderedSrc || item.src}
       alt={item.name}
       loading="lazy"
+      decoding="async"
       style={customScale !== 1 ? { transform: `scale(${customScale})` } : undefined}
       className={`smart-logo-img ${isSvg && mode === 'dark' ? 'svg-invert-dark' : ''} ${className}`}
     />

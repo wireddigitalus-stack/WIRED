@@ -37,24 +37,23 @@ import {
 import { BRAND_INFO } from '../data/wiredData';
 import {
   AI_ENGINE_SHARE,
-  ANALYTICS_TIMEFRAMES,
-  GEO_TRAFFIC_REGIONS,
   SUPABASE_PROJECT_URL,
   SUPABASE_SQL_SCHEMA,
   TRACKED_SEO_KEYWORDS,
-  WEEKLY_HEATMAP_DATA,
   addLead,
   authorizeStudioDevice,
+  computeLiveAnalytics,
   deleteLead,
   exportLeadsToCsv,
   getClientHardwareSignature,
+  getLastDbStatus,
   getLeads,
   getSectionCounts,
   getSupabaseConfig,
   getTelemetryEvents,
   isStudioDeviceAuthorized,
   logTelemetryEvent,
-  resetDemoLeads,
+  pushLeadToSupabase,
   revokeStudioDevice,
   runLiveSiteSeoAudit,
   saveSupabaseConfig,
@@ -197,17 +196,16 @@ export default function AdminDashboardView({ onExitDashboard }) {
   const [telemetryEvents, setTelemetryEvents] = useState(() => getTelemetryEvents());
   const [sectionCounts, setSectionCounts] = useState(() => getSectionCounts());
 
-  // Live SEO & GEO Audit State + Prospect Audit Generator
+  // Live SEO & GEO Audit State + Prospect Audit Generator (starts clean with no mock company)
   const [seoAudit, setSeoAudit] = useState(() => runLiveSiteSeoAudit());
-  const [prospectName, setProspectName] = useState('Bristol Auto & Commercial Group');
-  const [prospectUrl, setProspectUrl] = useState('https://example-tricities-business.com');
+  const [prospectName, setProspectName] = useState('');
+  const [prospectUrl, setProspectUrl] = useState('');
   const [prospectCity, setProspectCity] = useState('Bristol, TN/VA');
-  const [prospectAudited, setProspectAudited] = useState(true);
 
   // Supabase Cloud Database State (https://urzkegplrgskzfejgudc.supabase.co)
   const [sbConfig, setSbConfig] = useState(() => getSupabaseConfig());
   const [sbKeyInput, setSbKeyInput] = useState(() => getSupabaseConfig().anonKey || '');
-  const [sbSyncStatus, setSbSyncStatus] = useState('');
+  const [sbSyncStatus, setSbSyncStatus] = useState(() => getLastDbStatus());
   const [isSbSyncing, setIsSbSyncing] = useState(false);
   const [showSbSqlModal, setShowSbSqlModal] = useState(false);
   const [copiedSbSql, setCopiedSbSql] = useState(false);
@@ -218,6 +216,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
     const res = await syncLeadsWithSupabase();
     setIsSbSyncing(false);
     setSbSyncStatus(res.message || '');
+    setTelemetryEvents([...getTelemetryEvents()]);
     if (res.leads) {
       setLeads([...res.leads]);
       if (res.leads.length > 0 && !selectedLeadId) {
@@ -227,6 +226,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
     if (res.needsTable) {
       setShowSbSqlModal(true);
     }
+    return res;
   };
 
   const handleSaveSupabaseKey = async (e) => {
@@ -236,10 +236,54 @@ export default function AdminDashboardView({ onExitDashboard }) {
       anonKey: sbKeyInput
     });
     setSbConfig(updated);
+    setSbKeyInput(updated.anonKey || '');
     if (updated.isConfigured) {
       await handleSupabaseSync();
     } else {
       setSbSyncStatus('Cleared Supabase Anon Key (using local storage fallback).');
+    }
+  };
+
+  const handleSendTestLeadToSupabase = async () => {
+    setIsSbSyncing(true);
+    setSbSyncStatus('Saving live verification lead to Supabase (public.wired_leads)...');
+    const updatedList = addLead({
+      source: 'Dashboard DB Verification',
+      name: `Studio DB Verification (${new Date().toLocaleTimeString()})`,
+      contact: 'WiredDigitalUS@gmail.com • 731-616-5121',
+      companyUrl: 'https://www.wireddigitalcreative.com',
+      service: 'Supabase Cloud CRM Verification',
+      urgency: 'Verified Live',
+      ValueEstimate: '$5,500',
+      details: 'Live round-trip database write test from WIRED_OS Command Center to public.wired_leads.',
+      notes: 'Safe to delete after verifying in Supabase Table Editor.'
+    });
+    const createdLead = updatedList[0];
+    setLeads([...updatedList]);
+    setSelectedLeadId(createdLead?.id || null);
+    setTelemetryEvents([...getTelemetryEvents()]);
+
+    if (getSupabaseConfig().isConfigured && createdLead) {
+      const pushRes = await pushLeadToSupabase(createdLead);
+      if (pushRes.ok) {
+        const syncRes = await syncLeadsWithSupabase();
+        setIsSbSyncing(false);
+        if (syncRes.leads) {
+          setLeads([...syncRes.leads]);
+        }
+        setSbSyncStatus(
+          `✓ VERIFIED! Lead "${createdLead.name}" saved to Supabase public.wired_leads (${syncRes.leads?.length || updatedList.length} total in DB).`
+        );
+      } else {
+        setIsSbSyncing(false);
+        setSbSyncStatus(
+          pushRes.reason ||
+            'Saved locally, but Supabase write failed. Make sure you ran the SQL Table Script once in Supabase.'
+        );
+      }
+    } else {
+      setIsSbSyncing(false);
+      setSbSyncStatus('Saved locally. Paste your Supabase Anon / Publishable Key above and click SAVE KEY & CONNECT to store in Cloud Postgres.');
     }
   };
 
@@ -255,12 +299,29 @@ export default function AdminDashboardView({ onExitDashboard }) {
 
     if (getSupabaseConfig().isConfigured) {
       syncLeadsWithSupabase().then((res) => {
-        if (res.ok && res.leads) {
+        if (res.leads) {
           setLeads([...res.leads]);
+        }
+        if (res.message) {
           setSbSyncStatus(res.message);
         }
+        if (res.needsTable) {
+          setShowSbSqlModal(true);
+        }
+        setTelemetryEvents([...getTelemetryEvents()]);
       });
     }
+
+    const onLeadsUpdated = (ev) => {
+      const latest = getLeads();
+      setLeads([...latest]);
+      setTelemetryEvents([...getTelemetryEvents()]);
+      if (ev?.detail?.message) {
+        setSbSyncStatus(ev.detail.message);
+      }
+    };
+    window.addEventListener('wired-leads-updated', onLeadsUpdated);
+    return () => window.removeEventListener('wired-leads-updated', onLeadsUpdated);
   }, []);
 
   const handleUnlockWithPin = (code) => {
@@ -331,8 +392,15 @@ export default function AdminDashboardView({ onExitDashboard }) {
     [leads]
   );
 
+  // Compute live analytics strictly from real leads and real telemetry events
+  const liveAnalytics = useMemo(
+    () => computeLiveAnalytics(leads, telemetryEvents),
+    [leads, telemetryEvents]
+  );
+  const currentSeriesData =
+    liveAnalytics.timeframes[timeframe] || liveAnalytics.timeframes['30D'];
+
   // Build SVG Spline Coordinates for Current Timeframe
-  const currentSeriesData = ANALYTICS_TIMEFRAMES[timeframe] || ANALYTICS_TIMEFRAMES['30D'];
   const chartGeometry = useMemo(() => {
     const pts = currentSeriesData.points;
     const width = 760;
@@ -344,8 +412,8 @@ export default function AdminDashboardView({ onExitDashboard }) {
     const usableH = height - padTop - padBottom;
     const baselineY = height - padBottom;
 
-    const maxVisitors = Math.max(...pts.map((p) => p.visitors), 10);
-    const maxLeads = Math.max(...pts.map((p) => p.leads), 5);
+    const maxVisitors = Math.max(...pts.map((p) => p.visitors), 5);
+    const maxLeads = Math.max(...pts.map((p) => p.leads), 3);
 
     const visitorCoords = [];
     const aiGeoCoords = [];
@@ -403,7 +471,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
     }
   };
 
-  const handleCreateManualLead = (e) => {
+  const handleCreateManualLead = async (e) => {
     e.preventDefault();
     const updated = addLead({
       source: 'Manual Studio Entry',
@@ -411,6 +479,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
     });
     setLeads([...updated]);
     setSelectedLeadId(updated[0]?.id || null);
+    setTelemetryEvents([...getTelemetryEvents()]);
     setShowNewLeadForm(false);
     setNewLeadDraft({
       name: '',
@@ -422,13 +491,22 @@ export default function AdminDashboardView({ onExitDashboard }) {
       details: '',
       notes: ''
     });
+    if (getSupabaseConfig().isConfigured && updated[0]) {
+      const pushRes = await pushLeadToSupabase(updated[0]);
+      if (pushRes.ok) {
+        setSbSyncStatus(`✓ Saved manual lead "${updated[0].name}" to Supabase public.wired_leads.`);
+      }
+    }
   };
 
-  const handleRefreshTelemetry = () => {
+  const handleRefreshTelemetry = async () => {
     setLeads([...getLeads()]);
     setTelemetryEvents([...getTelemetryEvents()]);
     setSectionCounts({ ...getSectionCounts() });
     setSeoAudit(runLiveSiteSeoAudit());
+    if (getSupabaseConfig().isConfigured) {
+      await handleSupabaseSync();
+    }
   };
 
   // ==========================================================================
@@ -570,52 +648,51 @@ export default function AdminDashboardView({ onExitDashboard }) {
     );
   }
 
-  // Section Engagement Funnel Bars
-  const funnelItems = [
+  // Section Engagement Funnel Bars (100% live counts, zero mock fallbacks)
+  const rawFunnelDefs = [
     {
       key: 'wired_os_stage',
       label: 'WIRED_OS Interactive Showcase (Fast Track & Vision)',
-      views: sectionCounts.wired_os_stage || 1340,
-      color: '#FFEE00',
-      rate: '94%'
+      views: sectionCounts.wired_os_stage || 0,
+      color: '#FFEE00'
     },
     {
       key: 'case_studies_tricities',
       label: 'Tri-Cities Case Study Cards & Screen Lightbox',
-      views: sectionCounts.case_studies_tricities || 1290,
-      color: '#30D158',
-      rate: '91%'
+      views: sectionCounts.case_studies_tricities || 0,
+      color: '#30D158'
     },
     {
       key: 'since_1999_reel',
       label: 'Since 1999 Studio Showreel & Manifesto',
-      views: sectionCounts.since_1999_reel || 1185,
-      color: '#0A84FF',
-      rate: '84%'
+      views: sectionCounts.since_1999_reel || 0,
+      color: '#0A84FF'
     },
     {
       key: 'legends_vault',
       label: 'Working With Legends (34 Client Logos Vault)',
-      views: sectionCounts.legends_vault || 1110,
-      color: '#BF5AF2',
-      rate: '78%'
+      views: sectionCounts.legends_vault || 0,
+      color: '#BF5AF2'
     },
     {
       key: 'video_screening_room',
       label: 'Global Video Screening Room (Halestorm / Cooper)',
-      views: sectionCounts.video_screening_room || 980,
-      color: '#5AC8FA',
-      rate: '69%'
+      views: sectionCounts.video_screening_room || 0,
+      color: '#5AC8FA'
     },
     {
       key: 'footer_lead_drawer',
       label: 'Collapsible Footer Lead Concierge Form',
-      views: sectionCounts.footer_lead_drawer || 645,
-      color: '#FF9F0A',
-      rate: '46%'
+      views: sectionCounts.footer_lead_drawer || 0,
+      color: '#FF9F0A'
     }
   ];
-  const maxFunnelViews = Math.max(...funnelItems.map((f) => f.views), 100);
+  const totalFunnelViews = rawFunnelDefs.reduce((acc, f) => acc + f.views, 0);
+  const funnelItems = rawFunnelDefs.map((f) => ({
+    ...f,
+    rate: totalFunnelViews > 0 ? `${Math.round((f.views / totalFunnelViews) * 100)}%` : '0%'
+  }));
+  const maxFunnelViews = Math.max(...funnelItems.map((f) => f.views), 1);
 
   return (
     <div className="wos-admin-shell">
@@ -742,14 +819,16 @@ export default function AdminDashboardView({ onExitDashboard }) {
               >
                 <div className="wos-kpi-top">
                   <span className="wos-kpi-label">ACTIVE PIPELINE LEADS</span>
-                  <span className="wos-delta-pill green">+38.4%</span>
+                  <span className="wos-delta-pill green">
+                    {sbConfig.isConfigured ? 'SUPABASE LIVE' : 'LOCAL CRM'}
+                  </span>
                 </div>
                 <div className="wos-kpi-main-row">
                   <span className="wos-kpi-big yellow">{leads.length}</span>
                   <span className="wos-kpi-subtag">{newLeadsCount} Unread New</span>
                 </div>
                 <p className="wos-kpi-foot">
-                  Synced with Footer Collapsible Lead Form &amp; Modal
+                  Synced across Footer Form, Contact Modal &amp; WIRED-64
                 </p>
               </div>
 
@@ -759,7 +838,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
               >
                 <div className="wos-kpi-top">
                   <span className="wos-kpi-label">
-                    SITE SESSIONS ({timeframe})
+                    LIVE EVENTS ({timeframe})
                   </span>
                   <span className="wos-delta-pill green">
                     {currentSeriesData.visitorDelta}
@@ -767,10 +846,10 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 </div>
                 <div className="wos-kpi-main-row">
                   <span className="wos-kpi-big">{currentSeriesData.totalVisitors}</span>
-                  <span className="wos-kpi-subtag">Tri-Cities + Global</span>
+                  <span className="wos-kpi-subtag">Real-Time Interactions</span>
                 </div>
                 <p className="wos-kpi-foot">
-                  76% Tri-Cities Local • 24% National/Record Labels
+                  100% Live First-Party Click-Stream (Zero Mock Data)
                 </p>
               </div>
 
@@ -779,7 +858,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 onClick={() => setActiveModule('seo')}
               >
                 <div className="wos-kpi-top">
-                  <span className="wos-kpi-label">AI SEARCH / GEO CITATIONS</span>
+                  <span className="wos-kpi-label">AI SEARCH / GEO EVENTS</span>
                   <span className="wos-delta-pill cyan">{currentSeriesData.aiDelta}</span>
                 </div>
                 <div className="wos-kpi-main-row">
@@ -789,7 +868,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   <span className="wos-kpi-subtag">ChatGPT • Gemini • Perplexity</span>
                 </div>
                 <p className="wos-kpi-foot">
-                  #1 Entity Rank for Bristol, Kingsport &amp; Johnson City
+                  JSON-LD @graph + /llms.txt + /sitemap.xml Active
                 </p>
               </div>
 
@@ -799,7 +878,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
               >
                 <div className="wos-kpi-top">
                   <span className="wos-kpi-label">SITE SEO &amp; VITALS HEALTH</span>
-                  <span className="wos-delta-pill green">99 / 100</span>
+                  <span className="wos-delta-pill green">{seoAudit.overallScore} / 100</span>
                 </div>
                 <div className="wos-kpi-main-row">
                   <span className="wos-kpi-big green">
@@ -822,7 +901,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                     REAL-TIME TELEMETRY &amp; GENERATIVE AI SEARCH VELOCITY
                   </span>
                   <h2 className="wos-panel-title">
-                    Site Traffic, AI Search Citations (GEO) &amp; Lead Conversions
+                    Live Site Events, AI Search Referrals (GEO) &amp; Lead Conversions
                   </h2>
                 </div>
 
@@ -837,7 +916,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       }
                     >
                       <span className="chip-dot yellow" />
-                      <span>Total Visitors</span>
+                      <span>Live Events</span>
                     </button>
                     <button
                       type="button"
@@ -847,7 +926,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       }
                     >
                       <span className="chip-dot cyan" />
-                      <span>AI / GEO Citations</span>
+                      <span>AI / GEO Events</span>
                     </button>
                     <button
                       type="button"
@@ -857,7 +936,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       }
                     >
                       <span className="chip-dot green" />
-                      <span>Lead Actions</span>
+                      <span>Leads Saved</span>
                     </button>
                   </div>
 
@@ -1059,18 +1138,18 @@ export default function AdminDashboardView({ onExitDashboard }) {
                         PERIOD: <strong>{chartGeometry.pts[hoverPointIndex].label}</strong>
                       </span>
                       <span className="scrubber-metric yellow">
-                        Visitors: <strong>{chartGeometry.pts[hoverPointIndex].visitors}</strong>
+                        Live Events: <strong>{chartGeometry.pts[hoverPointIndex].visitors}</strong>
                       </span>
                       <span className="scrubber-metric cyan">
-                        AI/GEO Citations: <strong>{chartGeometry.pts[hoverPointIndex].aiGeo}</strong>
+                        AI/GEO Events: <strong>{chartGeometry.pts[hoverPointIndex].aiGeo}</strong>
                       </span>
                       <span className="scrubber-metric green">
-                        Lead Actions: <strong>{chartGeometry.pts[hoverPointIndex].leads}</strong>
+                        Leads Saved: <strong>{chartGeometry.pts[hoverPointIndex].leads}</strong>
                       </span>
                     </>
                   ) : (
                     <span className="scrubber-hint">
-                      Hover or tap any node on the spline curve to inspect exact telemetry
+                      Hover or tap any node on the spline curve to inspect exact live telemetry
                       metrics ({currentSeriesData.label})
                     </span>
                   )}
@@ -1084,7 +1163,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
               <div className="wos-glass-panel">
                 <div className="wos-panel-header">
                   <div>
-                    <span className="wos-panel-kicker">INCOMING LEAD VAULT</span>
+                    <span className="wos-panel-kicker">INCOMING LEAD VAULT (ZERO MOCK DATA)</span>
                     <h3 className="wos-panel-title">Recent Client &amp; Label Inquiries</h3>
                   </div>
                   <button
@@ -1098,33 +1177,67 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 </div>
 
                 <div className="wos-mini-leads-list">
-                  {leads.slice(0, 4).map((lead) => (
+                  {leads.length === 0 ? (
                     <div
-                      key={lead.id}
-                      className="wos-mini-lead-row"
-                      onClick={() => {
-                        setSelectedLeadId(lead.id);
-                        setActiveModule('leads');
+                      style={{
+                        padding: '22px 16px',
+                        borderRadius: '12px',
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px dashed rgba(255,238,0,0.3)',
+                        color: 'rgba(255,255,255,0.8)',
+                        fontSize: '0.86rem'
                       }}
                     >
-                      <div className="mini-lead-main">
-                        <div className="mini-lead-badges">
-                          <span className={`wos-status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                            {lead.status}
-                          </span>
-                          <span className="mini-lead-source">{lead.source}</span>
-                        </div>
-                        <h4>{lead.name}</h4>
-                        <p>{lead.service}</p>
-                      </div>
-                      <div className="mini-lead-right">
-                        <span className="mini-lead-val">{lead.ValueEstimate || '$5,500'}</span>
-                        <span className="mini-lead-time">
-                          {new Date(lead.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
+                      <strong style={{ color: '#FFEE00', display: 'block', marginBottom: '4px' }}>
+                        0 Leads in Pipeline (All Mock Data Removed)
+                      </strong>
+                      Submit a lead via the Footer Form, Header Contact Modal, WIRED-64 Chatbot, or click{' '}
+                      <button
+                        type="button"
+                        onClick={() => setActiveModule('leads')}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#30D158',
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                          padding: 0,
+                          fontWeight: 700
+                        }}
+                      >
+                        LEADS CRM → TEST DB SAVE
+                      </button>{' '}
+                      to verify live Supabase storage.
                     </div>
-                  ))}
+                  ) : (
+                    leads.slice(0, 4).map((lead) => (
+                      <div
+                        key={lead.id}
+                        className="wos-mini-lead-row"
+                        onClick={() => {
+                          setSelectedLeadId(lead.id);
+                          setActiveModule('leads');
+                        }}
+                      >
+                        <div className="mini-lead-main">
+                          <div className="mini-lead-badges">
+                            <span className={`wos-status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                              {lead.status}
+                            </span>
+                            <span className="mini-lead-source">{lead.source}</span>
+                          </div>
+                          <h4>{lead.name}</h4>
+                          <p>{lead.service}</p>
+                        </div>
+                        <div className="mini-lead-right">
+                          <span className="mini-lead-val">{lead.ValueEstimate || '$5,500'}</span>
+                          <span className="mini-lead-time">
+                            {new Date(lead.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -1139,20 +1252,38 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 </div>
 
                 <div className="wos-event-stream-list">
-                  {telemetryEvents.slice(0, 6).map((ev) => (
-                    <div key={ev.id} className="wos-stream-item">
-                      <div className={`stream-icon-dot cat-${ev.category}`} />
-                      <div className="stream-item-body">
-                        <div className="stream-item-top">
-                          <span className="stream-type-tag">{ev.type}</span>
-                          <span className="stream-meta-tag">
-                            {ev.location} • {ev.device}
-                          </span>
-                        </div>
-                        <p className="stream-detail-text">{ev.detail}</p>
-                      </div>
+                  {telemetryEvents.length === 0 ? (
+                    <div
+                      style={{
+                        padding: '22px 16px',
+                        borderRadius: '12px',
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px dashed rgba(48,209,88,0.35)',
+                        color: 'rgba(255,255,255,0.8)',
+                        fontSize: '0.86rem'
+                      }}
+                    >
+                      <strong style={{ color: '#30D158', display: 'block', marginBottom: '4px' }}>
+                        Waiting for Live Visitor Interactions
+                      </strong>
+                      All seeded demo events have been removed. Navigate tabs, play a video, or submit a lead to see real-time telemetry events stream here.
                     </div>
-                  ))}
+                  ) : (
+                    telemetryEvents.slice(0, 6).map((ev) => (
+                      <div key={ev.id} className="wos-stream-item">
+                        <div className={`stream-icon-dot cat-${ev.category}`} />
+                        <div className="stream-item-body">
+                          <div className="stream-item-top">
+                            <span className="stream-type-tag">{ev.type}</span>
+                            <span className="stream-meta-tag">
+                              {ev.location} • {ev.device}
+                            </span>
+                          </div>
+                          <p className="stream-detail-text">{ev.detail}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -1173,8 +1304,8 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   </span>
                   <h3 className="wos-panel-title" style={{ fontSize: '1.05rem', marginTop: '2px' }}>
                     {sbConfig.isConfigured
-                      ? 'Cloud Leads & Contact Forms Synced to Supabase (public.wired_leads)'
-                      : 'Connect Your Supabase Anon / Publishable Key to Store All Leads in Cloud Postgres'}
+                      ? '● LIVE: Saving All Site & CRM Leads to Supabase (public.wired_leads)'
+                      : '○ Connect Your Supabase Anon / Publishable Key to Save All Leads to Cloud Postgres'}
                   </h3>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -1186,6 +1317,17 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   >
                     <RefreshCw size={13} />
                     <span>{isSbSyncing ? 'SYNCING...' : 'SYNC CLOUD LEADS'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-mini-outline"
+                    onClick={handleSendTestLeadToSupabase}
+                    disabled={isSbSyncing}
+                    style={{ borderColor: '#30D158', color: '#30D158' }}
+                    title="Insert a real verification lead and verify round-trip save to public.wired_leads"
+                  >
+                    <Send size={12} />
+                    <span>TEST DB SAVE</span>
                   </button>
                   <button
                     type="button"
@@ -1227,7 +1369,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
               </form>
 
               {sbSyncStatus && (
-                <div style={{ marginTop: '10px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#FFEE00' }}>
+                <div style={{ marginTop: '10px', fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#FFEE00' }}>
                   &gt; {sbSyncStatus}
                 </div>
               )}
@@ -1303,12 +1445,8 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 <button
                   type="button"
                   className="btn-mini-outline"
-                  onClick={() => {
-                    const reset = resetDemoLeads();
-                    setLeads([...reset]);
-                    setSelectedLeadId(reset[0]?.id || null);
-                  }}
-                  title="Restore Default Demo Leads"
+                  onClick={handleRefreshTelemetry}
+                  title="Sync Live Leads with Supabase"
                 >
                   <RefreshCw size={13} />
                 </button>
@@ -1320,7 +1458,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
               <form className="wos-glass-panel wos-add-lead-drawer" onSubmit={handleCreateManualLead}>
                 <div className="wos-panel-header">
                   <div>
-                    <span className="wos-panel-kicker">MANUAL LEAD ENTRY</span>
+                    <span className="wos-panel-kicker">MANUAL LEAD ENTRY (SAVES TO SUPABASE)</span>
                     <h3 className="wos-panel-title">Log Phone, Referral, or In-Person Lead</h3>
                   </div>
                 </div>
@@ -1376,7 +1514,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   </div>
                   <button type="submit" className="btn-wired-yellow" style={{ justifyContent: 'center' }}>
                     <Plus size={15} />
-                    <span>SAVE LEAD TO PIPELINE</span>
+                    <span>SAVE LEAD TO DATABASE</span>
                   </button>
                 </div>
               </form>
@@ -1386,34 +1524,61 @@ export default function AdminDashboardView({ onExitDashboard }) {
             <div className="wos-crm-master-detail">
               {/* Left Column: Leads List */}
               <div className="wos-crm-list-col">
-                {filteredLeads.map((lead) => {
-                  const isSelected = selectedLead && selectedLead.id === lead.id;
-                  return (
-                    <div
-                      key={lead.id}
-                      className={`wos-crm-lead-card ${isSelected ? 'selected' : ''}`}
-                      onClick={() => setSelectedLeadId(lead.id)}
+                {filteredLeads.length === 0 ? (
+                  <div
+                    className="wos-glass-panel"
+                    style={{
+                      padding: '24px 18px',
+                      textAlign: 'center',
+                      border: '1px dashed rgba(255,238,0,0.35)'
+                    }}
+                  >
+                    <strong style={{ color: '#FFEE00', display: 'block', marginBottom: '6px' }}>
+                      No Leads in Pipeline Yet
+                    </strong>
+                    <p style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.75)', marginBottom: '12px' }}>
+                      All mock demo leads have been removed. New inquiries from the site or manual entries save directly here and to Supabase.
+                    </p>
+                    <button
+                      type="button"
+                      className="btn-mini-yellow"
+                      onClick={handleSendTestLeadToSupabase}
+                      disabled={isSbSyncing}
                     >
-                      <div className="crm-card-top">
-                        <span className={`wos-status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                          {lead.status}
-                        </span>
-                        <span className={`wos-priority-tag pri-${(lead.priority || 'HIGH').toLowerCase()}`}>
-                          {lead.priority || 'HIGH'}
-                        </span>
-                        <span className="crm-card-date">
-                          {new Date(lead.createdAt).toLocaleDateString()}
-                        </span>
+                      <Send size={12} />
+                      <span>SEND TEST LEAD TO SUPABASE</span>
+                    </button>
+                  </div>
+                ) : (
+                  filteredLeads.map((lead) => {
+                    const isSelected = selectedLead && selectedLead.id === lead.id;
+                    return (
+                      <div
+                        key={lead.id}
+                        className={`wos-crm-lead-card ${isSelected ? 'selected' : ''}`}
+                        onClick={() => setSelectedLeadId(lead.id)}
+                      >
+                        <div className="crm-card-top">
+                          <span className={`wos-status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                            {lead.status}
+                          </span>
+                          <span className={`wos-priority-tag pri-${(lead.priority || 'HIGH').toLowerCase()}`}>
+                            {lead.priority || 'HIGH'}
+                          </span>
+                          <span className="crm-card-date">
+                            {new Date(lead.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <h4 className="crm-card-name">{lead.name}</h4>
+                        <span className="crm-card-service">{lead.service}</span>
+                        <div className="crm-card-foot">
+                          <span className="crm-card-source">{lead.source}</span>
+                          <span className="crm-card-val">{lead.ValueEstimate || '$5,500'}</span>
+                        </div>
                       </div>
-                      <h4 className="crm-card-name">{lead.name}</h4>
-                      <span className="crm-card-service">{lead.service}</span>
-                      <div className="crm-card-foot">
-                        <span className="crm-card-source">{lead.source}</span>
-                        <span className="crm-card-val">{lead.ValueEstimate || '$5,500'}</span>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                )}
               </div>
 
               {/* Right Column: Lead Inspector & Dispatch Console */}
@@ -1500,7 +1665,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   {/* Studio Internal Notes */}
                   <div className="inspector-section-box">
                     <span className="inspector-field-label">
-                      ROB&apos;S INTERNAL STUDIO NOTES (AUTO-SAVED):
+                      ROB&apos;S INTERNAL STUDIO NOTES (AUTO-SAVED TO SUPABASE):
                     </span>
                     <textarea
                       rows={3}
@@ -1513,7 +1678,9 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 </div>
               ) : (
                 <div className="wos-glass-panel wos-crm-inspector">
-                  <p>Select a lead on the left to inspect details.</p>
+                  <p style={{ color: 'rgba(255,255,255,0.75)' }}>
+                    No lead selected. Submit a lead on the site, click <strong>+ ADD LEAD</strong>, or click <strong>TEST DB SAVE</strong> above to verify your Supabase connection.
+                  </p>
                 </div>
               )}
             </div>
@@ -1530,16 +1697,19 @@ export default function AdminDashboardView({ onExitDashboard }) {
               <div className="wos-glass-panel">
                 <div className="wos-panel-header">
                   <div>
-                    <span className="wos-panel-kicker">SECTION ENGAGEMENT FUNNEL</span>
+                    <span className="wos-panel-kicker">LIVE SECTION ENGAGEMENT FUNNEL</span>
                     <h3 className="wos-panel-title">
-                      Where Visitors Spend Time &amp; Convert
+                      Where Visitors Spend Time &amp; Convert (Real-Time Counts)
                     </h3>
                   </div>
                 </div>
 
                 <div className="wos-funnel-bars-list">
                   {funnelItems.map((item) => {
-                    const widthPct = Math.round((item.views / maxFunnelViews) * 100);
+                    const widthPct =
+                      totalFunnelViews > 0
+                        ? Math.round((item.views / maxFunnelViews) * 100)
+                        : 0;
                     return (
                       <div key={item.key} className="wos-funnel-row">
                         <div className="wos-funnel-label-row">
@@ -1568,7 +1738,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
               <div className="wos-glass-panel">
                 <div className="wos-panel-header">
                   <div>
-                    <span className="wos-panel-kicker">GEOGRAPHIC TELEMETRY</span>
+                    <span className="wos-panel-kicker">LIVE GEOGRAPHIC TELEMETRY</span>
                     <h3 className="wos-panel-title">
                       Tri-Cities Local Market vs. Global Label Hubs
                     </h3>
@@ -1576,7 +1746,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 </div>
 
                 <div className="wos-geo-regions-list">
-                  {GEO_TRAFFIC_REGIONS.map((reg) => (
+                  {liveAnalytics.geoRegions.map((reg) => (
                     <div key={reg.region} className="wos-geo-region-card">
                       <div className="geo-reg-top">
                         <span className="geo-reg-name">
@@ -1588,13 +1758,13 @@ export default function AdminDashboardView({ onExitDashboard }) {
                         <div
                           className="wos-funnel-fill"
                           style={{
-                            width: `${reg.share * 2.5}%`,
+                            width: `${Math.min(100, reg.share)}%`,
                             background: 'linear-gradient(90deg, #FFEE00, #30D158)'
                           }}
                         />
                       </div>
                       <div className="geo-reg-foot">
-                        <span>{reg.visitors.toLocaleString()} Sessions</span>
+                        <span>{reg.visitors.toLocaleString()} Live Events</span>
                         <strong className="text-yellow">{reg.share}% Share</strong>
                       </div>
                     </div>
@@ -1607,12 +1777,12 @@ export default function AdminDashboardView({ onExitDashboard }) {
             <div className="wos-glass-panel">
               <div className="wos-panel-header">
                 <div>
-                  <span className="wos-panel-kicker">TEMPORAL ENGAGEMENT MATRIX</span>
+                  <span className="wos-panel-kicker">LIVE TEMPORAL ENGAGEMENT MATRIX</span>
                   <h3 className="wos-panel-title">
-                    Weekly Visitor &amp; AI Search Peak Activity Heatmap (EST)
+                    Weekly Visitor &amp; AI Search Activity Heatmap (Live Events)
                   </h3>
                 </div>
-                <span className="wos-panel-kicker">PEAK WINDOW: TUE–THU • 12:00 PM – 6:00 PM</span>
+                <span className="wos-panel-kicker">REAL-TIME EVENT DISTRIBUTION</span>
               </div>
 
               <div className="wos-heatmap-wrapper">
@@ -1625,7 +1795,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   ))}
                 </div>
 
-                {WEEKLY_HEATMAP_DATA.map((row) => (
+                {liveAnalytics.weeklyHeatmap.map((row) => (
                   <div key={row.day} className="wos-heatmap-row">
                     <span className="hm-day-col">{row.day}</span>
                     {row.hours.map((val, idx) => {
@@ -1641,7 +1811,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                               : `rgba(10, 132, 255, ${alpha})`,
                             color: isPeak ? '#050505' : '#F4F4F6'
                           }}
-                          title={`${row.day} — Activity Index: ${val}%`}
+                          title={`${row.day} — ${row.counts?.[idx] || 0} live events (${val}%)`}
                         >
                           {val}%
                         </div>
@@ -1875,6 +2045,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   <label>PROSPECT BUSINESS NAME</label>
                   <input
                     type="text"
+                    placeholder="Enter client business name..."
                     value={prospectName}
                     onChange={(e) => setProspectName(e.target.value)}
                   />
@@ -1883,6 +2054,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   <label>PROSPECT CURRENT WEBSITE URL</label>
                   <input
                     type="text"
+                    placeholder="https://client-website.com"
                     value={prospectUrl}
                     onChange={(e) => setProspectUrl(e.target.value)}
                   />
@@ -1891,19 +2063,20 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   <label>TARGET MARKET / CITY</label>
                   <input
                     type="text"
+                    placeholder="Bristol, Johnson City, Kingsport..."
                     value={prospectCity}
                     onChange={(e) => setProspectCity(e.target.value)}
                   />
                 </div>
               </div>
 
-              {prospectAudited && (
+              {(prospectName.trim() || prospectUrl.trim()) ? (
                 <div className="wos-prospect-comparison-grid">
                   <div className="prospect-col legacy">
                     <span className="prospect-col-badge red">
-                      CURRENT LEGACY SITE // {prospectUrl}
+                      CURRENT LEGACY SITE // {prospectUrl || 'Unindexed Domain'}
                     </span>
-                    <h4>{prospectName} — Legacy Architecture</h4>
+                    <h4>{prospectName || 'Prospect Business'} — Legacy Architecture</h4>
                     <ul>
                       <li>
                         <strong>38 / 100</strong> Mobile Speed &amp; Core Web Vitals (3.9s+ load
@@ -1911,7 +2084,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       </li>
                       <li>
                         <strong>0 / 100</strong> Generative AI (GEO) Entity Schema for ChatGPT,
-                        Gemini &amp; Perplexity in {prospectCity}
+                        Gemini &amp; Perplexity in {prospectCity || 'Tri-Cities'}
                       </li>
                       <li>
                         <strong>Missing</strong> 24/7 Custom-Trained AI Lead Capture Advisor
@@ -1928,7 +2101,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                     <span className="prospect-col-badge yellow">
                       WIRED DIGITAL AI MODERNIZATION UPGRADE
                     </span>
-                    <h4>{prospectName} × Wired Digital AI Platform</h4>
+                    <h4>{prospectName || 'Prospect Business'} × Wired Digital AI Platform</h4>
                     <ul>
                       <li>
                         <strong>99 / 100</strong> Sub-0.4s Edge Architecture &amp; iOS Pro Mobile
@@ -1936,11 +2109,11 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       </li>
                       <li>
                         <strong>Full JSON-LD GEO Graph</strong> engineered to rank #{1} across{' '}
-                        {prospectCity} &amp; Tri-Cities AI Search
+                        {prospectCity || 'Tri-Cities'} &amp; AI Search
                       </li>
                       <li>
                         <strong>24/7 Custom-Trained AI Lead Concierge</strong> trained on all{' '}
-                        {prospectName} services &amp; inventory
+                        {prospectName || 'client'} services &amp; inventory
                       </li>
                       <li>
                         <strong>Custom Live Admin Dashboard</strong> tracking every visitor click,
@@ -1948,6 +2121,19 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       </li>
                     </ul>
                   </div>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    padding: '16px 18px',
+                    borderRadius: '12px',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px dashed rgba(255,238,0,0.3)',
+                    color: 'rgba(255,255,255,0.75)',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  Enter a real prospect business name or URL above to generate a custom side-by-side AI Modernization &amp; GEO Audit Report.
                 </div>
               )}
             </div>

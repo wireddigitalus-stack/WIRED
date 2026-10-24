@@ -8623,40 +8623,60 @@ a {
    3. INTERACTIVE BEFORE / AFTER AI MODERNIZATION SLIDER
    ========================================================================== */
 
-/* 1A. Since 1999 Boutique Callout Card */
-.since-boutique-callout {
-  margin: 18px 0 22px;
-  padding: 16px 18px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255, 238, 0, 0.09) 0%, rgba(15, 15, 22, 0.92) 100%);
-  border: 1px solid rgba(255, 238, 0, 0.35);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+/* 1A. Since 1999 Separate Standalone Boutique Card Under the About Card With Video */
+.since-under-video-card-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 28px 40px;
+}
+
+.since-boutique-standalone-card {
+  padding: 26px 32px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 238, 0, 0.08) 0%, rgba(14, 14, 20, 0.96) 55%, rgba(8, 8, 12, 0.98) 100%);
+  border: 1.5px solid rgba(255, 238, 0, 0.38);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.65),
+    0 0 32px rgba(255, 238, 0, 0.06);
 }
 
 .since-boutique-header {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .since-boutique-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   color: var(--wired-yellow);
   background: rgba(255, 238, 0, 0.12);
-  border: 1px solid rgba(255, 238, 0, 0.35);
-  padding: 4px 10px;
+  border: 1px solid rgba(255, 238, 0, 0.38);
+  padding: 5px 12px;
   border-radius: 999px;
 }
 
 .since-boutique-copy {
-  font-size: 0.92rem;
-  line-height: 1.62;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.02rem;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
+}
+
+@media (max-width: 640px) {
+  .since-under-video-card-wrap {
+    padding: 18px 16px 28px;
+  }
+  .since-boutique-standalone-card {
+    padding: 20px 18px;
+    border-radius: 18px;
+  }
+  .since-boutique-copy {
+    font-size: 0.92rem;
+  }
 }
 
 /* 1B. Web Creation View: Boutique "All Skills Under 1 Roof" Section */

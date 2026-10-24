@@ -237,7 +237,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'pricing',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT ANSWER // Fair, transparent boutique pricing—never cheap template junk, and never bloated $30K+ agency markup.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Creative Director Rob Neilson.\n• TYPICAL WEB & GEO BUILDS: $3,500 – $8,500 depending on pages, custom calculators & AI schema depth.\n• CUSTOM APPS / LIVE DASHBOARDS / 24/7 AI BOTS: $6,500 – $15,000+ (replaces hiring 4 separate vendors).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
+      reply: `DIRECT ANSWER // We deliver high-impact custom engineering and creative at straightforward, real-world pricing—with web, apps, software, AI, video & digital marketing all under one roof.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Creative Director Rob Neilson—never cheap template junk, and never bloated $30K+ agency markup.\n• TYPICAL WEB & GEO BUILDS: $3,500 – $8,500 depending on pages, custom calculators & AI schema depth.\n• CUSTOM APPS / LIVE DASHBOARDS / 24/7 AI BOTS: $6,500 – $15,000+ (replaces hiring 4 separate vendors).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
       subtext:
         'Every project is scoped flat-rate with zero surprise retainers required. Drop your Name + Email/Phone (or URL) for an exact quote!',
       chips: [

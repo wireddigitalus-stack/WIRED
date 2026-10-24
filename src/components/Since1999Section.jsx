@@ -127,8 +127,9 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 We aren&apos;t cheap bargain-bin template builders, and we aren&apos;t a
                 bloated agency marking up 10 middlemen: we deliver{' '}
                 <span className="highlight-yellow">
-                  fair, reasonable boutique value with custom web, apps, software, AI,
-                  video &amp; digital marketing all under one roof
+                  high-impact custom engineering and creative at straightforward,
+                  real-world pricing—with web, apps, software, AI, video &amp; digital
+                  marketing all under one roof
                 </span>{' '}
                 working directly with Creative Director <strong>Rob Neilson</strong>.
               </p>

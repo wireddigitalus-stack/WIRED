@@ -158,12 +158,13 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 <p className="boutique-roof-sublead">
                   We aren&apos;t a cheap bargain-bin template shop that leaves you invisible on
                   Google, and we aren&apos;t a bloated agency charging you for 10 layers of
-                  middlemen. We are a{' '}
+                  middlemen. We deliver{' '}
                   <span className="text-yellow">
-                    fair, reasonable, high-impact boutique web, app, software &amp; digital
-                    marketing company
+                    high-impact custom engineering and creative at straightforward, real-world
+                    pricing—with web, apps, software, AI, video &amp; digital marketing all under
+                    one roof
                   </span>{' '}
-                  where you work directly with Creative Director <strong>Rob Neilson</strong>.
+                  working directly with Creative Director <strong>Rob Neilson</strong>.
                 </p>
               </div>
 

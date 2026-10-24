@@ -1,0 +1,333 @@
+import React, { useState } from 'react';
+import {
+  Zap,
+  Mail,
+  Phone,
+  Check,
+  Copy,
+  CheckCircle2,
+  Cpu,
+  LayoutDashboard,
+  Megaphone,
+  Film,
+  MapPin,
+  ShieldCheck,
+  Sparkles
+} from 'lucide-react';
+import { BRAND_INFO } from '../data/wiredData';
+import { addLead, logTelemetryEvent } from '../utils/telemetry';
+
+const BODY_CTA_CHIPS = [
+  {
+    id: 'ai-web',
+    label: 'AI Website Design, Redesign & Modernization',
+    shortLabel: '⚡ AI Website / Modernization',
+    icon: Cpu
+  },
+  {
+    id: 'ai-dash',
+    label: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
+    shortLabel: '📊 Custom Dash / 24/7 AI Bot',
+    icon: LayoutDashboard
+  },
+  {
+    id: 'geo-marketing',
+    label: 'AI Search (GEO), Local SEO & Full-Service Marketing',
+    shortLabel: '🚀 GEO / SEO & Marketing',
+    icon: Megaphone
+  },
+  {
+    id: 'video',
+    label: 'Global Remote Music & Lyric Video Editing',
+    shortLabel: '🎬 4K Music / Lyric Video',
+    icon: Film
+  }
+];
+
+export default function BodyCtaContactCard() {
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formState, setFormState] = useState({
+    name: '',
+    contact: '',
+    companyUrl: '',
+    service: BODY_CTA_CHIPS[0].label,
+    details: ''
+  });
+
+  const handleCopyEmail = () => {
+    navigator.clipboard?.writeText(BRAND_INFO.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2200);
+  };
+
+  const handleChipSelect = (label) => {
+    setFormState((prev) => ({ ...prev, service: label }));
+    logTelemetryEvent(
+      'BODY_CTA_CHIP_SELECT',
+      `Selected service "${label}" in In-Body CTA Contact Card`,
+      'engagement',
+      'body_cta_card'
+    );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formState.name.trim() || !formState.contact.trim()) return;
+
+    addLead({
+      source: 'In-Body CTA Contact Card',
+      status: 'NEW',
+      priority: 'HIGH',
+      name: formState.name.trim(),
+      contact: formState.contact.trim(),
+      companyUrl: formState.companyUrl.trim(),
+      service: formState.service,
+      urgency: 'Ready to Start (This Month)',
+      details:
+        formState.details.trim() ||
+        `In-Body Contact Card Inquiry for ${formState.service}`
+    });
+    setSubmitted(true);
+  };
+
+  return (
+    <section
+      className="body-cta-contact-section"
+      id="direct-contact-card"
+      aria-label="Start a Project — Direct Contact Card with Rob Neilson"
+    >
+      <div className="section-container">
+        <div className="body-cta-bento-card">
+          {/* LEFT COLUMN: Direct Rob Neilson Authority + 1-Tap Phone & Email */}
+          <div className="body-cta-info-col">
+            <div className="body-cta-live-badge">
+              <span className="rec-dot" />
+              <span>DIRECT TO CREATIVE DIRECTOR ROB NEILSON // EST. 1999</span>
+            </div>
+
+            <h2 className="body-cta-heading">
+              LET&apos;S BUILD SOMETHING{' '}
+              <span className="text-yellow">UNFORGETTABLE.</span>
+            </h2>
+
+            <p className="body-cta-lead">
+              Get <strong>25+ years of staying ahead of the tech curve</strong> with{' '}
+              <strong>
+                AI website design, site modernization, Generative SEO (GEO), custom live
+                dashboards, 24/7 AI chatbots, full-service marketing, and 4K video
+              </strong>{' '}
+              all under one roof. No middlemen—work directly with{' '}
+              <strong>Rob Neilson</strong> in Bristol, VA/TN (Tri-Cities) or remotely
+              worldwide.
+            </p>
+
+            {/* Direct Contact Action Tiles */}
+            <div className="body-cta-direct-tiles">
+              <a
+                href={BRAND_INFO.phoneHref}
+                className="body-cta-direct-tile"
+                onClick={() =>
+                  logTelemetryEvent(
+                    'DIRECT_PHONE_CLICK',
+                    'Clicked Call/Text 731-616-5121 in Body CTA Card',
+                    'conversion',
+                    'body_cta_card'
+                  )
+                }
+              >
+                <div className="body-cta-tile-icon">
+                  <Phone size={18} />
+                </div>
+                <div className="body-cta-tile-text">
+                  <span className="body-cta-tile-kicker">CALL OR TEXT ROB DIRECT</span>
+                  <strong className="body-cta-tile-val">{BRAND_INFO.phone}</strong>
+                </div>
+              </a>
+
+              <div className="body-cta-direct-tile email-tile">
+                <div className="body-cta-tile-icon">
+                  <Mail size={18} />
+                </div>
+                <div className="body-cta-tile-text">
+                  <span className="body-cta-tile-kicker">DIRECT STUDIO EMAIL</span>
+                  <a
+                    href={`mailto:${BRAND_INFO.email}`}
+                    className="body-cta-tile-val email-link"
+                  >
+                    {BRAND_INFO.email}
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  className="body-cta-copy-btn"
+                  onClick={handleCopyEmail}
+                  title="Copy Studio Email"
+                >
+                  {copiedEmail ? <Check size={13} /> : <Copy size={13} />}
+                  <span>{copiedEmail ? 'COPIED' : 'COPY'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Trust & Market Strip */}
+            <div className="body-cta-trust-pills">
+              <span className="body-cta-trust-item">
+                <MapPin size={13} className="text-yellow" />
+                <span>Bristol • Johnson City • Kingsport • Abingdon &amp; Nationwide</span>
+              </span>
+              <span className="body-cta-trust-item">
+                <ShieldCheck size={13} className="text-yellow" />
+                <span>Flat-Rate Boutique Pricing • Same-Day Response</span>
+              </span>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Always-Open 30-Second Inline Project Brief Form */}
+          <div className="body-cta-form-col">
+            {submitted ? (
+              <div className="body-cta-success-box">
+                <CheckCircle2 size={46} className="success-icon-yellow" />
+                <h3>Project Brief Locked &amp; Dispatched!</h3>
+                <p>
+                  Thanks, <strong>{formState.name}</strong>! Your inquiry for{' '}
+                  <span className="text-yellow">{formState.service}</span> has been saved
+                  to our live database and sent directly to Creative Director{' '}
+                  <strong>Rob Neilson</strong>.
+                </p>
+                <p className="body-cta-success-contact">
+                  Direct Call or Text: <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
+                  {' • '}
+                  Email: <a href={`mailto:${BRAND_INFO.email}`}>{BRAND_INFO.email}</a>
+                </p>
+                <button
+                  type="button"
+                  className="btn-wired-yellow"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormState({
+                      name: '',
+                      contact: '',
+                      companyUrl: '',
+                      service: BODY_CTA_CHIPS[0].label,
+                      details: ''
+                    });
+                  }}
+                >
+                  SEND ANOTHER INQUIRY
+                </button>
+              </div>
+            ) : (
+              <form className="body-cta-form" onSubmit={handleSubmit}>
+                <div className="body-cta-form-header">
+                  <span className="body-cta-form-kicker">
+                    <Sparkles size={13} className="text-yellow" />
+                    <span>30-SECOND PROJECT BRIEF // INSTANT DISPATCH</span>
+                  </span>
+                  <h3>Start Your Project or Request a Free Site Audit</h3>
+                </div>
+
+                {/* 1. 1-Tap Service Chips */}
+                <div className="body-cta-field-group">
+                  <label className="body-cta-label">1. TAP WHAT WE&apos;RE BUILDING:</label>
+                  <div className="body-cta-chips-grid">
+                    {BODY_CTA_CHIPS.map((chip) => {
+                      const isSelected = formState.service === chip.label;
+                      return (
+                        <button
+                          key={chip.id}
+                          type="button"
+                          className={`body-cta-chip ${isSelected ? 'active' : ''}`}
+                          onClick={() => handleChipSelect(chip.label)}
+                        >
+                          <span>{chip.shortLabel}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 2. Name & Contact Row */}
+                <div className="body-cta-input-row">
+                  <div className="body-cta-field-group">
+                    <label htmlFor="body-cta-name" className="body-cta-label">
+                      2. YOUR NAME OR BUSINESS *
+                    </label>
+                    <input
+                      id="body-cta-name"
+                      type="text"
+                      required
+                      placeholder="Name, Business, or Artist"
+                      value={formState.name}
+                      onChange={(e) =>
+                        setFormState({ ...formState, name: e.target.value })
+                      }
+                      className="body-cta-input"
+                    />
+                  </div>
+
+                  <div className="body-cta-field-group">
+                    <label htmlFor="body-cta-contact" className="body-cta-label">
+                      3. BEST EMAIL OR MOBILE # *
+                    </label>
+                    <input
+                      id="body-cta-contact"
+                      type="text"
+                      required
+                      placeholder="you@company.com or (423) 555-0199"
+                      value={formState.contact}
+                      onChange={(e) =>
+                        setFormState({ ...formState, contact: e.target.value })
+                      }
+                      className="body-cta-input"
+                    />
+                  </div>
+                </div>
+
+                {/* 3. Website URL & Quick Note Row */}
+                <div className="body-cta-input-row">
+                  <div className="body-cta-field-group">
+                    <label htmlFor="body-cta-url" className="body-cta-label">
+                      CURRENT WEBSITE URL (OPTIONAL)
+                    </label>
+                    <input
+                      id="body-cta-url"
+                      type="text"
+                      placeholder="yourbusiness.com (if you have one)"
+                      value={formState.companyUrl}
+                      onChange={(e) =>
+                        setFormState({ ...formState, companyUrl: e.target.value })
+                      }
+                      className="body-cta-input"
+                    />
+                  </div>
+
+                  <div className="body-cta-field-group">
+                    <label htmlFor="body-cta-note" className="body-cta-label">
+                      PROJECT GOAL OR QUICK NOTE (OPTIONAL)
+                    </label>
+                    <input
+                      id="body-cta-note"
+                      type="text"
+                      placeholder="New site, AI bot, dashboard, GEO, or video..."
+                      value={formState.details}
+                      onChange={(e) =>
+                        setFormState({ ...formState, details: e.target.value })
+                      }
+                      className="body-cta-input"
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="btn-wired-yellow body-cta-submit-btn">
+                  <Zap size={16} fill="#050505" />
+                  <span>SEND DIRECT TO ROB NEILSON →</span>
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

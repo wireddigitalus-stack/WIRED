@@ -35,7 +35,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'How much does a custom AI website design or website redesign cost in the Tri-Cities?',
-    a: 'Wired Digital custom-scopes every website design, website redesign, and digital modernization project to match your goals—ranging from high-converting local service websites in Bristol, Johnson City, and Kingsport to enterprise builds featuring custom live admin telemetry dashboards and 24/7 AI lead capture agents. Use the WIRED-64 AI Concierge or the project inquiry drawer below for a same-day architectural roadmap.'
+    a: 'Wired Digital offers straightforward, flat-rate boutique pricing tailored to the Tri-Cities (Bristol, Johnson City, Kingsport, Abingdon) and national clients: Local Launch & AI Website Modernization builds typically range from $1,850 to $3,500; Growth Flagships with a custom-trained 24/7 AI Lead Concierge range from $3,500 to $6,500; and full custom software platforms with Live Admin Telemetry Dashboards range from $5,500 to $12,000+ with zero forced monthly retainers.'
   },
   {
     q: 'Does Wired Digital also produce and edit music videos and official lyric videos globally?',

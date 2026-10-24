@@ -9,6 +9,7 @@ import WorkScreeningRoom from './components/WorkScreeningRoom';
 import YellowFooter from './components/YellowFooter';
 import WiredOrbChatbot from './components/WiredOrbChatbot';
 import SeoSiteTreeAuthority from './components/SeoSiteTreeAuthority';
+import BodyCtaContactCard from './components/BodyCtaContactCard';
 import {
   logTelemetryEvent,
   SITE_TREE_NODES,
@@ -375,6 +376,9 @@ export default function App() {
             <AdminDashboardView onExitDashboard={() => handleNavigateTab('home')} />
           </Suspense>
         )}
+
+        {/* Always-Visible In-Body Call-to-Action Contact Card */}
+        {activeTab !== 'admin' && <BodyCtaContactCard />}
       </main>
 
       {/* Google Sitelinks, Full Site Tree Architecture & "Website Design Near Me" Authority Hub */}

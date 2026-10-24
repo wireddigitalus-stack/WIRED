@@ -543,6 +543,31 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     };
   }
 
+  // 15. TOPIC: DIRECT CONTACT, EMAIL & LAST-RESORT PHONE LINE
+  if (
+    lower.includes('phone') ||
+    lower.includes('call') ||
+    lower.includes('text') ||
+    lower.includes('email') ||
+    lower.includes('contact') ||
+    lower.includes('reach') ||
+    lower.includes('number')
+  ) {
+    return {
+      nextStep: 'IDLE',
+      topic: 'contact',
+      cartridge: leadDraft.cartridge || 'geo',
+      leadPatch: { details: q },
+      reply: `DIRECT STUDIO CONTACT // Creative Director Rob Neilson:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat (or click [OPEN 64-BIT LEAD PACKET] below) for instant cloud dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• LAST-RESORT / URGENT DIRECT LINE (Call or Text): 731-616-5121`,
+      subtext:
+        'Drop your Name + best Email/Phone below and Rob will get an instant alert!',
+      chips: [
+        { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
+        { label: '🔍 SCAN MY WEBSITE URL', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' }
+      ]
+    };
+  }
+
   // 15. SMART CONCISE EXECUTIVE FALLBACK (Answers directly & offers instant deep-dive paths)
   return {
     nextStep: 'IDLE',
@@ -1403,8 +1428,11 @@ export default function WiredOrbChatbot() {
 
                         <button type="submit" className="w64-transmit-btn">
                           <Zap size={14} fill="#050505" color="#050505" />
-                          <span>[ TRANSMIT LEAD TO WIRED_OS VAULT ]</span>
+                          <span>[ TRANSMIT LEAD TO ROB NEILSON ]</span>
                         </button>
+                        <div className="w64-packet-last-resort">
+                          Direct Email: WiredDigitalUS@gmail.com • Last-resort urgent call/text: 731-616-5121
+                        </div>
                       </form>
                     )}
 

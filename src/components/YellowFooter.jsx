@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Mail,
+  Phone,
   Check,
   Copy,
   Send,
@@ -203,7 +204,10 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                 </button>
               </div>
               <span className="footer-response-note">
-                Direct response from Creative Director Rob Neilson • Bristol, VA/TN
+                Direct response from Rob Neilson • Urgent / last-resort call or text:{' '}
+                <a href={BRAND_INFO.phoneHref} className="footer-last-resort-tel">
+                  {BRAND_INFO.phone}
+                </a>
               </span>
             </div>
           </div>
@@ -318,15 +322,15 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                       </div>
                     </div>
 
-                    {/* 3-Column Input Row */}
+                    {/* 3-Column Fast & Effortless Input Row */}
                     <div className="footer-form-grid-3">
                       <div className="footer-input-group">
-                        <label htmlFor="ft-lead-name">YOUR NAME *</label>
+                        <label htmlFor="ft-lead-name">2. YOUR NAME OR BUSINESS *</label>
                         <input
                           id="ft-lead-name"
                           type="text"
                           required
-                          placeholder="Name or Artist / Business"
+                          placeholder="Name, Business, or Artist"
                           value={formState.name}
                           onChange={(e) =>
                             setFormState({ ...formState, name: e.target.value })
@@ -335,7 +339,7 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                       </div>
 
                       <div className="footer-input-group">
-                        <label htmlFor="ft-lead-contact">EMAIL OR PHONE *</label>
+                        <label htmlFor="ft-lead-contact">3. BEST EMAIL OR MOBILE # *</label>
                         <input
                           id="ft-lead-contact"
                           type="text"
@@ -349,56 +353,37 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                       </div>
 
                       <div className="footer-input-group">
-                        <label htmlFor="ft-lead-url">CURRENT WEBSITE / PROJECT URL</label>
+                        <label htmlFor="ft-lead-url">4. WEBSITE URL OR QUICK NOTE (OPTIONAL)</label>
                         <input
                           id="ft-lead-url"
                           type="text"
-                          placeholder="https://yourbusiness.com (Optional)"
-                          value={formState.companyUrl}
+                          placeholder="yourbusiness.com or project goal..."
+                          value={formState.details}
                           onChange={(e) =>
-                            setFormState({ ...formState, companyUrl: e.target.value })
+                            setFormState({
+                              ...formState,
+                              details: e.target.value,
+                              companyUrl: e.target.value.includes('.') ? e.target.value : formState.companyUrl
+                            })
                           }
                         />
                       </div>
                     </div>
 
-                    {/* Project Details + Timeline Row */}
-                    <div className="footer-form-grid-2">
-                      <div className="footer-input-group">
-                        <label htmlFor="ft-lead-details">PROJECT GOALS &amp; FEATURES *</label>
-                        <textarea
-                          id="ft-lead-details"
-                          rows={2}
-                          required
-                          placeholder="Tell us about your site modernization, custom dashboard, 24/7 AI chatbot, or video edit..."
-                          value={formState.details}
-                          onChange={(e) =>
-                            setFormState({ ...formState, details: e.target.value })
-                          }
-                        />
+                    {/* Sleek Action & Last-Resort Contact Bar */}
+                    <div className="footer-fast-submit-bar">
+                      <div className="footer-last-resort-note">
+                        <Phone size={13} />
+                        <span>
+                          Email &amp; form go straight to Rob&apos;s phone. Need a last-resort direct line for an urgent project? Call/Text:{' '}
+                          <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
+                        </span>
                       </div>
 
-                      <div className="footer-submit-col">
-                        <div className="footer-input-group">
-                          <label htmlFor="ft-lead-urgency">TARGET TIMELINE</label>
-                          <select
-                            id="ft-lead-urgency"
-                            value={formState.urgency}
-                            onChange={(e) =>
-                              setFormState({ ...formState, urgency: e.target.value })
-                            }
-                          >
-                            <option value="Ready to Start (This Month)">Ready to Start (This Month)</option>
-                            <option value="Priority / Urgent Turnaround">Priority / Urgent Turnaround</option>
-                            <option value="Planning for Next Quarter">Planning for Next Quarter</option>
-                          </select>
-                        </div>
-
-                        <button type="submit" className="btn-wired-yellow footer-submit-btn">
-                          <Send size={15} />
-                          <span>SUBMIT LEAD TO WIRED DIGITAL</span>
-                        </button>
-                      </div>
+                      <button type="submit" className="btn-wired-yellow footer-submit-btn">
+                        <Zap size={15} fill="#050505" />
+                        <span>SEND TO ROB NEILSON →</span>
+                      </button>
                     </div>
                   </form>
                 )}

@@ -9682,3 +9682,132 @@ a {
 .w64-chip-btn:active {
   transform: translateY(0);
 }
+
+/* ============================================================================
+   STREAMLINED 30-SECOND CONTACT MODAL, FOOTER FORM & LAST-RESORT PHONE LINE
+   ============================================================================ */
+.modal-chip-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.modal-service-chip {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 11px 12px;
+  color: var(--ink-silver);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.modal-service-chip:hover {
+  border-color: rgba(255, 238, 0, 0.55);
+  color: var(--ink-white);
+  background: rgba(255, 238, 0, 0.08);
+}
+
+.modal-service-chip.active {
+  background: var(--wired-yellow);
+  border-color: var(--wired-yellow);
+  color: #050505;
+  box-shadow: 0 6px 18px rgba(255, 238, 0, 0.28);
+}
+
+.direct-contact-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.last-resort-phone-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.last-resort-phone-hint svg {
+  color: var(--wired-yellow);
+}
+
+.last-resort-phone-hint a,
+.last-resort-phone-note a {
+  color: var(--wired-yellow);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.last-resort-phone-hint a:hover,
+.last-resort-phone-note a:hover {
+  text-decoration: underline;
+}
+
+.footer-last-resort-tel {
+  color: #050505;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.footer-fast-submit-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-last-resort-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.footer-last-resort-note svg {
+  color: var(--wired-yellow);
+  flex-shrink: 0;
+}
+
+.footer-last-resort-note a {
+  color: var(--wired-yellow);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.footer-last-resort-note a:hover {
+  text-decoration: underline;
+}
+
+.w64-packet-last-resort {
+  margin-top: 8px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgba(0, 255, 102, 0.8);
+}
+
+@media (max-width: 640px) {
+  .modal-chip-selector-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-fast-submit-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

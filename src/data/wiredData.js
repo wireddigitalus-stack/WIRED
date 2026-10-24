@@ -8,6 +8,8 @@ export const BRAND_INFO = {
   yearsActive: '25+',
   location: 'Bristol, VA/TN (Since 2022) • Est. 1999 in Jackson, TN',
   email: 'WiredDigitalUS@gmail.com',
+  phone: '731-616-5121',
+  phoneHref: 'tel:+17316165121',
   youtubeUrl: 'https://www.youtube.com/@WiredDigitalCreative',
   instagramUrl: 'https://www.instagram.com/',
   facebookUrl: 'https://www.facebook.com/',

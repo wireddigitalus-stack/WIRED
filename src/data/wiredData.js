@@ -630,14 +630,14 @@ export const YOUTUBE_CHANNEL_DATA = {
       id: 'all',
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x',
       label: 'All Channel Releases',
-      shortLabel: 'ALL RELEASES (29)',
+      shortLabel: 'ALL RELEASES (27)',
       description: 'Complete broadcast feed across Music Videos by WIRED ϟ DIGITAL, Official Lyric Videos, and the Studio Channel Trailer.'
     },
     {
       id: 'music-videos',
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x',
       label: 'Music Videos by WIRED ϟ DIGITAL',
-      shortLabel: 'MUSIC VIDEOS (9)',
+      shortLabel: 'MUSIC VIDEOS (7)',
       description: 'Official music videos and live multi-cam productions edited and directed by Rob Neilson.'
     },
     {
@@ -656,7 +656,7 @@ export const YOUTUBE_CHANNEL_DATA = {
     }
   ],
   videos: [
-    // === MUSIC VIDEOS BY WIRED ϟ DIGITAL (PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x) ===
+    // === MUSIC VIDEOS BY WIRED ϟ DIGITAL (PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x) — 7 VIDEOS ===
     {
       videoId: 'Qmf-dN9gsGM',
       title: 'Halestorm - Shooting Star (feat. Paul Rodgers) (Official Music Video)',
@@ -698,16 +698,6 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
     },
     {
-      videoId: 'Bj_sXoLwD1E',
-      title: 'TESLA - Home To Home Series - Lazy Days',
-      artist: 'TESLA',
-      category: 'music-videos',
-      badge: 'OFFICIAL MUSIC VIDEO',
-      views: '71K+ Views',
-      duration: '4:30',
-      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
-    },
-    {
       videoId: 'DkTGpDq6Pcg',
       title: 'Full Devil Jacket - Valley of Bones (Official VEVO Music Video)',
       artist: 'Full Devil Jacket / eOne',
@@ -737,17 +727,6 @@ export const YOUTUBE_CHANNEL_DATA = {
       badge: 'VEVO / RCA OFFICIAL',
       views: '664K+ Views',
       duration: '3:41',
-      vevoRestricted: true,
-      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
-    },
-    {
-      videoId: 'v55qwxhF1UA',
-      title: 'Count Basie, Terence Blanchard - M-Squad (Official) ft. The Count Basie Orchestra',
-      artist: 'Count Basie Orchestra',
-      category: 'music-videos',
-      badge: 'VEVO / UMG OFFICIAL',
-      views: '66K+ Views',
-      duration: '2:08',
       vevoRestricted: true,
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
     },

@@ -204,7 +204,7 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                 </button>
               </div>
               <span className="footer-response-note">
-                Direct response from Rob Neilson • Urgent / last-resort call or text:{' '}
+                Direct response from Rob Neilson • Call or text:{' '}
                 <a href={BRAND_INFO.phoneHref} className="footer-last-resort-tel">
                   {BRAND_INFO.phone}
                 </a>
@@ -370,12 +370,12 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                       </div>
                     </div>
 
-                    {/* Sleek Action & Last-Resort Contact Bar */}
+                    {/* Sleek Action & Direct Contact Bar */}
                     <div className="footer-fast-submit-bar">
                       <div className="footer-last-resort-note">
                         <Phone size={13} />
                         <span>
-                          Email &amp; form go straight to Rob&apos;s phone. Need a last-resort direct line for an urgent project? Call/Text:{' '}
+                          Email &amp; form go straight to Rob&apos;s phone • Direct Call/Text:{' '}
                           <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
                         </span>
                       </div>

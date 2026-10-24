@@ -114,7 +114,7 @@ export default function ContactModal({ isOpen, onClose }) {
               Email: <a href={`mailto:${BRAND_INFO.email}`}>{BRAND_INFO.email}</a>
               {' • '}
               <span>
-                Time-sensitive / last-resort direct line:{' '}
+                Direct Call or Text:{' '}
                 <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
               </span>
             </p>
@@ -218,7 +218,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 </div>
                 <div className="last-resort-phone-hint">
                   <Phone size={12} />
-                  <span>Last-resort / urgent text or call: </span>
+                  <span>Direct Call or Text: </span>
                   <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
                 </div>
               </div>

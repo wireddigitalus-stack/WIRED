@@ -25,9 +25,9 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
           </div>
           <h2 className="section-title-tracked">SOME OF OUR WORK</h2>
           <p className="legends-subtitle">
-            Delivering global remote music video editing, custom kinetic lyric videos,
-            and visualizers for major record labels and rock royalty worldwide (with
-            on-location directing reserved for select high-end flagship commissions).
+            Delivering global remote <strong>4K music video editing, official kinetic lyric videos, and visualizers</strong> for
+            major record labels and rock royalty worldwide—including{' '}
+            <strong>Halestorm, Paul Rodgers, Alice Cooper, and Full Devil Jacket</strong> (with on-location directing reserved for select flagship commissions).
           </p>
         </div>
 

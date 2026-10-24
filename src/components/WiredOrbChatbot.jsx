@@ -558,7 +558,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'contact',
       cartridge: leadDraft.cartridge || 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT STUDIO CONTACT // Creative Director Rob Neilson:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat (or click [OPEN 64-BIT LEAD PACKET] below) for instant cloud dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• LAST-RESORT / URGENT DIRECT LINE (Call or Text): 731-616-5121`,
+      reply: `DIRECT STUDIO CONTACT // Creative Director Rob Neilson:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat (or click [OPEN 64-BIT LEAD PACKET] below) for instant cloud dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• DIRECT STUDIO LINE (Call or Text): 731-616-5121`,
       subtext:
         'Drop your Name + best Email/Phone below and Rob will get an instant alert!',
       chips: [
@@ -1599,7 +1599,7 @@ export default function WiredOrbChatbot() {
                           <span>[ TRANSMIT LEAD TO ROB NEILSON ]</span>
                         </button>
                         <div className="w64-packet-last-resort">
-                          Direct Email: WiredDigitalUS@gmail.com • Last-resort urgent call/text: 731-616-5121
+                          Direct Email: WiredDigitalUS@gmail.com • Direct Call/Text: 731-616-5121
                         </div>
                       </form>
                     )}

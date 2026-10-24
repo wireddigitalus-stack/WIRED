@@ -851,9 +851,9 @@ export const SITE_TREE_NODES = {
     schemaType: 'ProfessionalService + LocalBusiness + WebSite',
     priority: '1.0',
     title:
-      'Wired Digital Creative | Website Design Near Me in Bristol, Johnson City & Kingsport TN/VA — Website Design, Redesign, AI Modernization & Full-Service Marketing',
+      'Wired Digital Creative | AI Website Design, Redesign & Modernization, Generative SEO (GEO), Custom AI Dashboards & 4K Video | Bristol, Johnson City & Kingsport TN/VA',
     description:
-      'Wired Digital Creative (Wired Digital LLC — wireddigitalcreative.com). Searching for website design near me in the Tri-Cities (Bristol TN/VA, Johnson City TN, Kingsport TN, Abingdon VA)? We build ultra-fast AI-era websites, full-service marketing campaigns, custom live business admin dashboards, 24/7 AI lead capture chatbots, and global remote 4K music videos.',
+      'Wired Digital Creative (Wired Digital LLC — wireddigitalcreative.com, Est. 1999). 25+ years ahead of the tech curve in Bristol TN/VA, Johnson City, Kingsport & Abingdon: AI website design, redesign & modernization, Generative SEO (ChatGPT & Google AI), custom live admin dashboards, 24/7 AI chatbots, full-service marketing & 4K music videos.',
     tab: 'home',
     section: null
   },
@@ -868,9 +868,9 @@ export const SITE_TREE_NODES = {
       priority: '0.95',
       badge: 'CORE SERVICE #1',
       title:
-        'AI Website Design, Redesign & Modernization | Wired Digital — Bristol, Johnson City & Kingsport TN/VA',
+        'AI Website Design, Redesign & Modernization + Generative SEO (GEO) | Wired Digital Creative — Bristol, Johnson City & Kingsport TN/VA',
       description:
-        'Custom AI website design, full website redesigns, and digital modernization in Bristol, Johnson City, and Kingsport TN/VA. Sub-0.4s load speed, mobile-first iOS liquid glass UI, and Generative Engine Optimization (GEO).',
+        'Custom AI website design, full website redesigns, apps, and Generative Engine Optimization (GEO for ChatGPT, Google AI Overviews & Perplexity) in Bristol, Johnson City & Kingsport TN/VA. 25+ years of custom engineering, sub-0.4s load speed, live dashboards & 24/7 AI chatbots all under one roof.',
       tab: 'web',
       section: null
     },
@@ -884,9 +884,9 @@ export const SITE_TREE_NODES = {
       priority: '0.95',
       badge: 'FULL-SERVICE MARKETING',
       title:
-        'Full-Service Marketing Agency in Bristol, Johnson City & Kingsport TN/VA | Wired Digital',
+        'Full-Service Digital Marketing, Generative SEO (GEO) & Brand Growth | Wired Digital — Bristol, Johnson City & Kingsport TN/VA',
       description:
-        'Full-service digital marketing, brand identity, high-converting ad campaigns, social & video creative, and AI-driven lead funnels across the Tri-Cities (Bristol, Johnson City, Kingsport) and nationwide.',
+        'Full-service digital marketing, Generative SEO (GEO), Local Pack dominance, paid ad creative, 4K video campaigns, and AI-driven lead funnels across the Tri-Cities (Bristol, Johnson City, Kingsport) and nationwide.',
       tab: 'web',
       section: null
     },
@@ -900,9 +900,9 @@ export const SITE_TREE_NODES = {
       priority: '0.95',
       badge: 'BESPOKE TELEMETRY',
       title:
-        'Custom Live Business Admin Dashboards & Telemetry | Wired Digital Tri-Cities TN/VA',
+        'Custom Live Business Admin Dashboards, CRM & Real-Time Telemetry | Wired Digital Tri-Cities TN/VA',
       description:
-        'Replace guesswork with a custom-coded live backend business dashboard. Track real-time visitor click-streams, active inventory engagement, and incoming leads—like our build for Fast Track Bristol TN.',
+        'Replace guesswork with a custom-coded live backend business admin dashboard. Track real-time visitor click-streams, active inventory/property engagement, and incoming cloud leads—proven on Fast Track Bristol TN.',
       tab: 'home',
       section: 'case-studies'
     },
@@ -916,9 +916,9 @@ export const SITE_TREE_NODES = {
       priority: '0.95',
       badge: '24/7 AI CONCIERGE',
       title:
-        '24/7 Custom-Trained AI Lead Capture Chatbots | Wired Digital — Bristol, Johnson City & Kingsport',
+        '24/7 Custom-Trained AI Lead Capture Chatbots & Conversational Agents | Wired Digital — Bristol, Johnson City & Kingsport',
       description:
-        'Deploy a custom-trained 24/7 AI advisor and lead capture chatbot trained on your exact services, pricing, and regional footprint—proven on Team Vision LLC and WIRED_64.',
+        'Deploy a custom-trained 24/7 AI advisor and lead capture chatbot engineered around your exact services, inventory, properties, and pricing—proven in production on Team Vision LLC and WIRED-64.',
       tab: 'home',
       section: 'case-studies'
     },
@@ -932,9 +932,9 @@ export const SITE_TREE_NODES = {
       priority: '0.90',
       badge: 'GLOBAL LABEL POST',
       title:
-        'Remote 4K Music Video, Official Lyric Video & Visualizer Editing | Wired Digital Creative',
+        'Global Remote 4K Music Video, Official Lyric Video & Visualizer Production | Wired Digital Creative (34+ Legends)',
       description:
-        'Working full-time in the music industry since 2015. Global remote 4K music video, official lyric video, and visualizer editing for Primary Wave, Alice Cooper, Halestorm, Paul Rodgers, Def Leppard & 34+ legends.',
+        'Full-time in the music industry since 2015 (Est. 1999). Global remote 4K music video editing, official kinetic lyric videos, and visualizers for Primary Wave, Alice Cooper, Halestorm, Paul Rodgers, Def Leppard & 34+ Hall-of-Fame icons.',
       tab: 'video',
       section: null
     },
@@ -948,9 +948,9 @@ export const SITE_TREE_NODES = {
       priority: '0.88',
       badge: '34+ ICONS',
       title:
-        'Working With Legends — 34+ Iconic Rock Artists & Record Labels | Wired Digital',
+        'Working With Legends — 34+ Hall-of-Fame Rock Artists, Estates & Record Labels | Wired Digital Creative',
       description:
-        'Explore Wired Digital’s verified roster of 34+ legendary music artists and major label catalogs including Alice Cooper, Def Leppard, Halestorm, Paul Rodgers, Bob Marley, Whitney Houston, Prince, and Primary Wave.',
+        'Explore Wired Digital Creative’s verified roster of 34+ legendary music artists and major label catalogs including Primary Wave (The Home of Legends), Alice Cooper, Def Leppard, Halestorm, Paul Rodgers, Bob Marley, Whitney Houston, and Prince.',
       tab: 'home',
       section: 'legends'
     }

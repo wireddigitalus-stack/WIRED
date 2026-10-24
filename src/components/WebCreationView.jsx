@@ -105,13 +105,14 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
         <div className="section-container">
           <div className="eyebrow-tag">
             <Cpu size={14} />
-            <span>WIRED DIGITAL // WEBSITE DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
+            <span>WIRED DIGITAL // AI WEBSITE DESIGN, REDESIGN, CUSTOM APPS &amp; GENERATIVE SEO (GEO)</span>
           </div>
           <h1 className="subview-hero-title">
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; AI MODERNIZATION
           </h1>
           <p className="subview-hero-lead">
-            Built to keep pace with how search engines work in the age of AI. When you partner with
+            Engineered to rank #1 in <strong>Google Search, ChatGPT, Google AI Overviews, Gemini, and Perplexity (GEO)</strong> across{' '}
+            <strong>Bristol, Johnson City, Kingsport, Abingdon, and nationwide</strong>. When you partner with
             Wired Digital, you are investing in{' '}
             <strong>25+ years of real-world experience (Est. 1999)</strong> and a relentless track
             record of <strong>staying ahead of every major technology wave</strong>—from early web
@@ -443,8 +444,8 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
       <section className="subview-services-section">
         <div className="section-container">
           <div className="subview-section-head">
-            <span className="eyebrow-tag">ENGINEERING &amp; DESIGN</span>
-            <h2 className="section-title-tracked">WEB &amp; AI CAPABILITIES</h2>
+            <span className="eyebrow-tag">ALL SKILLS UNDER 1 ROOF // 25+ YEARS OF DIGITAL FIREPOWER</span>
+            <h2 className="section-title-tracked">CUSTOM WEB, AI, APPS, GEO &amp; MARKETING</h2>
           </div>
 
           <div className="services-bento-grid">

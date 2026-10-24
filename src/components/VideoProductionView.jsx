@@ -110,18 +110,17 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
         <div className="section-container">
           <div className="eyebrow-tag">
             <Film size={14} />
-            <span>WIRED DIGITAL // VIDEO PRODUCTION &amp; VISUAL ARTISTRY</span>
+            <span>WIRED DIGITAL // GLOBAL 4K MUSIC VIDEO, OFFICIAL LYRIC VIDEO &amp; VISUALIZER PRODUCTION</span>
           </div>
           <h1 className="subview-hero-title">
-            ROCK-AND-ROLL <span className="text-yellow">VIDEO PRODUCTION</span> FOR LEGENDS
+            ROCK-AND-ROLL <span className="text-yellow">4K VIDEO PRODUCTION</span> FOR LEGENDS
           </h1>
           <p className="subview-hero-lead">
-            Founded in Jackson, TN in 1999, working full-time in the music industry since
-            2015, and now based in Bristol (VA/TN) since 2022—delivering global remote music
-            video editing, official lyric videos, visualizers, and tour promos for
-            multi-platinum artists, iconic catalogs, and major record labels worldwide
-            (with on-location directing &amp; shooting reserved for select high-end
-            flagship commissions).
+            Founded in <strong>Jackson, TN in 1999</strong>, working full-time in the music industry
+            since <strong>2015</strong>, and headquartered in <strong>Bristol (VA/TN) since 2022</strong>—delivering
+            100% remote <strong>4K music video editing, custom kinetic lyric videos, visualizers, and tour promos</strong> for{' '}
+            <strong>Primary Wave (The Home of Legends), Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, and 34+ Hall-of-Fame artists</strong>{' '}
+            and major record labels worldwide (with on-location RED Cinema directing reserved for select flagship commissions).
           </p>
 
           <div className="subview-hero-actions">

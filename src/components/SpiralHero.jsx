@@ -162,7 +162,7 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
         <div className="ios-hero-top-pill below-banner-pill">
           <span className="pulse-dot" />
           <span>
-            WEBSITE DESIGN, REDESIGN &amp; AI MODERNIZATION • FULL-SERVICE MARKETING • AI-ERA SEARCH (GEO) • GLOBAL VIDEO
+            AI WEBSITE DESIGN, REDESIGN &amp; MODERNIZATION • GENERATIVE SEO (GEO) • CUSTOM AI &amp; DASHBOARDS • FULL-SERVICE MARKETING • 4K GLOBAL VIDEO
           </span>
         </div>
       </div>

@@ -30,9 +30,9 @@ export default function LegendsWall() {
           </div>
           <h2 className="section-title-tracked">WORKING WITH LEGENDS</h2>
           <p className="legends-subtitle">
-            From Hall-of-Fame rock catalogs and major record labels to multi-platinum
-            icons—delivering high-impact video production, visualizers, and custom
-            digital experiences.
+            Trusted by <strong>34+ Hall-of-Fame rock icons, estates, and major record labels</strong>—including{' '}
+            <strong>Primary Wave, Alice Cooper, Def Leppard, Halestorm, Paul Rodgers, Bob Marley, Whitney Houston, and Prince</strong>—for
+            4K music videos, official lyric videos, visualizers, and custom digital experiences.
           </p>
 
           {/* Controls Bar: Category Filter + Dark Stage / Classic Vault Toggle */}

@@ -95,20 +95,20 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               <strong>Wired Digital Creative</strong> bridges{' '}
               <strong>rock-and-roll artistry</strong> with{' '}
               <strong>advanced AI software engineering</strong>. Founded in{' '}
-              <strong>Jackson, TN in 1999</strong> and now based in{' '}
+              <strong>Jackson, TN in 1999</strong> and headquartered in{' '}
               <strong>Bristol (VA/TN) since 2022</strong>, we specialize in{' '}
               <span className="highlight-yellow">
-                website design, redesign, and full-stack AI modernization
+                AI website design, redesign, custom apps, and full-stack modernization
               </span>
-              —engineered to keep pace with the fast-changing way search engines work
-              in the age of AI. We pair{' '}
-              <strong>full-service marketing</strong> and{' '}
-              <strong>Generative SEO (GEO + Local SEO)</strong> with{' '}
-              <strong>custom business dashboards</strong> to drive revenue across the
-              Tri-Cities and nationwide, while working full-time in the music industry
-              since 2015 delivering{' '}
-              <strong>global remote music &amp; lyric video editing</strong> for major
-              record labels and Hall-of-Fame catalogs worldwide.
+              —engineered to keep pace with how search engines work in the age of{' '}
+              <strong>ChatGPT, Google AI Overviews, Gemini, and Perplexity</strong>. We pair{' '}
+              <strong>full-service digital marketing</strong> and{' '}
+              <strong>Generative Engine Optimization (GEO + Local SEO)</strong> with{' '}
+              <strong>custom live business dashboards &amp; 24/7 AI lead concierges</strong> across{' '}
+              <strong>Bristol, Johnson City, Kingsport, Abingdon</strong>, and nationwide—while
+              working full-time in the music industry since 2015 delivering{' '}
+              <strong>global remote 4K music &amp; lyric video editing</strong> for major record
+              labels and 34+ Hall-of-Fame catalogs worldwide.
             </p>
 
             <div className="since-pillar-pills">

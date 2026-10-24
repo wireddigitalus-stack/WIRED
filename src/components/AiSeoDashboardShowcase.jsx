@@ -117,19 +117,24 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
       <div className="section-container">
         {/* Section Header */}
         <div className="ai-section-header">
+          <span className="eyebrow-tag" style={{ marginBottom: '0.6rem' }}>
+            <Sparkles size={14} />
+            <span>AI-ERA WEB ENGINEERING • GENERATIVE SEO (GEO) • BRISTOL, JOHNSON CITY &amp; KINGSPORT TN/VA</span>
+          </span>
           <h2 className="ai-main-heading">
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
           </h2>
 
           <p className="ai-sub-lead">
             Search engines are evolving faster than ever. As{' '}
-            <strong>Google AI Overviews, ChatGPT, Gemini, and Perplexity</strong>{' '}
-            transform how customers discover businesses, static legacy websites are
-            getting left behind. We design, redesign, and modernize websites to keep
-            pace with AI-era search—combining{' '}
-            <strong>Generative Engine Optimization (GEO)</strong>,{' '}
+            <strong>Google AI Overviews, ChatGPT Search, Gemini, and Perplexity</strong>{' '}
+            transform how customers discover businesses in{' '}
+            <strong>Bristol, Johnson City, Kingsport, Abingdon, and nationwide</strong>, static
+            legacy websites are getting left behind. We design, redesign, and modernize websites to
+            keep pace with AI-era search—combining{' '}
+            <strong>Generative Engine Optimization (GEO + Local Pack SEO)</strong>,{' '}
             <strong>custom-trained 24/7 AI lead concierges</strong>, and{' '}
-            <strong>live custom admin dashboards</strong> built around your business.
+            <strong>live custom admin dashboards</strong> engineered around your business.
           </p>
         </div>
 

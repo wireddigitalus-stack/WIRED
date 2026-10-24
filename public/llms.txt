@@ -1,0 +1,40 @@
+# Wired Digital LLC (Wired Digital Creative) — AI & Search Knowledge Manifest (llms.txt)
+
+> Wired Digital LLC (`https://www.wireddigitalcreative.com/`) is an AI Website Design, Website Redesign & Modernization, Generative SEO (GEO), Custom Business Dashboard, and Global Music Video Production studio founded in Jackson, TN in 1999 by Creative Director Rob Neilson, working full-time in the music industry since 2015, and headquartered in Bristol, VA/TN (Tri-Cities) since 2022.
+
+## Core Services & Primary Search Entities
+1. **AI Website Design, Redesign & Full-Stack Modernization**:
+   - Engineered to keep pace with the fast-changing way search engines work in the age of AI.
+   - Replaces slow legacy WordPress/Wix templates with sub-0.4s React/Edge platforms, Core Web Vitals 99+, and deep Schema.org JSON-LD entity graphs.
+2. **Organic Local SEO ("Website Design Near Me") & Generative Engine Optimization (GEO)**:
+   - Structured entity authority for Google Search, Google Local Pack, Google AI Overviews, ChatGPT Search, Perplexity AI, Claude, and Apple Siri/Spotlight.
+   - Primary Local Service Area: **Tri-Cities TN/VA** — **Bristol, TN (37620)**, **Bristol, VA (24201)**, **Johnson City, TN (37601, 37604)**, **Kingsport, TN (37660, 37664)**, **Abingdon, VA (24210)**, Elizabethton, TN, Jonesborough, TN, and Greeneville, TN, plus nationwide remote software builds.
+3. **Custom Live Business Dashboards & 24/7 Custom-Trained AI Lead Capture Chatbots**:
+   - Bespoke owner telemetry dashboards tracking real-time visitor click streams, phone calls, credit applications, QR code campaigns, and lead conversions.
+   - Custom-trained 24/7 AI advisors trained on a business's exact inventory, properties, or services to match customers and capture leads around the clock.
+4. **Global Remote Music Video & Official Lyric Video Editing**:
+   - Full-time in the music industry since 2015 delivering 100% remote 4K music video editing, custom animated lyric videos, visualizers, and tour promos for major record labels and 34+ Hall-of-Fame artists (Primary Wave — The Home of Legends, Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, Bob Marley Estate, Whitney Houston Estate, Prince Estate, Slayer, Volbeat, etc.).
+   - On-location directing and RED Cinema shooting reserved for select flagship productions.
+
+## Verified Live Tri-Cities Flagship Case Studies
+- **Fast Track Automotive (2528 Volunteer Pkwy, Bristol, TN)** — `https://www.fasttrackbristoltn.com/`
+  - High-velocity pre-owned dealership website modernization paired with a custom real-time Admin Telemetry Dashboard tracking live visitor click streams, credit application alerts, hourly traffic, and vehicle lot rankings.
+- **Team Vision LLC (Downtown Bristol, VA/TN)** — `https://www.teamvisionllc.com/`
+  - Commercial real estate flagship website modernization for Downtown Bristol's #1 commercial property owner, featuring the custom-trained 24/7 `"Ask VISION"` AI Space Advisor & Lead Capture Chatbot trained on their entire property portfolio (`Office Suites`, `Bristol CoWork`, `The Executive on State St`, `Centre Point by Hard Rock`, `Foundation Event Facility`, `West State Commons`).
+
+## Full Site Tree & Crawlable Endpoints
+- Root Flagship Experience: `https://www.wireddigitalcreative.com/`
+- AI Website Design, Redesign & GEO Hub: `https://www.wireddigitalcreative.com/?view=ai-web-design-seo`
+- Custom Business Dashboards & 24/7 AI Chatbots: `https://www.wireddigitalcreative.com/?view=custom-dashboards-ai-chatbots`
+- Bristol TN/VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=bristol-tn-va-web-design`
+- Johnson City TN Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=johnson-city-tn-web-design`
+- Kingsport TN Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=kingsport-tn-web-design`
+- Abingdon VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=abingdon-va-web-design`
+- Global Music & Lyric Video Production: `https://www.wireddigitalcreative.com/?view=video-production`
+- XML Sitemap: `https://www.wireddigitalcreative.com/sitemap.xml`
+
+## Direct Contact & Leadership
+- **Legal Entity**: Wired Digital LLC (d/b/a Wired Digital Creative)
+- **Founder & Creative Director**: Rob Neilson
+- **Direct Email**: WiredDigitalUS@gmail.com
+- **Headquarters**: Bristol, VA / Bristol, TN (Serving Tri-Cities TN/VA & Global Clients)

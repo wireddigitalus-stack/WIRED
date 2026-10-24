@@ -1,0 +1,50 @@
+# Wired Digital LLC (wireddigitalcreative.com)
+# Maximum Organic Search (Google/Bing) + Generative AI Search (GEO) Crawler Configuration
+
+User-agent: *
+Allow: /
+
+# Google Search, Local Pack, Image & Video Indexing
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+# AI Search & Generative Engine Optimization (GEO) Crawlers — Explicitly Allowed
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Canonical XML Site Tree & AI Knowledge Base Manifest
+Sitemap: https://www.wireddigitalcreative.com/sitemap.xml
+# AI/LLM Structured Knowledge Base: https://www.wireddigitalcreative.com/llms.txt

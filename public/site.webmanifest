@@ -1,0 +1,16 @@
+{
+  "name": "Wired Digital LLC — AI Website Design, Modernization, GEO & Global Video",
+  "short_name": "Wired Digital",
+  "description": "AI Website Design, Redesign & Modernization built for how search engines work in the age of AI. Custom dashboards, 24/7 AI chatbots & Generative SEO in Bristol VA/TN, Johnson City & Kingsport, plus global music video editing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#040405",
+  "theme_color": "#FFEE00",
+  "icons": [
+    {
+      "src": "/WD-Brand-2017.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

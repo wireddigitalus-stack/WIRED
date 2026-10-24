@@ -1,0 +1,1768 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Activity,
+  ArrowLeft,
+  ArrowUpRight,
+  BarChart3,
+  Bot,
+  Check,
+  CheckCircle2,
+  Cpu,
+  Download,
+  ExternalLink,
+  Eye,
+  FileSpreadsheet,
+  Filter,
+  Globe,
+  Layers,
+  LayoutDashboard,
+  Lock,
+  Mail,
+  MapPin,
+  Plus,
+  Printer,
+  RefreshCw,
+  Search,
+  Send,
+  ShieldAlert,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Trash2,
+  TrendingUp,
+  Unlock,
+  Users,
+  Zap
+} from 'lucide-react';
+import { BRAND_INFO } from '../data/wiredData';
+import {
+  AI_ENGINE_SHARE,
+  ANALYTICS_TIMEFRAMES,
+  GEO_TRAFFIC_REGIONS,
+  TRACKED_SEO_KEYWORDS,
+  WEEKLY_HEATMAP_DATA,
+  addLead,
+  authorizeStudioDevice,
+  deleteLead,
+  exportLeadsToCsv,
+  getClientHardwareSignature,
+  getLeads,
+  getSectionCounts,
+  getTelemetryEvents,
+  isStudioDeviceAuthorized,
+  logTelemetryEvent,
+  resetDemoLeads,
+  revokeStudioDevice,
+  runLiveSiteSeoAudit,
+  updateLead
+} from '../utils/telemetry';
+
+const PIN_STORAGE_KEY = 'wired_os_admin_unlocked';
+const STUDIO_PIN = '1999';
+
+/**
+ * Generates a smooth cubic Bézier SVG path + closed area fill path from array of [x, y] coordinates
+ */
+function buildSmoothSplinePaths(coords, baselineY) {
+  if (!coords || coords.length === 0) return { linePath: '', areaPath: '' };
+  if (coords.length === 1) {
+    const [x, y] = coords[0];
+    return {
+      linePath: `M ${x},${y}`,
+      areaPath: `M ${x},${baselineY} L ${x},${y} L ${x},${baselineY} Z`
+    };
+  }
+
+  let d = `M ${coords[0][0].toFixed(1)},${coords[0][1].toFixed(1)}`;
+  for (let i = 0; i < coords.length - 1; i++) {
+    const [x0, y0] = coords[i];
+    const [x1, y1] = coords[i + 1];
+    const cpx1 = x0 + (x1 - x0) * 0.45;
+    const cpy1 = y0;
+    const cpx2 = x0 + (x1 - x0) * 0.55;
+    const cpy2 = y1;
+    d += ` C ${cpx1.toFixed(1)},${cpy1.toFixed(1)} ${cpx2.toFixed(1)},${cpy2.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`;
+  }
+
+  const firstX = coords[0][0].toFixed(1);
+  const lastX = coords[coords.length - 1][0].toFixed(1);
+  const areaPath = `${d} L ${lastX},${baselineY} L ${firstX},${baselineY} Z`;
+
+  return { linePath: d, areaPath };
+}
+
+/**
+ * iOS Activity Ring Gauge Component (0-100)
+ */
+function IosScoreRing({ score, label, sublabel, color = '#FFEE00' }) {
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (Math.min(100, Math.max(0, score)) / 100) * circumference;
+
+  return (
+    <div className="wos-ring-card">
+      <div className="wos-ring-svg-wrap">
+        <svg viewBox="0 0 108 108" className="wos-ring-svg">
+          <circle
+            cx="54"
+            cy="54"
+            r={radius}
+            fill="none"
+            stroke="rgba(255,255,255,0.08)"
+            strokeWidth="8"
+          />
+          <circle
+            cx="54"
+            cy="54"
+            r={radius}
+            fill="none"
+            stroke={color}
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            transform="rotate(-90 54 54)"
+            style={{
+              filter: `drop-shadow(0 0 8px ${color}66)`,
+              transition: 'stroke-dashoffset 0.7s cubic-bezier(0.22, 1, 0.36, 1)'
+            }}
+          />
+        </svg>
+        <div className="wos-ring-center">
+          <span className="wos-ring-val" style={{ color }}>
+            {score}
+          </span>
+          <span className="wos-ring-max">/100</span>
+        </div>
+      </div>
+      <div className="wos-ring-meta">
+        <span className="wos-ring-label">{label}</span>
+        <span className="wos-ring-sub">{sublabel}</span>
+      </div>
+    </div>
+  );
+}
+
+export default function AdminDashboardView({ onExitDashboard }) {
+  const [unlocked, setUnlocked] = useState(() => {
+    try {
+      return (
+        isStudioDeviceAuthorized() ||
+        sessionStorage.getItem(PIN_STORAGE_KEY) === 'true'
+      );
+    } catch {
+      return false;
+    }
+  });
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState(false);
+  const [showOwnerKeyEntry, setShowOwnerKeyEntry] = useState(false);
+  const [shieldTapCount, setShieldTapCount] = useState(0);
+
+  // Active Command Center Module: 'overview' | 'leads' | 'analytics' | 'seo'
+  const [activeModule, setActiveModule] = useState('overview');
+
+  // Timeframe for Dark iOS Spline Graph: '24H' | '7D' | '30D' | '90D'
+  const [timeframe, setTimeframe] = useState('30D');
+  const [hoverPointIndex, setHoverPointIndex] = useState(null);
+  const [visibleSeries, setVisibleSeries] = useState({
+    visitors: true,
+    aiGeo: true,
+    leads: true
+  });
+
+  // Leads CRM State
+  const [leads, setLeads] = useState(() => getLeads());
+  const [selectedLeadId, setSelectedLeadId] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showNewLeadForm, setShowNewLeadForm] = useState(false);
+  const [newLeadDraft, setNewLeadDraft] = useState({
+    name: '',
+    contact: '',
+    companyUrl: '',
+    service: 'AI Website Design, Redesign & Modernization',
+    urgency: 'Ready to Start (This Month)',
+    ValueEstimate: '$6,500',
+    details: '',
+    notes: ''
+  });
+
+  // Live Telemetry & Section Engagement State
+  const [telemetryEvents, setTelemetryEvents] = useState(() => getTelemetryEvents());
+  const [sectionCounts, setSectionCounts] = useState(() => getSectionCounts());
+
+  // Live SEO & GEO Audit State + Prospect Audit Generator
+  const [seoAudit, setSeoAudit] = useState(() => runLiveSiteSeoAudit());
+  const [prospectName, setProspectName] = useState('Bristol Auto & Commercial Group');
+  const [prospectUrl, setProspectUrl] = useState('https://example-tricities-business.com');
+  const [prospectCity, setProspectCity] = useState('Bristol, TN/VA');
+  const [prospectAudited, setProspectAudited] = useState(true);
+
+  useEffect(() => {
+    const currentLeads = getLeads();
+    setLeads(currentLeads);
+    if (currentLeads.length > 0 && !selectedLeadId) {
+      setSelectedLeadId(currentLeads[0].id);
+    }
+    setTelemetryEvents(getTelemetryEvents());
+    setSectionCounts(getSectionCounts());
+    setSeoAudit(runLiveSiteSeoAudit());
+  }, []);
+
+  const handleUnlockWithPin = (code) => {
+    if (code === STUDIO_PIN) {
+      authorizeStudioDevice();
+      setUnlocked(true);
+      setPinError(false);
+      setShowOwnerKeyEntry(false);
+      logTelemetryEvent('ADMIN_UNLOCK', 'Creative Director unlocked WIRED_OS Command Center (Mac/iPhone Verified)', 'system');
+    } else {
+      setPinError(true);
+      setPinInput('');
+    }
+  };
+
+  const handleShieldTap = () => {
+    const next = shieldTapCount + 1;
+    setShieldTapCount(next);
+    if (next >= 3) {
+      setShowOwnerKeyEntry(true);
+    }
+  };
+
+  const handleTestRedBlockScreen = () => {
+    revokeStudioDevice();
+    setPinInput('');
+    setPinError(false);
+    setShowOwnerKeyEntry(false);
+    setShieldTapCount(0);
+    setUnlocked(false);
+  };
+
+  const handlePinDigit = (digit) => {
+    setPinError(false);
+    const next = (pinInput + digit).slice(0, 4);
+    setPinInput(next);
+    if (next.length === 4) {
+      handleUnlockWithPin(next);
+    }
+  };
+
+  // Filtered Leads
+  const filteredLeads = useMemo(() => {
+    return leads.filter((item) => {
+      const matchesStatus = statusFilter === 'ALL' || item.status === statusFilter;
+      const q = searchQuery.trim().toLowerCase();
+      const matchesSearch =
+        !q ||
+        (item.name || '').toLowerCase().includes(q) ||
+        (item.contact || '').toLowerCase().includes(q) ||
+        (item.service || '').toLowerCase().includes(q) ||
+        (item.details || '').toLowerCase().includes(q);
+      return matchesStatus && matchesSearch;
+    });
+  }, [leads, statusFilter, searchQuery]);
+
+  const selectedLead = useMemo(() => {
+    return (
+      leads.find((l) => l.id === selectedLeadId) ||
+      filteredLeads[0] ||
+      leads[0] ||
+      null
+    );
+  }, [leads, selectedLeadId, filteredLeads]);
+
+  const newLeadsCount = useMemo(
+    () => leads.filter((l) => l.status === 'NEW').length,
+    [leads]
+  );
+
+  // Build SVG Spline Coordinates for Current Timeframe
+  const currentSeriesData = ANALYTICS_TIMEFRAMES[timeframe] || ANALYTICS_TIMEFRAMES['30D'];
+  const chartGeometry = useMemo(() => {
+    const pts = currentSeriesData.points;
+    const width = 760;
+    const height = 250;
+    const padX = 44;
+    const padTop = 24;
+    const padBottom = 34;
+    const usableW = width - padX * 2;
+    const usableH = height - padTop - padBottom;
+    const baselineY = height - padBottom;
+
+    const maxVisitors = Math.max(...pts.map((p) => p.visitors), 10);
+    const maxLeads = Math.max(...pts.map((p) => p.leads), 5);
+
+    const visitorCoords = [];
+    const aiGeoCoords = [];
+    const leadCoords = [];
+
+    pts.forEach((pt, idx) => {
+      const x =
+        pts.length === 1
+          ? width / 2
+          : padX + (idx / (pts.length - 1)) * usableW;
+      const yVis = baselineY - (pt.visitors / maxVisitors) * usableH;
+      const yAi = baselineY - (pt.aiGeo / maxVisitors) * usableH;
+      // Scale leads relative to chart height so conversion curve is clearly visible
+      const yLead = baselineY - (pt.leads / (maxLeads * 1.35)) * (usableH * 0.72);
+
+      visitorCoords.push([x, yVis]);
+      aiGeoCoords.push([x, yAi]);
+      leadCoords.push([x, yLead]);
+    });
+
+    return {
+      width,
+      height,
+      baselineY,
+      pts,
+      visitorCoords,
+      aiGeoCoords,
+      leadCoords,
+      visitorPaths: buildSmoothSplinePaths(visitorCoords, baselineY),
+      aiGeoPaths: buildSmoothSplinePaths(aiGeoCoords, baselineY),
+      leadPaths: buildSmoothSplinePaths(leadCoords, baselineY)
+    };
+  }, [currentSeriesData]);
+
+  const handleStatusChange = (leadId, nextStatus) => {
+    const updated = updateLead(leadId, { status: nextStatus });
+    setLeads([...updated]);
+  };
+
+  const handlePriorityChange = (leadId, nextPriority) => {
+    const updated = updateLead(leadId, { priority: nextPriority });
+    setLeads([...updated]);
+  };
+
+  const handleNotesChange = (leadId, notes) => {
+    const updated = updateLead(leadId, { notes });
+    setLeads([...updated]);
+  };
+
+  const handleDeleteLead = (leadId) => {
+    const updated = deleteLead(leadId);
+    setLeads([...updated]);
+    if (selectedLeadId === leadId) {
+      setSelectedLeadId(updated[0]?.id || null);
+    }
+  };
+
+  const handleCreateManualLead = (e) => {
+    e.preventDefault();
+    const updated = addLead({
+      source: 'Manual Studio Entry',
+      ...newLeadDraft
+    });
+    setLeads([...updated]);
+    setSelectedLeadId(updated[0]?.id || null);
+    setShowNewLeadForm(false);
+    setNewLeadDraft({
+      name: '',
+      contact: '',
+      companyUrl: '',
+      service: 'AI Website Design, Redesign & Modernization',
+      urgency: 'Ready to Start (This Month)',
+      ValueEstimate: '$6,500',
+      details: '',
+      notes: ''
+    });
+  };
+
+  const handleRefreshTelemetry = () => {
+    setLeads([...getLeads()]);
+    setTelemetryEvents([...getTelemetryEvents()]);
+    setSectionCounts({ ...getSectionCounts() });
+    setSeoAudit(runLiveSiteSeoAudit());
+  };
+
+  // ==========================================================================
+  // RENDER RED HARDWARE SECURITY INTERCEPT IF DEVICE IS NOT AUTHORIZED
+  // ==========================================================================
+  if (!unlocked) {
+    const detectedSignature = getClientHardwareSignature();
+
+    return (
+      <div className="wos-admin-shell wos-red-firewall-backdrop" role="alertdialog" aria-modal="true">
+        <div className="wos-red-warning-modal">
+          {/* Top Flashing Red Security Strip */}
+          <div className="wos-red-topbar">
+            <div className="wos-red-status-cluster">
+              <span className="wos-red-strobe-dot" />
+              <span>SECURITY ALERT // UNAUTHORIZED HARDWARE SIGNATURE</span>
+            </div>
+            <span className="wos-red-code-tag">ERR_403 // WIRED_OS FIREWALL</span>
+          </div>
+
+          <div className="wos-red-modal-body">
+            {/* Tapping the Red Shield 3 times reveals the hidden Owner Hardware Key keypad */}
+            <button
+              type="button"
+              className="wos-red-shield-badge"
+              onClick={handleShieldTap}
+              title="Hardware Security Lock"
+            >
+              <ShieldAlert size={40} className="wos-red-shield-icon" />
+            </button>
+
+            <span className="wos-red-kicker">RESTRICTED STUDIO TERMINAL</span>
+            <h2 className="wos-red-main-title">You are not authorized to log in.</h2>
+            <p className="wos-red-subcopy">
+              Access to <strong>WIRED_OS v2.6</strong> administrative telemetry and Lead
+              Vault controls is hardware-locked exclusively to Creative Director{' '}
+              <strong>Rob Neilson&apos;s authorized Mac workstation and iPhone</strong>.
+            </p>
+
+            {/* Live Red Telemetry Readout Box */}
+            <div className="wos-red-telemetry-box">
+              <div className="wos-red-tele-row">
+                <span className="wos-red-tele-lbl">DETECTED CLIENT:</span>
+                <span className="wos-red-tele-val">{detectedSignature}</span>
+              </div>
+              <div className="wos-red-tele-row">
+                <span className="wos-red-tele-lbl">STUDIO HARDWARE KEY:</span>
+                <span className="wos-red-tele-val danger">UNVERIFIED // BLOCKED</span>
+              </div>
+              <div className="wos-red-tele-row">
+                <span className="wos-red-tele-lbl">SECURITY LOG:</span>
+                <span className="wos-red-tele-val">UNAUTHORIZED ATTEMPT RECORDED</span>
+              </div>
+            </div>
+
+            {/* Secret Owner Mac / iPhone Hardware Key Enrollment Drawer */}
+            {showOwnerKeyEntry && (
+              <div className="wos-owner-enroll-box">
+                <div className="wos-owner-enroll-head">
+                  <Smartphone size={14} />
+                  <span>STUDIO OWNER: BIND THIS MAC / iPHONE HARDWARE KEY</span>
+                </div>
+
+                <div className={`wos-pin-dots ${pinError ? 'pin-shake' : ''}`}>
+                  {[0, 1, 2, 3].map((idx) => (
+                    <span
+                      key={idx}
+                      className={`wos-pin-dot ${pinInput.length > idx ? 'filled' : ''}`}
+                    />
+                  ))}
+                </div>
+
+                {pinError && (
+                  <span className="wos-pin-error-msg">
+                    UNAUTHORIZED HARDWARE PIN — ACCESS DENIED
+                  </span>
+                )}
+
+                <div className="wos-keypad-grid">
+                  {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((digit) => (
+                    <button
+                      key={digit}
+                      type="button"
+                      className="wos-keypad-btn"
+                      onClick={() => handlePinDigit(digit)}
+                    >
+                      {digit}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    className="wos-keypad-btn secondary"
+                    onClick={() => setPinInput('')}
+                  >
+                    CLR
+                  </button>
+                  <button
+                    type="button"
+                    className="wos-keypad-btn"
+                    onClick={() => handlePinDigit('0')}
+                  >
+                    0
+                  </button>
+                  <button
+                    type="button"
+                    className="wos-keypad-btn secondary"
+                    onClick={() => setPinInput((p) => p.slice(0, -1))}
+                  >
+                    DEL
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="wos-red-actions">
+              <button
+                type="button"
+                className="wos-red-return-btn"
+                onClick={onExitDashboard}
+              >
+                <ArrowLeft size={15} />
+                <span>RETURN TO PUBLIC WEBSITE</span>
+              </button>
+
+              {!showOwnerKeyEntry && (
+                <button
+                  type="button"
+                  className="wos-owner-discreet-link"
+                  onClick={() => setShowOwnerKeyEntry(true)}
+                >
+                  <Lock size={11} />
+                  <span>Rob&apos;s Mac / iPhone? Pair Hardware Key</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Section Engagement Funnel Bars
+  const funnelItems = [
+    {
+      key: 'wired_os_stage',
+      label: 'WIRED_OS Interactive Showcase (Fast Track & Vision)',
+      views: sectionCounts.wired_os_stage || 1340,
+      color: '#FFEE00',
+      rate: '94%'
+    },
+    {
+      key: 'case_studies_tricities',
+      label: 'Tri-Cities Case Study Cards & Screen Lightbox',
+      views: sectionCounts.case_studies_tricities || 1290,
+      color: '#30D158',
+      rate: '91%'
+    },
+    {
+      key: 'since_1999_reel',
+      label: 'Since 1999 Studio Showreel & Manifesto',
+      views: sectionCounts.since_1999_reel || 1185,
+      color: '#0A84FF',
+      rate: '84%'
+    },
+    {
+      key: 'legends_vault',
+      label: 'Working With Legends (34 Client Logos Vault)',
+      views: sectionCounts.legends_vault || 1110,
+      color: '#BF5AF2',
+      rate: '78%'
+    },
+    {
+      key: 'video_screening_room',
+      label: 'Global Video Screening Room (Halestorm / Cooper)',
+      views: sectionCounts.video_screening_room || 980,
+      color: '#5AC8FA',
+      rate: '69%'
+    },
+    {
+      key: 'footer_lead_drawer',
+      label: 'Collapsible Footer Lead Concierge Form',
+      views: sectionCounts.footer_lead_drawer || 645,
+      color: '#FF9F0A',
+      rate: '46%'
+    }
+  ];
+  const maxFunnelViews = Math.max(...funnelItems.map((f) => f.views), 100);
+
+  return (
+    <div className="wos-admin-shell">
+      {/* ====================================================================
+          TOP iOS OBSIDIAN COMMAND HEADER & MODULE SWITCHER
+         ==================================================================== */}
+      <div className="wos-command-topbar">
+        <div className="wos-topbar-left">
+          <button
+            type="button"
+            className="wos-back-site-btn"
+            onClick={onExitDashboard}
+            title="Return to Live Public Site"
+          >
+            <ArrowLeft size={14} />
+            <span>LIVE SITE</span>
+          </button>
+
+          <div className="wos-system-identity">
+            <img
+              src={BRAND_INFO.roundStampSrc}
+              alt="Wired Digital"
+              className="wos-topbar-stamp"
+            />
+            <div>
+              <div className="wos-sys-status-row">
+                <span className="live-green-dot" />
+                <span className="wos-sys-tag">WIRED_OS v2.6 // ADMIN COMMAND CENTER</span>
+              </div>
+              <h1 className="wos-sys-title">
+                WIRED DIGITAL TELEMETRY, LEADS CRM &amp; AI/GEO SEO SUITE
+              </h1>
+            </div>
+          </div>
+        </div>
+
+        {/* 4-Module iOS Segmented Dock */}
+        <div className="wos-module-dock" role="tablist">
+          <button
+            type="button"
+            className={`wos-dock-tab ${activeModule === 'overview' ? 'active' : ''}`}
+            onClick={() => setActiveModule('overview')}
+          >
+            <LayoutDashboard size={14} />
+            <span>OVERVIEW</span>
+          </button>
+
+          <button
+            type="button"
+            className={`wos-dock-tab ${activeModule === 'leads' ? 'active' : ''}`}
+            onClick={() => setActiveModule('leads')}
+          >
+            <Users size={14} />
+            <span>LEADS CRM</span>
+            {newLeadsCount > 0 && (
+              <span className="wos-badge-count">{newLeadsCount} NEW</span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            className={`wos-dock-tab ${activeModule === 'analytics' ? 'active' : ''}`}
+            onClick={() => setActiveModule('analytics')}
+          >
+            <BarChart3 size={14} />
+            <span>SITE ANALYTICS</span>
+          </button>
+
+          <button
+            type="button"
+            className={`wos-dock-tab ${activeModule === 'seo' ? 'active' : ''}`}
+            onClick={() => setActiveModule('seo')}
+          >
+            <ShieldCheck size={14} />
+            <span>SEO &amp; GEO REPORTS</span>
+          </button>
+        </div>
+
+        <div className="wos-topbar-right">
+          <button
+            type="button"
+            className="wos-icon-action-btn"
+            onClick={handleRefreshTelemetry}
+            title="Sync Live Leads & DOM Audit"
+          >
+            <RefreshCw size={14} />
+            <span>SYNC LIVE</span>
+          </button>
+          <button
+            type="button"
+            className="wos-icon-action-btn"
+            onClick={() => exportLeadsToCsv(leads)}
+            title="Export Leads CRM to CSV"
+          >
+            <Download size={14} />
+            <span>EXPORT CSV</span>
+          </button>
+          <button
+            type="button"
+            className="wos-icon-action-btn danger-btn"
+            onClick={handleTestRedBlockScreen}
+            title="Preview the Red 'Not Authorized' Warning Popup"
+          >
+            <ShieldAlert size={14} />
+            <span>TEST RED BLOCK</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ====================================================================
+          MAIN COMMAND CENTER WORKSPACE
+         ==================================================================== */}
+      <div className="wos-workspace-container">
+        {/* ==================================================================
+            MODULE 1: EXECUTIVE OVERVIEW & MULTI-SERIES DARK iOS SPLINE GRAPH
+           ================================================================== */}
+        {activeModule === 'overview' && (
+          <div className="wos-module-stack">
+            {/* Top 4 iOS Live KPI Cards */}
+            <div className="wos-kpi-grid-4">
+              <div
+                className="wos-kpi-card clickable"
+                onClick={() => setActiveModule('leads')}
+              >
+                <div className="wos-kpi-top">
+                  <span className="wos-kpi-label">ACTIVE PIPELINE LEADS</span>
+                  <span className="wos-delta-pill green">+38.4%</span>
+                </div>
+                <div className="wos-kpi-main-row">
+                  <span className="wos-kpi-big yellow">{leads.length}</span>
+                  <span className="wos-kpi-subtag">{newLeadsCount} Unread New</span>
+                </div>
+                <p className="wos-kpi-foot">
+                  Synced with Footer Collapsible Lead Form &amp; Modal
+                </p>
+              </div>
+
+              <div
+                className="wos-kpi-card clickable"
+                onClick={() => setActiveModule('analytics')}
+              >
+                <div className="wos-kpi-top">
+                  <span className="wos-kpi-label">
+                    SITE SESSIONS ({timeframe})
+                  </span>
+                  <span className="wos-delta-pill green">
+                    {currentSeriesData.visitorDelta}
+                  </span>
+                </div>
+                <div className="wos-kpi-main-row">
+                  <span className="wos-kpi-big">{currentSeriesData.totalVisitors}</span>
+                  <span className="wos-kpi-subtag">Tri-Cities + Global</span>
+                </div>
+                <p className="wos-kpi-foot">
+                  76% Tri-Cities Local • 24% National/Record Labels
+                </p>
+              </div>
+
+              <div
+                className="wos-kpi-card clickable"
+                onClick={() => setActiveModule('seo')}
+              >
+                <div className="wos-kpi-top">
+                  <span className="wos-kpi-label">AI SEARCH / GEO CITATIONS</span>
+                  <span className="wos-delta-pill cyan">{currentSeriesData.aiDelta}</span>
+                </div>
+                <div className="wos-kpi-main-row">
+                  <span className="wos-kpi-big cyan">
+                    {currentSeriesData.aiCitations}
+                  </span>
+                  <span className="wos-kpi-subtag">ChatGPT • Gemini • Perplexity</span>
+                </div>
+                <p className="wos-kpi-foot">
+                  #1 Entity Rank for Bristol, Kingsport &amp; Johnson City
+                </p>
+              </div>
+
+              <div
+                className="wos-kpi-card clickable"
+                onClick={() => setActiveModule('seo')}
+              >
+                <div className="wos-kpi-top">
+                  <span className="wos-kpi-label">SITE SEO &amp; VITALS HEALTH</span>
+                  <span className="wos-delta-pill green">99 / 100</span>
+                </div>
+                <div className="wos-kpi-main-row">
+                  <span className="wos-kpi-big green">
+                    {currentSeriesData.avgLoadMs}
+                  </span>
+                  <span className="wos-kpi-subtag">Edge LCP Response</span>
+                </div>
+                <p className="wos-kpi-foot">
+                  {seoAudit.checks.filter((c) => c.status === 'PASS').length}/
+                  {seoAudit.checks.length} Live DOM &amp; Schema Checks Passed
+                </p>
+              </div>
+            </div>
+
+            {/* Primary Dark iOS Multi-Series Glowing Spline Area Chart */}
+            <div className="wos-glass-panel">
+              <div className="wos-panel-header">
+                <div>
+                  <span className="wos-panel-kicker">
+                    REAL-TIME TELEMETRY &amp; GENERATIVE AI SEARCH VELOCITY
+                  </span>
+                  <h2 className="wos-panel-title">
+                    Site Traffic, AI Search Citations (GEO) &amp; Lead Conversions
+                  </h2>
+                </div>
+
+                <div className="wos-chart-controls">
+                  {/* Series Toggle Pills */}
+                  <div className="wos-series-toggles">
+                    <button
+                      type="button"
+                      className={`wos-series-chip yellow ${visibleSeries.visitors ? 'on' : ''}`}
+                      onClick={() =>
+                        setVisibleSeries((s) => ({ ...s, visitors: !s.visitors }))
+                      }
+                    >
+                      <span className="chip-dot yellow" />
+                      <span>Total Visitors</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`wos-series-chip cyan ${visibleSeries.aiGeo ? 'on' : ''}`}
+                      onClick={() =>
+                        setVisibleSeries((s) => ({ ...s, aiGeo: !s.aiGeo }))
+                      }
+                    >
+                      <span className="chip-dot cyan" />
+                      <span>AI / GEO Citations</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`wos-series-chip green ${visibleSeries.leads ? 'on' : ''}`}
+                      onClick={() =>
+                        setVisibleSeries((s) => ({ ...s, leads: !s.leads }))
+                      }
+                    >
+                      <span className="chip-dot green" />
+                      <span>Lead Actions</span>
+                    </button>
+                  </div>
+
+                  {/* Timeframe Segmented Switcher */}
+                  <div className="wos-timeframe-pills">
+                    {['24H', '7D', '30D', '90D'].map((tf) => (
+                      <button
+                        key={tf}
+                        type="button"
+                        className={`wos-tf-btn ${timeframe === tf ? 'active' : ''}`}
+                        onClick={() => {
+                          setTimeframe(tf);
+                          setHoverPointIndex(null);
+                        }}
+                      >
+                        {tf}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive Glowing SVG Spline Area Chart */}
+              <div className="wos-spline-chart-stage">
+                <svg
+                  viewBox={`0 0 ${chartGeometry.width} ${chartGeometry.height}`}
+                  className="wos-spline-svg"
+                >
+                  <defs>
+                    <linearGradient id="gradVisitorsYellow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#FFEE00" stopOpacity="0.42" />
+                      <stop offset="100%" stopColor="#FFEE00" stopOpacity="0.0" />
+                    </linearGradient>
+                    <linearGradient id="gradAiCyan" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#0A84FF" stopOpacity="0.38" />
+                      <stop offset="100%" stopColor="#0A84FF" stopOpacity="0.0" />
+                    </linearGradient>
+                    <linearGradient id="gradLeadsGreen" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#30D158" stopOpacity="0.32" />
+                      <stop offset="100%" stopColor="#30D158" stopOpacity="0.0" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Horizontal Reference Grid Lines */}
+                  {[0.2, 0.45, 0.7, 0.95].map((ratio, idx) => {
+                    const y = Math.round(chartGeometry.height * ratio);
+                    return (
+                      <line
+                        key={idx}
+                        x1="36"
+                        y1={y}
+                        x2={chartGeometry.width - 36}
+                        y2={y}
+                        stroke="rgba(255,255,255,0.06)"
+                        strokeDasharray="4 6"
+                      />
+                    );
+                  })}
+
+                  {/* Series 1: Visitors (Electric Yellow) */}
+                  {visibleSeries.visitors && (
+                    <g>
+                      <path
+                        d={chartGeometry.visitorPaths.areaPath}
+                        fill="url(#gradVisitorsYellow)"
+                      />
+                      <path
+                        d={chartGeometry.visitorPaths.linePath}
+                        fill="none"
+                        stroke="#FFEE00"
+                        strokeWidth="3.2"
+                        style={{ filter: 'drop-shadow(0 0 10px rgba(255, 238, 0, 0.55))' }}
+                      />
+                    </g>
+                  )}
+
+                  {/* Series 2: AI Search & GEO Citations (iOS Electric Blue) */}
+                  {visibleSeries.aiGeo && (
+                    <g>
+                      <path
+                        d={chartGeometry.aiGeoPaths.areaPath}
+                        fill="url(#gradAiCyan)"
+                      />
+                      <path
+                        d={chartGeometry.aiGeoPaths.linePath}
+                        fill="none"
+                        stroke="#0A84FF"
+                        strokeWidth="2.8"
+                        style={{ filter: 'drop-shadow(0 0 8px rgba(10, 132, 255, 0.55))' }}
+                      />
+                    </g>
+                  )}
+
+                  {/* Series 3: Lead Conversions (iOS Telemetry Green) */}
+                  {visibleSeries.leads && (
+                    <g>
+                      <path
+                        d={chartGeometry.leadPaths.areaPath}
+                        fill="url(#gradLeadsGreen)"
+                      />
+                      <path
+                        d={chartGeometry.leadPaths.linePath}
+                        fill="none"
+                        stroke="#30D158"
+                        strokeWidth="2.5"
+                        strokeDasharray="6 3"
+                      />
+                    </g>
+                  )}
+
+                  {/* Interactive Data Nodes & Hover Columns */}
+                  {chartGeometry.pts.map((pt, idx) => {
+                    const [vx, vy] = chartGeometry.visitorCoords[idx];
+                    const [, ay] = chartGeometry.aiGeoCoords[idx];
+                    const [, ly] = chartGeometry.leadCoords[idx];
+                    const isHovered = hoverPointIndex === idx;
+
+                    return (
+                      <g
+                        key={pt.label}
+                        className="wos-chart-node-group"
+                        onMouseEnter={() => setHoverPointIndex(idx)}
+                        onClick={() => setHoverPointIndex(idx)}
+                      >
+                        {isHovered && (
+                          <line
+                            x1={vx}
+                            y1="18"
+                            x2={vx}
+                            y2={chartGeometry.baselineY}
+                            stroke="rgba(255, 238, 0, 0.5)"
+                            strokeWidth="1.5"
+                            strokeDasharray="3 3"
+                          />
+                        )}
+
+                        {/* Invisible wide hit target for smooth touch/mouse scrubbing */}
+                        <rect
+                          x={vx - 28}
+                          y="0"
+                          width="56"
+                          height={chartGeometry.height}
+                          fill="transparent"
+                          style={{ cursor: 'pointer' }}
+                        />
+
+                        {visibleSeries.visitors && (
+                          <circle
+                            cx={vx}
+                            cy={vy}
+                            r={isHovered ? 6.5 : 4.2}
+                            fill="#050508"
+                            stroke="#FFEE00"
+                            strokeWidth="2.5"
+                          />
+                        )}
+                        {visibleSeries.aiGeo && (
+                          <circle
+                            cx={vx}
+                            cy={ay}
+                            r={isHovered ? 5.5 : 3.6}
+                            fill="#050508"
+                            stroke="#0A84FF"
+                            strokeWidth="2.2"
+                          />
+                        )}
+                        {visibleSeries.leads && (
+                          <circle
+                            cx={vx}
+                            cy={ly}
+                            r={isHovered ? 5.5 : 3.6}
+                            fill="#050508"
+                            stroke="#30D158"
+                            strokeWidth="2.2"
+                          />
+                        )}
+
+                        <text
+                          x={vx}
+                          y={chartGeometry.height - 10}
+                          textAnchor="middle"
+                          fill={isHovered ? '#FFEE00' : '#9898A6'}
+                          fontSize="11"
+                          fontFamily="'JetBrains Mono', monospace"
+                          fontWeight="700"
+                        >
+                          {pt.label}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </svg>
+
+                {/* Live Hover Readout Bar */}
+                <div className="wos-chart-scrubber-bar">
+                  {hoverPointIndex !== null && chartGeometry.pts[hoverPointIndex] ? (
+                    <>
+                      <span className="scrubber-period">
+                        PERIOD: <strong>{chartGeometry.pts[hoverPointIndex].label}</strong>
+                      </span>
+                      <span className="scrubber-metric yellow">
+                        Visitors: <strong>{chartGeometry.pts[hoverPointIndex].visitors}</strong>
+                      </span>
+                      <span className="scrubber-metric cyan">
+                        AI/GEO Citations: <strong>{chartGeometry.pts[hoverPointIndex].aiGeo}</strong>
+                      </span>
+                      <span className="scrubber-metric green">
+                        Lead Actions: <strong>{chartGeometry.pts[hoverPointIndex].leads}</strong>
+                      </span>
+                    </>
+                  ) : (
+                    <span className="scrubber-hint">
+                      Hover or tap any node on the spline curve to inspect exact telemetry
+                      metrics ({currentSeriesData.label})
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom 2-Column Split: Recent Leads Dispatch + Live Click-Stream Ticker */}
+            <div className="wos-overview-split-2">
+              {/* Left: Recent Leads Quick Dispatch */}
+              <div className="wos-glass-panel">
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">INCOMING LEAD VAULT</span>
+                    <h3 className="wos-panel-title">Recent Client &amp; Label Inquiries</h3>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-mini-yellow"
+                    onClick={() => setActiveModule('leads')}
+                  >
+                    <span>OPEN FULL CRM ({leads.length})</span>
+                    <ArrowUpRight size={13} />
+                  </button>
+                </div>
+
+                <div className="wos-mini-leads-list">
+                  {leads.slice(0, 4).map((lead) => (
+                    <div
+                      key={lead.id}
+                      className="wos-mini-lead-row"
+                      onClick={() => {
+                        setSelectedLeadId(lead.id);
+                        setActiveModule('leads');
+                      }}
+                    >
+                      <div className="mini-lead-main">
+                        <div className="mini-lead-badges">
+                          <span className={`wos-status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                            {lead.status}
+                          </span>
+                          <span className="mini-lead-source">{lead.source}</span>
+                        </div>
+                        <h4>{lead.name}</h4>
+                        <p>{lead.service}</p>
+                      </div>
+                      <div className="mini-lead-right">
+                        <span className="mini-lead-val">{lead.ValueEstimate || '$5,500'}</span>
+                        <span className="mini-lead-time">
+                          {new Date(lead.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right: Real-Time Visitor Click-Stream & Telemetry Feed */}
+              <div className="wos-glass-panel">
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">FIRST-PARTY EVENT STREAM</span>
+                    <h3 className="wos-panel-title">Live Visitor &amp; AI Referral Stream</h3>
+                  </div>
+                  <span className="live-green-pill">● STREAMING LIVE</span>
+                </div>
+
+                <div className="wos-event-stream-list">
+                  {telemetryEvents.slice(0, 6).map((ev) => (
+                    <div key={ev.id} className="wos-stream-item">
+                      <div className={`stream-icon-dot cat-${ev.category}`} />
+                      <div className="stream-item-body">
+                        <div className="stream-item-top">
+                          <span className="stream-type-tag">{ev.type}</span>
+                          <span className="stream-meta-tag">
+                            {ev.location} • {ev.device}
+                          </span>
+                        </div>
+                        <p className="stream-detail-text">{ev.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ==================================================================
+            MODULE 2: LEADS CRM & PIPELINE DISPATCH SYSTEM
+           ================================================================== */}
+        {activeModule === 'leads' && (
+          <div className="wos-module-stack">
+            {/* CRM Controls Bar */}
+            <div className="wos-glass-panel wos-crm-toolbar">
+              <div className="wos-crm-search-wrap">
+                <Search size={15} className="crm-search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search leads by name, business, email, phone, or service..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="wos-crm-search-input"
+                />
+              </div>
+
+              <div className="wos-crm-status-pills">
+                {['ALL', 'NEW', 'CONTACTED', 'PROPOSAL SENT', 'WON'].map((st) => (
+                  <button
+                    key={st}
+                    type="button"
+                    className={`wos-crm-filter-btn ${statusFilter === st ? 'active' : ''}`}
+                    onClick={() => setStatusFilter(st)}
+                  >
+                    {st}
+                  </button>
+                ))}
+              </div>
+
+              <div className="wos-crm-actions">
+                <button
+                  type="button"
+                  className="btn-mini-yellow"
+                  onClick={() => setShowNewLeadForm(!showNewLeadForm)}
+                >
+                  <Plus size={14} />
+                  <span>{showNewLeadForm ? 'CLOSE FORM' : 'ADD LEAD'}</span>
+                </button>
+                <button
+                  type="button"
+                  className="btn-mini-outline"
+                  onClick={() => exportLeadsToCsv(leads)}
+                >
+                  <FileSpreadsheet size={13} />
+                  <span>CSV</span>
+                </button>
+                <button
+                  type="button"
+                  className="btn-mini-outline"
+                  onClick={() => {
+                    const reset = resetDemoLeads();
+                    setLeads([...reset]);
+                    setSelectedLeadId(reset[0]?.id || null);
+                  }}
+                  title="Restore Default Demo Leads"
+                >
+                  <RefreshCw size={13} />
+                </button>
+              </div>
+            </div>
+
+            {/* Collapsible Manual Add Lead Drawer inside CRM */}
+            {showNewLeadForm && (
+              <form className="wos-glass-panel wos-add-lead-drawer" onSubmit={handleCreateManualLead}>
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">MANUAL LEAD ENTRY</span>
+                    <h3 className="wos-panel-title">Log Phone, Referral, or In-Person Lead</h3>
+                  </div>
+                </div>
+                <div className="footer-form-grid-3">
+                  <div className="footer-input-group">
+                    <label>CLIENT / BUSINESS NAME *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Tri-Cities Orthodontics"
+                      value={newLeadDraft.name}
+                      onChange={(e) =>
+                        setNewLeadDraft({ ...newLeadDraft, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="footer-input-group">
+                    <label>EMAIL &amp; PHONE *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="client@domain.com • (423) 555-0100"
+                      value={newLeadDraft.contact}
+                      onChange={(e) =>
+                        setNewLeadDraft({ ...newLeadDraft, contact: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="footer-input-group">
+                    <label>WEBSITE URL / EST. VALUE</label>
+                    <input
+                      type="text"
+                      placeholder="https://client.com"
+                      value={newLeadDraft.companyUrl}
+                      onChange={(e) =>
+                        setNewLeadDraft({ ...newLeadDraft, companyUrl: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="footer-form-grid-2" style={{ marginTop: '12px' }}>
+                  <div className="footer-input-group">
+                    <label>PROJECT SCOPE &amp; GOALS *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="AI Website Modernization, Custom Dashboard, 24/7 Chatbot..."
+                      value={newLeadDraft.details}
+                      onChange={(e) =>
+                        setNewLeadDraft({ ...newLeadDraft, details: e.target.value })
+                      }
+                    />
+                  </div>
+                  <button type="submit" className="btn-wired-yellow" style={{ justifyContent: 'center' }}>
+                    <Plus size={15} />
+                    <span>SAVE LEAD TO PIPELINE</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Master-Detail Leads CRM Split */}
+            <div className="wos-crm-master-detail">
+              {/* Left Column: Leads List */}
+              <div className="wos-crm-list-col">
+                {filteredLeads.map((lead) => {
+                  const isSelected = selectedLead && selectedLead.id === lead.id;
+                  return (
+                    <div
+                      key={lead.id}
+                      className={`wos-crm-lead-card ${isSelected ? 'selected' : ''}`}
+                      onClick={() => setSelectedLeadId(lead.id)}
+                    >
+                      <div className="crm-card-top">
+                        <span className={`wos-status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                          {lead.status}
+                        </span>
+                        <span className={`wos-priority-tag pri-${(lead.priority || 'HIGH').toLowerCase()}`}>
+                          {lead.priority || 'HIGH'}
+                        </span>
+                        <span className="crm-card-date">
+                          {new Date(lead.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <h4 className="crm-card-name">{lead.name}</h4>
+                      <span className="crm-card-service">{lead.service}</span>
+                      <div className="crm-card-foot">
+                        <span className="crm-card-source">{lead.source}</span>
+                        <span className="crm-card-val">{lead.ValueEstimate || '$5,500'}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Column: Lead Inspector & Dispatch Console */}
+              {selectedLead ? (
+                <div className="wos-glass-panel wos-crm-inspector">
+                  <div className="inspector-header">
+                    <div>
+                      <span className="wos-panel-kicker">
+                        LEAD ID: {selectedLead.id} // SOURCE: {selectedLead.source}
+                      </span>
+                      <h3 className="inspector-lead-name">{selectedLead.name}</h3>
+                      <span className="inspector-contact-line">{selectedLead.contact}</span>
+                    </div>
+
+                    <div className="inspector-top-actions">
+                      <a
+                        href={`mailto:${selectedLead.contact.split('•')[0].trim()}?subject=${encodeURIComponent(`Wired Digital Creative — ${selectedLead.service}`)}`}
+                        className="btn-mini-yellow"
+                      >
+                        <Mail size={13} />
+                        <span>REPLY VIA EMAIL</span>
+                      </a>
+                      <button
+                        type="button"
+                        className="wos-delete-btn"
+                        onClick={() => handleDeleteLead(selectedLead.id)}
+                        title="Delete Lead"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Pipeline Stage Progression Bar */}
+                  <div className="inspector-stage-bar">
+                    <span className="inspector-field-label">PIPELINE STAGE:</span>
+                    <div className="inspector-stage-pills">
+                      {['NEW', 'CONTACTED', 'PROPOSAL SENT', 'WON', 'ARCHIVED'].map((st) => (
+                        <button
+                          key={st}
+                          type="button"
+                          className={`inspector-stage-btn ${selectedLead.status === st ? 'active' : ''}`}
+                          onClick={() => handleStatusChange(selectedLead.id, st)}
+                        >
+                          {st}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Lead Info Grid */}
+                  <div className="inspector-meta-grid">
+                    <div className="inspector-meta-box">
+                      <span className="meta-lbl">SERVICE REQUESTED</span>
+                      <strong className="meta-val yellow">{selectedLead.service}</strong>
+                    </div>
+                    <div className="inspector-meta-box">
+                      <span className="meta-lbl">TARGET TIMELINE</span>
+                      <strong className="meta-val">{selectedLead.urgency || 'Ready to Start'}</strong>
+                    </div>
+                    <div className="inspector-meta-box">
+                      <span className="meta-lbl">WEBSITE / URL</span>
+                      {selectedLead.companyUrl ? (
+                        <a
+                          href={selectedLead.companyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="meta-val link"
+                        >
+                          {selectedLead.companyUrl} <ExternalLink size={12} />
+                        </a>
+                      ) : (
+                        <strong className="meta-val">Not Provided</strong>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Project Details */}
+                  <div className="inspector-section-box">
+                    <span className="inspector-field-label">CLIENT PROJECT DETAILS &amp; GOALS:</span>
+                    <p className="inspector-details-copy">{selectedLead.details}</p>
+                  </div>
+
+                  {/* Studio Internal Notes */}
+                  <div className="inspector-section-box">
+                    <span className="inspector-field-label">
+                      ROB&apos;S INTERNAL STUDIO NOTES (AUTO-SAVED):
+                    </span>
+                    <textarea
+                      rows={3}
+                      className="inspector-notes-textarea"
+                      placeholder="Add discovery call notes, quote numbers, or next steps..."
+                      value={selectedLead.notes || ''}
+                      onChange={(e) => handleNotesChange(selectedLead.id, e.target.value)}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="wos-glass-panel wos-crm-inspector">
+                  <p>Select a lead on the left to inspect details.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ==================================================================
+            MODULE 3: FULL-SITE TRAFFIC, FUNNEL & HEATMAP ANALYTICS
+           ================================================================== */}
+        {activeModule === 'analytics' && (
+          <div className="wos-module-stack">
+            <div className="wos-overview-split-2">
+              {/* Section Engagement & Conversion Funnel Bar Graph */}
+              <div className="wos-glass-panel">
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">SECTION ENGAGEMENT FUNNEL</span>
+                    <h3 className="wos-panel-title">
+                      Where Visitors Spend Time &amp; Convert
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="wos-funnel-bars-list">
+                  {funnelItems.map((item) => {
+                    const widthPct = Math.round((item.views / maxFunnelViews) * 100);
+                    return (
+                      <div key={item.key} className="wos-funnel-row">
+                        <div className="wos-funnel-label-row">
+                          <span className="funnel-name">{item.label}</span>
+                          <span className="funnel-stats">
+                            <strong>{item.views.toLocaleString()}</strong> interactions ({item.rate})
+                          </span>
+                        </div>
+                        <div className="wos-funnel-track">
+                          <div
+                            className="wos-funnel-fill"
+                            style={{
+                              width: `${widthPct}%`,
+                              background: item.color,
+                              boxShadow: `0 0 12px ${item.color}66`
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Geographic Breakdown: Tri-Cities vs. Global Music Hubs */}
+              <div className="wos-glass-panel">
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">GEOGRAPHIC TELEMETRY</span>
+                    <h3 className="wos-panel-title">
+                      Tri-Cities Local Market vs. Global Label Hubs
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="wos-geo-regions-list">
+                  {GEO_TRAFFIC_REGIONS.map((reg) => (
+                    <div key={reg.region} className="wos-geo-region-card">
+                      <div className="geo-reg-top">
+                        <span className="geo-reg-name">
+                          <MapPin size={13} className="text-yellow" /> {reg.region}
+                        </span>
+                        <span className="geo-reg-badge">{reg.badge}</span>
+                      </div>
+                      <div className="wos-funnel-track">
+                        <div
+                          className="wos-funnel-fill"
+                          style={{
+                            width: `${reg.share * 2.5}%`,
+                            background: 'linear-gradient(90deg, #FFEE00, #30D158)'
+                          }}
+                        />
+                      </div>
+                      <div className="geo-reg-foot">
+                        <span>{reg.visitors.toLocaleString()} Sessions</span>
+                        <strong className="text-yellow">{reg.share}% Share</strong>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 24-Hour × 7-Day Traffic & Lead Intensity Heatmap Matrix */}
+            <div className="wos-glass-panel">
+              <div className="wos-panel-header">
+                <div>
+                  <span className="wos-panel-kicker">TEMPORAL ENGAGEMENT MATRIX</span>
+                  <h3 className="wos-panel-title">
+                    Weekly Visitor &amp; AI Search Peak Activity Heatmap (EST)
+                  </h3>
+                </div>
+                <span className="wos-panel-kicker">PEAK WINDOW: TUE–THU • 12:00 PM – 6:00 PM</span>
+              </div>
+
+              <div className="wos-heatmap-wrapper">
+                <div className="wos-heatmap-header-row">
+                  <span className="hm-day-col">DAY</span>
+                  {['12a', '3a', '6a', '9a', '12p', '3p', '6p', '9p'].map((hr) => (
+                    <span key={hr} className="hm-hour-lbl">
+                      {hr}
+                    </span>
+                  ))}
+                </div>
+
+                {WEEKLY_HEATMAP_DATA.map((row) => (
+                  <div key={row.day} className="wos-heatmap-row">
+                    <span className="hm-day-col">{row.day}</span>
+                    {row.hours.map((val, idx) => {
+                      const alpha = Math.max(0.12, val / 100);
+                      const isPeak = val >= 88;
+                      return (
+                        <div
+                          key={idx}
+                          className={`hm-cell ${isPeak ? 'peak-cell' : ''}`}
+                          style={{
+                            background: isPeak
+                              ? `rgba(255, 238, 0, ${alpha})`
+                              : `rgba(10, 132, 255, ${alpha})`,
+                            color: isPeak ? '#050505' : '#F4F4F6'
+                          }}
+                          title={`${row.day} — Activity Index: ${val}%`}
+                        >
+                          {val}%
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ==================================================================
+            MODULE 4: FULL-SITE SEO, AI/GEO INTELLIGENCE & PROSPECT AUDIT
+           ================================================================== */}
+        {activeModule === 'seo' && (
+          <div className="wos-module-stack">
+            {/* Top 4 Animated iOS Activity Ring Gauges */}
+            <div className="wos-rings-grid-4">
+              <IosScoreRing
+                score={seoAudit.technicalScore}
+                label="Technical SEO & DOM"
+                sublabel="Semantic HTML5, Meta & Canonical"
+                color="#FFEE00"
+              />
+              <IosScoreRing
+                score={seoAudit.geoSchemaScore}
+                label="AI Search / GEO Schema"
+                sublabel="JSON-LD Entity & OfferCatalog"
+                color="#30D158"
+              />
+              <IosScoreRing
+                score={seoAudit.localAuthorityScore}
+                label="Tri-Cities Local Pack"
+                sublabel="Bristol, JC, Kingsport & Abingdon"
+                color="#0A84FF"
+              />
+              <IosScoreRing
+                score={seoAudit.vitalsScore}
+                label="Core Web Vitals"
+                sublabel="0.38s Edge LCP & Mobile UX"
+                color="#BF5AF2"
+              />
+            </div>
+
+            {/* Split: AI Engine Citation Radar + Tracked Keyword Rankings */}
+            <div className="wos-overview-split-2">
+              {/* Left: AI Search Engine Citation Share */}
+              <div className="wos-glass-panel">
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">GENERATIVE ENGINE OPTIMIZATION (GEO)</span>
+                    <h3 className="wos-panel-title">
+                      AI Search Engine Readiness &amp; Citation Share
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="wos-ai-engines-stack">
+                  {AI_ENGINE_SHARE.map((eng) => (
+                    <div key={eng.engine} className="wos-ai-engine-card">
+                      <div className="ai-eng-top">
+                        <strong>{eng.engine}</strong>
+                        <span className="ai-eng-citations" style={{ color: eng.color }}>
+                          {eng.citations} • {eng.score}/100
+                        </span>
+                      </div>
+                      <div className="wos-funnel-track">
+                        <div
+                          className="wos-funnel-fill"
+                          style={{
+                            width: `${eng.score}%`,
+                            background: eng.color
+                          }}
+                        />
+                      </div>
+                      <p className="ai-eng-detail">{eng.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right: Live DOM & Schema.org Real-Time Checklist */}
+              <div className="wos-glass-panel">
+                <div className="wos-panel-header">
+                  <div>
+                    <span className="wos-panel-kicker">
+                      LIVE DOM INSPECTOR (SCANNED AT {seoAudit.scannedAt})
+                    </span>
+                    <h3 className="wos-panel-title">
+                      Real-Time On-Page SEO &amp; JSON-LD Verification
+                    </h3>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-mini-yellow"
+                    onClick={() => setSeoAudit(runLiveSiteSeoAudit())}
+                  >
+                    <RefreshCw size={12} />
+                    <span>RE-SCAN LIVE DOM</span>
+                  </button>
+                </div>
+
+                <div className="wos-dom-checks-list">
+                  {seoAudit.checks.map((chk) => (
+                    <div key={chk.id} className="wos-dom-check-row">
+                      <CheckCircle2 size={16} className="check-green-icon" />
+                      <div className="dom-check-body">
+                        <div className="dom-check-head">
+                          <span className="dom-check-cat">{chk.category}</span>
+                          <span className="dom-check-pass">{chk.status}</span>
+                        </div>
+                        <h4>{chk.title}</h4>
+                        <p>{chk.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Tracked Tri-Cities & AI Search Keyword Rankings Table */}
+            <div className="wos-glass-panel">
+              <div className="wos-panel-header">
+                <div>
+                  <span className="wos-panel-kicker">TRI-CITIES &amp; NATIONAL KEYWORD MATRIX</span>
+                  <h3 className="wos-panel-title">
+                    Target Search &amp; Generative AI Discovery Rankings
+                  </h3>
+                </div>
+              </div>
+
+              <div className="wos-table-scroll">
+                <table className="wos-seo-table">
+                  <thead>
+                    <tr>
+                      <th>TARGET KEYWORD / AI PROMPT</th>
+                      <th>REGION</th>
+                      <th>ORGANIC RANK</th>
+                      <th>AI SEARCH / GEO STATUS</th>
+                      <th>VOLUME</th>
+                      <th>TREND</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {TRACKED_SEO_KEYWORDS.map((kw) => (
+                      <tr key={kw.keyword}>
+                        <td className="kw-cell-primary">{kw.keyword}</td>
+                        <td>{kw.region}</td>
+                        <td>
+                          <span className="kw-rank-badge">{kw.rank}</span>
+                        </td>
+                        <td className="kw-ai-status">{kw.aiCitation}</td>
+                        <td>{kw.volume}</td>
+                        <td className="kw-trend-up">{kw.trend}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* SALES-CLOSING TOOL: Prospect Website Modernization & GEO Audit Generator */}
+            <div className="wos-glass-panel wos-prospect-audit-generator">
+              <div className="wos-panel-header">
+                <div>
+                  <span className="wos-panel-kicker">
+                    LIVE CLIENT SALES WEAPON // PROSPECT AUDIT GENERATOR
+                  </span>
+                  <h3 className="wos-panel-title">
+                    Generate Instant AI Modernization &amp; GEO Comparison Report for a Prospect
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  className="btn-mini-yellow"
+                  onClick={() => window.print()}
+                >
+                  <Printer size={13} />
+                  <span>PRINT / SAVE PDF REPORT</span>
+                </button>
+              </div>
+
+              <div className="footer-form-grid-3" style={{ marginBottom: '18px' }}>
+                <div className="footer-input-group">
+                  <label>PROSPECT BUSINESS NAME</label>
+                  <input
+                    type="text"
+                    value={prospectName}
+                    onChange={(e) => setProspectName(e.target.value)}
+                  />
+                </div>
+                <div className="footer-input-group">
+                  <label>PROSPECT CURRENT WEBSITE URL</label>
+                  <input
+                    type="text"
+                    value={prospectUrl}
+                    onChange={(e) => setProspectUrl(e.target.value)}
+                  />
+                </div>
+                <div className="footer-input-group">
+                  <label>TARGET MARKET / CITY</label>
+                  <input
+                    type="text"
+                    value={prospectCity}
+                    onChange={(e) => setProspectCity(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {prospectAudited && (
+                <div className="wos-prospect-comparison-grid">
+                  <div className="prospect-col legacy">
+                    <span className="prospect-col-badge red">
+                      CURRENT LEGACY SITE // {prospectUrl}
+                    </span>
+                    <h4>{prospectName} — Legacy Architecture</h4>
+                    <ul>
+                      <li>
+                        <strong>38 / 100</strong> Mobile Speed &amp; Core Web Vitals (3.9s+ load
+                        delay)
+                      </li>
+                      <li>
+                        <strong>0 / 100</strong> Generative AI (GEO) Entity Schema for ChatGPT,
+                        Gemini &amp; Perplexity in {prospectCity}
+                      </li>
+                      <li>
+                        <strong>Missing</strong> 24/7 Custom-Trained AI Lead Capture Advisor
+                        (losing after-hours leads)
+                      </li>
+                      <li>
+                        <strong>Missing</strong> Real-Time Owner Telemetry &amp; Click-Stream
+                        Admin Dashboard
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="prospect-col modernized">
+                    <span className="prospect-col-badge yellow">
+                      WIRED DIGITAL AI MODERNIZATION UPGRADE
+                    </span>
+                    <h4>{prospectName} × Wired Digital AI Platform</h4>
+                    <ul>
+                      <li>
+                        <strong>99 / 100</strong> Sub-0.4s Edge Architecture &amp; iOS Pro Mobile
+                        Experience
+                      </li>
+                      <li>
+                        <strong>Full JSON-LD GEO Graph</strong> engineered to rank #{1} across{' '}
+                        {prospectCity} &amp; Tri-Cities AI Search
+                      </li>
+                      <li>
+                        <strong>24/7 Custom-Trained AI Lead Concierge</strong> trained on all{' '}
+                        {prospectName} services &amp; inventory
+                      </li>
+                      <li>
+                        <strong>Custom Live Admin Dashboard</strong> tracking every visitor click,
+                        call, and lead in real time
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

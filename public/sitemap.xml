@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <!-- 1. ROOT FLAGSHIP HUB: AI Website Design, Redesign, Modernization & GEO -->
+  <url>
+    <loc>https://www.wireddigitalcreative.com/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.wireddigitalcreative.com/WD-Brand-2017.png</image:loc>
+      <image:title>Wired Digital LLC — AI Website Design, Redesign &amp; Modernization (Bristol VA/TN &amp; Tri-Cities)</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.wireddigitalcreative.com/fasttrack-admin-dash.png</image:loc>
+      <image:title>Fast Track Automotive Bristol TN — Custom Live Telemetry &amp; Lead Admin Dashboard by Wired Digital</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.wireddigitalcreative.com/teamvision-ai-advisor.png</image:loc>
+      <image:title>Team Vision LLC Bristol — 24/7 Custom-Trained Ask VISION AI Space Advisor &amp; Lead Capture Chatbot</image:title>
+    </image:image>
+  </url>
+
+  <!-- 2. CORE SERVICE PILLARS (SITELINKS TREE) -->
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?view=ai-web-design-seo</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?view=custom-dashboards-ai-chatbots</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?view=generative-seo-geo</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?view=video-production</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <!-- 3. LOCAL "WEBSITE DESIGN NEAR ME" TRI-CITIES SERVICE NODES -->
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?city=bristol-tn-va-web-design</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?city=johnson-city-tn-web-design</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?city=kingsport-tn-web-design</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?city=abingdon-va-web-design</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 4. FLAGSHIP CASE STUDIES & CLIENT VAULT NODES -->
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?case=fast-track-bristol-tn</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?case=team-vision-llc-bristol</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?section=legends-vault</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+</urlset>

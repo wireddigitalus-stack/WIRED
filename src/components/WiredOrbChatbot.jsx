@@ -1228,11 +1228,6 @@ export default function WiredOrbChatbot() {
               <aside className="wired64-graphics-deck">
                 {/* Giant Living Shiny Black Orb over 64-Bit Phosphor-Green Perspective Grid */}
                 <div className="w64-orb-holo-stage">
-                  {/* Live Mood Badge or Interactive Hint */}
-                  <div className={`w64-stage-mood-hud ${orbMoodBadge ? 'is-active' : ''}`}>
-                    {orbMoodBadge || 'HOVER OR DOUBLE-CLICK ORB // 64-BIT SMILE'}
-                  </div>
-
                   <svg
                     viewBox="0 0 360 200"
                     className="w64-wireframe-grid-svg"
@@ -1309,6 +1304,16 @@ export default function WiredOrbChatbot() {
                     ))}
                   </div>
                 </div>
+
+                {/* Dedicated Mood / Instruction Pill Below Stage (Never Overlaps Orb Animation) */}
+                <button
+                  type="button"
+                  className={`w64-stage-mood-hud ${orbMoodBadge ? 'is-active' : ''}`}
+                  onClick={handleStageOrbDoubleClick}
+                  title="Click or double-click orb to cycle WIRED-64 secret 64-bit moods"
+                >
+                  {orbMoodBadge || '⚡ HOVER OR DOUBLE-CLICK ORB // 64-BIT SMILE'}
+                </button>
 
                 {/* Dynamic 64-Bit Retro Vector Graphics Screen (Desktop Full-Screen & Docked) */}
                 {!isMobileViewport && (

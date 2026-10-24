@@ -651,7 +651,7 @@ export default function WiredOrbChatbot() {
             <div className="orb-whisper-stack">
               <span className="orb-whisper-line-1">ASK</span>
               <span className="orb-whisper-line-2">WIRED-64</span>
-              <span className="orb-whisper-line-3">// 24/7 AI</span>
+              <span className="orb-whisper-line-3">// 24/7 IQ</span>
             </div>
             <span className="orb-whisper-tether" aria-hidden="true" />
           </div>

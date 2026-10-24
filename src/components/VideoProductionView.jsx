@@ -262,10 +262,10 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
                 {isVevoOrEmbedBlocked ? (
                   <div className="yt-vevo-cinema-fallback">
                     <img
-                      src={`https://i.ytimg.com/vi/${activeVideoObj.videoId}/maxresdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/${activeVideoObj.videoId}/hqdefault.jpg`}
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = `https://i.ytimg.com/vi/${activeVideoObj.videoId}/hqdefault.jpg`;
+                        e.currentTarget.src = `https://i.ytimg.com/vi/${activeVideoObj.videoId}/0.jpg`;
                       }}
                       alt={activeVideoObj.title}
                       className="yt-vevo-fallback-bg"

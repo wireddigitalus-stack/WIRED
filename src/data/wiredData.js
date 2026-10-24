@@ -559,8 +559,8 @@ export const FEATURED_WORK = [
     category: 'FLAGSHIP COMMISSIONED PRODUCTION',
     youtubeId: '-uM3mZFoUrU',
     youtubeUrl: 'https://youtu.be/-uM3mZFoUrU?si=xFjTCZA7TyakEIsH',
-    thumbnail: 'https://i.ytimg.com/vi/-uM3mZFoUrU/maxresdefault.jpg',
-    fallbackThumb: 'https://i.ytimg.com/vi/-uM3mZFoUrU/hqdefault.jpg',
+    thumbnail: 'https://i.ytimg.com/vi/-uM3mZFoUrU/hqdefault.jpg',
+    fallbackThumb: 'https://i.ytimg.com/vi/-uM3mZFoUrU/0.jpg',
     description:
       'Cinematic rock performance and dark visual storytelling directed and edited by Rob Neilson for Full Devil Jacket’s official eOne / VEVO release "Killers".',
     tags: ['Flagship Directing & Edit', 'Cinematic Rock Production', 'VEVO / eOne']

@@ -67,8 +67,17 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
                     >
                       <img
                         src={project.thumbnail}
+                        onLoad={(e) => {
+                          if (
+                            e.currentTarget.naturalWidth <= 120 &&
+                            project.fallbackThumb &&
+                            e.currentTarget.src !== project.fallbackThumb
+                          ) {
+                            e.currentTarget.src = project.fallbackThumb;
+                          }
+                        }}
                         onError={(e) => {
-                          if (e.currentTarget.src !== project.fallbackThumb) {
+                          if (project.fallbackThumb && e.currentTarget.src !== project.fallbackThumb) {
                             e.currentTarget.src = project.fallbackThumb;
                           }
                         }}

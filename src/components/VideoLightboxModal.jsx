@@ -96,10 +96,10 @@ export default function VideoLightboxModal({ project, onClose }) {
           ) : isVevoProtected ? (
             <div className="yt-vevo-cinema-fallback modal-vevo-stage">
               <img
-                src={`https://i.ytimg.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                src={`https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = `https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`;
+                  e.currentTarget.src = `https://i.ytimg.com/vi/${project.youtubeId}/0.jpg`;
                 }}
                 alt={project.title}
                 className="yt-vevo-fallback-bg"

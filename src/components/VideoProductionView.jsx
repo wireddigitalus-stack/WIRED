@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Film,
   Play,
@@ -11,7 +11,8 @@ import {
   ListVideo,
   Tv,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  ShieldCheck
 } from 'lucide-react';
 import {
   BRAND_INFO,
@@ -22,6 +23,7 @@ import {
 
 export default function VideoProductionView({ onOpenVideoModal, onOpenContact, onNavigateTab }) {
   const theaterPlayerRef = useRef(null);
+  const iframeRef = useRef(null);
 
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,6 +31,7 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
   const [autoPlayEmbed, setAutoPlayEmbed] = useState(false);
   const [embedPlaylistMode, setEmbedPlaylistMode] = useState(false);
   const [showAllVideos, setShowAllVideos] = useState(false);
+  const [runtimeBlockedIds, setRuntimeBlockedIds] = useState({});
 
   const filteredVideos = YOUTUBE_CHANNEL_DATA.videos.filter((vid) => {
     const matchesCat = activeCategory === 'all' || vid.category === activeCategory;
@@ -45,6 +48,27 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
     YOUTUBE_CHANNEL_DATA.videos.find((v) => v.videoId === activeVideoId) ||
     filteredVideos[0] ||
     YOUTUBE_CHANNEL_DATA.videos[0];
+
+  const isVevoOrEmbedBlocked =
+    !embedPlaylistMode &&
+    Boolean(activeVideoObj.vevoRestricted || runtimeBlockedIds[activeVideoObj.videoId]);
+
+  // Listen for YouTube IFrame API onError (101 / 150 = VEVO / label embed disabled)
+  useEffect(() => {
+    const handleYtMessage = (event) => {
+      if (!event.origin || !event.origin.includes('youtube.com')) return;
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (data?.event === 'onError' && (data.info === 101 || data.info === 150 || data.info === 153)) {
+          setRuntimeBlockedIds((prev) => ({ ...prev, [activeVideoObj.videoId]: true }));
+        }
+      } catch {
+        // Ignore non-JSON messages
+      }
+    };
+    window.addEventListener('message', handleYtMessage);
+    return () => window.removeEventListener('message', handleYtMessage);
+  }, [activeVideoObj.videoId]);
 
   const activePlaylistObj =
     YOUTUBE_CHANNEL_DATA.playlists.find((p) => p.id === activeCategory) ||
@@ -216,11 +240,11 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
                     </span>
                   </div>
                   <h2 className="yt-channel-title">
-                    WIRED DIGITAL <span className="text-yellow">YOUTUBE BROADCAST DECK</span>
+                    WIRED ϟ DIGITAL <span className="text-yellow">YOUTUBE BROADCAST DECK</span>
                   </h2>
                   <p className="yt-channel-sub">
-                    36 Official Music Videos, Custom Lyric Videos &amp; Artist Promo Reels — stream
-                    directly below or explore the full playlist catalog on YouTube.
+                    {YOUTUBE_CHANNEL_DATA.bio} — stream all {YOUTUBE_CHANNEL_DATA.videos.length}{' '}
+                    official Music Videos, Custom Lyric Videos &amp; the Channel Trailer directly below.
                   </p>
                 </div>
               </div>
@@ -251,22 +275,79 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
             {/* Main 16:9 Embedded YouTube Broadcast Theater */}
             <div className="yt-broadcast-theater" ref={theaterPlayerRef}>
               <div className="yt-iframe-stage">
-                <iframe
-                  key={
-                    embedPlaylistMode
-                      ? `pl_${activePlaylistObj.playlistId}`
-                      : `vid_${activeVideoObj.videoId}_${autoPlayEmbed}`
-                  }
-                  src={
-                    embedPlaylistMode
-                      ? `https://www.youtube.com/embed/videoseries?list=${activePlaylistObj.playlistId}&rel=0`
-                      : `https://www.youtube.com/embed/${activeVideoObj.videoId}?autoplay=${autoPlayEmbed ? 1 : 0}&rel=0`
-                  }
-                  title={activeVideoObj.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="yt-broadcast-iframe"
-                />
+                {isVevoOrEmbedBlocked ? (
+                  <div className="yt-vevo-cinema-fallback">
+                    <img
+                      src={`https://i.ytimg.com/vi/${activeVideoObj.videoId}/maxresdefault.jpg`}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = `https://i.ytimg.com/vi/${activeVideoObj.videoId}/hqdefault.jpg`;
+                      }}
+                      alt={activeVideoObj.title}
+                      className="yt-vevo-fallback-bg"
+                    />
+                    <div className="yt-vevo-fallback-overlay">
+                      <span className="yt-vevo-shield-pill">
+                        <ShieldCheck size={14} />
+                        <span>VEVO / MAJOR-LABEL COPYRIGHT PROTECTION // DIRECT YOUTUBE STREAM</span>
+                      </span>
+                      <h3 className="yt-vevo-fallback-title">{activeVideoObj.title}</h3>
+                      <p className="yt-vevo-fallback-sub">
+                        <strong>{activeVideoObj.artist}</strong> • {activeVideoObj.views} •{' '}
+                        {activeVideoObj.duration} — VEVO &amp; major record label licensing require
+                        this official release to stream directly on YouTube.
+                      </p>
+                      <div className="yt-vevo-fallback-actions">
+                        <a
+                          href={`https://www.youtube.com/watch?v=${activeVideoObj.videoId}&list=${activeVideoObj.playlistId}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-wired-yellow yt-vevo-watch-btn"
+                        >
+                          <Play size={16} fill="#050505" stroke="#050505" />
+                          <span>WATCH OFFICIAL VEVO RELEASE ON YOUTUBE</span>
+                          <ExternalLink size={15} />
+                        </a>
+                        <button
+                          type="button"
+                          className="btn-wired-outline"
+                          onClick={handleNextVideo}
+                        >
+                          <span>NEXT VIDEO IN FEED</span>
+                          <SkipForward size={15} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <iframe
+                    ref={iframeRef}
+                    key={
+                      embedPlaylistMode
+                        ? `pl_${activePlaylistObj.playlistId}`
+                        : `vid_${activeVideoObj.videoId}_${autoPlayEmbed}`
+                    }
+                    src={
+                      embedPlaylistMode
+                        ? `https://www.youtube.com/embed/videoseries?list=${activePlaylistObj.playlistId}&rel=0&enablejsapi=1`
+                        : `https://www.youtube.com/embed/${activeVideoObj.videoId}?autoplay=${autoPlayEmbed ? 1 : 0}&rel=0&enablejsapi=1`
+                    }
+                    onLoad={() => {
+                      try {
+                        iframeRef.current?.contentWindow?.postMessage(
+                          JSON.stringify({ event: 'listening' }),
+                          '*'
+                        );
+                      } catch {
+                        // Ignore cross-origin errors
+                      }
+                    }}
+                    title={activeVideoObj.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="yt-broadcast-iframe"
+                  />
+                )}
               </div>
 
               {/* Active Broadcast Control & Telemetry Bar Underneath 16:9 Player */}

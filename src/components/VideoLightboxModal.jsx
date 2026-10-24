@@ -1,17 +1,54 @@
-import React, { useEffect } from 'react';
-import { X, ExternalLink } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { X, ExternalLink, Play, ShieldCheck } from 'lucide-react';
+
+const VEVO_RESTRICTED_VIDEO_IDS = new Set([
+  'DkTGpDq6Pcg',
+  '-uM3mZFoUrU',
+  'GCzKaAv8aFA',
+  'v55qwxhF1UA',
+  'w54CeorgMu4',
+  'qlMV56gJLYY',
+  'DF8po26yGho'
+]);
 
 export default function VideoLightboxModal({ project, onClose }) {
+  const iframeRef = useRef(null);
+  const [embedBlocked, setEmbedBlocked] = useState(false);
+
   useEffect(() => {
+    setEmbedBlocked(false);
     if (!project) return;
     const handleKey = (e) => {
       if (e.key === 'Escape') onClose();
     };
+    const handleYtMessage = (event) => {
+      if (!event.origin || !event.origin.includes('youtube.com')) return;
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (data?.event === 'onError' && (data.info === 101 || data.info === 150 || data.info === 153)) {
+          setEmbedBlocked(true);
+        }
+      } catch {
+        // Ignore non-JSON messages
+      }
+    };
     window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
+    window.addEventListener('message', handleYtMessage);
+    return () => {
+      window.removeEventListener('keydown', handleKey);
+      window.removeEventListener('message', handleYtMessage);
+    };
   }, [project, onClose]);
 
   if (!project) return null;
+
+  const isVevoProtected =
+    !project.localVideo &&
+    Boolean(
+      project.vevoRestricted ||
+        embedBlocked ||
+        (project.youtubeId && VEVO_RESTRICTED_VIDEO_IDS.has(project.youtubeId))
+    );
 
   return (
     <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
@@ -57,9 +94,55 @@ export default function VideoLightboxModal({ project, onClose }) {
               playsInline
               className="modal-video-element"
             />
+          ) : isVevoProtected ? (
+            <div className="yt-vevo-cinema-fallback modal-vevo-stage">
+              <img
+                src={`https://i.ytimg.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = `https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`;
+                }}
+                alt={project.title}
+                className="yt-vevo-fallback-bg"
+              />
+              <div className="yt-vevo-fallback-overlay">
+                <span className="yt-vevo-shield-pill">
+                  <ShieldCheck size={14} />
+                  <span>VEVO / MAJOR-LABEL COPYRIGHT PROTECTION // DIRECT YOUTUBE STREAM</span>
+                </span>
+                <h3 className="yt-vevo-fallback-title">{project.shortTitle || project.title}</h3>
+                <p className="yt-vevo-fallback-sub">
+                  VEVO &amp; major record label licensing require this official release to stream
+                  directly on YouTube.
+                </p>
+                <div className="yt-vevo-fallback-actions">
+                  <a
+                    href={project.youtubeUrl || `https://www.youtube.com/watch?v=${project.youtubeId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-wired-yellow yt-vevo-watch-btn"
+                  >
+                    <Play size={16} fill="#050505" stroke="#050505" />
+                    <span>WATCH OFFICIAL VEVO RELEASE ON YOUTUBE</span>
+                    <ExternalLink size={15} />
+                  </a>
+                </div>
+              </div>
+            </div>
           ) : (
             <iframe
-              src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0`}
+              ref={iframeRef}
+              src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&enablejsapi=1`}
+              onLoad={() => {
+                try {
+                  iframeRef.current?.contentWindow?.postMessage(
+                    JSON.stringify({ event: 'listening' }),
+                    '*'
+                  );
+                } catch {
+                  // Ignore
+                }
+              }}
               title={project.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

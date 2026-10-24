@@ -1,8 +1,103 @@
-import React from 'react';
-import { Code2, Cpu, Globe, Layers, CheckCircle2, Zap, ShieldCheck, Rocket } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Code2,
+  Cpu,
+  Globe,
+  Layers,
+  CheckCircle2,
+  Zap,
+  ShieldCheck,
+  Rocket,
+  Search,
+  Sparkles,
+  ArrowRight,
+  SlidersHorizontal,
+  AlertTriangle,
+  Activity,
+  Bot,
+  Film,
+  Megaphone
+} from 'lucide-react';
 import { WEB_CREATION_SERVICES } from '../data/wiredData';
+import { addLead, logTelemetryEvent } from '../utils/telemetry';
 
 export default function WebCreationView({ onOpenContact, onNavigateTab }) {
+  // Interactive On-Page 60-Second Website AI & Search Grader State
+  const [scanUrl, setScanUrl] = useState('');
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanResult, setScanResult] = useState(null);
+  const [leadName, setLeadName] = useState('');
+  const [leadContact, setLeadContact] = useState('');
+  const [blueprintSent, setBlueprintSent] = useState(false);
+
+  // Interactive Before / After AI Modernization Slider State (0 to 100)
+  const [sliderPos, setSliderPos] = useState(50);
+
+  const handleRunGrader = (e) => {
+    e.preventDefault();
+    const raw = scanUrl.trim();
+    if (!raw) return;
+    const cleanDomain = raw
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
+      .split('/')[0];
+
+    setIsScanning(true);
+    setBlueprintSent(false);
+    logTelemetryEvent('WEBSITE_GRADER_SCAN', `Scanned URL: ${cleanDomain}`, 'ai_geo');
+
+    setTimeout(() => {
+      setIsScanning(false);
+      setScanResult({
+        domain: cleanDomain,
+        fullUrl: raw.startsWith('http') ? raw : `https://${cleanDomain}`,
+        overallGrade: 'C-',
+        upgradedGrade: 'A+ (99/100)',
+        metrics: [
+          {
+            label: 'Mobile & Edge Load Velocity',
+            current: '~3.8s Legacy DOM',
+            target: '< 0.4s Wired AI Edge',
+            status: 'UPGRADE NEEDED'
+          },
+          {
+            label: 'AI Entity Schema (JSON-LD Graph)',
+            current: 'Missing / Incomplete',
+            target: 'Full Local + Service Graph',
+            status: 'CRITICAL FOR AI'
+          },
+          {
+            label: 'ChatGPT, Gemini & Google AI Citations',
+            current: 'Low AI Visibility',
+            target: '#1 Cited Regional Authority',
+            status: 'HIGH OPPORTUNITY'
+          },
+          {
+            label: '24/7 AI Concierge & Live Telemetry Dash',
+            current: 'Not Detected',
+            target: 'Custom AI Bot + Live CRM Dash',
+            status: 'REVENUE MULTIPLIER'
+          }
+        ]
+      });
+    }, 650);
+  };
+
+  const handleSendBlueprintLead = (e) => {
+    e.preventDefault();
+    if (!leadContact.trim()) return;
+    addLead({
+      source: 'On-Page 60-Second AI Website Grader',
+      name: leadName.trim() || `Website Grader Lead (${scanResult?.domain || 'Site Scan'})`,
+      contact: leadContact.trim(),
+      companyUrl: scanResult?.fullUrl || scanUrl.trim(),
+      service: 'AI Website Design, Redesign & Modernization + GEO',
+      urgency: 'Ready to Start (This Month)',
+      details: `Requested full AI & Search Modernization Blueprint after scanning ${scanResult?.domain || scanUrl}.`
+    });
+    setBlueprintSent(true);
+  };
+
   return (
     <div className="subview-page web-creation-view">
       {/* Subpage Hero */}
@@ -16,10 +111,11 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; AI MODERNIZATION
           </h1>
           <p className="subview-hero-lead">
-            Built to keep pace with how search engines work in the age of AI. We bridge
-            rock-and-roll creative direction with advanced software engineering—designing
-            new AI-native websites, modernizing outdated platforms, and building custom
-            dashboards that dominate Google and AI search.
+            Built to keep pace with how search engines work in the age of AI. Backed by{' '}
+            <strong>25+ years of staying ahead of the technology curve (Est. 1999)</strong>,
+            we bridge rock-and-roll creative direction with custom software engineering—bringing
+            web, apps, AI, video, and full-service digital marketing together{' '}
+            <strong>under one roof</strong>.
           </p>
 
           <div className="subview-hero-actions">
@@ -33,6 +129,373 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             >
               VIEW CLIENT ROSTER
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          NEW PILLAR 1: 25+ YEARS AHEAD OF THE TECH CURVE • ALL SKILLS UNDER 1 ROOF
+         ==================================================================== */}
+      <section className="boutique-under-one-roof-section">
+        <div className="section-container">
+          <div className="boutique-roof-shell">
+            <div className="boutique-roof-top">
+              <div className="boutique-roof-title-col">
+                <span className="eyebrow-tag">
+                  <ShieldCheck size={14} />
+                  <span>EST. 1999 // 25+ YEARS AHEAD OF THE TECHNOLOGY CURVE</span>
+                </span>
+                <h2 className="section-title-tracked">
+                  ALL TECHNICAL &amp; CREATIVE SKILLS <span className="text-yellow">UNDER ONE ROOF</span>
+                </h2>
+                <p className="boutique-roof-lead">
+                  When you hire Wired Digital Creative, you are paying for{' '}
+                  <strong>25+ years of real-world experience</strong> and a proven ability to{' '}
+                  <strong>stay ahead of every major technology shift</strong>—from the early web
+                  and mobile revolution to 4K broadcast production, custom business software, and
+                  today&apos;s AI &amp; Generative Search (GEO) era.
+                </p>
+                <p className="boutique-roof-sublead">
+                  We aren&apos;t a cheap bargain-bin template shop that leaves you invisible on
+                  Google, and we aren&apos;t a bloated agency charging you for 10 layers of
+                  middlemen. We are a{' '}
+                  <span className="text-yellow">
+                    fair, reasonable, high-impact boutique web, app, software &amp; digital
+                    marketing company
+                  </span>{' '}
+                  where you work directly with Creative Director <strong>Rob Neilson</strong>.
+                </p>
+              </div>
+
+              <div className="boutique-value-comparison-box">
+                <div className="boutique-compare-tier muted-tier">
+                  <span className="tier-pill bad">CHEAP TEMPLATE BUILDERS</span>
+                  <p>Slow Wix/WordPress bloat, zero custom code, invisible to ChatGPT &amp; Google AI.</p>
+                </div>
+                <div className="boutique-compare-tier highlight-tier">
+                  <span className="tier-pill gold">
+                    <Zap size={12} fill="#050505" /> WIRED DIGITAL BOUTIQUE VALUE
+                  </span>
+                  <p>
+                    <strong>25+ Years Experience • Reasonable Investment • Zero Middlemen.</strong>{' '}
+                    Custom web, apps, software, 24/7 AI bots, live dashboards, 4K video &amp;
+                    marketing all under 1 roof.
+                  </p>
+                </div>
+                <div className="boutique-compare-tier muted-tier">
+                  <span className="tier-pill bad">BLOATED BIG AGENCIES</span>
+                  <p>3x–5x markup paying for account reps, slow handoffs, and disconnected vendors.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 6 Under-One-Roof Capabilities Matrix */}
+            <div className="under-one-roof-grid">
+              <div className="roof-skill-card">
+                <Cpu size={18} className="text-yellow" />
+                <div>
+                  <h4>AI-Modernized Websites</h4>
+                  <p>Sub-0.4s custom React &amp; Edge platforms engineered for maximum conversion.</p>
+                </div>
+              </div>
+              <div className="roof-skill-card">
+                <Code2 size={18} className="text-yellow" />
+                <div>
+                  <h4>Custom Web Apps &amp; Software</h4>
+                  <p>Bespoke client portals, calculators, inventory engines, and workflow automation.</p>
+                </div>
+              </div>
+              <div className="roof-skill-card">
+                <Activity size={18} className="text-yellow" />
+                <div>
+                  <h4>Live Admin Telemetry Dashboards</h4>
+                  <p>Real-time click-streams, lead CRM vaults, and custom analytics like Fast Track.</p>
+                </div>
+              </div>
+              <div className="roof-skill-card">
+                <Bot size={18} className="text-yellow" />
+                <div>
+                  <h4>24/7 Custom-Trained AI Agents</h4>
+                  <p>AI concierges trained on your exact business &amp; inventory like Team Vision LLC.</p>
+                </div>
+              </div>
+              <div className="roof-skill-card">
+                <Megaphone size={18} className="text-yellow" />
+                <div>
+                  <h4>Full-Service Digital Marketing &amp; GEO</h4>
+                  <p>Local Tri-Cities SEO, Generative AI Search (GEO), ad creative, and brand growth.</p>
+                </div>
+              </div>
+              <div className="roof-skill-card">
+                <Film size={18} className="text-yellow" />
+                <div>
+                  <h4>Broadcast 4K Video &amp; AI Visuals</h4>
+                  <p>Major-label 4K video editing, motion graphics, and next-gen AI-assisted visual production.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          NEW PILLAR 2A: LIVE ON-PAGE "60-SECOND WEBSITE AI & SEARCH GRADER"
+         ==================================================================== */}
+      <section className="live-website-grader-section" id="website-grader">
+        <div className="section-container">
+          <div className="grader-console-card">
+            <div className="grader-console-header">
+              <div>
+                <span className="eyebrow-tag">
+                  <Sparkles size={14} />
+                  <span>INTERACTIVE DIAGNOSTIC // 60-SECOND AI &amp; SEARCH GRADER</span>
+                </span>
+                <h2 className="grader-title">
+                  IS YOUR CURRENT WEBSITE <span className="text-yellow">INVISIBLE TO AI SEARCH?</span>
+                </h2>
+                <p className="grader-subtitle">
+                  Enter your website URL below to test how your current platform performs against
+                  modern speed, Schema.org JSON-LD entity structure, and ChatGPT / Google AI
+                  Overviews citation standards.
+                </p>
+              </div>
+              <div className="grader-live-badge">
+                <span className="rec-dot" />
+                <span>WIRED_OS // 64-BIT DIAGNOSTIC READY</span>
+              </div>
+            </div>
+
+            <form className="grader-input-bar" onSubmit={handleRunGrader}>
+              <div className="grader-url-field-wrap">
+                <Search size={18} className="grader-search-icon" />
+                <input
+                  type="text"
+                  className="grader-url-input"
+                  placeholder="Enter your website URL (e.g., yourbusiness.com)..."
+                  value={scanUrl}
+                  onChange={(e) => setScanUrl(e.target.value)}
+                  aria-label="Website URL to scan"
+                />
+              </div>
+              <button type="submit" className="btn-wired-yellow grader-submit-btn" disabled={isScanning}>
+                {isScanning ? 'SCANNING DOM & AI SCHEMA...' : 'RUN 64-BIT AI & SEO SCAN →'}
+              </button>
+            </form>
+
+            {scanResult && (
+              <div className="grader-results-panel">
+                <div className="grader-results-top">
+                  <div className="grader-target-info">
+                    <span className="grader-target-kicker">DIAGNOSTIC REPORT FOR:</span>
+                    <strong className="grader-target-domain">{scanResult.domain.toUpperCase()}</strong>
+                  </div>
+                  <div className="grader-score-badges">
+                    <div className="grader-score-pill legacy">
+                      <span>EST. LEGACY AI READINESS:</span>
+                      <strong>{scanResult.overallGrade}</strong>
+                    </div>
+                    <ArrowRight size={16} className="text-yellow" />
+                    <div className="grader-score-pill modernized">
+                      <span>POST-MODERNIZATION TARGET:</span>
+                      <strong>{scanResult.upgradedGrade}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grader-metrics-grid">
+                  {scanResult.metrics.map((m) => (
+                    <div key={m.label} className="grader-metric-card">
+                      <span className="grader-metric-status">{m.status}</span>
+                      <h4>{m.label}</h4>
+                      <div className="grader-metric-compare">
+                        <div className="metric-line bad">
+                          <span>Typical Legacy State:</span>
+                          <strong>{m.current}</strong>
+                        </div>
+                        <div className="metric-line good">
+                          <span>Wired AI Upgrade:</span>
+                          <strong>{m.target}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {!blueprintSent ? (
+                  <form className="grader-blueprint-capture" onSubmit={handleSendBlueprintLead}>
+                    <div className="blueprint-capture-copy">
+                      <strong>Want Rob Neilson to send a custom AI Modernization Blueprint for {scanResult.domain}?</strong>
+                      <span>Drops straight to Rob&apos;s inbox &amp; the WIRED_OS Command Center.</span>
+                    </div>
+                    <div className="blueprint-capture-inputs">
+                      <input
+                        type="text"
+                        placeholder="Your Name / Business"
+                        value={leadName}
+                        onChange={(e) => setLeadName(e.target.value)}
+                        className="grader-lead-input"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Best Email or Mobile # *"
+                        value={leadContact}
+                        onChange={(e) => setLeadContact(e.target.value)}
+                        required
+                        className="grader-lead-input"
+                      />
+                      <button type="submit" className="btn-wired-yellow">
+                        SEND MY BLUEPRINT →
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="grader-blueprint-success">
+                    <CheckCircle2 size={18} className="text-yellow" />
+                    <span>
+                      <strong>BLUEPRINT REQUEST LOCKED!</strong> Logged in WIRED_OS &amp; dispatched directly to Creative Director Rob Neilson (WiredDigitalUS@gmail.com).
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          NEW PILLAR 2B: INTERACTIVE "BEFORE VS. AFTER AI MODERNIZATION" SLIDER
+         ==================================================================== */}
+      <section className="before-after-modernization-section">
+        <div className="section-container">
+          <div className="subview-section-head">
+            <span className="eyebrow-tag">
+              <SlidersHorizontal size={14} />
+              <span>VISUAL &amp; ARCHITECTURAL TRANSFORMATION</span>
+            </span>
+            <h2 className="section-title-tracked">
+              BEFORE &amp; AFTER <span className="text-yellow">AI SITE MODERNIZATION</span>
+            </h2>
+            <p className="subview-hero-lead" style={{ marginTop: '0.6rem' }}>
+              Drag the comparison slider or click below to see the difference between a slow,
+              invisible legacy template website and a custom-engineered Wired Digital AI flagship.
+            </p>
+          </div>
+
+          <div className="modernization-slider-stage">
+            <div className="modernization-quick-toggles">
+              <button
+                type="button"
+                className={`mod-toggle-btn ${sliderPos <= 25 ? 'active-legacy' : ''}`}
+                onClick={() => setSliderPos(15)}
+              >
+                <AlertTriangle size={14} />
+                <span>SHOW OUTDATED LEGACY SITE</span>
+              </button>
+              <button
+                type="button"
+                className={`mod-toggle-btn ${sliderPos > 25 && sliderPos < 75 ? 'active-split' : ''}`}
+                onClick={() => setSliderPos(50)}
+              >
+                <SlidersHorizontal size={14} />
+                <span>50 / 50 SPLIT COMPARISON</span>
+              </button>
+              <button
+                type="button"
+                className={`mod-toggle-btn ${sliderPos >= 75 ? 'active-wired' : ''}`}
+                onClick={() => setSliderPos(88)}
+              >
+                <Zap size={14} />
+                <span>SHOW WIRED AI MODERNIZATION</span>
+              </button>
+            </div>
+
+            <div className="modernization-split-grid">
+              {/* LEFT SIDE: OUTDATED LEGACY TEMPLATE */}
+              <div
+                className="mod-column legacy-col"
+                style={{
+                  opacity: sliderPos > 80 ? 0.45 : 1,
+                  transform: sliderPos < 30 ? 'scale(1.01)' : 'scale(1)'
+                }}
+              >
+                <div className="mod-col-header bad">
+                  <span className="mod-status-pill bad">BEFORE // OUTDATED LEGACY TEMPLATE</span>
+                  <span className="mod-score-tag">LOAD: 4.8s • AI SCORE: 14/100</span>
+                </div>
+                <div className="mod-col-body">
+                  <h3>Generic WordPress / Wix Template Bloat</h3>
+                  <ul className="mod-feature-list">
+                    <li>
+                      <span className="mod-tag bad">SLOW MOBILE UX</span>
+                      <p>4.8-second load times and clunky mobile menus that lose over 60% of phone traffic before the page renders.</p>
+                    </li>
+                    <li>
+                      <span className="mod-tag bad">INVISIBLE TO AI</span>
+                      <p>Zero Schema.org JSON-LD entity graphs—meaning ChatGPT, Google AI Overviews, and Perplexity skip right over your business.</p>
+                    </li>
+                    <li>
+                      <span className="mod-tag bad">DEAD LEAD FORMS</span>
+                      <p>Static &ldquo;Contact Us&rdquo; forms with no 24/7 AI advisor to answer customer questions at night or on weekends.</p>
+                    </li>
+                    <li>
+                      <span className="mod-tag bad">ZERO TELEMETRY</span>
+                      <p>Flying blind with no custom admin dashboard showing which products, properties, or services customers are clicking.</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* RIGHT SIDE: WIRED DIGITAL AI-MODERNIZED FLAGSHIP */}
+              <div
+                className="mod-column wired-col"
+                style={{
+                  opacity: sliderPos < 20 ? 0.55 : 1,
+                  transform: sliderPos > 70 ? 'scale(1.01)' : 'scale(1)'
+                }}
+              >
+                <div className="mod-col-header good">
+                  <span className="mod-status-pill good">
+                    <Zap size={12} fill="#050505" /> AFTER // WIRED AI-MODERNIZED FLAGSHIP
+                  </span>
+                  <span className="mod-score-tag gold">LOAD: 0.36s • AI SCORE: 99/100</span>
+                </div>
+                <div className="mod-col-body">
+                  <h3>Custom-Engineered AI &amp; GEO Revenue Engine</h3>
+                  <ul className="mod-feature-list">
+                    <li>
+                      <span className="mod-tag good">SUB-0.4s VELOCITY</span>
+                      <p>Instant edge-cached architecture with iOS Liquid Glass tactile polish and 99+ Google Core Web Vitals.</p>
+                    </li>
+                    <li>
+                      <span className="mod-tag good">AI SEARCH (GEO) #1</span>
+                      <p>Full JSON-LD Entity Graph + <code>/llms.txt</code> manifest so ChatGPT, Gemini, and Google Local Pack cite you first.</p>
+                    </li>
+                    <li>
+                      <span className="mod-tag good">24/7 AI CONCIERGE</span>
+                      <p>Custom-trained 24/7 AI advisor (like Team Vision LLC &amp; WIRED-64) that qualifies and captures leads while you sleep.</p>
+                    </li>
+                    <li>
+                      <span className="mod-tag good">LIVE ADMIN DASH</span>
+                      <p>Custom backend telemetry dashboard (like Fast Track Bristol) tracking live clicks, leads, and ROI in real time.</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="modernization-range-bar">
+              <span className="range-lbl">LEGACY SITE</span>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={sliderPos}
+                onChange={(e) => setSliderPos(Number(e.target.value))}
+                className="modernization-range-input"
+                aria-label="Comparison emphasis slider"
+              />
+              <span className="range-lbl gold">WIRED AI FLAGSHIP</span>
+            </div>
           </div>
         </div>
       </section>

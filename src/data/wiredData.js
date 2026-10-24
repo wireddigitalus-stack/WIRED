@@ -540,6 +540,7 @@ export const FEATURED_WORK = [
     category: 'FLAGSHIP COMMISSIONED PRODUCTION',
     youtubeId: 'DkTGpDq6Pcg',
     youtubeUrl: 'https://www.youtube.com/watch?v=DkTGpDq6Pcg',
+    vevoRestricted: true,
     thumbnail: 'https://i.ytimg.com/vi/DkTGpDq6Pcg/maxresdefault.jpg',
     fallbackThumb: 'https://i.ytimg.com/vi/DkTGpDq6Pcg/hqdefault.jpg',
     description:
@@ -619,47 +620,47 @@ export const YOUTUBE_CHANNEL_DATA = {
   channelId: 'UCJu6ls0Cack7vBSTPSk1rXA',
   uploadsPlaylistId: 'UUJu6ls0Cack7vBSTPSk1rXA',
   handle: '@WiredDigitalCreative',
-  channelTitle: 'WIRED DIGITAL CREATIVE',
+  channelTitle: 'WIRED ϟ DIGITAL',
   channelUrl: 'https://www.youtube.com/@WiredDigitalCreative',
   subscribeUrl: 'https://www.youtube.com/@WiredDigitalCreative?sub_confirmation=1',
   rssUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCJu6ls0Cack7vBSTPSk1rXA',
-  bio: 'With over 25 years in Video Production, WIRED DIGITAL CREATIVE has the chops. Utilizing the latest in digital imaging and editing technology, we deliver Award-Winning Creative Content.',
+  bio: 'With over 25 years in Video Production, WIRED ϟ DIGITAL has the chops. Utilizing the latest in digital imaging and editing technology, we deliver Award Winning Creative Content.',
   playlists: [
     {
       id: 'all',
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x',
       label: 'All Channel Releases',
-      shortLabel: 'ALL RELEASES (36)',
-      description: 'Complete broadcast feed across Music Videos, Official Lyric Videos, and Artist Promo Reels.'
+      shortLabel: 'ALL RELEASES (29)',
+      description: 'Complete broadcast feed across Music Videos by WIRED ϟ DIGITAL, Official Lyric Videos, and the Studio Channel Trailer.'
     },
     {
       id: 'music-videos',
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x',
-      label: 'Music Videos by WIRED DIGITAL',
+      label: 'Music Videos by WIRED ϟ DIGITAL',
       shortLabel: 'MUSIC VIDEOS (9)',
       description: 'Official music videos and live multi-cam productions edited and directed by Rob Neilson.'
     },
     {
       id: 'lyric-videos',
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub',
-      label: 'Lyric Videos by WIRED DIGITAL',
+      label: 'Lyric Videos by WIRED ϟ DIGITAL',
       shortLabel: 'LYRIC VIDEOS (19)',
       description: 'Custom-animated official lyric videos and kinetic typography worlds for iconic artists & labels.'
     },
     {
-      id: 'promos',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc',
-      label: 'Promotional & Tour Videos',
-      shortLabel: 'PROMOS & REELS (8)',
-      description: 'Album samplers, tour trailers, brand promos, and official channel reels.'
+      id: 'channel-intro',
+      playlistId: 'UUJu6ls0Cack7vBSTPSk1rXA',
+      label: 'Welcome To WIRED ϟ DIGITAL',
+      shortLabel: 'CHANNEL INTRO (1)',
+      description: 'Official Featured Channel Trailer for WIRED ϟ DIGITAL.'
     }
   ],
   videos: [
-    // === MUSIC VIDEOS PLAYLIST (PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x) ===
+    // === MUSIC VIDEOS BY WIRED ϟ DIGITAL (PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x) ===
     {
       videoId: 'Qmf-dN9gsGM',
       title: 'Halestorm - Shooting Star (feat. Paul Rodgers) (Official Music Video)',
-      artist: 'Halestorm & Paul Rodgers',
+      artist: 'Halestorm & Bad Company',
       category: 'music-videos',
       badge: 'OFFICIAL MUSIC VIDEO',
       views: '643K+ Views',
@@ -677,48 +678,8 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
     },
     {
-      videoId: 'DkTGpDq6Pcg',
-      title: 'Full Devil Jacket - Valley of Bones (Official VEVO Music Video)',
-      artist: 'Full Devil Jacket / eOne',
-      category: 'music-videos',
-      badge: 'DIRECTED & EDITED',
-      views: '120K+ Views',
-      duration: '3:29',
-      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
-    },
-    {
-      videoId: '-uM3mZFoUrU',
-      title: 'Full Devil Jacket - Killers (Official VEVO Video)',
-      artist: 'Full Devil Jacket / eOne',
-      category: 'music-videos',
-      badge: 'OFFICIAL MUSIC VIDEO',
-      views: '27K+ Views',
-      duration: '3:39',
-      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
-    },
-    {
-      videoId: 'GCzKaAv8aFA',
-      title: 'Fantasia - No Time For It (Acoustic Version)',
-      artist: 'Fantasia',
-      category: 'music-videos',
-      badge: 'OFFICIAL VIDEO EDIT',
-      views: '664K+ Views',
-      duration: '3:41',
-      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
-    },
-    {
-      videoId: 'v55qwxhF1UA',
-      title: 'Count Basie, Terence Blanchard - M-Squad (Official) ft. The Count Basie Orchestra',
-      artist: 'Count Basie Orchestra',
-      category: 'music-videos',
-      badge: 'OFFICIAL MUSIC VIDEO',
-      views: '66K+ Views',
-      duration: '2:08',
-      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
-    },
-    {
       videoId: 'b2G7N7QeEj0',
-      title: "Alice Cooper - School's Out & Don't Give Up - Live at Wacken World Wide",
+      title: "Alice Cooper - School's Out & Don't Give Up - Live at Wacken World Wide 2020",
       artist: 'Alice Cooper',
       category: 'music-videos',
       badge: 'LIVE BROADCAST EDIT',
@@ -746,46 +707,60 @@ export const YOUTUBE_CHANNEL_DATA = {
       duration: '4:30',
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
     },
+    {
+      videoId: 'DkTGpDq6Pcg',
+      title: 'Full Devil Jacket - Valley of Bones (Official VEVO Music Video)',
+      artist: 'Full Devil Jacket / eOne',
+      category: 'music-videos',
+      badge: 'VEVO OFFICIAL • DIRECT STREAM',
+      views: '120K+ Views',
+      duration: '3:29',
+      vevoRestricted: true,
+      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
+    },
+    {
+      videoId: '-uM3mZFoUrU',
+      title: 'Full Devil Jacket - Killers (Official VEVO Video)',
+      artist: 'Full Devil Jacket / eOne',
+      category: 'music-videos',
+      badge: 'VEVO OFFICIAL • DIRECT STREAM',
+      views: '27K+ Views',
+      duration: '3:39',
+      vevoRestricted: true,
+      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
+    },
+    {
+      videoId: 'GCzKaAv8aFA',
+      title: 'Fantasia - No Time For It (Acoustic Version)',
+      artist: 'Fantasia',
+      category: 'music-videos',
+      badge: 'VEVO / RCA OFFICIAL',
+      views: '664K+ Views',
+      duration: '3:41',
+      vevoRestricted: true,
+      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
+    },
+    {
+      videoId: 'v55qwxhF1UA',
+      title: 'Count Basie, Terence Blanchard - M-Squad (Official) ft. The Count Basie Orchestra',
+      artist: 'Count Basie Orchestra',
+      category: 'music-videos',
+      badge: 'VEVO / UMG OFFICIAL',
+      views: '66K+ Views',
+      duration: '2:08',
+      vevoRestricted: true,
+      playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x'
+    },
 
-    // === LYRIC VIDEOS PLAYLIST (PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub) ===
+    // === LYRIC VIDEOS BY WIRED ϟ DIGITAL (PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub) ===
     {
       videoId: 'rcEbSkaAqkg',
-      title: 'Alice Cooper - "School\'s Out" (Official Lyric Video)',
+      title: 'Alice Cooper - "School\'s Out" (Lyric Video)',
       artist: 'Alice Cooper / Primary Wave',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
       views: '1.1M+ Views',
       duration: '3:29',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: 'DF8po26yGho',
-      title: 'Fantasia - Enough (Official Lyric Video)',
-      artist: 'Fantasia',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '248K+ Views',
-      duration: '4:41',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: 'zbUJNnTU89Y',
-      title: 'CANDLEBOX - Supernova (Official Lyric Video)',
-      artist: 'Candlebox',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '186K+ Views',
-      duration: '3:46',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: '9I3enYndcyc',
-      title: 'CANDLEBOX - Vexatious (Official Lyric Video)',
-      artist: 'Candlebox',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '152K+ Views',
-      duration: '3:56',
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
@@ -799,63 +774,23 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
-      videoId: 'w54CeorgMu4',
-      title: "Bing Crosby, Ella Fitzgerald - That's A-Plenty (Official Lyric Video)",
-      artist: 'Bing Crosby & Ella Fitzgerald',
+      videoId: '9I3enYndcyc',
+      title: 'CANDLEBOX - Vexatious (Official Lyric Video)',
+      artist: 'Candlebox',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
-      views: '15K+ Views',
-      duration: '2:24',
+      views: '152K+ Views',
+      duration: '3:56',
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
-      videoId: '61v21lduha0',
-      title: 'The Rocketboys - "Viva Voce" (Official Lyric Video)',
-      artist: 'The Rocketboys',
+      videoId: 'zbUJNnTU89Y',
+      title: 'CANDLEBOX - Supernova (Official Lyric Video)',
+      artist: 'Candlebox',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
-      views: '637K+ Views',
-      duration: '4:32',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: 'Dhm-N1DU4x0',
-      title: 'JEFFREY NOTHING - "Never Enough" (Official Video)',
-      artist: 'Jeffrey Nothing',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '205K+ Views',
-      duration: '4:33',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: 'vJ3W8orhJQg',
-      title: 'JEFFREY NOTHING - "Dead Space / Dead Inside" (Lyric Video)',
-      artist: 'Jeffrey Nothing',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '108K+ Views',
-      duration: '3:58',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: 'qlMV56gJLYY',
-      title: 'Kevin Rudolf - That Other Ship (Official Lyric Video)',
-      artist: 'Kevin Rudolf',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '106K+ Views',
-      duration: '3:29',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
-      videoId: 'KdH9nYnWP6o',
-      title: 'Mammothor - M.O.A.B. (Official Lyric Video)',
-      artist: 'Mammothor',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '57K+ Views',
-      duration: '4:27',
+      views: '186K+ Views',
+      duration: '3:46',
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
@@ -869,6 +804,16 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
+      videoId: 'KdH9nYnWP6o',
+      title: 'Mammothor - M.O.A.B. (Official Lyric Video)',
+      artist: 'Mammothor',
+      category: 'lyric-videos',
+      badge: 'OFFICIAL LYRIC VIDEO',
+      views: '57K+ Views',
+      duration: '4:27',
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
       videoId: 'c1gjxsFmra0',
       title: 'Mammothor - Hitcher (Official Lyric Video)',
       artist: 'Mammothor',
@@ -879,8 +824,38 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
+      videoId: '61v21lduha0',
+      title: 'The Rocketboys - "Viva Voce" (Lyric Video)',
+      artist: 'The Rocketboys',
+      category: 'lyric-videos',
+      badge: 'OFFICIAL LYRIC VIDEO',
+      views: '637K+ Views',
+      duration: '4:32',
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
+      videoId: 'vJ3W8orhJQg',
+      title: 'JEFFREY NOTHING - "Dead Space / Dead Inside" (Lyric Video)',
+      artist: 'Jeffrey Nothing',
+      category: 'lyric-videos',
+      badge: 'OFFICIAL LYRIC VIDEO',
+      views: '108K+ Views',
+      duration: '3:58',
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
+      videoId: 'Dhm-N1DU4x0',
+      title: 'JEFFREY NOTHING - "Never Enough" 🤘',
+      artist: 'Jeffrey Nothing',
+      category: 'lyric-videos',
+      badge: 'OFFICIAL LYRIC VIDEO',
+      views: '205K+ Views',
+      duration: '4:33',
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
       videoId: 'eN8tLoCmuII',
-      title: 'Plaid Brixx - The Greener Side (Official Lyric Video)',
+      title: 'Plaid Brixx - The Greener Side (Lyric Video)',
       artist: 'Plaid Brixx',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
@@ -889,18 +864,8 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
-      videoId: '584YU163akU',
-      title: "Mizgin - If I Said I'm in Love (Official Lyric Video)",
-      artist: 'Mizgin',
-      category: 'lyric-videos',
-      badge: 'OFFICIAL LYRIC VIDEO',
-      views: '44K+ Views',
-      duration: '3:03',
-      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-    {
       videoId: 'EKJyNNoIGdM',
-      title: 'AMERICAN LION - "Arrival" (Official Lyric Video)',
+      title: 'AMERICAN LION - "Arrival" (Lyric Video)',
       artist: 'American Lion',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
@@ -909,13 +874,23 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
-      videoId: 'kyQLdsZezLI',
-      title: 'Plaid Brixx - "Heartbreaker" (Official Lyric Video)',
-      artist: 'Plaid Brixx',
+      videoId: '584YU163akU',
+      title: "Mizgin - If I Said I'm in Love (Suicide) Lyric Video",
+      artist: 'Mizgin',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
-      views: '2.5K+ Views',
-      duration: '3:41',
+      views: '44K+ Views',
+      duration: '3:03',
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
+      videoId: 'qZk8-HoWK3g',
+      title: 'B. Good - Unleashed (Official Lyric Video)',
+      artist: 'B. Good',
+      category: 'lyric-videos',
+      badge: 'OFFICIAL LYRIC VIDEO',
+      views: 'Official Release',
+      duration: '2:50',
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
@@ -929,94 +904,57 @@ export const YOUTUBE_CHANNEL_DATA = {
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
     {
-      videoId: 'qZk8-HoWK3g',
-      title: 'B. Good - Unleashed (Official Lyric Video)',
-      artist: 'B. Good',
+      videoId: 'kyQLdsZezLI',
+      title: 'Plaid Brixx: "Heartbreaker" Lyric Video',
+      artist: 'Plaid Brixx',
       category: 'lyric-videos',
       badge: 'OFFICIAL LYRIC VIDEO',
-      views: 'Official Release',
-      duration: '2:50',
+      views: '2.5K+ Views',
+      duration: '3:41',
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
+      videoId: 'w54CeorgMu4',
+      title: "Bing Crosby, Ella Fitzgerald - That's A-Plenty (Lyric Video) (Official)",
+      artist: 'Bing Crosby & Ella Fitzgerald',
+      category: 'lyric-videos',
+      badge: 'VEVO / UMG OFFICIAL',
+      views: '15K+ Views',
+      duration: '2:24',
+      vevoRestricted: true,
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
+      videoId: 'qlMV56gJLYY',
+      title: 'Kevin Rudolf - That Other Ship (Official Lyric Video)',
+      artist: 'Kevin Rudolf',
+      category: 'lyric-videos',
+      badge: 'VEVO OFFICIAL • DIRECT STREAM',
+      views: '106K+ Views',
+      duration: '3:29',
+      vevoRestricted: true,
+      playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
+    },
+    {
+      videoId: 'DF8po26yGho',
+      title: 'Fantasia - Enough (Official Lyric Video)',
+      artist: 'Fantasia',
+      category: 'lyric-videos',
+      badge: 'VEVO / BMG OFFICIAL',
+      views: '248K+ Views',
+      duration: '4:41',
+      vevoRestricted: true,
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
     },
 
-    // === PROMOTIONAL & TOUR VIDEOS PLAYLIST (PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc) ===
-    {
-      videoId: 'Ohhz7vpGbHY',
-      title: 'SKID ROW - 2022 Year End Wrap-Up: Highlights of an Incredible Year',
-      artist: 'Skid Row',
-      category: 'promos',
-      badge: 'TOUR & YEAR RECAP',
-      views: '3.3K+ Views',
-      duration: '2:27',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
-    {
-      videoId: 'jhItO_TBTZI',
-      title: 'DEF LEPPARD - Album Sampler (Official Promo)',
-      artist: 'Def Leppard',
-      category: 'promos',
-      badge: 'ALBUM PROMO REEL',
-      views: '18K+ Views',
-      duration: '7:17',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
-    {
-      videoId: 'K8yMRgaYOcI',
-      title: 'Scorpions - Rock "N" Roll Star – Single Malt Whisky Promo',
-      artist: 'Scorpions',
-      category: 'promos',
-      badge: 'COMMERCIAL PROMO',
-      views: '61K+ Views',
-      duration: '0:38',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
-    {
-      videoId: 'Nyl6cKegps0',
-      title: 'CANDLEBOX - Disappearing In Airports (Official Album Sampler)',
-      artist: 'Candlebox',
-      category: 'promos',
-      badge: 'ALBUM SAMPLER',
-      views: '3.2K+ Views',
-      duration: '14:04',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
-    {
-      videoId: 'iWPGLJ3y5xA',
-      title: 'TESLA - Winter Tour 2017 (Official Tour Promo)',
-      artist: 'TESLA',
-      category: 'promos',
-      badge: 'TOUR PROMO',
-      views: '4.3K+ Views',
-      duration: '1:12',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
-    {
-      videoId: 'MVFKwrcm4TA',
-      title: '808 Audio - CES 2017 (Official Event Recap)',
-      artist: '808 Audio',
-      category: 'promos',
-      badge: 'BRAND REEL',
-      views: '10K+ Views',
-      duration: '1:56',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
-    {
-      videoId: 'Zkaf0SyVrmM',
-      title: 'DEF LEPPARD - Black Friday & Cyber Monday Webstore Promo',
-      artist: 'Def Leppard',
-      category: 'promos',
-      badge: 'MERCH & STORE PROMO',
-      views: '4.3K+ Views',
-      duration: '0:33',
-      playlistId: 'PLG_ZQTV-zvR8_WENXNP-g27BPv9sEUSSc'
-    },
+    // === FEATURED CHANNEL TRAILER (UUJu6ls0Cack7vBSTPSk1rXA) ===
     {
       videoId: 'MbO7W4-LTFE',
-      title: 'Welcome To WIRED DIGITAL CREATIVE — Studio Channel Intro',
-      artist: 'Wired Digital Creative',
-      category: 'promos',
-      badge: 'CHANNEL INTRO',
-      views: 'Official Channel',
+      title: 'Welcome To WIRED ϟ DIGITAL',
+      artist: 'WIRED ϟ DIGITAL',
+      category: 'channel-intro',
+      badge: 'CHANNEL TRAILER',
+      views: 'Featured Intro',
       duration: '0:49',
       playlistId: 'UUJu6ls0Cack7vBSTPSk1rXA'
     }

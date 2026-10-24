@@ -187,14 +187,12 @@ function generateWired64Response(input, currentStep, leadDraft) {
   }
 
   if (
-    lower.includes('seo') ||
-    lower.includes('geo') ||
-    lower.includes('modern') ||
-    lower.includes('redesign') ||
-    lower.includes('site') ||
-    lower.includes('web') ||
     lower.includes('price') ||
-    lower.includes('cost')
+    lower.includes('cost') ||
+    lower.includes('budget') ||
+    lower.includes('experience') ||
+    lower.includes('why') ||
+    lower.includes('boutique')
   ) {
     return {
       nextStep: 'ASK_NAME_AND_CONTACT',
@@ -205,7 +203,30 @@ function generateWired64Response(input, currentStep, leadDraft) {
         details: q
       },
       reply:
-        'AI WEBSITE DESIGN, REDESIGN & MODERNIZATION // Search engines have changed forever. We engineer sub-second React/Edge sites with full Schema.org JSON-LD entity graphs so your business is cited #1 by ChatGPT, Google AI Overviews, Perplexity, and local Tri-Cities search.',
+        '25+ YEARS AHEAD OF THE TECH CURVE (EST. 1999) // With Wired Digital Creative, you are paying for 25+ years of real-world experience and staying ahead of every tech wave—without bloated agency middlemen. We are not cheap bargain-bin template builders, but fair and reasonable for a boutique web, app, custom software, video & full-service digital marketing company with all technical and creative skills under 1 roof.',
+      subtext:
+        'Drop your Name + Email or Phone (and your current website URL if you have one) so Creative Director Rob Neilson can put together a fair, custom scope!'
+    };
+  }
+
+  if (
+    lower.includes('seo') ||
+    lower.includes('geo') ||
+    lower.includes('modern') ||
+    lower.includes('redesign') ||
+    lower.includes('site') ||
+    lower.includes('web')
+  ) {
+    return {
+      nextStep: 'ASK_NAME_AND_CONTACT',
+      cartridge: 'geo',
+      leadPatch: {
+        cartridge: 'geo',
+        service: 'AI Website Design, Redesign & Modernization + GEO',
+        details: q
+      },
+      reply:
+        'AI WEBSITE DESIGN, REDESIGN & MODERNIZATION // Search engines have changed forever. Backed by 25+ years of staying ahead of the tech curve, we engineer sub-second React/Edge sites with full Schema.org JSON-LD entity graphs so your business is cited #1 by ChatGPT, Google AI Overviews, Perplexity, and local Tri-Cities search.',
       subtext:
         'Drop your Name + Email or Phone (or your current website URL) and Rob will put together a custom modernization proposal!'
     };
@@ -216,7 +237,7 @@ function generateWired64Response(input, currentStep, leadDraft) {
     nextStep: 'ASK_NAME_AND_CONTACT',
     cartridge: leadDraft.cartridge || 'geo',
     leadPatch: { details: q },
-    reply: `MESSAGE LOGGED // "${q.slice(0, 70)}". Wired Digital builds high-converting AI websites, custom live dashboards, 24/7 AI lead chatbots, and global music videos.`,
+    reply: `MESSAGE LOGGED // "${q.slice(0, 70)}". Backed by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital brings custom AI websites, apps, live dashboards, 24/7 AI chatbots, full-service marketing, and 4K video all under one roof.`,
     subtext:
       'What is your Name and best Email or Phone number so Creative Director Rob Neilson can follow up directly?'
   };

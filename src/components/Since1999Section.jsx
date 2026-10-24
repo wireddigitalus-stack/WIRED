@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Maximize2, Sparkles, Film, TrendingUp, Cpu, Megaphone } from 'lucide-react';
+import { Maximize2, Sparkles, Film, TrendingUp, Cpu, Megaphone, ShieldCheck, Layers } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
 
 export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOpenContact }) {
@@ -110,6 +110,29 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               <strong>global remote music &amp; lyric video editing</strong> for major
               record labels and Hall-of-Fame catalogs worldwide.
             </p>
+
+            {/* 25+ Years Ahead of the Tech Curve • Boutique Under-One-Roof Callout */}
+            <div className="since-boutique-callout">
+              <div className="since-boutique-header">
+                <span className="since-boutique-badge">
+                  <ShieldCheck size={13} />
+                  <span>25+ YEARS AHEAD OF THE TECH CURVE // ALL SKILLS UNDER 1 ROOF</span>
+                </span>
+              </div>
+              <p className="since-boutique-copy">
+                When you partner with Wired Digital, you are investing in{' '}
+                <strong>25+ years of real-world experience</strong> and a relentless track
+                record of <strong>staying ahead of every major technology wave</strong>—from
+                early web and mobile to 4K broadcast media, custom apps, and AI-era search.
+                We aren&apos;t cheap bargain-bin template builders, and we aren&apos;t a
+                bloated agency marking up 10 middlemen: we deliver{' '}
+                <span className="highlight-yellow">
+                  fair, reasonable boutique value with custom web, apps, software, AI,
+                  video &amp; digital marketing all under one roof
+                </span>{' '}
+                working directly with Creative Director <strong>Rob Neilson</strong>.
+              </p>
+            </div>
 
             <div className="since-pillar-pills">
               <button

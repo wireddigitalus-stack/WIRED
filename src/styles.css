@@ -8615,3 +8615,807 @@ a {
     font-size: 16px;
   }
 }
+
+/* ==========================================================================
+   NEXT-LEVEL 3-PILLAR UPGRADE:
+   1. 25+ YEARS AHEAD OF THE TECH CURVE • ALL SKILLS UNDER 1 ROOF
+   2. ON-PAGE 60-SECOND WEBSITE AI & SEARCH (GEO) GRADER
+   3. INTERACTIVE BEFORE / AFTER AI MODERNIZATION SLIDER
+   ========================================================================== */
+
+/* 1A. Since 1999 Boutique Callout Card */
+.since-boutique-callout {
+  margin: 18px 0 22px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 238, 0, 0.09) 0%, rgba(15, 15, 22, 0.92) 100%);
+  border: 1px solid rgba(255, 238, 0, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.since-boutique-header {
+  margin-bottom: 8px;
+}
+
+.since-boutique-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--wired-yellow);
+  background: rgba(255, 238, 0, 0.12);
+  border: 1px solid rgba(255, 238, 0, 0.35);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.since-boutique-copy {
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+/* 1B. Web Creation View: Boutique "All Skills Under 1 Roof" Section */
+.boutique-under-one-roof-section {
+  padding: 36px 0 24px;
+}
+
+.boutique-roof-shell {
+  background: linear-gradient(165deg, rgba(16, 16, 24, 0.96) 0%, rgba(8, 8, 12, 0.98) 100%);
+  border: 1px solid rgba(255, 238, 0, 0.28);
+  border-radius: 26px;
+  padding: 34px 32px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.boutique-roof-top {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.boutique-roof-lead {
+  font-size: 1.04rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 12px 0;
+}
+
+.boutique-roof-sublead {
+  font-size: 0.96rem;
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.boutique-value-comparison-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.boutique-compare-tier {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.boutique-compare-tier.highlight-tier {
+  background: linear-gradient(135deg, rgba(255, 238, 0, 0.14) 0%, rgba(20, 20, 28, 0.95) 100%);
+  border: 1.5px solid var(--wired-yellow);
+  box-shadow: 0 10px 30px rgba(255, 238, 0, 0.12);
+}
+
+.boutique-compare-tier p {
+  margin: 6px 0 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.tier-pill.bad {
+  background: rgba(255, 69, 58, 0.15);
+  color: #ff6961;
+  border: 1px solid rgba(255, 69, 58, 0.35);
+}
+
+.tier-pill.gold {
+  background: var(--wired-yellow);
+  color: #050505;
+}
+
+.under-one-roof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.roof-skill-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transition: all 0.2s ease;
+}
+
+.roof-skill-card:hover {
+  border-color: rgba(255, 238, 0, 0.45);
+  transform: translateY(-2px);
+}
+
+.roof-skill-card h4 {
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--ink-white);
+  margin: 0 0 4px;
+}
+
+.roof-skill-card p {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-silver);
+  margin: 0;
+}
+
+/* 2. Live On-Page 60-Second Website AI & Search Grader */
+.live-website-grader-section {
+  padding: 20px 0 36px;
+}
+
+.home-grader-strip {
+  margin-top: 28px;
+}
+
+.grader-console-card {
+  background: linear-gradient(155deg, rgba(14, 14, 22, 0.97) 0%, rgba(6, 6, 10, 0.99) 100%);
+  border: 1.5px solid rgba(255, 238, 0, 0.38);
+  border-radius: 24px;
+  padding: 28px 30px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(255, 238, 0, 0.07);
+}
+
+.grader-console-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.grader-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.95rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--ink-white);
+  margin: 8px 0 6px;
+}
+
+.grader-subtitle {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-silver);
+  max-width: 720px;
+  margin: 0;
+}
+
+.grader-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--wired-yellow);
+  background: rgba(255, 238, 0, 0.08);
+  border: 1px solid rgba(255, 238, 0, 0.3);
+  padding: 7px 13px;
+  border-radius: 999px;
+}
+
+.grader-input-bar {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.grader-url-field-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.grader-search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--wired-yellow);
+  pointer-events: none;
+}
+
+.grader-url-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 15px 16px 15px 46px;
+  color: var(--ink-white);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grader-url-input:focus {
+  border-color: var(--wired-yellow);
+  box-shadow: 0 0 0 3px rgba(255, 238, 0, 0.16);
+}
+
+.grader-submit-btn {
+  white-space: nowrap;
+  padding: 0 26px;
+  border-radius: 14px;
+}
+
+.grader-results-panel {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.grader-results-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.grader-target-info {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.grader-target-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+}
+
+.grader-target-domain {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--wired-yellow);
+}
+
+.grader-score-badges {
+  display: flex;
+   flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.grader-score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.grader-score-pill.legacy {
+  background: rgba(255, 69, 58, 0.14);
+  border: 1px solid rgba(255, 69, 58, 0.38);
+  color: #ff6961;
+}
+
+.grader-score-pill.modernized {
+  background: rgba(48, 209, 88, 0.15);
+  border: 1px solid rgba(48, 209, 88, 0.45);
+  color: #30d158;
+}
+
+.grader-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.grader-metric-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.grader-metric-status {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--wired-yellow);
+  background: rgba(255, 238, 0, 0.1);
+  padding: 2px 7px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.grader-metric-card h4 {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  color: var(--ink-white);
+  margin: 0 0 10px;
+}
+
+.grader-metric-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.76rem;
+}
+
+.metric-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.metric-line.bad strong {
+  color: #ff6961;
+}
+
+.metric-line.good strong {
+  color: #30d158;
+}
+
+.grader-blueprint-capture {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: rgba(255, 238, 0, 0.07);
+  border: 1px solid rgba(255, 238, 0, 0.35);
+  border-radius: 16px;
+  padding: 16px 18px;
+}
+
+.blueprint-capture-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.blueprint-capture-copy strong {
+  font-size: 0.92rem;
+  color: var(--ink-white);
+}
+
+.blueprint-capture-copy span {
+  font-size: 0.78rem;
+  color: var(--ink-silver);
+}
+
+.blueprint-capture-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.grader-lead-input {
+  background: rgba(5, 5, 8, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--ink-white);
+  font-size: 16px;
+  min-width: 190px;
+}
+
+.grader-blueprint-success {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(48, 209, 88, 0.14);
+  border: 1px solid rgba(48, 209, 88, 0.45);
+  color: var(--ink-white);
+  font-size: 0.88rem;
+}
+
+/* 3. Interactive Before & After AI Site Modernization Slider */
+.before-after-modernization-section {
+  padding: 28px 0 44px;
+}
+
+.modernization-slider-stage {
+  margin-top: 24px;
+  background: rgba(12, 12, 18, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 26px;
+}
+
+.modernization-quick-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.mod-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--ink-silver);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.mod-toggle-btn.active-legacy {
+  background: rgba(255, 69, 58, 0.18);
+  border-color: #ff6961;
+  color: #ff6961;
+}
+
+.mod-toggle-btn.active-split {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--ink-white);
+  color: var(--ink-white);
+}
+
+.mod-toggle-btn.active-wired {
+  background: var(--wired-yellow);
+  border-color: var(--wired-yellow);
+  color: #050505;
+}
+
+.modernization-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.mod-column {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.mod-column.legacy-col {
+  background: rgba(24, 14, 16, 0.78);
+  border: 1px solid rgba(255, 69, 58, 0.35);
+}
+
+.mod-column.wired-col {
+  background: linear-gradient(155deg, rgba(255, 238, 0, 0.09) 0%, rgba(12, 18, 16, 0.94) 100%);
+  border: 1.5px solid var(--wired-yellow);
+  box-shadow: 0 16px 40px rgba(255, 238, 0, 0.08);
+}
+
+.mod-col-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mod-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.mod-status-pill.bad {
+  background: rgba(255, 69, 58, 0.2);
+  color: #ff6961;
+}
+
+.mod-status-pill.good {
+  background: var(--wired-yellow);
+  color: #050505;
+}
+
+.mod-score-tag {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #ff6961;
+}
+
+.mod-score-tag.gold {
+  color: #30d158;
+}
+
+.mod-col-body {
+  padding: 20px;
+}
+
+.mod-col-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink-white);
+  margin: 0 0 16px;
+}
+
+.mod-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mod-feature-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mod-feature-list li p {
+  margin: 0;
+  font-size: 0.83rem;
+  line-height: 1.48;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.mod-tag {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.mod-tag.bad {
+  background: rgba(255, 69, 58, 0.18);
+  color: #ff6961;
+}
+
+.mod-tag.good {
+  background: rgba(48, 209, 88, 0.18);
+  color: #30d158;
+}
+
+.modernization-range-bar {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.modernization-range-input {
+  flex: 1;
+  accent-color: var(--wired-yellow);
+  cursor: pointer;
+}
+
+.range-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.range-lbl.gold {
+  color: var(--wired-yellow);
+}
+
+@media (max-width: 980px) {
+  .boutique-roof-top {
+    grid-template-columns: 1fr;
+  }
+  .under-one-roof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grader-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modernization-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .boutique-roof-shell,
+  .grader-console-card,
+  .modernization-slider-stage {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+  .under-one-roof-grid,
+  .grader-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .grader-input-bar {
+    flex-direction: column;
+  }
+  .grader-submit-btn {
+    padding: 14px 20px;
+    width: 100%;
+    justify-content: center;
+  }
+  .blueprint-capture-inputs {
+    width: 100%;
+    flex-direction: column;
+  }
+  .grader-lead-input {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   VEVO / MAJOR-LABEL COPYRIGHT PROTECTION 16:9 CINEMA STAGE FALLBACK
+   ========================================================================== */
+.yt-vevo-cinema-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #050508;
+}
+
+.yt-vevo-cinema-fallback.modal-vevo-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+}
+
+.yt-vevo-fallback-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.42) contrast(1.12);
+  transform: scale(1.03);
+}
+
+.yt-vevo-fallback-overlay {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 28px 32px;
+  margin: 16px;
+  text-align: center;
+  background: rgba(8, 8, 14, 0.86);
+  backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(255, 238, 0, 0.45);
+  border-radius: 22px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.yt-vevo-shield-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: var(--wired-yellow);
+  background: rgba(255, 238, 0, 0.12);
+  border: 1px solid rgba(255, 238, 0, 0.4);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.yt-vevo-fallback-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+  font-weight: 800;
+  color: var(--ink-white);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.yt-vevo-fallback-sub {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.86);
+  margin: 0;
+}
+
+.yt-vevo-fallback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.yt-vevo-watch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .yt-vevo-fallback-overlay {
+    padding: 18px 16px;
+    gap: 8px;
+  }
+  .yt-vevo-fallback-sub {
+    font-size: 0.78rem;
+  }
+}

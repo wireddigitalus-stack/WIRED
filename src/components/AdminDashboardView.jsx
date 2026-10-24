@@ -1617,6 +1617,51 @@ export default function AdminDashboardView({ onExitDashboard }) {
               </div>
             </div>
 
+            {/* Live Social Share Card Preview (iMessage / Text / Email / Open Graph) */}
+            <div className="wos-glass-panel">
+              <div className="wos-panel-header">
+                <div>
+                  <span className="wos-panel-kicker">
+                    LIVE OPEN GRAPH &amp; TEXT/EMAIL SHARE PREVIEW // 1200×630 • 179 KB
+                  </span>
+                  <h3 className="wos-panel-title">
+                    Official Social Share Card (Round Seal • Sub-200KB Text &amp; Email Compliant)
+                  </h3>
+                </div>
+                <a
+                  href="/wired-og-seal-2026.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-mini-yellow"
+                >
+                  <span>OPEN FULL 1200×630 CARD ↗</span>
+                </a>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 540px) 1fr', gap: '20px', alignItems: 'center' }}>
+                <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1.5px solid rgba(255, 238, 0, 0.45)', boxShadow: '0 16px 40px rgba(0,0,0,0.65)' }}>
+                  <img
+                    src="/wired-og-seal-2026.jpg"
+                    alt="Wired Digital Creative 1200x630 Social Share Card"
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem', color: 'rgba(255,255,255,0.86)' }}>
+                  <div>
+                    <strong style={{ color: '#FFEE00' }}>Primary Cache-Busted Open Graph URL:</strong>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '4px', color: '#30d158' }}>
+                      https://www.wireddigitalcreative.com/wired-og-seal-2026.jpg
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Dimensions &amp; Payload:</strong> 1200 × 630 px • 179 KB Baseline RGB JPEG + 185 KB PNG (100% compliant with iMessage, SMS/MMS, Apple Mail, Gmail, X, Facebook &amp; LinkedIn).
+                  </div>
+                  <div>
+                    <strong>Tip for iMessage / Social Caches:</strong> Changing the filename to <code>wired-og-seal-2026.jpg</code> automatically bypasses old phone &amp; social network URL caches as soon as the deployment goes live.
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Tracked Tri-Cities & AI Search Keyword Rankings Table */}
             <div className="wos-glass-panel">
               <div className="wos-panel-header">

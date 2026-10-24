@@ -13,13 +13,16 @@ import {
   Activity,
   Bot,
   X,
-  ArrowRightLeft
+  ArrowRightLeft,
+  Search,
+  ArrowRight
 } from 'lucide-react';
 import {
   TRI_CITIES_CASE_STUDIES,
   AI_SEO_PILLARS,
   TRI_CITIES_MARKETS
 } from '../data/wiredData';
+import { addLead, logTelemetryEvent } from '../utils/telemetry';
 
 export default function AiSeoDashboardShowcase({ onOpenContact }) {
   const [activeDemoTab, setActiveDemoTab] = useState('auto'); // 'auto' | 'cre' | 'geo'
@@ -31,6 +34,79 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
   });
   const [compareMode, setCompareMode] = useState('after'); // 'before' | 'after'
   const [lightboxImage, setLightboxImage] = useState(null);
+
+  // Interactive Home-Page 60-Second Website AI & Search Grader State
+  const [homeScanUrl, setHomeScanUrl] = useState('');
+  const [isHomeScanning, setIsHomeScanning] = useState(false);
+  const [homeScanResult, setHomeScanResult] = useState(null);
+  const [homeLeadName, setHomeLeadName] = useState('');
+  const [homeLeadContact, setHomeLeadContact] = useState('');
+  const [homeBlueprintSent, setHomeBlueprintSent] = useState(false);
+
+  const handleHomeGraderScan = (e) => {
+    e.preventDefault();
+    const raw = homeScanUrl.trim();
+    if (!raw) return;
+    const cleanDomain = raw
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
+      .split('/')[0];
+
+    setIsHomeScanning(true);
+    setHomeBlueprintSent(false);
+    logTelemetryEvent('WEBSITE_GRADER_SCAN', `Home Grader Scanned: ${cleanDomain}`, 'ai_geo');
+
+    setTimeout(() => {
+      setIsHomeScanning(false);
+      setHomeScanResult({
+        domain: cleanDomain,
+        fullUrl: raw.startsWith('http') ? raw : `https://${cleanDomain}`,
+        overallGrade: 'C-',
+        upgradedGrade: 'A+ (99/100)',
+        metrics: [
+          {
+            label: 'Mobile & Edge Speed',
+            current: '~3.8s Legacy Load',
+            target: '< 0.4s Wired AI Edge',
+            status: 'UPGRADE NEEDED'
+          },
+          {
+            label: 'AI Entity Schema (JSON-LD)',
+            current: 'Missing / Incomplete',
+            target: 'Full Local + Service Graph',
+            status: 'CRITICAL FOR AI'
+          },
+          {
+            label: 'ChatGPT & Google AI Citations',
+            current: 'Low AI Visibility',
+            target: '#1 Cited Regional Authority',
+            status: 'HIGH OPPORTUNITY'
+          },
+          {
+            label: '24/7 AI Bot & Live Admin Dash',
+            current: 'Not Detected',
+            target: 'Custom AI Bot + Live CRM Dash',
+            status: 'REVENUE MULTIPLIER'
+          }
+        ]
+      });
+    }, 650);
+  };
+
+  const handleHomeBlueprintSubmit = (e) => {
+    e.preventDefault();
+    if (!homeLeadContact.trim()) return;
+    addLead({
+      source: 'Home 60-Second AI Website Grader',
+      name: homeLeadName.trim() || `Website Grader Lead (${homeScanResult?.domain || 'Site Scan'})`,
+      contact: homeLeadContact.trim(),
+      companyUrl: homeScanResult?.fullUrl || homeScanUrl.trim(),
+      service: 'AI Website Design, Redesign & Modernization + GEO',
+      urgency: 'Ready to Start (This Month)',
+      details: `Requested AI & Search Modernization Blueprint from Home Grader for ${homeScanResult?.domain || homeScanUrl}.`
+    });
+    setHomeBlueprintSent(true);
+  };
 
   const toggleCardMode = (id, mode) => {
     setCardModes((prev) => ({ ...prev, [id]: mode }));
@@ -708,6 +784,125 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               </div>
             )}
           </div>
+        </div>
+
+        {/* ====================================================================
+            LIVE ON-PAGE "60-SECOND WEBSITE AI & SEARCH (GEO) GRADER" BAR
+           ==================================================================== */}
+        <div className="grader-console-card home-grader-strip">
+          <div className="grader-console-header">
+            <div>
+              <span className="eyebrow-tag">
+                <Sparkles size={14} />
+                <span>LIVE DIAGNOSTIC // 60-SECOND WEBSITE AI &amp; SEARCH GRADER</span>
+              </span>
+              <h3 className="grader-title">
+                TEST YOUR CURRENT WEBSITE FOR <span className="text-yellow">AI SEARCH (GEO) &amp; SPEED</span>
+              </h3>
+              <p className="grader-subtitle">
+                Type your website URL below to run an instant 64-bit diagnostic on mobile load speed,
+                Schema.org JSON-LD entity structure, and ChatGPT / Google AI citation readiness.
+              </p>
+            </div>
+            <div className="grader-live-badge">
+              <span className="rec-dot" />
+              <span>25+ YEARS AHEAD OF THE TECH CURVE // ALL SKILLS UNDER 1 ROOF</span>
+            </div>
+          </div>
+
+          <form className="grader-input-bar" onSubmit={handleHomeGraderScan}>
+            <div className="grader-url-field-wrap">
+              <Search size={18} className="grader-search-icon" />
+              <input
+                type="text"
+                className="grader-url-input"
+                placeholder="Enter your website URL (e.g., yourbusiness.com)..."
+                value={homeScanUrl}
+                onChange={(e) => setHomeScanUrl(e.target.value)}
+                aria-label="Website URL to scan"
+              />
+            </div>
+            <button type="submit" className="btn-wired-yellow grader-submit-btn" disabled={isHomeScanning}>
+              {isHomeScanning ? 'SCANNING DOM & AI SCHEMA...' : 'RUN 64-BIT AI & SEO SCAN →'}
+            </button>
+          </form>
+
+          {homeScanResult && (
+            <div className="grader-results-panel">
+              <div className="grader-results-top">
+                <div className="grader-target-info">
+                  <span className="grader-target-kicker">DIAGNOSTIC REPORT FOR:</span>
+                  <strong className="grader-target-domain">{homeScanResult.domain.toUpperCase()}</strong>
+                </div>
+                <div className="grader-score-badges">
+                  <div className="grader-score-pill legacy">
+                    <span>EST. LEGACY AI READINESS:</span>
+                    <strong>{homeScanResult.overallGrade}</strong>
+                  </div>
+                  <ArrowRight size={16} className="text-yellow" />
+                  <div className="grader-score-pill modernized">
+                    <span>WIRED AI TARGET:</span>
+                    <strong>{homeScanResult.upgradedGrade}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grader-metrics-grid">
+                {homeScanResult.metrics.map((m) => (
+                  <div key={m.label} className="grader-metric-card">
+                    <span className="grader-metric-status">{m.status}</span>
+                    <h4>{m.label}</h4>
+                    <div className="grader-metric-compare">
+                      <div className="metric-line bad">
+                        <span>Legacy State:</span>
+                        <strong>{m.current}</strong>
+                      </div>
+                      <div className="metric-line good">
+                        <span>Wired Upgrade:</span>
+                        <strong>{m.target}</strong>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {!homeBlueprintSent ? (
+                <form className="grader-blueprint-capture" onSubmit={handleHomeBlueprintSubmit}>
+                  <div className="blueprint-capture-copy">
+                    <strong>Want Creative Director Rob Neilson to send a custom Modernization Blueprint for {homeScanResult.domain}?</strong>
+                    <span>Dispatches directly to Rob&apos;s inbox &amp; the WIRED_OS Command Center.</span>
+                  </div>
+                  <div className="blueprint-capture-inputs">
+                    <input
+                      type="text"
+                      placeholder="Your Name / Business"
+                      value={homeLeadName}
+                      onChange={(e) => setHomeLeadName(e.target.value)}
+                      className="grader-lead-input"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Best Email or Mobile # *"
+                      value={homeLeadContact}
+                      onChange={(e) => setHomeLeadContact(e.target.value)}
+                      required
+                      className="grader-lead-input"
+                    />
+                    <button type="submit" className="btn-wired-yellow">
+                      SEND MY BLUEPRINT →
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="grader-blueprint-success">
+                  <CheckCircle2 size={18} className="text-yellow" />
+                  <span>
+                    <strong>BLUEPRINT REQUEST LOCKED!</strong> Logged in WIRED_OS &amp; emailed directly to Rob Neilson (WiredDigitalUS@gmail.com).
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ====================================================================

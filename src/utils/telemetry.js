@@ -115,6 +115,37 @@ export function saveLeads(leads) {
   return leads;
 }
 
+export function dispatchLeadNotification(lead) {
+  if (typeof window === 'undefined' || typeof fetch === 'undefined') return;
+  try {
+    fetch('https://formsubmit.co/ajax/WiredDigitalUS@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: `⚡ WIRED DIGITAL LEAD: ${lead.name || 'New Inquiry'} — ${lead.service || 'Project Inquiry'}`,
+        _template: 'table',
+        _captcha: 'false',
+        Lead_ID: lead.id,
+        Submitted_At: lead.createdAt,
+        Lead_Source: lead.source || 'WiredDigitalCreative.com',
+        Client_Name: lead.name || 'Not Provided',
+        Contact_Info: lead.contact || 'Not Provided',
+        Website_URL: lead.companyUrl || 'Not Provided',
+        Service_Requested: lead.service || 'General Inquiry',
+        Timeline_Urgency: lead.urgency || 'Standard',
+        Project_Details: lead.details || 'Submitted via WiredDigitalCreative.com'
+      })
+    }).catch(() => {
+      // Non-blocking background dispatch; local CRM storage is always guaranteed
+    });
+  } catch {
+    // Ignore network errors in offline/sandbox environments
+  }
+}
+
 export function addLead(leadData) {
   const current = getLeads();
   const newLead = {
@@ -129,6 +160,7 @@ export function addLead(leadData) {
   const updated = [newLead, ...current];
   saveLeads(updated);
   logTelemetryEvent('LEAD_SUBMITTED', `${newLead.name} (${newLead.service})`, 'conversion');
+  dispatchLeadNotification(newLead);
   return updated;
 }
 

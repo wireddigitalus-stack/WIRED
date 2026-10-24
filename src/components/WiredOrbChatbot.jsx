@@ -654,6 +654,93 @@ function playWired64Chirp(mood = 'smile') {
   }
 }
 
+/**
+ * Dyslexia-Friendly 64-Bit Message Formatter:
+ * - Breaks up paragraphs and bullet lists into distinct, well-spaced blocks
+ * - Renders all Headings, Titles & Bullet Labels in Phosphor Green (#00FF66)
+ * - Renders all Paragraph & Explanation Body Text in High-Contrast Yellow (#FFEE00)
+ */
+function renderDyslexiaFriendlyBotContent(text, subtext) {
+  const rawLines = (text || '')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  return (
+    <div className="w64-dyslexia-reader">
+      {rawLines.map((line, idx) => {
+        const isBullet = line.startsWith('•') || line.startsWith('-') || line.startsWith('>');
+
+        if (isBullet) {
+          const cleanBullet = line.replace(/^[•\->]\s*/, '');
+          const colonIdx = cleanBullet.indexOf(':');
+          if (colonIdx > 0 && colonIdx < 58) {
+            const bulletTitle = cleanBullet.slice(0, colonIdx + 1);
+            const bulletBody = cleanBullet.slice(colonIdx + 1).trim();
+            return (
+              <div key={idx} className="w64-list-item-block">
+                <div className="w64-list-title-green">▸ {bulletTitle}</div>
+                {bulletBody && <p className="w64-para-yellow">{bulletBody}</p>}
+              </div>
+            );
+          }
+          return (
+            <div key={idx} className="w64-list-item-block">
+              <p className="w64-para-yellow">▸ {cleanBullet}</p>
+            </div>
+          );
+        }
+
+        // First line or non-bullet heading with "//" or ":"
+        if (idx === 0) {
+          if (line.includes('//')) {
+            const parts = line.split('//');
+            const leftTag = parts[0].trim();
+            const rightRest = parts.slice(1).join('//').trim();
+
+            // Check if rightRest is a short title (ends with ':' or <= 52 chars) vs a full sentence
+            if (rightRest.endsWith(':') || rightRest.length <= 54) {
+              return (
+                <div key={idx} className="w64-heading-block">
+                  <div className="w64-heading-green">
+                    {leftTag} // {rightRest}
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div key={idx} className="w64-heading-block">
+                <div className="w64-heading-green">{leftTag} //</div>
+                <p className="w64-para-yellow">{rightRest}</p>
+              </div>
+            );
+          }
+
+          return (
+            <div key={idx} className="w64-heading-block">
+              <div className="w64-heading-green">{line}</div>
+            </div>
+          );
+        }
+
+        // Any other standalone paragraph line
+        return (
+          <p key={idx} className="w64-para-yellow w64-standalone-para">
+            {line}
+          </p>
+        );
+      })}
+
+      {subtext && (
+        <div className="w64-msg-subtext-block">
+          <div className="w64-subtext-heading-green">NEXT STEP //</div>
+          <p className="w64-para-yellow">{subtext}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function WiredOrbChatbot() {
   const dockRef = useRef(null);
   const orbButtonRef = useRef(null);
@@ -1481,8 +1568,14 @@ export default function WiredOrbChatbot() {
                           </span>
                           <span className="w64-msg-time">{msg.time}</span>
                         </div>
-                        <div className="w64-msg-text">{msg.text}</div>
-                        {msg.subtext && <div className="w64-msg-subtext">{msg.subtext}</div>}
+                        {msg.sender === 'bot' ? (
+                          renderDyslexiaFriendlyBotContent(msg.text, msg.subtext)
+                        ) : (
+                          <>
+                            <div className="w64-msg-text">{msg.text}</div>
+                            {msg.subtext && <div className="w64-msg-subtext">{msg.subtext}</div>}
+                          </>
+                        )}
                         {msg.sender === 'bot' && Array.isArray(msg.chips) && msg.chips.length > 0 && (
                           <div className="w64-msg-chips">
                             {msg.chips.map((chip, cIdx) => (

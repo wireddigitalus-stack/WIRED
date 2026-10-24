@@ -7087,6 +7087,12 @@ a {
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.85),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: padding 0.2s ease, border-radius 0.2s ease;
+}
+
+.seo-sitetree-shell.is-collapsed {
+  padding: 18px 24px;
+  border-radius: 20px;
 }
 
 .seo-sitetree-topbar {
@@ -7097,6 +7103,11 @@ a {
   gap: 16px;
   padding-bottom: 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.seo-sitetree-shell.is-collapsed .seo-sitetree-topbar {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .seo-sitetree-brand-cluster {

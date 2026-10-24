@@ -49,7 +49,7 @@ export default function SeoSiteTreeAuthority({
   onOpenContact
 }) {
   const [activePanel, setActivePanel] = useState('tree'); // 'tree' | 'local' | 'faq'
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [openFaqIdx, setOpenFaqIdx] = useState(0);
 
   const handleNodeClick = (e, node) => {
@@ -72,10 +72,23 @@ export default function SeoSiteTreeAuthority({
       aria-label="Google Sitelinks, Full Site Tree Architecture & Website Design Near Me Authority Hub"
     >
       <div className="container">
-        <div className="seo-sitetree-shell">
+        <div className={`seo-sitetree-shell ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}>
           {/* Top Command Header Bar */}
           <div className="seo-sitetree-topbar">
-            <div className="seo-sitetree-brand-cluster">
+            <div
+              className="seo-sitetree-brand-cluster"
+              onClick={() => setIsExpanded((prev) => !prev)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsExpanded((prev) => !prev);
+                }
+              }}
+              style={{ cursor: 'pointer' }}
+              title={isExpanded ? 'Click to collapse Google Sitelinks & AI GEO Architecture' : 'Click to expand Google Sitelinks & AI GEO Architecture'}
+            >
               <span className="seo-sitetree-live-pill">
                 <span className="seo-live-dot" />
                 GOOGLE SITELINKS &amp; AI GEO ARCHITECTURE // LIVE
@@ -90,11 +103,15 @@ export default function SeoSiteTreeAuthority({
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={activePanel === 'tree'}
-                  className={`seo-tab-btn ${activePanel === 'tree' ? 'active' : ''}`}
+                  aria-selected={isExpanded && activePanel === 'tree'}
+                  className={`seo-tab-btn ${isExpanded && activePanel === 'tree' ? 'active' : ''}`}
                   onClick={() => {
-                    setActivePanel('tree');
-                    setIsExpanded(true);
+                    if (isExpanded && activePanel === 'tree') {
+                      setIsExpanded(false);
+                    } else {
+                      setActivePanel('tree');
+                      setIsExpanded(true);
+                    }
                   }}
                 >
                   <Network size={13} />
@@ -103,11 +120,15 @@ export default function SeoSiteTreeAuthority({
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={activePanel === 'local'}
-                  className={`seo-tab-btn ${activePanel === 'local' ? 'active' : ''}`}
+                  aria-selected={isExpanded && activePanel === 'local'}
+                  className={`seo-tab-btn ${isExpanded && activePanel === 'local' ? 'active' : ''}`}
                   onClick={() => {
-                    setActivePanel('local');
-                    setIsExpanded(true);
+                    if (isExpanded && activePanel === 'local') {
+                      setIsExpanded(false);
+                    } else {
+                      setActivePanel('local');
+                      setIsExpanded(true);
+                    }
                   }}
                 >
                   <MapPin size={13} />
@@ -116,11 +137,15 @@ export default function SeoSiteTreeAuthority({
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={activePanel === 'faq'}
-                  className={`seo-tab-btn ${activePanel === 'faq' ? 'active' : ''}`}
+                  aria-selected={isExpanded && activePanel === 'faq'}
+                  className={`seo-tab-btn ${isExpanded && activePanel === 'faq' ? 'active' : ''}`}
                   onClick={() => {
-                    setActivePanel('faq');
-                    setIsExpanded(true);
+                    if (isExpanded && activePanel === 'faq') {
+                      setIsExpanded(false);
+                    } else {
+                      setActivePanel('faq');
+                      setIsExpanded(true);
+                    }
                   }}
                 >
                   <HelpCircle size={13} />
@@ -136,57 +161,58 @@ export default function SeoSiteTreeAuthority({
                 title={isExpanded ? 'Collapse Site Tree Panel' : 'Expand Site Tree Panel'}
               >
                 {isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-                <span>{isExpanded ? 'COMPACT' : 'EXPAND'}</span>
+                <span>{isExpanded ? 'COLLAPSE' : 'EXPAND'}</span>
               </button>
             </div>
           </div>
 
-          {/* Main Semantic Heading Block */}
-          <div className="seo-sitetree-intro">
-            <div className="seo-sitetree-intro-copy">
-              <h2 className="seo-sitetree-h2">
-                ENGINEERED FOR <span className="text-yellow">&quot;WEBSITE DESIGN NEAR ME&quot;</span> &amp;
-                GOOGLE / AI SITELINK DISCOVERY.
-              </h2>
-              <p className="seo-sitetree-lead">
-                Every node below is wired directly into our live{' '}
-                <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="seo-inline-code-link">
-                  /sitemap.xml
-                </a>
-                ,{' '}
-                <a href="/llms.txt" target="_blank" rel="noopener noreferrer" className="seo-inline-code-link">
-                  /llms.txt
-                </a>{' '}
-                AI Entity Manifest, and 5-node <strong>Schema.org JSON-LD @graph</strong>. Click any node in the
-                site tree to dynamically load its canonical metadata and jump straight to that architecture.
-              </p>
-            </div>
-
-            {/* Machine-Crawlable Endpoints Strip */}
-            <div className="seo-endpoints-strip" aria-label="Live Machine Crawlable Search Endpoints">
-              {SITE_TREE_NODES.crawlerEndpoints.map((ep) => (
-                <a
-                  key={ep.id}
-                  href={ep.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="seo-endpoint-chip"
-                  title={`${ep.label} — ${ep.protocol}`}
-                >
-                  <FileCode2 size={13} className="seo-ep-icon" />
-                  <div className="seo-ep-meta">
-                    <span className="seo-ep-path">{ep.path}</span>
-                    <span className="seo-ep-status">{ep.status}</span>
-                  </div>
-                  <ExternalLink size={11} className="seo-ep-ext" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Expandable Body */}
+          {/* Expandable Intro + Body (Collapsed by Default) */}
           {isExpanded && (
-            <div className="seo-sitetree-body">
+            <>
+              {/* Main Semantic Heading Block */}
+              <div className="seo-sitetree-intro">
+                <div className="seo-sitetree-intro-copy">
+                  <h2 className="seo-sitetree-h2">
+                    ENGINEERED FOR <span className="text-yellow">&quot;WEBSITE DESIGN NEAR ME&quot;</span> &amp;
+                    GOOGLE / AI SITELINK DISCOVERY.
+                  </h2>
+                  <p className="seo-sitetree-lead">
+                    Every node below is wired directly into our live{' '}
+                    <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="seo-inline-code-link">
+                      /sitemap.xml
+                    </a>
+                    ,{' '}
+                    <a href="/llms.txt" target="_blank" rel="noopener noreferrer" className="seo-inline-code-link">
+                      /llms.txt
+                    </a>{' '}
+                    AI Entity Manifest, and 5-node <strong>Schema.org JSON-LD @graph</strong>. Click any node in the
+                    site tree to dynamically load its canonical metadata and jump straight to that architecture.
+                  </p>
+                </div>
+
+                {/* Machine-Crawlable Endpoints Strip */}
+                <div className="seo-endpoints-strip" aria-label="Live Machine Crawlable Search Endpoints">
+                  {SITE_TREE_NODES.crawlerEndpoints.map((ep) => (
+                    <a
+                      key={ep.id}
+                      href={ep.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="seo-endpoint-chip"
+                      title={`${ep.label} — ${ep.protocol}`}
+                    >
+                      <FileCode2 size={13} className="seo-ep-icon" />
+                      <div className="seo-ep-meta">
+                        <span className="seo-ep-path">{ep.path}</span>
+                        <span className="seo-ep-status">{ep.status}</span>
+                      </div>
+                      <ExternalLink size={11} className="seo-ep-ext" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="seo-sitetree-body">
               {/* ================================================================
                   PANEL 1: VISUAL GOOGLE SITE TREE & SITELINKS HIERARCHY
                  ================================================================ */}
@@ -425,7 +451,8 @@ export default function SeoSiteTreeAuthority({
                   })}
                 </div>
               )}
-            </div>
+              </div>
+            </>
           )}
         </div>
       </div>

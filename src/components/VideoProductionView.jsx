@@ -121,7 +121,18 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
       <section className="subview-reel-strip">
         <div className="section-container">
           <div className="subview-reel-card">
-            <div className="subview-reel-media">
+            <div
+              className="subview-reel-media"
+              onClick={() =>
+                onOpenVideoModal({
+                  title: "Wired Digital — Studio Director's Showreel",
+                  role: 'Directed & Edited by Rob Neilson',
+                  category: 'STUDIO REEL',
+                  localVideo: BRAND_INFO.reelMp4
+                })
+              }
+              title="Click to watch Studio Showreel in Theater Mode with sound"
+            >
               <video
                 src={BRAND_INFO.reelMp4}
                 poster={BRAND_INFO.reelPoster}
@@ -132,25 +143,27 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
                 className="subview-reel-video"
               />
               <div className="video-halftone-overlay" />
-              <button
-                type="button"
-                className="reel-center-play-btn"
-                onClick={() =>
-                  onOpenVideoModal({
-                    title: "Wired Digital — Studio Director's Showreel",
-                    role: 'Directed & Edited by Rob Neilson',
-                    category: 'STUDIO REEL',
-                    localVideo: BRAND_INFO.reelMp4
-                  })
-                }
-              >
-                <Play size={24} fill="#050505" stroke="#050505" />
-                <span>WATCH STUDIO REEL</span>
-              </button>
             </div>
 
             <div className="subview-reel-info">
-              <span className="reel-kicker">CREATIVE DIRECTOR: ROB NEILSON</span>
+              <div className="subview-reel-top-row">
+                <span className="reel-kicker">CREATIVE DIRECTOR: ROB NEILSON</span>
+                <button
+                  type="button"
+                  className="reel-center-play-btn"
+                  onClick={() =>
+                    onOpenVideoModal({
+                      title: "Wired Digital — Studio Director's Showreel",
+                      role: 'Directed & Edited by Rob Neilson',
+                      category: 'STUDIO REEL',
+                      localVideo: BRAND_INFO.reelMp4
+                    })
+                  }
+                >
+                  <Play size={18} fill="#050505" stroke="#050505" />
+                  <span>WATCH STUDIO REEL</span>
+                </button>
+              </div>
               <h2>From RED Cinema Shoots to Custom Animated Lyric Worlds</h2>
               <p>
                 Whether cutting a multi-cam rock collaboration for{' '}

@@ -2856,6 +2856,20 @@ a {
   align-items: center;
   justify-content: center;
   background: #000;
+  cursor: pointer;
+}
+
+.subview-reel-top-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.subview-reel-top-row .reel-kicker {
+  margin-bottom: 0;
 }
 
 .subview-reel-video {
@@ -6868,12 +6882,27 @@ a {
   background: #ffee00;
 }
 
-.wired64-overlay-backdrop.mode-docked .w64-crt-cartridge-screen,
-.wired64-overlay-backdrop.mode-docked .w64-cartridge-selector {
-  display: none !important;
+/* Desktop Docked Window: Keep Orb + Vector Screen + 4 Cartridge Cards on the Left Side */
+.wired64-overlay-backdrop.mode-docked .wired64-main-grid {
+  grid-template-columns: 295px 1fr;
 }
 
-@media (max-width: 1100px), (hover: none), (pointer: coarse) {
+.wired64-overlay-backdrop.mode-docked .wired64-graphics-deck {
+  padding: 12px;
+  gap: 10px;
+}
+
+.wired64-overlay-backdrop.mode-docked .w64-orb-holo-stage {
+  height: 118px;
+  flex-shrink: 0;
+}
+
+.wired64-overlay-backdrop.mode-docked .w64-cartridge-btn {
+  padding: 7px 9px;
+}
+
+@media (max-width: 768px) {
+  .wired64-overlay-backdrop.mode-docked .wired64-main-grid,
   .wired64-main-grid {
     display: flex;
     flex-direction: column;
@@ -6882,7 +6911,7 @@ a {
     overflow: hidden;
   }
 
-  /* Compact top stage on tablet/mobile so the chat viewport gets maximum screen height */
+  /* Compact top stage on mobile phones so the chat viewport gets maximum screen height */
   .wired64-graphics-deck {
     flex-shrink: 0;
     border-right: none;
@@ -6897,6 +6926,7 @@ a {
     display: none !important;
   }
 
+  .wired64-overlay-backdrop.mode-docked .w64-orb-holo-stage,
   .w64-orb-holo-stage {
     height: 58px;
     flex-direction: row;

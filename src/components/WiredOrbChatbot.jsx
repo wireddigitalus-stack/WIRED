@@ -236,10 +236,7 @@ export default function WiredOrbChatbot() {
   const [isOverYellowFooter, setIsOverYellowFooter] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return (
-      window.innerWidth <= 1100 ||
-      window.matchMedia('(max-width: 1100px), (hover: none), (pointer: coarse)').matches
-    );
+    return window.innerWidth <= 768;
   });
   const [activeCartridge, setActiveCartridge] = useState('geo');
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
@@ -263,13 +260,10 @@ export default function WiredOrbChatbot() {
     cartridge: 'geo'
   });
 
-  // Keep mobile/tablet viewport detection synced on resize & orientation changes
+  // Keep mobile phone viewport detection synced on resize & orientation changes
   useEffect(() => {
     const checkViewport = () => {
-      const mobileNow =
-        window.innerWidth <= 1100 ||
-        window.matchMedia('(max-width: 1100px), (hover: none), (pointer: coarse)').matches;
-      setIsMobileViewport(mobileNow);
+      setIsMobileViewport(window.innerWidth <= 768);
     };
     checkViewport();
     window.addEventListener('resize', checkViewport, { passive: true });
@@ -670,8 +664,8 @@ export default function WiredOrbChatbot() {
                   </div>
                 </div>
 
-                {/* Dynamic 64-Bit Retro Vector Graphics Screen (Desktop Full-Screen Only) */}
-                {!isMobileViewport && isFullScreen && (
+                {/* Dynamic 64-Bit Retro Vector Graphics Screen (Desktop Full-Screen & Docked) */}
+                {!isMobileViewport && (
                 <div className="w64-crt-cartridge-screen">
                   <div className="w64-crt-screen-header">
                     <span>ACTIVE MODULE // {activeCartridge.toUpperCase()}_64.SYS</span>
@@ -794,8 +788,8 @@ export default function WiredOrbChatbot() {
                 </div>
                 )}
 
-                {/* 4 Selectable 64-Bit Mission Cartridges (Desktop Full-Screen Only) */}
-                {!isMobileViewport && isFullScreen && (
+                {/* 4 Selectable 64-Bit Mission Cartridges (Desktop Full-Screen & Docked) */}
+                {!isMobileViewport && (
                 <div className="w64-cartridge-selector">
                   <span className="w64-slot-label">SELECT 64-BIT MISSION CARTRIDGE:</span>
                   <div className="w64-cartridge-grid">

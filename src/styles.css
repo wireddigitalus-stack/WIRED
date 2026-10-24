@@ -406,12 +406,9 @@ a {
 }
 
 .swirl-continuous-spin {
-  animation: hypnoticSpiralSpin 52s linear infinite;
+  animation: hypnoticSpiralSpin 18s linear infinite;
   transform-origin: 0px 0px;
-}
-
-.site-hero-banner:hover .swirl-continuous-spin {
-  animation-duration: 30s;
+  will-change: transform;
 }
 
 .site-hero-banner.voltage-surge .swirl-continuous-spin {
@@ -6830,6 +6827,10 @@ a {
   color: #040805;
 }
 
+.w64-pill-mobile-text {
+  display: none;
+}
+
 .w64-command-form {
   display: flex;
   align-items: center;
@@ -6880,17 +6881,69 @@ a {
   background: #ffee00;
 }
 
-@media (max-width: 960px) {
+.wired64-overlay-backdrop.mode-docked .w64-crt-cartridge-screen,
+.wired64-overlay-backdrop.mode-docked .w64-cartridge-selector {
+  display: none !important;
+}
+
+@media (max-width: 1100px), (hover: none), (pointer: coarse) {
   .wired64-main-grid {
-    grid-template-columns: 1fr;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
+
+  /* Compact top stage on tablet/mobile so the chat viewport gets maximum screen height */
   .wired64-graphics-deck {
+    flex-shrink: 0;
     border-right: none;
     border-bottom: 1.5px solid rgba(0, 255, 102, 0.35);
+    padding: 8px 12px;
+    gap: 8px;
+    overflow: visible;
   }
-  .w64-cartridge-grid {
-    grid-template-columns: repeat(2, 1fr);
+
+  .w64-crt-cartridge-screen,
+  .w64-cartridge-selector {
+    display: none !important;
+  }
+
+  .w64-orb-holo-stage {
+    height: 58px;
+    flex-direction: row;
+    gap: 16px;
+    padding: 0 14px;
+  }
+
+  .w64-stage-orb-wrap {
+    width: 46px;
+    height: 46px;
+  }
+
+  .orb-black-sphere.stage-sphere {
+    width: 44px;
+    height: 44px;
+  }
+
+  .orb-eyes-upper-zone.stage-eyes {
+    top: 11px;
+    gap: 8px;
+  }
+
+  .orb-reflective-eye.stage-eye {
+    width: 6.5px;
+    height: 8.5px;
+  }
+
+  .w64-voice-eq {
+    margin-top: 0;
+  }
+
+  .wired64-chat-column {
+    flex: 1;
+    min-height: 0;
   }
 }
 
@@ -6920,18 +6973,79 @@ a {
     height: 8px;
     margin-right: 20px;
   }
-  .wired64-overlay-backdrop.mode-fullscreen {
-    padding: 8px;
+  .wired64-overlay-backdrop.mode-fullscreen,
+  .wired64-overlay-backdrop.mode-docked {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    padding: 6px;
+  }
+  .wired64-terminal-window {
+    max-height: 100%;
+    border-radius: 14px;
+  }
+  .wired64-topbar {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .w64-rom-title {
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+  }
+  .w64-win-btn {
+    padding: 4px 8px;
+    font-size: 0.58rem;
+  }
+  .w64-win-btn:first-child {
+    display: none;
   }
   .w64-clock-tag {
     display: none;
   }
-  .w64-cartridge-grid,
-  .w64-packet-grid {
-    grid-template-columns: 1fr;
+  .wired64-messages-viewport {
+    padding: 12px 10px;
+    gap: 10px;
   }
   .w64-msg-block {
     max-width: 96%;
+    padding: 10px 12px;
+  }
+  .w64-msg-text {
+    font-size: 0.78rem;
+  }
+  .w64-msg-subtext {
+    font-size: 0.7rem;
+  }
+  .w64-packet-grid {
+    grid-template-columns: 1fr;
+  }
+  .wired64-input-dock {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .w64-hide-mobile,
+  .w64-pill-desktop-text {
+    display: none !important;
+  }
+  .w64-pill-mobile-text {
+    display: inline;
+  }
+  .w64-quick-arcade-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .w64-arcade-pill {
+    justify-content: center;
+    padding: 6px 8px;
+    font-size: 0.6rem;
+    white-space: nowrap;
+  }
+  .w64-command-input,
+  .w64-field input,
+  .w64-field select {
+    font-size: 16px;
   }
 }
 

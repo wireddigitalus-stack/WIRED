@@ -232,6 +232,13 @@ export default function WiredOrbChatbot() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
+  const [isMobileViewport, setIsMobileViewport] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.innerWidth <= 1100 ||
+      window.matchMedia('(max-width: 1100px), (hover: none), (pointer: coarse)').matches
+    );
+  });
   const [activeCartridge, setActiveCartridge] = useState('geo');
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [inputText, setInputText] = useState('');
@@ -253,6 +260,23 @@ export default function WiredOrbChatbot() {
     details: '',
     cartridge: 'geo'
   });
+
+  // Keep mobile/tablet viewport detection synced on resize & orientation changes
+  useEffect(() => {
+    const checkViewport = () => {
+      const mobileNow =
+        window.innerWidth <= 1100 ||
+        window.matchMedia('(max-width: 1100px), (hover: none), (pointer: coarse)').matches;
+      setIsMobileViewport(mobileNow);
+    };
+    checkViewport();
+    window.addEventListener('resize', checkViewport, { passive: true });
+    window.addEventListener('orientationchange', checkViewport, { passive: true });
+    return () => {
+      window.removeEventListener('resize', checkViewport);
+      window.removeEventListener('orientationchange', checkViewport);
+    };
+  }, []);
 
   // Update whisper prompt based on scroll position
   useEffect(() => {
@@ -280,9 +304,9 @@ export default function WiredOrbChatbot() {
     let rafId = null;
     let lastNear = false;
 
-    const onMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+    const updatePoint = (clientX, clientY) => {
+      mouse.x = clientX;
+      mouse.y = clientY;
 
       // Calculate angle & distance relative to the floating orb (or screen center when open)
       let originX = window.innerWidth - 58;
@@ -316,6 +340,13 @@ export default function WiredOrbChatbot() {
       targetEye.y = Math.sin(angle) * maxRadiusY * factor;
     };
 
+    const onMouseMove = (e) => updatePoint(e.clientX, e.clientY);
+    const onTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        updatePoint(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
     const tick = () => {
       currentEye.x += (targetEye.x - currentEye.x) * 0.11;
       currentEye.y += (targetEye.y - currentEye.y) * 0.11;
@@ -337,9 +368,13 @@ export default function WiredOrbChatbot() {
 
     rafId = requestAnimationFrame(tick);
     window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('touchstart', onTouchMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchstart', onTouchMove);
+      window.removeEventListener('touchmove', onTouchMove);
     };
   }, [isOpen]);
 
@@ -615,7 +650,8 @@ export default function WiredOrbChatbot() {
                   </div>
                 </div>
 
-                {/* Dynamic 64-Bit Retro Vector Graphics Screen (Changes per Cartridge) */}
+                {/* Dynamic 64-Bit Retro Vector Graphics Screen (Desktop Full-Screen Only) */}
+                {!isMobileViewport && isFullScreen && (
                 <div className="w64-crt-cartridge-screen">
                   <div className="w64-crt-screen-header">
                     <span>ACTIVE MODULE // {activeCartridge.toUpperCase()}_64.SYS</span>
@@ -736,8 +772,10 @@ export default function WiredOrbChatbot() {
                     </div>
                   )}
                 </div>
+                )}
 
-                {/* 4 Selectable 64-Bit Mission Cartridges */}
+                {/* 4 Selectable 64-Bit Mission Cartridges (Desktop Full-Screen Only) */}
+                {!isMobileViewport && isFullScreen && (
                 <div className="w64-cartridge-selector">
                   <span className="w64-slot-label">SELECT 64-BIT MISSION CARTRIDGE:</span>
                   <div className="w64-cartridge-grid">
@@ -755,6 +793,7 @@ export default function WiredOrbChatbot() {
                     ))}
                   </div>
                 </div>
+                )}
               </aside>
 
               {/* RIGHT PANEL: 64-BIT YELLOW & GREEN CONVERSATION STREAM + INSTANT LEAD PACKET */}
@@ -890,18 +929,21 @@ export default function WiredOrbChatbot() {
                       onClick={() => setShowPacketForm(!showPacketForm)}
                     >
                       <Zap size={12} fill="#050505" color="#050505" />
-                      <span>
+                      <span className="w64-pill-desktop-text">
                         {showPacketForm
                           ? '[ HIDE LEAD PACKET ]'
                           : packetSubmitted
                           ? '[ + SEND ANOTHER LEAD PACKET ]'
                           : '[ TRANSMIT QUICK LEAD PACKET ]'}
                       </span>
+                      <span className="w64-pill-mobile-text">
+                        {showPacketForm ? '[ HIDE FORM ]' : '[ LEAD PACKET ]'}
+                      </span>
                     </button>
 
                     <button
                       type="button"
-                      className="w64-arcade-pill"
+                      className="w64-arcade-pill w64-hide-mobile"
                       onClick={() =>
                         pushUserAndBotTurn(
                           'How do your custom live dashboards and 24/7 AI bots work?',
@@ -922,7 +964,8 @@ export default function WiredOrbChatbot() {
                         )
                       }
                     >
-                      [ SCAN MY WEBSITE URL ]
+                      <span className="w64-pill-desktop-text">[ SCAN MY WEBSITE URL ]</span>
+                      <span className="w64-pill-mobile-text">[ SCAN MY SITE ]</span>
                     </button>
                   </div>
 

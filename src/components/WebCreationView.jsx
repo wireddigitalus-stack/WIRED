@@ -10,10 +10,10 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
         <div className="section-container">
           <div className="eyebrow-tag">
             <Cpu size={14} />
-            <span>WIRED DIGITAL // AI WEBSITE DESIGN, REDESIGN &amp; MODERNIZATION</span>
+            <span>WIRED DIGITAL // WEBSITE DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
           </div>
           <h1 className="subview-hero-title">
-            AI SITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; MODERNIZATION
+            WEBSITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; AI MODERNIZATION
           </h1>
           <p className="subview-hero-lead">
             Built to keep pace with how search engines work in the age of AI. We bridge

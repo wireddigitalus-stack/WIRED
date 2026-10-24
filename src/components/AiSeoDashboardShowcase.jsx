@@ -42,7 +42,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
         {/* Section Header */}
         <div className="ai-section-header">
           <h2 className="ai-main-heading">
-            AI WEBSITE <span className="text-yellow">DESIGN, REDESIGN &amp; MODERNIZATION</span>
+            WEBSITE <span className="text-yellow">DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
           </h2>
 
           <p className="ai-sub-lead">

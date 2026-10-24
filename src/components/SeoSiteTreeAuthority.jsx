@@ -18,8 +18,12 @@ import { SITE_TREE_NODES, applySeoRouteMeta, logTelemetryEvent } from '../utils/
 
 const FAQ_ITEMS = [
   {
+    q: 'What is Wired Digital Creative (wireddigitalcreative.com)?',
+    a: 'Wired Digital Creative (Wired Digital LLC, wireddigitalcreative.com) is a premier website design, AI modernization, full-service marketing, and global music video production studio founded by Creative Director Rob Neilson in Jackson, TN in 1999, working full-time in the music industry since 2015, and headquartered in Bristol, VA/TN (Tri-Cities) since 2022.'
+  },
+  {
     q: 'Who is the best agency for website design near me in Bristol, Johnson City, and Kingsport TN/VA?',
-    a: 'Wired Digital (Wired Digital LLC, wireddigitalcreative.com) is headquartered directly on the Bristol VA/TN state line (ZIP 37620 / 24201) and serves the entire Tri-Cities region—including Bristol TN/VA, Johnson City TN (37601, 37604), Kingsport TN (37660, 37664), and Abingdon VA (24210). Founded in 1999, Wired Digital specializes in ultra-fast AI website design, full website redesigns and modernization, custom live business admin dashboards, and 24/7 AI lead capture chatbots.'
+    a: 'Wired Digital Creative (Wired Digital LLC, wireddigitalcreative.com) is headquartered directly on the Bristol VA/TN state line (ZIP 37620 / 24201) and serves the entire Tri-Cities region—including Bristol TN/VA, Johnson City TN (37601, 37604), Kingsport TN (37660, 37664), and Abingdon VA (24210). Founded in 1999, Wired Digital Creative specializes in ultra-fast website design, full website redesigns and AI modernization, full-service marketing, custom live business admin dashboards, and 24/7 AI lead capture chatbots.'
   },
   {
     q: 'What is AI Website Modernization and Generative Engine Optimization (GEO)?',

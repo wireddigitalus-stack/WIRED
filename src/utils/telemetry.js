@@ -422,6 +422,15 @@ export const WEEKLY_HEATMAP_DATA = [
 
 export const TRACKED_SEO_KEYWORDS = [
   {
+    keyword: 'Wired Digital Creative (wireddigitalcreative.com)',
+    region: 'Brand Entity • Local & Global',
+    rank: '#1',
+    aiCitation: 'Verified Primary Entity in Google & AI',
+    volume: '1,180/mo',
+    intent: 'BRAND AUTHORITY',
+    trend: 'LOCKED #1'
+  },
+  {
     keyword: 'website design near me (Bristol / Tri-Cities)',
     region: 'Bristol TN/VA • 37620 / 24201',
     rank: '#1',
@@ -504,14 +513,14 @@ export const SITE_TREE_NODES = {
     id: 'root',
     query: '',
     canonical: 'https://www.wireddigitalcreative.com/',
-    label: 'WIRED DIGITAL // ROOT HUB',
+    label: 'WIRED DIGITAL CREATIVE // ROOT HUB',
     pathDisplay: '/',
     schemaType: 'ProfessionalService + LocalBusiness + WebSite',
     priority: '1.0',
     title:
-      'Website Design Near Me in Bristol, Johnson City & Kingsport TN/VA | Wired Digital — AI Website Design, Custom Dashboards & Global Video Editing',
+      'Wired Digital Creative | Website Design Near Me in Bristol, Johnson City & Kingsport TN/VA — Website Design, Redesign, AI Modernization & Full-Service Marketing',
     description:
-      'Searching for website design near me in the Tri-Cities (Bristol TN/VA, Johnson City TN, Kingsport TN, Abingdon VA)? Wired Digital builds ultra-fast AI-era websites, custom live business admin dashboards, 24/7 AI lead capture chatbots, Generative SEO (GEO), and global remote 4K music videos.',
+      'Wired Digital Creative (Wired Digital LLC — wireddigitalcreative.com). Searching for website design near me in the Tri-Cities (Bristol TN/VA, Johnson City TN, Kingsport TN, Abingdon VA)? We build ultra-fast AI-era websites, full-service marketing campaigns, custom live business admin dashboards, 24/7 AI lead capture chatbots, and global remote 4K music videos.',
     tab: 'home',
     section: null
   },

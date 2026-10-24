@@ -92,12 +92,13 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
             <h2 className="since-heading">SINCE 1999</h2>
 
             <p className="since-manifesto">
-              Wired Digital bridges <strong>rock-and-roll artistry</strong> with{' '}
+              <strong>Wired Digital Creative</strong> bridges{' '}
+              <strong>rock-and-roll artistry</strong> with{' '}
               <strong>advanced AI software engineering</strong>. Founded in{' '}
               <strong>Jackson, TN in 1999</strong> and now based in{' '}
               <strong>Bristol (VA/TN) since 2022</strong>, we specialize in{' '}
               <span className="highlight-yellow">
-                AI website design, redesign, and full-stack modernization
+                website design, redesign, and full-stack AI modernization
               </span>
               —engineered to keep pace with the fast-changing way search engines work
               in the age of AI. We pair{' '}

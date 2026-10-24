@@ -33,51 +33,7 @@ function buildCleanBurtonSwirlPath(turns = 7.5, innerR = 6, spacing = 132, thick
 const SWIRL_PATH = buildCleanBurtonSwirlPath(7.5, 4, 134, 68, 720);
 
 export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
-  const bannerRef = useRef(null);
-  const swirlTranslateRef = useRef(null);
   const [surge, setSurge] = useState(false);
-
-  useEffect(() => {
-    const target = { x: 0, y: 0 };
-    const current = { x: 0, y: 0 };
-    let rafId = null;
-
-    const handleMove = (e) => {
-      if (!bannerRef.current) return;
-      const rect = bannerRef.current.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left) / Math.max(1, rect.width) - 0.5) * 2;
-      const ny = ((e.clientY - rect.top) / Math.max(1, rect.height) - 0.5) * 2;
-      target.x = Math.max(-1, Math.min(1, nx));
-      target.y = Math.max(-1, Math.min(1, ny));
-    };
-
-    const handleLeave = () => {
-      target.x = 0;
-      target.y = 0;
-    };
-
-    const tick = () => {
-      // Smooth spring-damped interpolation (zero initial jump, zero React re-renders)
-      current.x += (target.x - current.x) * 0.055;
-      current.y += (target.y - current.y) * 0.055;
-
-      if (swirlTranslateRef.current) {
-        const tx = (current.x * 14).toFixed(2);
-        const ty = (current.y * 8).toFixed(2);
-        swirlTranslateRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-    window.addEventListener('mousemove', handleMove, { passive: true });
-    window.addEventListener('mouseleave', handleLeave, { passive: true });
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseleave', handleLeave);
-    };
-  }, []);
 
   const triggerSurge = () => {
     setSurge(true);
@@ -86,7 +42,6 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
 
   return (
     <section
-      ref={bannerRef}
       className={`site-hero-banner ${surge ? 'voltage-surge' : ''}`}
       aria-label="Wired Digital Hero Banner"
     >
@@ -155,16 +110,8 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
           <g clipPath="url(#tornTopBottomClip)">
             <rect x="-980" y="-240" width="1960" height="480" fill="#040405" />
 
-            <g
-              ref={swirlTranslateRef}
-              style={{
-                willChange: 'transform',
-                transform: 'translate3d(0px, 0px, 0)'
-              }}
-            >
-              <g className="swirl-continuous-spin">
-                <path d={SWIRL_PATH} fill="url(#cleanHalftoneLines)" />
-              </g>
+            <g className="swirl-continuous-spin">
+              <path d={SWIRL_PATH} fill="url(#cleanHalftoneLines)" />
             </g>
 
             {/* Center studio depth shade so the iOS glass card & yellow title read with 100% clarity */}

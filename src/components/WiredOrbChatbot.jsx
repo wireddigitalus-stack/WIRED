@@ -129,7 +129,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       autoSubmitLead: true,
       reply: `DIRECT DISPATCH LOCKED [ ${contactStr} ] → ROB NEILSON // 100% TRANSMITTED.`,
       subtext:
-        'Logged in WIRED_OS Leads CRM and dispatched to Rob Neilson (WiredDigitalUS@gmail.com). Keep asking deep-dive questions below or click [EDIT / VIEW LEAD PACKET] anytime.',
+        'Sent directly to Creative Director Rob Neilson (WiredDigitalUS@gmail.com) — Rob will reach out to you shortly. Feel free to keep asking questions below!',
       chips: [
         { label: '⚡ DEEP DIVE: GEO ARCHITECTURE', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
         { label: '⏱️ TIMELINE & 3-PHASE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
@@ -558,7 +558,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'contact',
       cartridge: leadDraft.cartridge || 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT STUDIO CONTACT // Creative Director Rob Neilson:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat (or click [OPEN 64-BIT LEAD PACKET] below) for instant cloud dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• DIRECT STUDIO LINE (Call or Text): 731-616-5121`,
+      reply: `DIRECT STUDIO CONTACT // Creative Director Rob Neilson:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat for instant dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• DIRECT STUDIO LINE (Call or Text): 731-616-5121`,
       subtext:
         'Drop your Name + best Email/Phone below and Rob will get an instant alert!',
       chips: [
@@ -1113,8 +1113,8 @@ export default function WiredOrbChatbot() {
         sender: 'bot',
         time: 'LEAD_VAULT // LOCKED',
         cartridge: activeCartridge,
-        text: `64-BIT LEAD PACKET TRANSMITTED // Thank you, ${leadDraft.name}!`,
-        subtext: `Logged in the WIRED_OS Backend Leads CRM for "${leadDraft.service}". Creative Director Rob Neilson will reach out to ${leadDraft.contact}.`
+        text: `LEAD PACKET TRANSMITTED // Thank you, ${leadDraft.name}!`,
+        subtext: `Sent directly to Creative Director Rob Neilson for "${leadDraft.service}". Rob will reach out to ${leadDraft.contact} shortly.`
       }
     ]);
   };

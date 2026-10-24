@@ -204,7 +204,9 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                 </button>
               </div>
               <span className="footer-response-note">
-                Direct response from Rob Neilson • Call or text:{' '}
+                Direct response from Rob Neilson
+                <br />
+                Call or text:{' '}
                 <a href={BRAND_INFO.phoneHref} className="footer-last-resort-tel">
                   {BRAND_INFO.phone}
                 </a>

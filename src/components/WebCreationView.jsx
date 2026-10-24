@@ -262,7 +262,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
               </div>
               <div className="grader-live-badge">
                 <span className="rec-dot" />
-                <span>WIRED_OS // 64-BIT DIAGNOSTIC READY</span>
+                <span>WIRED_OS // DIAGNOSTIC READY</span>
               </div>
             </div>
 
@@ -279,7 +279,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 />
               </div>
               <button type="submit" className="btn-wired-yellow grader-submit-btn" disabled={isScanning}>
-                {isScanning ? 'SCANNING DOM & AI SCHEMA...' : 'RUN 64-BIT AI & SEO SCAN →'}
+                {isScanning ? 'SCANNING DOM & AI SCHEMA...' : 'RUN AI & SEO DIAGNOSTIC →'}
               </button>
             </form>
 

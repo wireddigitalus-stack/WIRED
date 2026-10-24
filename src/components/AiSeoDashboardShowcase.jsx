@@ -800,7 +800,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 TEST YOUR CURRENT WEBSITE FOR <span className="text-yellow">AI SEARCH (GEO) &amp; SPEED</span>
               </h3>
               <p className="grader-subtitle">
-                Type your website URL below to run an instant 64-bit diagnostic on mobile load speed,
+                Type your website URL below to run an instant diagnostic on mobile load speed,
                 Schema.org JSON-LD entity structure, and ChatGPT / Google AI citation readiness.
               </p>
             </div>
@@ -823,7 +823,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               />
             </div>
             <button type="submit" className="btn-wired-yellow grader-submit-btn" disabled={isHomeScanning}>
-              {isHomeScanning ? 'SCANNING DOM & AI SCHEMA...' : 'RUN 64-BIT AI & SEO SCAN →'}
+              {isHomeScanning ? 'SCANNING DOM & AI SCHEMA...' : 'RUN AI & SEO DIAGNOSTIC →'}
             </button>
           </form>
 

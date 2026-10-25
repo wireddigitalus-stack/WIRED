@@ -147,11 +147,11 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
 
             {/* Signature Slate/iOS Glass Tagline Bar: creative + intelligent + fast */}
             <div className="hero-tagline-bar">
-              <span className="tagline-word">c r e a t i v e</span>
+              <span className="tagline-word">creative</span>
               <span className="tagline-plus">+</span>
-              <span className="tagline-word">i n t e l l i g e n t</span>
+              <span className="tagline-word">intelligent</span>
               <span className="tagline-plus">+</span>
-              <span className="tagline-word">f a s t</span>
+              <span className="tagline-word">fast</span>
             </div>
           </div>
         </div>

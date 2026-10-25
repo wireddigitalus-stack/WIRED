@@ -295,11 +295,11 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       </div>
 
                       <div className="ft-screen-caption-strip">
-                        <span>🟢 2,751 Visits / 4,591 Actions</span>
+                        <span>🟢 FIRST 30 DAYS: 2,751 Visits / 4,591 Actions</span>
                         <span>•</span>
                         <span>💳 47 Credit Apps</span>
                         <span>•</span>
-                        <span>🔥 Live Click Stream &amp; Lot Rank</span>
+                        <span>🔥 1,719 Vehicle Clicks</span>
                       </div>
                     </div>
                   </div>
@@ -373,19 +373,19 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   <div className="ft-kpi-pills-row">
                     <div className="ft-mini-stat">
                       <span className="ft-stat-val">2,751</span>
-                      <span className="ft-stat-lbl">Monthly Visits (4,591 Actions)</span>
+                      <span className="ft-stat-lbl">First 30 Days: Visits (4,591 Actions)</span>
                     </div>
                     <div className="ft-mini-stat">
                       <span className="ft-stat-val">47</span>
-                      <span className="ft-stat-lbl">Online Credit Applications</span>
+                      <span className="ft-stat-lbl">First 30 Days: Online Credit Apps</span>
                     </div>
                     <div className="ft-mini-stat">
                       <span className="ft-stat-val">1,719</span>
-                      <span className="ft-stat-lbl">Vehicle Inventory Clicks</span>
+                      <span className="ft-stat-lbl">First 30 Days: Inventory Clicks</span>
                     </div>
                     <div className="ft-mini-stat">
-                      <span className="ft-stat-val">Live Stream</span>
-                      <span className="ft-stat-lbl">QR Flyers • Calls • Fuel Calc • Lot Rank</span>
+                      <span className="ft-stat-val">First 30 Days</span>
+                      <span className="ft-stat-lbl">Live Stream • QR Flyers • Calls • Lot Rank</span>
                     </div>
                   </div>
 

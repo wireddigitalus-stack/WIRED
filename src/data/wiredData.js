@@ -39,11 +39,11 @@ export const TRI_CITIES_CASE_STUDIES = [
     badge: 'AI SITE MODERNIZATION + CUSTOM LIVE ADMIN DASHBOARD + GEO/SEO',
     headline: 'High-Velocity Dealership Front-End + Custom Live Telemetry & Lead Admin Dashboard',
     summary:
-      'Designed and modernized from the ground up for Bristol’s premier pre-owned dealership on Volunteer Parkway. Pairs a high-converting mobile showroom with a custom-built real-time Admin Dashboard tracking every visitor click stream, credit app, phone call, QR flyer scan, and hottest vehicle on the lot.',
+      'Designed and modernized from the ground up for Bristol’s premier pre-owned dealership on Volunteer Parkway. In the first 30 days, the platform generated 2,751+ visits, 4,591 visitor actions, 1,719 vehicle clicks, and 47 online credit applications—all tracked live inside their custom Admin Dashboard.',
     metrics: [
-      { value: '2,751+', label: 'Tracked Monthly Visits' },
-      { value: '47 Apps', label: '30-Day Financing Leads' },
-      { value: '1,719', label: 'Vehicle Inventory Clicks' }
+      { value: '2,751+', label: 'First 30 Days: Tracked Visits' },
+      { value: '47 Apps', label: 'First 30 Days: Credit Leads' },
+      { value: '1,719', label: 'First 30 Days: Vehicle Clicks' }
     ],
     features: [
       'Custom Live Admin Dashboard (Real-Time Visitor Click Stream, Sound Alerts & CSV Export)',
@@ -56,8 +56,8 @@ export const TRI_CITIES_CASE_STUDIES = [
       route: 'fasttrackbristoltn.com + /admin.html',
       status: 'LIVE • BRISTOL, TN',
       kpis: [
-        { label: 'Live Click Stream', val: '4,591 Monthly Actions' },
-        { label: 'Lead Capture', val: '47 Credit Apps + 15 Calls' },
+        { label: 'First 30 Days Actions', val: '4,591 Visitor Actions' },
+        { label: 'First 30 Days Leads', val: '47 Credit Apps + 15 Calls' },
         { label: 'Lot Intelligence', val: '39 Units Ranked Live' }
       ]
     }

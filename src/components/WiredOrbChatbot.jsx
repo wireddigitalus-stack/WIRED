@@ -198,7 +198,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         reply: `DEEP DIVE // CUSTOM TELEMETRY + 24/7 AI CONCIERGE STACK:\n• ZERO-COOKIE FIRST-PARTY TELEMETRY: Tracks every click, phone tap, vehicle/property view & form action directly into your private /admin dashboard.\n• RAG-TRAINED AI BRAIN: We train your 24/7 bot on your exact inventory, sq ft, pricing rules, and FAQs—zero hallucination.\n• INSTANT SMS/EMAIL DISPATCH: Qualified leads fire straight to your phone in <2 seconds with full conversation transcripts.`,
         subtext: 'Drop your Name + Email/Phone if you want a live Wired Digital demo for your business!',
         chips: [
-          { label: '🚗 FAST TRACK METRICS (2,751+ VISITS)', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
+          { label: '🚗 FAST TRACK (FIRST 30 DAYS: 2,751+ VISITS)', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
           { label: '🏢 TEAM VISION AI ADVISOR PROOF', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
           { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
         ]
@@ -269,7 +269,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
         details: q
       },
-      reply: `CASE STUDY // FAST TRACK BRISTOL TN (fasttrackbristoltn.com):\nWe engineered both their high-speed public showroom AND their private /admin telemetry command center.\n• LIVE REAL-TIME PROOF: 2,751+ tracked visits • 4,591 visitor actions • 1,719 vehicle clicks • 164 financing clicks • 47 credit applications.\n• LOT DEMAND INTELLIGENCE: Automatically ranks top-clicked vehicles (#1 Jeep Wrangler Unlimited, #2 F-150 XLT) + 70% mobile vs 30% desktop split.\n• DEALER TOOLS BUILT-IN: 1-click printable QR window flyers & instant lead alerts.`,
+      reply: `CASE STUDY // FAST TRACK BRISTOL TN (fasttrackbristoltn.com):\nWe engineered both their high-speed public showroom AND their private /admin telemetry command center.\n• FIRST 30 DAYS LIVE PROOF: In the first 30 days, tracked 2,751+ visits • 4,591 visitor actions • 1,719 vehicle clicks • 164 financing clicks • 47 credit applications.\n• LOT DEMAND INTELLIGENCE: Automatically ranks top-clicked vehicles (#1 Jeep Wrangler Unlimited, #2 F-150 XLT) + 70% mobile vs 30% desktop split.\n• DEALER TOOLS BUILT-IN: 1-click printable QR window flyers & instant lead alerts.`,
       subtext:
         'We can build a custom live command center tailored to your exact industry. Want one? Drop your Name + Email/Phone or explore further:',
       chips: [

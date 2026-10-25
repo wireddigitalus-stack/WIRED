@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { WEB_CREATION_SERVICES } from '../data/wiredData';
 import { addLead, logTelemetryEvent } from '../utils/telemetry';
+import { normalizeDomain, runWebsiteDiagnostic } from '../utils/websiteDiagnostic';
 
 export default function WebCreationView({ onOpenContact, onNavigateTab }) {
   // Interactive On-Page 60-Second Website AI & Search Grader State
@@ -33,54 +34,20 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
   // Interactive Before / After AI Modernization Slider State (0 to 100)
   const [sliderPos, setSliderPos] = useState(50);
 
-  const handleRunGrader = (e) => {
+  const handleRunGrader = async (e) => {
     e.preventDefault();
-    const raw = scanUrl.trim();
-    if (!raw) return;
-    const cleanDomain = raw
-      .replace(/^https?:\/\//i, '')
-      .replace(/^www\./i, '')
-      .split('/')[0];
+    const { cleanDomain } = normalizeDomain(scanUrl);
+    if (!cleanDomain) return;
 
     setIsScanning(true);
     setBlueprintSent(false);
     logTelemetryEvent('WEBSITE_GRADER_SCAN', `Scanned URL: ${cleanDomain}`, 'ai_geo');
 
-    setTimeout(() => {
-      setIsScanning(false);
-      setScanResult({
-        domain: cleanDomain,
-        fullUrl: raw.startsWith('http') ? raw : `https://${cleanDomain}`,
-        overallGrade: 'C-',
-        upgradedGrade: 'A+ (99/100)',
-        metrics: [
-          {
-            label: 'Mobile & Edge Load Velocity',
-            current: '~3.8s Legacy DOM',
-            target: '< 0.4s Wired AI Edge',
-            status: 'UPGRADE NEEDED'
-          },
-          {
-            label: 'AI Entity Schema (JSON-LD Graph)',
-            current: 'Missing / Incomplete',
-            target: 'Full Local + Service Graph',
-            status: 'CRITICAL FOR AI'
-          },
-          {
-            label: 'ChatGPT, Gemini & Google AI Citations',
-            current: 'Low AI Visibility',
-            target: '#1 Cited Regional Authority',
-            status: 'HIGH OPPORTUNITY'
-          },
-          {
-            label: '24/7 AI Concierge & Live Telemetry Dash',
-            current: 'Not Detected',
-            target: 'Custom AI Bot + Live CRM Dash',
-            status: 'REVENUE MULTIPLIER'
-          }
-        ]
-      });
-    }, 650);
+    const report = await runWebsiteDiagnostic(scanUrl);
+    setIsScanning(false);
+    if (report) {
+      setScanResult(report);
+    }
   };
 
   const handleSendBlueprintLead = (e) => {
@@ -193,30 +160,37 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                     <strong className="grader-target-domain">{scanResult.domain.toUpperCase()}</strong>
                   </div>
                   <div className="grader-score-badges">
-                    <div className="grader-score-pill legacy">
-                      <span>EST. LEGACY AI READINESS:</span>
+                    <div className={`grader-score-pill ${scanResult.isVerifiedWired ? 'modernized' : 'legacy'}`}>
+                      <span>{scanResult.isVerifiedWired ? 'VERIFIED AI READINESS:' : 'SCANNED AI READINESS:'}</span>
                       <strong>{scanResult.overallGrade}</strong>
                     </div>
                     <ArrowRight size={16} className="text-yellow" />
                     <div className="grader-score-pill modernized">
-                      <span>POST-MODERNIZATION TARGET:</span>
+                      <span>{scanResult.isVerifiedWired ? 'ARCHITECTURE:' : 'POST-MODERNIZATION TARGET:'}</span>
                       <strong>{scanResult.upgradedGrade}</strong>
                     </div>
                   </div>
                 </div>
 
+                {scanResult.summaryBanner && (
+                  <div className="grader-blueprint-success">
+                    <CheckCircle2 size={18} className="text-yellow" />
+                    <span>{scanResult.summaryBanner}</span>
+                  </div>
+                )}
+
                 <div className="grader-metrics-grid">
                   {scanResult.metrics.map((m) => (
-                    <div key={m.label} className="grader-metric-card">
-                      <span className="grader-metric-status">{m.status}</span>
+                    <div key={m.label} className={`grader-metric-card ${m.passed ? 'passed-card' : ''}`}>
+                      <span className={`grader-metric-status ${m.passed ? 'passed' : ''}`}>{m.status}</span>
                       <h4>{m.label}</h4>
                       <div className="grader-metric-compare">
-                        <div className="metric-line bad">
-                          <span>Typical Legacy State:</span>
+                        <div className={`metric-line ${m.passed ? 'good' : 'bad'}`}>
+                          <span>{m.currentLabel || 'Scanned State:'}</span>
                           <strong>{m.current}</strong>
                         </div>
                         <div className="metric-line good">
-                          <span>Wired AI Upgrade:</span>
+                          <span>{m.targetLabel || 'Wired AI Upgrade:'}</span>
                           <strong>{m.target}</strong>
                         </div>
                       </div>
@@ -227,7 +201,11 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 {!blueprintSent ? (
                   <form className="grader-blueprint-capture" onSubmit={handleSendBlueprintLead}>
                     <div className="blueprint-capture-copy">
-                      <strong>Want Rob Neilson to send a custom AI Modernization Blueprint for {scanResult.domain}?</strong>
+                      <strong>
+                        {scanResult.isVerifiedWired
+                          ? 'Want Rob Neilson to build this exact A+ (99/100) Wired AI Architecture for your business?'
+                          : `Want Rob Neilson to send a custom AI Modernization Blueprint for ${scanResult.domain}?`}
+                      </strong>
                       <span>Drops straight to Rob&apos;s inbox &amp; the WIRED_OS Command Center.</span>
                     </div>
                     <div className="blueprint-capture-inputs">

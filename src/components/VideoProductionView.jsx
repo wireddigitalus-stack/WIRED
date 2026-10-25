@@ -148,13 +148,13 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
               className="subview-reel-media"
               onClick={() =>
                 onOpenVideoModal({
-                  title: "Wired Digital — Studio Director's Showreel",
+                  title: 'Wired Digital — Featured Clip',
                   role: 'Directed & Edited by Rob Neilson',
-                  category: 'STUDIO REEL',
+                  category: 'FEATURED CLIP',
                   localVideo: BRAND_INFO.reelMp4
                 })
               }
-              title="Click to watch Studio Showreel in Theater Mode with sound"
+              title="Click to watch clip in Theater Mode with sound"
             >
               <video
                 src={BRAND_INFO.reelMp4}

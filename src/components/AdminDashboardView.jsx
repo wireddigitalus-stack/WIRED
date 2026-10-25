@@ -664,7 +664,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
     },
     {
       key: 'since_1999_reel',
-      label: 'Since 1999 Studio Showreel & Manifesto',
+      label: 'Since 1999 Video Clip & Manifesto',
       views: sectionCounts.since_1999_reel || 0,
       color: '#0A84FF'
     },

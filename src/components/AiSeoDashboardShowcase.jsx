@@ -23,6 +23,7 @@ import {
   TRI_CITIES_MARKETS
 } from '../data/wiredData';
 import { addLead, logTelemetryEvent } from '../utils/telemetry';
+import { normalizeDomain, runWebsiteDiagnostic } from '../utils/websiteDiagnostic';
 
 export default function AiSeoDashboardShowcase({ onOpenContact }) {
   const [activeDemoTab, setActiveDemoTab] = useState('auto'); // 'auto' | 'cre' | 'geo'
@@ -43,54 +44,20 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
   const [homeLeadContact, setHomeLeadContact] = useState('');
   const [homeBlueprintSent, setHomeBlueprintSent] = useState(false);
 
-  const handleHomeGraderScan = (e) => {
+  const handleHomeGraderScan = async (e) => {
     e.preventDefault();
-    const raw = homeScanUrl.trim();
-    if (!raw) return;
-    const cleanDomain = raw
-      .replace(/^https?:\/\//i, '')
-      .replace(/^www\./i, '')
-      .split('/')[0];
+    const { cleanDomain } = normalizeDomain(homeScanUrl);
+    if (!cleanDomain) return;
 
     setIsHomeScanning(true);
     setHomeBlueprintSent(false);
     logTelemetryEvent('WEBSITE_GRADER_SCAN', `Home Grader Scanned: ${cleanDomain}`, 'ai_geo');
 
-    setTimeout(() => {
-      setIsHomeScanning(false);
-      setHomeScanResult({
-        domain: cleanDomain,
-        fullUrl: raw.startsWith('http') ? raw : `https://${cleanDomain}`,
-        overallGrade: 'C-',
-        upgradedGrade: 'A+ (99/100)',
-        metrics: [
-          {
-            label: 'Mobile & Edge Speed',
-            current: '~3.8s Legacy Load',
-            target: '< 0.4s Wired AI Edge',
-            status: 'UPGRADE NEEDED'
-          },
-          {
-            label: 'AI Entity Schema (JSON-LD)',
-            current: 'Missing / Incomplete',
-            target: 'Full Local + Service Graph',
-            status: 'CRITICAL FOR AI'
-          },
-          {
-            label: 'ChatGPT & Google AI Citations',
-            current: 'Low AI Visibility',
-            target: '#1 Cited Regional Authority',
-            status: 'HIGH OPPORTUNITY'
-          },
-          {
-            label: '24/7 AI Bot & Live Admin Dash',
-            current: 'Not Detected',
-            target: 'Custom AI Bot + Live CRM Dash',
-            status: 'REVENUE MULTIPLIER'
-          }
-        ]
-      });
-    }, 650);
+    const report = await runWebsiteDiagnostic(homeScanUrl);
+    setIsHomeScanning(false);
+    if (report) {
+      setHomeScanResult(report);
+    }
   };
 
   const handleHomeBlueprintSubmit = (e) => {
@@ -852,30 +819,37 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   <strong className="grader-target-domain">{homeScanResult.domain.toUpperCase()}</strong>
                 </div>
                 <div className="grader-score-badges">
-                  <div className="grader-score-pill legacy">
-                    <span>EST. LEGACY AI READINESS:</span>
+                  <div className={`grader-score-pill ${homeScanResult.isVerifiedWired ? 'modernized' : 'legacy'}`}>
+                    <span>{homeScanResult.isVerifiedWired ? 'VERIFIED AI READINESS:' : 'SCANNED AI READINESS:'}</span>
                     <strong>{homeScanResult.overallGrade}</strong>
                   </div>
                   <ArrowRight size={16} className="text-yellow" />
                   <div className="grader-score-pill modernized">
-                    <span>WIRED AI TARGET:</span>
+                    <span>{homeScanResult.isVerifiedWired ? 'ARCHITECTURE:' : 'WIRED AI TARGET:'}</span>
                     <strong>{homeScanResult.upgradedGrade}</strong>
                   </div>
                 </div>
               </div>
 
+              {homeScanResult.summaryBanner && (
+                <div className="grader-blueprint-success">
+                  <CheckCircle2 size={18} className="text-yellow" />
+                  <span>{homeScanResult.summaryBanner}</span>
+                </div>
+              )}
+
               <div className="grader-metrics-grid">
                 {homeScanResult.metrics.map((m) => (
-                  <div key={m.label} className="grader-metric-card">
-                    <span className="grader-metric-status">{m.status}</span>
+                  <div key={m.label} className={`grader-metric-card ${m.passed ? 'passed-card' : ''}`}>
+                    <span className={`grader-metric-status ${m.passed ? 'passed' : ''}`}>{m.status}</span>
                     <h4>{m.label}</h4>
                     <div className="grader-metric-compare">
-                      <div className="metric-line bad">
-                        <span>Legacy State:</span>
+                      <div className={`metric-line ${m.passed ? 'good' : 'bad'}`}>
+                        <span>{m.currentLabel || 'Scanned State:'}</span>
                         <strong>{m.current}</strong>
                       </div>
                       <div className="metric-line good">
-                        <span>Wired Upgrade:</span>
+                        <span>{m.targetLabel || 'Wired Upgrade:'}</span>
                         <strong>{m.target}</strong>
                       </div>
                     </div>
@@ -886,7 +860,11 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               {!homeBlueprintSent ? (
                 <form className="grader-blueprint-capture" onSubmit={handleHomeBlueprintSubmit}>
                   <div className="blueprint-capture-copy">
-                    <strong>Want Creative Director Rob Neilson to send a custom Modernization Blueprint for {homeScanResult.domain}?</strong>
+                    <strong>
+                      {homeScanResult.isVerifiedWired
+                        ? 'Want Creative Director Rob Neilson to build this exact A+ (99/100) Wired AI Architecture for your business?'
+                        : `Want Creative Director Rob Neilson to send a custom Modernization Blueprint for ${homeScanResult.domain}?`}
+                    </strong>
                     <span>Dispatches directly to Rob&apos;s inbox &amp; the WIRED_OS Command Center.</span>
                   </div>
                   <div className="blueprint-capture-inputs">

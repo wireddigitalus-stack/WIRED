@@ -9362,6 +9362,11 @@ a {
   padding: 14px;
 }
 
+.grader-metric-card.passed-card {
+  background: rgba(48, 209, 88, 0.06);
+  border-color: rgba(48, 209, 88, 0.35);
+}
+
 .grader-metric-status {
   display: inline-block;
   font-family: var(--font-mono);
@@ -9373,6 +9378,12 @@ a {
   padding: 2px 7px;
   border-radius: 6px;
   margin-bottom: 6px;
+}
+
+.grader-metric-status.passed {
+  color: #30d158;
+  background: rgba(48, 209, 88, 0.16);
+  border: 1px solid rgba(48, 209, 88, 0.35);
 }
 
 .grader-metric-card h4 {

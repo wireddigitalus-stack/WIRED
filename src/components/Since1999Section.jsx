@@ -45,7 +45,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
             <div className="studio-hud-top">
               <span className="hud-rec-badge">
                 <span className="rec-dot" />
-                STUDIO REEL // EST. 1999
+                EST. 1999
               </span>
               <span className="hud-timecode">BRISTOL VA/TN × GLOBAL</span>
             </div>
@@ -55,7 +55,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 type="button"
                 className="hud-control-btn"
                 onClick={togglePlay}
-                aria-label={isPlaying ? 'Pause Studio Reel' : 'Play Studio Reel'}
+                aria-label={isPlaying ? 'Pause Video Clip' : 'Play Video Clip'}
               >
                 {isPlaying ? 'PAUSE LOOP' : 'PLAY LOOP'}
               </button>
@@ -64,15 +64,15 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 className="hud-control-btn hud-expand-btn"
                 onClick={() =>
                   onOpenVideoModal({
-                    title: 'Wired Digital — Studio Director\'s Reel',
+                    title: 'Wired Digital — Featured Clip',
                     role: 'Rob Neilson — Creative Director',
-                    category: 'STUDIO SHOWREEL',
+                    category: 'FEATURED CLIP',
                     localVideo: BRAND_INFO.reelMp4
                   })
                 }
               >
                 <Maximize2 size={13} />
-                <span>EXPAND REEL</span>
+                <span>EXPAND CLIP</span>
               </button>
             </div>
           </div>

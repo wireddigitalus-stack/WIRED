@@ -204,7 +204,7 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                 </button>
               </div>
               <span className="footer-response-note">
-                Direct response from Rob Neilson
+                Direct response from Wired Digital
                 <br />
                 Call or text:{' '}
                 <a href={BRAND_INFO.phoneHref} className="footer-last-resort-tel">
@@ -377,14 +377,14 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                       <div className="footer-last-resort-note">
                         <Phone size={13} />
                         <span>
-                          Email &amp; form go straight to Rob&apos;s phone • Direct Call/Text:{' '}
+                          Dispatches directly to the WIRED_OS Command Center • Direct Call/Text:{' '}
                           <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
                         </span>
                       </div>
 
                       <button type="submit" className="btn-wired-yellow footer-submit-btn">
                         <Zap size={15} fill="#050505" />
-                        <span>SEND TO ROB NEILSON →</span>
+                        <span>SEND TO WIRED DIGITAL →</span>
                       </button>
                     </div>
                   </form>

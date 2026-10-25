@@ -127,9 +127,9 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         details: leadDraft.details ? `${leadDraft.details} | Contact: ${q}` : `WIRED-64 Direct Capture: ${q}`
       },
       autoSubmitLead: true,
-      reply: `DIRECT DISPATCH LOCKED [ ${contactStr} ] → ROB NEILSON // 100% TRANSMITTED.`,
+      reply: `DIRECT DISPATCH LOCKED [ ${contactStr} ] → WIRED_OS COMMAND CENTER // 100% TRANSMITTED.`,
       subtext:
-        'Sent directly to Creative Director Rob Neilson (WiredDigitalUS@gmail.com) — Rob will reach out to you shortly. Feel free to keep asking questions below!',
+        'Dispatched directly to the WIRED_OS Command Center — Wired Digital will reach out to you shortly. Feel free to keep asking questions below!',
       chips: [
         { label: '⚡ DEEP DIVE: GEO ARCHITECTURE', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
         { label: '⏱️ TIMELINE & 3-PHASE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
@@ -152,7 +152,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       },
       reply: `64-BIT DIAGNOSTIC // [ ${cleanUrl.toUpperCase()} ]\n• DOM SPEED ESTIMATE: ~3.6s Legacy Load (Modern Target: <0.4s Edge React)\n• AI ENTITY SCHEMA (@graph JSON-LD): MISSING (Invisible to ChatGPT, Gemini & Perplexity)\n• /LLMS.TXT & CITATION FEED: NOT DETECTED\n• 24/7 AI CONCIERGE & LIVE TELEMETRY: NOT INSTALLED`,
       subtext:
-        'Bottom line: We can cut load times by ~85%, inject full Tri-Cities/National AI Schema, and wire in a 24/7 AI lead advisor. Drop your Name + Email/Phone to get Rob’s custom blueprint, or pick a deep dive below:',
+        'Bottom line: We can cut load times by ~85%, inject full Tri-Cities/National AI Schema, and wire in a 24/7 AI lead advisor. Drop your Name + Email/Phone to get a custom Wired Digital blueprint, or pick a deep dive below:',
       chips: [
         { label: '🔧 HOW WE FIX THIS IN 3 WEEKS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' },
         { label: '💎 BOUTIQUE COST FOR THIS UPGRADE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
@@ -183,7 +183,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         topic: 'video',
         cartridge: 'video',
         reply: `DEEP DIVE // 4K REMOTE POST-PRODUCTION ARCHITECTURE:\n• STEM & CAMERA INGEST: Direct 4K ProRes/RAW & multi-track audio ingest from labels/artists globally.\n• KINETIC 3D LYRIC WORLDS: Custom Unreal/After Effects 3D environments, beat-synced typography & custom visualizers—never stock lyric templates.\n• VEVO & BROADCAST DELIVERY: Mastered to SMPTE standards for VEVO, YouTube 4K60, Apple Music & arena tour screens.`,
-        subtext: 'Want to lock in an edit window with Rob? Drop your track title + Email/Phone, or explore another topic:',
+        subtext: 'Want to lock in an edit window with Wired Digital? Drop your track title + Email/Phone, or explore another topic:',
         chips: [
           { label: '🎸 SEE 34+ LEGEND ROSTER', prompt: 'Which 34+ music legends and labels have you worked with?', cartridge: 'video' },
           { label: '⏱️ VIDEO TURNAROUND TIME', prompt: 'How fast is your turnaround time for a lyric or music video?', cartridge: 'video' }
@@ -196,7 +196,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         topic: 'dash',
         cartridge: 'dash',
         reply: `DEEP DIVE // CUSTOM TELEMETRY + 24/7 AI CONCIERGE STACK:\n• ZERO-COOKIE FIRST-PARTY TELEMETRY: Tracks every click, phone tap, vehicle/property view & form action directly into your private /admin dashboard.\n• RAG-TRAINED AI BRAIN: We train your 24/7 bot on your exact inventory, sq ft, pricing rules, and FAQs—zero hallucination.\n• INSTANT SMS/EMAIL DISPATCH: Qualified leads fire straight to your phone in <2 seconds with full conversation transcripts.`,
-        subtext: 'Drop your Name + Email/Phone if you want Rob to demo this live for your business!',
+        subtext: 'Drop your Name + Email/Phone if you want a live Wired Digital demo for your business!',
         chips: [
           { label: '🚗 FAST TRACK METRICS (2,751+ VISITS)', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
           { label: '🏢 TEAM VISION AI ADVISOR PROOF', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
@@ -237,7 +237,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'pricing',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT ANSWER // We deliver high-impact custom engineering and creative at straightforward, real-world Tri-Cities & national pricing—with web, apps, software, AI, video & digital marketing all under one roof.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Creative Director Rob Neilson—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH FLAGSHIP + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page flagship + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD & AI OS ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track Bristol TN).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
+      reply: `DIRECT ANSWER // We deliver high-impact custom engineering and creative at straightforward, real-world Tri-Cities & national pricing—with web, apps, software, AI, video & digital marketing all under one roof.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Wired Digital—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH FLAGSHIP + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page flagship + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD & AI OS ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track Bristol TN).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
       subtext:
         'Every project is scoped flat-rate with zero surprise retainers required. Drop your Name + Email/Phone (or URL) for an exact quote!',
       chips: [
@@ -397,7 +397,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       },
       reply: `AI WEBSITE MODERNIZATION // Legacy WordPress, Wix & Squarespace templates average 3.8s–5.2s load times, losing 60%+ of mobile visitors before the page even renders.\n• <0.4s REACT / EDGE ARCHITECTURE: We engineer custom, zero-bloat platforms scoring 99/100 on Core Web Vitals.\n• INTERACTIVE CONVERSION TOOLS: Custom ROI calculators, instant graders, interactive portfolios & 24/7 AI lead capture.\n• FUTURE-PROOF CODE: Built with 25+ years of staying ahead of the tech curve—engineered for both human conversion and AI crawlers.`,
       subtext:
-        'Drop your current URL below to benchmark your speed & AI readiness, or leave your Name + Email/Phone to talk with Rob:',
+        'Drop your current URL below to benchmark your speed & AI readiness, or leave your Name + Email/Phone to connect with Wired Digital:',
       chips: [
         { label: '🔍 SCAN MY CURRENT SITE', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' },
         { label: '⚡ DEEP DIVE: GEO vs. SEO', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
@@ -458,7 +458,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'timeline',
       cartridge: leadDraft.cartridge || 'geo',
       leadPatch: { details: q },
-      reply: `THE 3-PHASE WIRED METHOD // Creative + Intelligent + Fast (No agency drag):\n• PHASE 1 — ARCHITECT (Days 1–4): Deep audit, AI entity mapping, wireframe & conversion strategy directly with Rob Neilson.\n• PHASE 2 — ENGINEER (Weeks 1–3): Custom sub-second React build, 24/7 AI bot training, or 4K video assembly with live staging links.\n• PHASE 3 — IGNITE (Launch): Edge deployment, Google/AI citation indexing & live admin telemetry handoff.\n• TYPICAL TURNAROUND: Custom websites in 2–4 weeks • 4K lyric/music videos in 1–3 weeks.`,
+      reply: `THE 3-PHASE WIRED METHOD // Creative + Intelligent + Fast (No agency drag):\n• PHASE 1 — ARCHITECT (Days 1–4): Deep audit, AI entity mapping, wireframe & conversion strategy directly with Wired Digital.\n• PHASE 2 — ENGINEER (Weeks 1–3): Custom sub-second React build, 24/7 AI bot training, or 4K video assembly with live staging links.\n• PHASE 3 — IGNITE (Launch): Edge deployment, Google/AI citation indexing & live admin telemetry handoff.\n• TYPICAL TURNAROUND: Custom websites in 2–4 weeks • 4K lyric/music videos in 1–3 weeks.`,
       subtext:
         'Ready to claim a production slot this month? Drop your Name + Email/Phone below or open the Quick Packet form!',
       chips: [
@@ -558,9 +558,9 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'contact',
       cartridge: leadDraft.cartridge || 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT STUDIO CONTACT // Creative Director Rob Neilson:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat for instant dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• DIRECT STUDIO LINE (Call or Text): 731-616-5121`,
+      reply: `DIRECT STUDIO CONTACT // WIRED DIGITAL:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat for instant dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• DIRECT STUDIO LINE (Call or Text): 731-616-5121`,
       subtext:
-        'Drop your Name + best Email/Phone below and Rob will get an instant alert!',
+        'Drop your Name + best Email/Phone below for instant dispatch to the WIRED_OS Command Center!',
       chips: [
         { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
         { label: '🔍 SCAN MY WEBSITE URL', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' }
@@ -576,7 +576,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     leadPatch: { details: q },
     reply: `WIRED-64 // EXECUTIVE BRIEFING:\nBacked by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital Creative brings every high-impact discipline under 1 roof:\n• AI WEBSITE MODERNIZATION & GEO: Sub-0.4s React builds ranked #1 in ChatGPT, Gemini & Google.\n• CUSTOM TELEMETRY & 24/7 AI BOTS: Live /admin dashboards (like Fast Track) & AI advisors (like Team Vision).\n• GLOBAL 4K VIDEO POST: Remote editing & lyric animation for 34+ music legends.`,
     subtext:
-      'Click any topic below for a smart deep dive, drop your URL for a scan, or leave your Name + Email/Phone for Creative Director Rob Neilson:',
+      'Click any topic below for a smart deep dive, drop your URL for a scan, or leave your Name + Email/Phone for Wired Digital:',
     chips: [
       { label: '⚡ DEEP DIVE: GEO & AI SEARCH', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
       { label: '💎 BOUTIQUE PRICING & 25-YR VALUE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
@@ -597,7 +597,7 @@ const ORB_SECRET_MOODS = [
     id: 'wink',
     badge: 'MOOD: LOCKED IN // CHEEKY WINK',
     quip: '😉 SIGNAL LOCKED // Zero middlemen. Just 25+ years of custom firepower under one roof.',
-    subtext: 'Direct access to Creative Director Rob Neilson—custom web, AI, apps, and 4K video.'
+    subtext: 'Direct access to Wired Digital—custom web, AI, apps, and 4K video.'
   },
   {
     id: 'shades',
@@ -1068,7 +1068,7 @@ export default function WiredOrbChatbot() {
           chips: [
             { label: '⚡ SCAN MY WEBSITE URL', prompt: 'Run a diagnostic scan on my current website.', cartridge: 'scan' },
             { label: '💎 BOUTIQUE PRICING', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
-            { label: '🚀 START A PROJECT', prompt: 'I want to start a project with Creative Director Rob Neilson.', cartridge: 'geo' }
+            { label: '🚀 START A PROJECT', prompt: 'I want to start a project with Wired Digital.', cartridge: 'geo' }
           ]
         }
       ]);
@@ -1201,7 +1201,7 @@ export default function WiredOrbChatbot() {
         time: 'LEAD_VAULT // LOCKED',
         cartridge: activeCartridge,
         text: `LEAD PACKET TRANSMITTED // Thank you, ${leadDraft.name}!`,
-        subtext: `Sent directly to Creative Director Rob Neilson for "${leadDraft.service}". Rob will reach out to ${leadDraft.contact} shortly.`
+        subtext: `Dispatched directly to the WIRED_OS Command Center for "${leadDraft.service}". Wired Digital will reach out to ${leadDraft.contact} shortly.`
       }
     ]);
   };
@@ -1610,7 +1610,7 @@ export default function WiredOrbChatbot() {
                     {showPacketForm && (
                       <form className="w64-inline-packet-form" onSubmit={handlePacketSubmit}>
                         <div className="w64-packet-head">
-                          <span>[ 64-BIT DIRECT LEAD PACKET → ROB NEILSON ]</span>
+                          <span>[ 64-BIT DIRECT LEAD PACKET → WIRED DIGITAL ]</span>
                           <button
                             type="button"
                             onClick={() => setShowPacketForm(false)}
@@ -1684,7 +1684,7 @@ export default function WiredOrbChatbot() {
                           <label>PROJECT GOALS / NOTES</label>
                           <input
                             type="text"
-                            placeholder="Tell Rob what you want to build or modernize..."
+                            placeholder="Tell Wired Digital what you want to build or modernize..."
                             value={leadDraft.details}
                             onChange={(e) =>
                               setLeadDraft({ ...leadDraft, details: e.target.value })
@@ -1694,7 +1694,7 @@ export default function WiredOrbChatbot() {
 
                         <button type="submit" className="w64-transmit-btn">
                           <Zap size={14} fill="#050505" color="#050505" />
-                          <span>[ TRANSMIT LEAD TO ROB NEILSON ]</span>
+                          <span>[ TRANSMIT LEAD TO WIRED DIGITAL ]</span>
                         </button>
                         <div className="w64-packet-last-resort">
                           Direct Email: WiredDigitalUS@gmail.com • Direct Call/Text: 731-616-5121

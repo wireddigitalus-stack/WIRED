@@ -87,7 +87,7 @@ export default function ContactModal({ isOpen, onClose }) {
           <div className="contact-header-brand">
             <img src={BRAND_INFO.logoSrc} alt="Wired Digital" className="modal-raven-icon" />
             <div>
-              <span className="modal-kicker">30-SECOND PROJECT BRIEF // DIRECT TO ROB NEILSON</span>
+              <span className="modal-kicker">30-SECOND PROJECT BRIEF // WIRED DIGITAL</span>
               <h3 className="modal-title">LET&apos;S BUILD SOMETHING UNFORGETTABLE</h3>
             </div>
           </div>
@@ -107,8 +107,8 @@ export default function ContactModal({ isOpen, onClose }) {
             <h4>Project Brief Locked &amp; Dispatched!</h4>
             <p>
               Thanks, <strong>{formState.name}</strong>! Your inquiry for{' '}
-              <span className="text-yellow">{formState.projectType}</span> has been saved to our
-              cloud database and sent directly to Creative Director <strong>Rob Neilson</strong>.
+              <span className="text-yellow">{formState.projectType}</span> has been dispatched
+              directly to the <strong>WIRED_OS Command Center</strong>.
             </p>
             <p className="last-resort-phone-note" style={{ marginTop: '10px' }}>
               Email: <a href={`mailto:${BRAND_INFO.email}`}>{BRAND_INFO.email}</a>
@@ -224,7 +224,7 @@ export default function ContactModal({ isOpen, onClose }) {
               </div>
               <button type="submit" className="btn-wired-yellow">
                 <Zap size={15} fill="#050505" />
-                <span>SEND TO ROB NEILSON →</span>
+                <span>SEND TO WIRED DIGITAL →</span>
               </button>
             </div>
           </form>

@@ -556,7 +556,7 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
           <div className="subview-bottom-banner">
             <div>
               <h3>Need a Music Video, Visualizer, or Tour Promo Campaign?</h3>
-              <p>Direct collaboration with Creative Director Rob Neilson—fast, intelligent, and built to stand out.</p>
+              <p>Direct studio collaboration with Wired Digital—fast, intelligent, and built to stand out.</p>
             </div>
             <div className="subview-banner-btns">
               <button type="button" className="btn-wired-yellow" onClick={onOpenContact}>

@@ -100,10 +100,10 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
                   <div className="work-card-top">
                     <div className="work-author-row">
                       <div className="work-author-avatar">
-                        <img src={BRAND_INFO.logoSrc} alt="Rob Neilson" />
+                        <img src={BRAND_INFO.logoSrc} alt="Wired Digital" />
                       </div>
                       <div className="work-author-meta">
-                        <span className="author-name">Rob Neilson</span>
+                        <span className="author-name">Wired Digital</span>
                         <span className="author-sub">
                           {project.role} • {project.date}
                         </span>

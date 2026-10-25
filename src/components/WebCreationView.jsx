@@ -88,9 +88,8 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             middlemen: we deliver{' '}
             <span className="text-yellow">
               high-impact custom engineering and creative at straightforward, real-world
-              pricing—with web, apps, software, AI, video &amp; digital marketing all under one roof
-            </span>{' '}
-            working directly with Creative Director <strong>Rob Neilson</strong>.
+              pricing—with web, apps, software, AI, video &amp; digital marketing all under one roof.
+            </span>
           </p>
 
           <div className="subview-hero-actions">
@@ -203,10 +202,10 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                     <div className="blueprint-capture-copy">
                       <strong>
                         {scanResult.isVerifiedWired
-                          ? 'Want Rob Neilson to build this exact A+ (99/100) Wired AI Architecture for your business?'
-                          : `Want Rob Neilson to send a custom AI Modernization Blueprint for ${scanResult.domain}?`}
+                          ? 'Want WIRED DIGITAL to build this exact A+ (99/100) Wired AI Architecture for your business?'
+                          : `Want WIRED DIGITAL to send a custom Modernization Blueprint for ${scanResult.domain}?`}
                       </strong>
-                      <span>Drops straight to Rob&apos;s inbox &amp; the WIRED_OS Command Center.</span>
+                      <span>Dispatches directly to the WIRED_OS Command Center.</span>
                     </div>
                     <div className="blueprint-capture-inputs">
                       <input
@@ -233,7 +232,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                   <div className="grader-blueprint-success">
                     <CheckCircle2 size={18} className="text-yellow" />
                     <span>
-                      <strong>BLUEPRINT REQUEST LOCKED!</strong> Logged in WIRED_OS &amp; dispatched directly to Creative Director Rob Neilson (WiredDigitalUS@gmail.com).
+                      <strong>BLUEPRINT REQUEST LOCKED!</strong> Dispatched directly to the WIRED_OS Command Center.
                     </span>
                   </div>
                 )}

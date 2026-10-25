@@ -95,15 +95,15 @@ export default function BodyCtaContactCard() {
     <section
       className="body-cta-contact-section"
       id="direct-contact-card"
-      aria-label="Start a Project — Direct Contact Card with Rob Neilson"
+      aria-label="Start a Project — Direct Contact Card with Wired Digital"
     >
       <div className="section-container">
         <div className="body-cta-bento-card">
-          {/* LEFT COLUMN: Direct Rob Neilson Authority + 1-Tap Phone & Email */}
+          {/* LEFT COLUMN: Direct Wired Digital Authority + 1-Tap Phone & Email */}
           <div className="body-cta-info-col">
             <div className="body-cta-live-badge">
               <span className="rec-dot" />
-              <span>DIRECT TO CREATIVE DIRECTOR ROB NEILSON // EST. 1999</span>
+              <span>DIRECT TO WIRED DIGITAL // EST. 1999</span>
             </div>
 
             <h2 className="body-cta-heading">
@@ -118,7 +118,7 @@ export default function BodyCtaContactCard() {
                 dashboards, 24/7 AI chatbots, full-service marketing, and 4K video
               </strong>{' '}
               all under one roof. No middlemen—work directly with{' '}
-              <strong>Rob Neilson</strong> in Bristol, VA/TN (Tri-Cities) or remotely
+              <strong>Wired Digital</strong> in Bristol, VA/TN (Tri-Cities) or remotely
               worldwide.
             </p>
 
@@ -140,7 +140,7 @@ export default function BodyCtaContactCard() {
                   <Phone size={18} />
                 </div>
                 <div className="body-cta-tile-text">
-                  <span className="body-cta-tile-kicker">CALL OR TEXT ROB DIRECT</span>
+                  <span className="body-cta-tile-kicker">CALL OR TEXT WIRED DIGITAL</span>
                   <strong className="body-cta-tile-val">{BRAND_INFO.phone}</strong>
                 </div>
               </a>
@@ -191,9 +191,8 @@ export default function BodyCtaContactCard() {
                 <h3>Project Brief Locked &amp; Dispatched!</h3>
                 <p>
                   Thanks, <strong>{formState.name}</strong>! Your inquiry for{' '}
-                  <span className="text-yellow">{formState.service}</span> has been saved
-                  to our live database and sent directly to Creative Director{' '}
-                  <strong>Rob Neilson</strong>.
+                  <span className="text-yellow">{formState.service}</span> has been
+                  dispatched directly to the <strong>WIRED_OS Command Center</strong>.
                 </p>
                 <p className="body-cta-success-contact">
                   Direct Call or Text: <a href={BRAND_INFO.phoneHref}>{BRAND_INFO.phone}</a>
@@ -321,7 +320,7 @@ export default function BodyCtaContactCard() {
 
                 <button type="submit" className="btn-wired-yellow body-cta-submit-btn">
                   <Zap size={16} fill="#050505" />
-                  <span>SEND DIRECT TO ROB NEILSON →</span>
+                  <span>SEND DIRECT TO WIRED DIGITAL →</span>
                 </button>
               </form>
             )}

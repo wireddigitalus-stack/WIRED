@@ -862,10 +862,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   <div className="blueprint-capture-copy">
                     <strong>
                       {homeScanResult.isVerifiedWired
-                        ? 'Want Creative Director Rob Neilson to build this exact A+ (99/100) Wired AI Architecture for your business?'
-                        : `Want Creative Director Rob Neilson to send a custom Modernization Blueprint for ${homeScanResult.domain}?`}
+                        ? 'Want WIRED DIGITAL to build this exact A+ (99/100) Wired AI Architecture for your business?'
+                        : `Want WIRED DIGITAL to send a custom Modernization Blueprint for ${homeScanResult.domain}?`}
                     </strong>
-                    <span>Dispatches directly to Rob&apos;s inbox &amp; the WIRED_OS Command Center.</span>
+                    <span>Dispatches directly to the WIRED_OS Command Center.</span>
                   </div>
                   <div className="blueprint-capture-inputs">
                     <input
@@ -892,7 +892,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 <div className="grader-blueprint-success">
                   <CheckCircle2 size={18} className="text-yellow" />
                   <span>
-                    <strong>BLUEPRINT REQUEST LOCKED!</strong> Logged in WIRED_OS &amp; emailed directly to Rob Neilson (WiredDigitalUS@gmail.com).
+                    <strong>BLUEPRINT REQUEST LOCKED!</strong> Dispatched directly to the WIRED_OS Command Center.
                   </span>
                 </div>
               )}

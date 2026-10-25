@@ -8,8 +8,8 @@
   "theme_color": "#FFEE00",
   "icons": [
     {
-      "src": "/WD-Brand-2017.png",
-      "sizes": "512x512",
+      "src": "/wired-round-favicon.png",
+      "sizes": "204x204",
       "type": "image/png"
     }
   ]

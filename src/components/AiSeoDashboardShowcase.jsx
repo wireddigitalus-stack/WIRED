@@ -655,12 +655,12 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               </div>
             )}
 
-            {/* TAB 3: RINGGER LAW (PUBLIC LEGAL FRONT-END + 24/7 DEBT TRIAGE AI + LIVE SUPABASE CRM /ADMIN) */}
+            {/* TAB 3: RINGGER LAW (PUBLIC LEGAL FRONT-END + 24/7 DEBT TRIAGE AI + LIVE DATABASE CRM /ADMIN) */}
             {activeDemoTab === 'law' && (
               <div className="ft-showcase-wrapper">
                 <div className="ft-showcase-toolbar">
                   <div className="ft-toolbar-left">
-                    <span className="live-green-pill">● LIVE SUPABASE LEGAL CRM + 24/7 DEBT TRIAGE AI // JACKSON &amp; WEST TN</span>
+                    <span className="live-green-pill">● LIVE DATABASE LEGAL CRM + 24/7 DEBT TRIAGE AI // JACKSON &amp; WEST TN</span>
                     <span className="ft-toolbar-sub">
                       Pairs an urgent foreclosure/garnishment funnel &amp; 24/7 AI intake bot with a live attorney CRM tracking signed court packets &amp; $64.50/click CPC value.
                     </span>
@@ -706,7 +706,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                           subtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
                           altSrc: '/ringgerlaw-admin-dash.jpg',
                           altTitle: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
-                          altSubtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+                          altSubtitle: 'Live Database CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
                           swapLabel: 'Switch to Live Legal CRM (/admin)'
                         })
                       }
@@ -741,7 +741,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       </div>
                     </div>
 
-                    {/* CENTER SUPABASE CRM CONNECTOR */}
+                    {/* CENTER DATABASE CRM CONNECTOR */}
                     <div className="ft-pipeline-bridge" aria-hidden="true">
                       <div className="pipeline-line" />
                       <div className="pipeline-pulse-badge">
@@ -758,7 +758,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                         setLightboxImage({
                           src: '/ringgerlaw-admin-dash.jpg',
                           title: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
-                          subtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+                          subtitle: 'Live Database CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
                           altSrc: '/ringgerlaw-frontend.jpg',
                           altTitle: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
                           altSubtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
@@ -788,7 +788,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       </div>
 
                       <div className="ft-screen-caption-strip">
-                        <span>🟢 250 Tracked Sessions</span>
+                        <span>🟢 3,800+ Sessions (90-Day Cross-Section)</span>
                         <span>•</span>
                         <span>🔴 Emergency Foreclosure/Repo Triage</span>
                         <span>•</span>
@@ -808,7 +808,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                             ? {
                                 src: '/ringgerlaw-admin-dash.jpg',
                                 title: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
-                                subtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+                                subtitle: 'Live Database CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
                                 altSrc: '/ringgerlaw-frontend.jpg',
                                 altTitle: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
                                 altSubtitle: 'Serving Jackson & West Tennessee Since 1981',
@@ -820,7 +820,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                                 subtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
                                 altSrc: '/ringgerlaw-admin-dash.jpg',
                                 altTitle: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
-                                altSubtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets',
+                                altSubtitle: 'Live Database CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets',
                                 swapLabel: 'Switch to Live Legal CRM (/admin)'
                               }
                         )
@@ -859,8 +859,8 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 <div className="ft-showcase-footer-bar">
                   <div className="ft-kpi-pills-row">
                     <div className="ft-mini-stat">
-                      <span className="ft-stat-val">250+ Sessions</span>
-                      <span className="ft-stat-lbl">Google Search, Ads, Direct &amp; AI</span>
+                      <span className="ft-stat-val">3,800+ (90 Days)</span>
+                      <span className="ft-stat-lbl">90-Day Cross-Section • Ads, Organic &amp; AI</span>
                     </div>
                     <div className="ft-mini-stat">
                       <span className="ft-stat-val">24/7 AI + CRM</span>

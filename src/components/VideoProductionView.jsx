@@ -27,7 +27,9 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
 
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeVideoId, setActiveVideoId] = useState(YOUTUBE_CHANNEL_DATA.videos[0].videoId);
+  const [activeVideoId, setActiveVideoId] = useState(
+    YOUTUBE_CHANNEL_DATA.videos[1]?.videoId || YOUTUBE_CHANNEL_DATA.videos[0].videoId
+  );
   const [autoPlayEmbed, setAutoPlayEmbed] = useState(false);
   const [embedPlaylistMode, setEmbedPlaylistMode] = useState(false);
   const [showAllVideos, setShowAllVideos] = useState(false);
@@ -144,33 +146,46 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
       <section className="subview-reel-strip">
         <div className="section-container">
           <div className="subview-reel-card">
-            <div
-              className="subview-reel-media"
-              onClick={() =>
-                onOpenVideoModal({
-                  title: 'Wired Digital — Featured Clip',
-                  role: 'Directed & Edited by Rob Neilson',
-                  category: 'FEATURED CLIP',
-                  localVideo: BRAND_INFO.reelMp4
-                })
-              }
-              title="Click to watch clip in Theater Mode with sound"
-            >
-              <video
-                src={BRAND_INFO.reelMp4}
-                poster={BRAND_INFO.reelPoster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="subview-reel-video"
+            <div className="subview-reel-media">
+              <iframe
+                src="https://www.youtube.com/embed/i2yjCTNWJPA?rel=0&enablejsapi=1"
+                title="Wired Digital — Official Video Production Reel"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="yt-broadcast-iframe"
               />
-              <div className="video-halftone-overlay" />
             </div>
 
             <div className="subview-reel-info">
               <div className="subview-reel-top-row">
-                <span className="reel-kicker">CREATIVE DIRECTOR: ROB NEILSON</span>
+                <span className="reel-kicker">CREATIVE DIRECTOR: ROB NEILSON // OFFICIAL PRODUCTION REEL</span>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    className="yt-watch-direct-btn"
+                    onClick={() =>
+                      onOpenVideoModal({
+                        title: 'Wired Digital — Official Video Production Reel',
+                        role: 'Directed & Edited by Rob Neilson',
+                        category: 'OFFICIAL PRODUCTION REEL',
+                        youtubeId: 'i2yjCTNWJPA',
+                        youtubeUrl: 'https://youtu.be/i2yjCTNWJPA?si=YdTIsZQN1KPa2Ym1'
+                      })
+                    }
+                  >
+                    <Play size={12} fill="currentColor" />
+                    <span>THEATER MODE</span>
+                  </button>
+                  <a
+                    href="https://youtu.be/i2yjCTNWJPA?si=YdTIsZQN1KPa2Ym1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="yt-watch-direct-btn"
+                  >
+                    <span>WATCH ON YOUTUBE</span>
+                    <ExternalLink size={12} />
+                  </a>
+                </div>
               </div>
               <h2>From RED Cinema Shoots to Custom Animated Lyric Worlds</h2>
               <p>

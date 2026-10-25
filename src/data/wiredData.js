@@ -113,15 +113,15 @@ export const TRI_CITIES_CASE_STUDIES = [
     primaryTabLabel: 'Live Legal CRM & Admin',
     secondaryTabLabel: 'Public Site + 24/7 AI',
     primaryTitle: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
-    primarySubtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+    primarySubtitle: 'Live Database CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
     secondaryTitle: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
     secondarySubtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
-    badge: 'LEGAL AI PLATFORM + LIVE SUPABASE CRM (/ADMIN) + 24/7 DEBT TRIAGE AI + GEO',
+    badge: 'LEGAL AI PLATFORM + LIVE DATABASE CRM (/ADMIN) + 24/7 DEBT TRIAGE AI + GEO',
     headline: 'High-Converting Legal Funnel + 24/7 Debt Triage AI + Live Attorney CRM & Court Intake Portal',
     summary:
-      'Engineered for The Law Offices of Louis W. Ringger Jr. (serving Jackson & West Tennessee since 1981—where Wired Digital was founded in 1999). Pairs an urgent foreclosure/garnishment legal front-end and 24/7 "West TN Debt Triage" AI chatbot with a live Supabase-connected Executive Command Center (/admin) tracking urgent leads, auto-qualified Chapter 7 vs. 13 court intake packets, 250+ visitor sessions, and real-time $64.50/click legal search value.',
+      'Engineered for The Law Offices of Louis W. Ringger Jr. (serving Jackson & West Tennessee since 1981—where Wired Digital was founded in 1999). Pairs an urgent foreclosure/garnishment legal front-end and 24/7 "West TN Debt Triage" AI chatbot with a live database-connected Executive Command Center (/admin) tracking urgent leads, auto-qualified Chapter 7 vs. 13 court intake packets, 3,800+ visitor sessions across a 90-day cross-section (with a rolling live sample shown in the dashboard), and real-time $64.50/click legal search value.',
     metrics: [
-      { value: '250+', label: 'Tracked Visitor Sessions' },
+      { value: '3,800+', label: '90-Day Tracked Sessions' },
       { value: '24/7 AI', label: 'West TN Debt Triage Bot' },
       { value: '$64.50', label: 'Per-Click Legal CPC Tracked' }
     ],
@@ -136,7 +136,7 @@ export const TRI_CITIES_CASE_STUDIES = [
       route: 'ringgerlaw.com + /admin',
       status: 'LIVE • JACKSON & WEST TN',
       kpis: [
-        { label: 'Live Sessions Tracked', val: '250 Sessions (Ads, Organic, Direct & AI)' },
+        { label: '90-Day Cross-Section', val: '3,800+ Sessions (Ads, Organic, Direct & AI)' },
         { label: 'Lead Auto-Triage', val: 'Foreclosure / Garnishment / Ch. 7 & 13' },
         { label: 'Search Value Engine', val: '$64.50/Click Legal CPC Attribution' }
       ]
@@ -692,8 +692,8 @@ export const YOUTUBE_CHANNEL_DATA = {
       id: 'all',
       playlistId: 'PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x',
       label: 'All Channel Releases',
-      shortLabel: 'ALL RELEASES (27)',
-      description: 'Complete broadcast feed across Music Videos by WIRED ϟ DIGITAL, Official Lyric Videos, and the Studio Channel Trailer.'
+      shortLabel: 'ALL RELEASES (28)',
+      description: 'Complete broadcast feed across Music Videos by WIRED ϟ DIGITAL, Official Lyric Videos, and the Studio Production Reel.'
     },
     {
       id: 'music-videos',
@@ -712,12 +712,24 @@ export const YOUTUBE_CHANNEL_DATA = {
     {
       id: 'channel-intro',
       playlistId: 'UUJu6ls0Cack7vBSTPSk1rXA',
-      label: 'Welcome To WIRED ϟ DIGITAL',
-      shortLabel: 'CHANNEL INTRO (1)',
-      description: 'Official Featured Channel Trailer for WIRED ϟ DIGITAL.'
+      label: 'WIRED ϟ DIGITAL Production Reel',
+      shortLabel: 'PRODUCTION REEL (1)',
+      description: 'Official Video Production Reel for WIRED ϟ DIGITAL.'
     }
   ],
   videos: [
+    // === NEW OFFICIAL VIDEO PRODUCTION REEL ===
+    {
+      videoId: 'i2yjCTNWJPA',
+      title: 'WIRED ϟ DIGITAL — Official Video Production Reel',
+      artist: 'WIRED ϟ DIGITAL • Rob Neilson',
+      category: 'channel-intro',
+      badge: 'NEW PRODUCTION REEL',
+      views: 'Official Showreel',
+      duration: 'Reel',
+      playlistId: 'UUJu6ls0Cack7vBSTPSk1rXA'
+    },
+
     // === MUSIC VIDEOS BY WIRED ϟ DIGITAL (PLG_ZQTV-zvR8be6LGEnqiaQnmDgeWiE9x) — 7 VIDEOS ===
     {
       videoId: 'Qmf-dN9gsGM',
@@ -985,18 +997,6 @@ export const YOUTUBE_CHANNEL_DATA = {
       duration: '4:41',
       vevoRestricted: true,
       playlistId: 'PLG_ZQTV-zvR_o_S7rJLwTRgSDB5Nd02Ub'
-    },
-
-    // === FEATURED CHANNEL TRAILER (UUJu6ls0Cack7vBSTPSk1rXA) ===
-    {
-      videoId: 'MbO7W4-LTFE',
-      title: 'Welcome To WIRED ϟ DIGITAL',
-      artist: 'WIRED ϟ DIGITAL',
-      category: 'channel-intro',
-      badge: 'CHANNEL TRAILER',
-      views: 'Featured Intro',
-      duration: '0:49',
-      playlistId: 'UUJu6ls0Cack7vBSTPSk1rXA'
     }
   ]
 };

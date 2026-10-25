@@ -1355,7 +1355,7 @@ export const SITE_TREE_NODES = {
       title:
         'Case Study: Ringger Law (Est. 1981) — Live Legal CRM Dashboard, Court Intakes & 24/7 AI Triage | Wired Digital',
       description:
-        'How Wired Digital engineered Ringger Law (ringgerlaw.com, Jackson & West TN) with a 24/7 West TN Debt Triage AI chatbot and a live Supabase Executive Command Center (/admin) tracking urgent foreclosure/repo leads, signed court intake packets, and $64.50/click legal CPC value.',
+        'How Wired Digital engineered Ringger Law (ringgerlaw.com, Jackson & West TN) with a 24/7 West TN Debt Triage AI chatbot and a live database Executive Command Center (/admin) tracking urgent foreclosure/repo leads, signed court intake packets, and $64.50/click legal CPC value.',
       tab: 'home',
       section: 'case-studies'
     }

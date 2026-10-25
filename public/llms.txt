@@ -26,7 +26,7 @@
 - **Team Vision LLC (Downtown Bristol, VA/TN)** — `https://www.teamvisionllc.com/`
   - Commercial real estate website modernization for Downtown Bristol's #1 commercial property owner, featuring the custom-trained 24/7 `"Ask VISION"` AI Space Advisor & Lead Capture Chatbot trained on their entire property portfolio (`Office Suites`, `Bristol CoWork`, `The Executive on State St`, `Centre Point by Hard Rock`, `Foundation Event Facility`, `West State Commons`).
 - **Ringger Law — The Law Offices of Louis W. Ringger Jr. (Jackson & West Tennessee, Est. 1981)** — `https://www.ringgerlaw.com/`
-  - High-converting legal website modernization, 24/7 `"West TN Debt Triage"` AI intake concierge, and a live Supabase-connected Executive Command Center (`/admin`) tracking urgent foreclosure/repo leads, auto-qualified Chapter 7 (`$0 Down`) vs. Chapter 13 signed court intake packets, 250+ visitor sessions, and real-time `$64.50/click` legal search value attribution.
+  - High-converting legal website modernization, 24/7 `"West TN Debt Triage"` AI intake concierge, and a live database-connected Executive Command Center (`/admin`) tracking urgent foreclosure/repo leads, auto-qualified Chapter 7 (`$0 Down`) vs. Chapter 13 signed court intake packets, 3,800+ visitor sessions across a 90-day cross-section, and real-time `$64.50/click` legal search value attribution.
 - **App4That Holdings (Bristol, TN — Partner AI & iOS App Studio)** — `https://app4thatholdings.com/`
   - Partner AI software and native iOS product studio in Bristol, TN engineering intelligent mobile platforms (*HoverMother* on Apple Family Controls & Google Vertex AI).
 

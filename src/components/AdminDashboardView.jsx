@@ -891,7 +891,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                 <div className="wos-kpi-top">
                   <span className="wos-kpi-label">ACTIVE PIPELINE LEADS</span>
                   <span className="wos-delta-pill green">
-                    {sbConfig.isConfigured ? 'SUPABASE LIVE' : 'LOCAL CRM'}
+                    {sbConfig.isConfigured ? 'DATABASE LIVE' : 'LOCAL CRM'}
                   </span>
                 </div>
                 <div className="wos-kpi-main-row">
@@ -1278,7 +1278,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       >
                         LEADS CRM → TEST DB SAVE
                       </button>{' '}
-                      to verify live Supabase storage.
+                      to verify live database storage.
                     </div>
                   ) : (
                     leads.slice(0, 4).map((lead) => (

@@ -35,7 +35,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Can Wired Digital build a custom live admin dashboard or 24/7 AI chatbot for my business?',
-    a: 'Yes. Wired Digital builds bespoke live backend business dashboards and 24/7 custom-trained AI lead concierges—such as Fast Track Bristol TN (fasttrackbristoltn.com, tracking real-time vehicle click-streams and credit apps), Team Vision LLC (teamvisionllc.com, featuring the 24/7 "Ask VISION" AI Space Advisor), and Ringger Law (ringgerlaw.com, pairing a 24/7 West TN Debt Triage AI bot with a live Supabase Legal CRM & Court Intake Command Center).'
+    a: 'Yes. Wired Digital builds bespoke live backend business dashboards and 24/7 custom-trained AI lead concierges—such as Fast Track Bristol TN (fasttrackbristoltn.com, tracking real-time vehicle click-streams and credit apps), Team Vision LLC (teamvisionllc.com, featuring the 24/7 "Ask VISION" AI Space Advisor), and Ringger Law (ringgerlaw.com, pairing a 24/7 West TN Debt Triage AI bot with a live database Legal CRM & Court Intake Command Center).'
   },
   {
     q: 'How much does a custom AI website design or website redesign cost in the Tri-Cities?',

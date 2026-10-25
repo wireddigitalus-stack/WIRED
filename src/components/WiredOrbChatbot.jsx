@@ -56,12 +56,12 @@ const INITIAL_MESSAGES = [
     cartridge: 'geo',
     text: 'ONLINE // Concise answers. Deep technical IQ. Zero agency fluff.',
     subtext:
-      'Ask anything about AI Website Modernization, GEO (ranking in ChatGPT & Google AI), Custom Dashboards, 24/7 AI Bots, Boutique Pricing, or 4K Music Video Post-Production—or drop your URL for an instant scan.',
+      'Ask anything about AI Website Modernization, GEO (ranking in ChatGPT & Google AI), Custom Dashboards, 24/7 AI Bots, Flat-Rate Pricing, or Full-Service Marketing—or drop your URL for an instant scan.',
     chips: [
       { label: '⚡ HOW GEO RANKS IN CHATGPT', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-      { label: '💎 PRICING & 25-YR VALUE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
-      { label: '📊 FAST TRACK & VISION PROOF', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' },
-      { label: '🎬 34+ MUSIC LEGENDS & 4K VIDEO', prompt: 'Tell me about your 4K remote music & lyric video editing for 34+ legends.', cartridge: 'video' }
+      { label: '💎 FLAT-RATE PRICING & PACKAGES', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
+      { label: '📊 FAST TRACK, VISION & RINGGER PROOF', prompt: 'Deep dive into the Fast Track live dashboard, Team Vision 24/7 AI bot, and Ringger Law CRM.', cartridge: 'dash' },
+      { label: '⏱️ 3-PHASE WEBSITE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
     ]
   }
 ];
@@ -217,7 +217,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     };
   }
 
-  // 4. TOPIC: PRICING, COST, BUDGET & 25+ YEARS BOUTIQUE VALUE
+  // 4. TOPIC: PRICING, COST, BUDGET & 25+ YEARS VALUE
   if (
     lower.includes('price') ||
     lower.includes('pricing') ||
@@ -229,6 +229,8 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     lower.includes('expensive') ||
     lower.includes('worth') ||
     lower.includes('boutique') ||
+    lower.includes('tier') ||
+    lower.includes('package') ||
     lower.includes('under 1 roof') ||
     lower.includes('under one roof')
   ) {
@@ -237,13 +239,13 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'pricing',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT ANSWER // We deliver high-impact custom engineering and creative at straightforward, real-world Tri-Cities & national pricing—with web, apps, software, AI, video & digital marketing all under one roof.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Wired Digital—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH PLATFORM + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page site + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD & AI OS ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track Bristol TN).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
+      reply: `DIRECT ANSWER // We deliver high-impact custom web & AI engineering at straightforward, flat-rate pricing:\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Wired Digital—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH PLATFORM + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page custom site + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD, AI OS & FULL MARKETING ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track & Ringger Law) + Full-Service Marketing & custom commercial video creative (video production is included exclusively with top-tier full-marketing packages).`,
       subtext:
         'Every project is scoped flat-rate with zero surprise retainers required. Drop your Name + Email/Phone (or URL) for an exact quote!',
       chips: [
         { label: '⏱️ TURNAROUND & 3-PHASE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' },
         { label: '⚡ HOW GEO PAYS FOR ITSELF', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-        { label: '📊 SEE FAST TRACK & VISION PROOF', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
+        { label: '📊 SEE FAST TRACK, VISION & RINGGER', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
       ]
     };
   }
@@ -300,7 +302,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
         details: q
       },
-      reply: `CASE STUDY // RINGGER LAW (ringgerlaw.com + /admin):\nEngineered for The Law Offices of Louis W. Ringger Jr. (Est. 1981 in Jackson & West TN—where Wired Digital was founded in 1999).\n• 24/7 "WEST TN DEBT TRIAGE" AI + URGENT FUNNEL: Answers urgent foreclosure, repo & 25% wage garnishment questions 24/7 and routes Chapter 7 ($0 Down) vs. Chapter 13 leads.\n• LIVE SUPABASE LEGAL CRM (/ADMIN): Tracks emergency Foreclosure/Repo leads, signed digital court intake packets, 250+ visitor sessions (Ads, Organic, Direct & AI), and real-time $64.50/click legal CPC value.\n• BUILT-IN PRACTICE TOOLS: 1-click Print Report, PIN lock security & Practice Asset Brief.`,
+      reply: `CASE STUDY // RINGGER LAW (ringgerlaw.com + /admin):\nEngineered for The Law Offices of Louis W. Ringger Jr. (Est. 1981 in Jackson & West TN—where Wired Digital was founded in 1999).\n• 24/7 "WEST TN DEBT TRIAGE" AI + URGENT FUNNEL: Answers urgent foreclosure, repo & 25% wage garnishment questions 24/7 and routes Chapter 7 ($0 Down) vs. Chapter 13 leads.\n• LIVE DATABASE LEGAL CRM (/ADMIN): Tracks emergency Foreclosure/Repo leads, signed digital court intake packets, 3,800+ visitor sessions across a 90-day cross-section (Ads, Organic, Direct & AI), and real-time $64.50/click legal CPC value.\n• BUILT-IN PRACTICE TOOLS: 1-click Print Report, PIN lock security & Practice Asset Brief.`,
       subtext:
         'Want a custom CRM, intake portal & 24/7 AI advisor built around your firm or business? Drop your Name + Email/Phone below!',
       chips: [
@@ -475,13 +477,14 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     };
   }
 
-  // 11. TOPIC: TIMELINE, TURNAROUND SPEED & 3-PHASE PROCESS
+  // 11. TOPIC: TIMELINE, TURNAROUND SPEED & 3-PHASE WEBSITE PROCESS
   if (
     lower.includes('timeline') ||
     lower.includes('turnaround') ||
     lower.includes('how long') ||
     lower.includes('how fast') ||
     lower.includes('process') ||
+    lower.includes('phase') ||
     lower.includes('steps') ||
     lower.includes('start')
   ) {
@@ -490,11 +493,11 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'timeline',
       cartridge: leadDraft.cartridge || 'geo',
       leadPatch: { details: q },
-      reply: `THE 3-PHASE WIRED METHOD // Creative + Intelligent + Fast (No agency drag):\n• PHASE 1 — ARCHITECT (Days 1–4): Deep audit, AI entity mapping, wireframe & conversion strategy directly with Wired Digital.\n• PHASE 2 — ENGINEER (Weeks 1–3): Custom sub-second React build, 24/7 AI bot training, or 4K video assembly with live staging links.\n• PHASE 3 — IGNITE (Launch): Edge deployment, Google/AI citation indexing & live admin telemetry handoff.\n• TYPICAL TURNAROUND: Custom websites in 2–4 weeks • 4K lyric/music videos in 1–3 weeks.`,
+      reply: `THE 3-PHASE WIRED WEBSITE METHOD // Creative + Intelligent + Fast (No agency drag):\n• PHASE 1 — ARCHITECT (Days 1–4): Deep site audit, AI Search (GEO) entity mapping, custom UI wireframe & conversion strategy directly with Wired Digital.\n• PHASE 2 — ENGINEER (Weeks 1–3): Custom sub-second React build, 5-node Schema.org @graph, 24/7 custom-trained AI chatbot & live /admin telemetry dashboard with live staging previews.\n• PHASE 3 — IGNITE (Launch): Edge deployment, Google Local Pack + AI citation indexing (/llms.txt & /sitemap.xml) & live owner dashboard handoff.\n• TYPICAL WEBSITE TURNAROUND: Custom websites & AI platforms launch in 2–4 weeks.`,
       subtext:
-        'Ready to claim a production slot this month? Drop your Name + Email/Phone below or open the Quick Packet form!',
+        'Ready to claim a website build slot this month? Drop your Name + Email/Phone below or open the Quick Packet form!',
       chips: [
-        { label: '💎 BOUTIQUE PRICING RANGES', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
+        { label: '💎 FLAT-RATE PRICING RANGES', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
         { label: '🔍 SCAN MY WEBSITE FIRST', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' }
       ]
     };
@@ -528,12 +531,12 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'history',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `25+ YEARS AHEAD OF THE TECH CURVE // Founded by Creative Director Rob Neilson in 1999:\n• 1999 (JACKSON, TN): Launched Wired Digital during Web 1.0, mastering code, design, and motion graphics under one roof.\n• 2015 (GLOBAL MUSIC INDUSTRY): Went full-time editing & animating 4K videos for 34+ rock/pop icons and Primary Wave.\n• 2022–2026 (BRISTOL VA/TN HQ & APP4THAT HOLDINGS PARTNER): Headquartered in the Tri-Cities and a partner in Bristol AI & native iOS app studio App4That Holdings (app4thatholdings.com). Unlike local WordPress/promo shops, we engineer custom <0.4s React sites, live /admin dashboards, 24/7 AI chatbots, native apps, GEO & 4K video all under one roof.`,
+      reply: `25+ YEARS AHEAD OF THE TECH CURVE // Founded by Creative Director Rob Neilson in 1999:\n• 1999 (JACKSON, TN): Launched Wired Digital during Web 1.0, mastering code, design, and custom digital engineering under one roof.\n• 2022–2026 (BRISTOL VA/TN HQ & APP4THAT HOLDINGS PARTNER): Headquartered in the Tri-Cities and a partner in Bristol AI & native iOS app studio App4That Holdings (app4thatholdings.com).\n• WHY WE BEAT LOCAL WORDPRESS SHOPS: We engineer custom <0.4s React websites, live /admin CRM dashboards (Fast Track & Ringger Law), 24/7 AI chatbots (Team Vision LLC), native apps, and GEO in-house—with custom video creative included in our top-tier full-marketing packages.`,
       subtext:
         'When you hire Wired Digital, you work directly with Rob—not a junior account rep. Drop your Name + Email/Phone to connect directly!',
       chips: [
-        { label: '💎 WHY BOUTIQUE BEATS AGENCIES', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
-        { label: '📊 SEE BRISTOL CASE STUDIES', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
+        { label: '💎 FLAT-RATE PRICING & TIERS', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
+        { label: '📊 SEE CLIENT CASE STUDIES', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
       ]
     };
   }
@@ -554,7 +557,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'marketing',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `FULL-SERVICE DIGITAL MARKETING & BRANDING // All under 1 roof so your traffic actually converts:\n• AI & LOCAL SEARCH DOMINATION: Google Map Pack, organic SEO, and AI Search (GEO) citation engineering.\n• HIGH-CONVERTING AD CREATIVES: 4K video ads, social reels, and kinetic motion graphics built with major-label production value.\n• CLOSED-LOOP ATTRIBUTION: Every ad and search click feeds into custom landing pages and live telemetry so you see exact ROI.`,
+      reply: `FULL-SERVICE DIGITAL MARKETING & BRANDING // Built so your traffic actually converts:\n• AI & LOCAL SEARCH DOMINATION: Google Map Pack, organic SEO, and AI Search (GEO) citation engineering.\n• TOP-TIER FULL MARKETING PACKAGES: Our top-tier full-service marketing packages include custom commercial video ads, social reels, and motion graphics alongside your custom AI platform.\n• CLOSED-LOOP ATTRIBUTION: Every ad and search click feeds into custom landing pages and live telemetry so you see exact ROI.`,
       subtext:
         'Want a unified growth & modernization plan? Drop your Name + Email/Phone or your current URL below:',
       chips: [
@@ -611,14 +614,14 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     topic: lastTopic || 'geo',
     cartridge: leadDraft.cartridge || 'geo',
     leadPatch: { details: q },
-    reply: `WIRED-64 // EXECUTIVE BRIEFING:\nBacked by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital Creative brings every high-impact discipline under 1 roof:\n• AI WEBSITE MODERNIZATION & GEO: Sub-0.4s React builds ranked #1 in ChatGPT, Gemini & Google.\n• CUSTOM TELEMETRY & 24/7 AI BOTS: Live /admin dashboards (like Fast Track) & AI advisors (like Team Vision).\n• GLOBAL 4K VIDEO POST: Remote editing & lyric animation for 34+ music legends.`,
+    reply: `WIRED-64 // EXECUTIVE BRIEFING:\nBacked by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital Creative engineers custom web & AI software under 1 roof:\n• AI WEBSITE MODERNIZATION & GEO: Sub-0.4s React builds ranked #1 in ChatGPT, Gemini & Google.\n• CUSTOM TELEMETRY & 24/7 AI BOTS: Live /admin CRM dashboards (Fast Track & Ringger Law) & 24/7 AI advisors (Team Vision LLC).\n• TOP-TIER FULL MARKETING PACKAGES: Full-service digital marketing, brand growth, and custom commercial video creative.`,
     subtext:
       'Click any topic below for a smart deep dive, drop your URL for a scan, or leave your Name + Email/Phone for Wired Digital:',
     chips: [
       { label: '⚡ DEEP DIVE: GEO & AI SEARCH', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-      { label: '💎 BOUTIQUE PRICING & 25-YR VALUE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
-      { label: '📊 FAST TRACK & VISION PROOF', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' },
-      { label: '🎬 4K MUSIC & LYRIC VIDEOS', prompt: 'Tell me about your 4K remote music & lyric video editing for 34+ legends.', cartridge: 'video' }
+      { label: '💎 FLAT-RATE PRICING & PACKAGES', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
+      { label: '📊 FAST TRACK, VISION & RINGGER', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' },
+      { label: '⏱️ 3-PHASE WEBSITE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
     ]
   };
 }

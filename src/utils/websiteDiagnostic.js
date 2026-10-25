@@ -131,7 +131,7 @@ function buildVerifiedWiredReport(cleanDomain, fullUrl) {
         currentLabel: 'Active Systems:',
         current: 'WIRED-64 AI Concierge + WIRED_OS Live Dash',
         targetLabel: 'Lead Pipeline:',
-        target: 'Real-Time Supabase + Instant Dispatch',
+        target: 'Real-Time Database + Instant Dispatch',
         status: 'VERIFIED PASS ✓',
         passed: true
       }

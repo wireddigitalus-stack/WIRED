@@ -89,12 +89,12 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             Wired Digital, you are investing in{' '}
             <strong>25+ years of real-world experience (Est. 1999)</strong> and a relentless track
             record of <strong>staying ahead of every major technology wave</strong>—from early web
-            and mobile to 4K broadcast media, custom apps, and AI-era search. We aren&apos;t cheap
+            and mobile to custom apps, live telemetry dashboards, and AI-era search. We aren&apos;t cheap
             bargain-bin template builders, and we aren&apos;t a bloated agency marking up 10
             middlemen: we deliver{' '}
             <span className="text-yellow">
-              high-impact custom engineering and creative at straightforward, real-world
-              pricing—with web, apps, software, AI, video &amp; digital marketing all under one roof.
+              high-impact custom engineering at straightforward, flat-rate
+              pricing—with web, apps, software, AI &amp; full-service digital marketing all under one roof.
             </span>
           </p>
 
@@ -146,7 +146,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                   >
                     <strong>App4That Holdings</strong>
                   </a>
-                  ), we engineer your <strong>custom website, live admin dashboard, 24/7 AI lead chatbot, native apps, Generative SEO (GEO), and 4K video</strong> directly in-house—at straightforward flat-rate pricing.
+                  ), we engineer your <strong>custom website, live admin dashboard, 24/7 AI lead chatbot, native apps, and Generative SEO (GEO)</strong> directly in-house—with custom video creative included in our top-tier full-service marketing packages.
                 </p>
               </div>
 
@@ -167,7 +167,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                   </span>
                   <p>
                     $15,000–$35,000+ markups and forced monthly retainers because you are paying
-                    separate middlemen for web dev, software, SEO, and video production.
+                    separate middlemen for web dev, custom software, SEO, and marketing campaigns.
                   </p>
                 </div>
 
@@ -179,7 +179,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                     <strong>25+ Years Ahead of the Curve (Est. 1999):</strong> Sub-0.4s custom React
                     websites, live <code>/admin</code> telemetry dashboards, 24/7 custom-trained AI
                     concierges, native iOS/AI apps (Partner in <strong>App4That Holdings</strong>), and
-                    major-label 4K video—at straightforward flat-rate pricing.
+                    top-tier full-service marketing—at straightforward flat-rate pricing.
                   </p>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 <Activity size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
                   <h4>Live Owner Admin Dashboards</h4>
-                  <p>Real-time visitor click streams, lead pipelines &amp; inventory rankings (proven on Fast Track Bristol).</p>
+                  <p>Real-time visitor click streams, lead pipelines &amp; CRM portals (Fast Track &amp; Ringger Law).</p>
                 </div>
               </div>
 
@@ -206,7 +206,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 <Bot size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
                   <h4>24/7 Custom-Trained AI Chatbots</h4>
-                  <p>Trained on your exact properties, inventory &amp; services to match buyers 24/7 (proven on Team Vision LLC).</p>
+                  <p>Trained on your exact properties, inventory &amp; services to match buyers 24/7 (Team Vision LLC).</p>
                 </div>
               </div>
 
@@ -227,10 +227,10 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
               </div>
 
               <div className="roof-skill-card">
-                <Film size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <Megaphone size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
-                  <h4>4K Video &amp; Full-Service Marketing</h4>
-                  <p>Major-label 4K video editing (34+ music legends), motion graphics, brand identity &amp; ad funnels.</p>
+                  <h4>Top-Tier Full-Service Marketing</h4>
+                  <p>Omnichannel growth, brand identity, ad funnels &amp; custom commercial video in top-tier packages.</p>
                 </div>
               </div>
             </div>

@@ -64,15 +64,16 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 className="hud-control-btn hud-expand-btn"
                 onClick={() =>
                   onOpenVideoModal({
-                    title: 'Wired Digital — Featured Clip',
+                    title: 'Wired Digital — Official Video Production Reel',
                     role: 'Rob Neilson — Creative Director',
-                    category: 'FEATURED CLIP',
-                    localVideo: BRAND_INFO.reelMp4
+                    category: 'OFFICIAL PRODUCTION REEL',
+                    youtubeId: 'i2yjCTNWJPA',
+                    youtubeUrl: 'https://youtu.be/i2yjCTNWJPA?si=YdTIsZQN1KPa2Ym1'
                   })
                 }
               >
                 <Maximize2 size={13} />
-                <span>EXPAND CLIP</span>
+                <span>WATCH FULL REEL</span>
               </button>
             </div>
           </div>

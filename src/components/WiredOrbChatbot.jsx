@@ -749,6 +749,7 @@ export default function WiredOrbChatbot() {
   const stageLeftEyeRef = useRef(null);
   const stageRightEyeRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const packetFormRef = useRef(null);
   const chatViewportRef = useRef(null);
   const scrollTrackRef = useRef(null);
   const isDraggingThumbRef = useRef(false);
@@ -927,12 +928,37 @@ export default function WiredOrbChatbot() {
     };
   }, [isOpen]);
 
-  // Auto-scroll chat log when messages change
+  // Auto-scroll chat log when messages change or when Lead Packet drawer opens
   useEffect(() => {
-    if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isBotTyping, isOpen]);
+    if (!isOpen) return;
+    const scrollUpAboveInputLine = () => {
+      const el = chatViewportRef.current;
+      if (el) {
+        el.scrollTo({
+          top: el.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+      if (showPacketForm && packetFormRef.current) {
+        packetFormRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end'
+        });
+      } else {
+        messagesEndRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end'
+        });
+      }
+    };
+
+    const rafId = requestAnimationFrame(scrollUpAboveInputLine);
+    const timerId = setTimeout(scrollUpAboveInputLine, 120);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timerId);
+    };
+  }, [messages, isBotTyping, isOpen, showPacketForm]);
 
   // Sync Custom 64-Bit Graphic Scrollbar Metrics
   const updateCustomScrollMetrics = () => {
@@ -1668,7 +1694,11 @@ export default function WiredOrbChatbot() {
 
                     {/* Inline 64-Bit Quick Lead Packet Drawer */}
                     {showPacketForm && (
-                      <form className="w64-inline-packet-form" onSubmit={handlePacketSubmit}>
+                      <form
+                        ref={packetFormRef}
+                        className="w64-inline-packet-form"
+                        onSubmit={handlePacketSubmit}
+                      >
                         <div className="w64-packet-head">
                           <span>[ 64-BIT DIRECT LEAD PACKET → WIRED DIGITAL ]</span>
                           <button

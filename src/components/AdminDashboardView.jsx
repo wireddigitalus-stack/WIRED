@@ -842,15 +842,15 @@ export default function AdminDashboardView({ onExitDashboard }) {
           </button>
         </div>
 
-        <div className="wos-topbar-right">
+        <div className="wos-topbar-right" aria-label="Dashboard quick utilities">
           <button
             type="button"
             className="wos-icon-action-btn"
             onClick={handleRefreshTelemetry}
             title="Sync Live Leads & DOM Audit"
           >
-            <RefreshCw size={14} />
-            <span>SYNC LIVE</span>
+            <RefreshCw size={12} />
+            <span>Sync</span>
           </button>
           <button
             type="button"
@@ -858,17 +858,17 @@ export default function AdminDashboardView({ onExitDashboard }) {
             onClick={() => exportLeadsToCsv(leads)}
             title="Export Leads CRM to CSV"
           >
-            <Download size={14} />
-            <span>EXPORT CSV</span>
+            <Download size={12} />
+            <span>CSV</span>
           </button>
           <button
             type="button"
             className="wos-icon-action-btn danger-btn"
             onClick={handleTestRedBlockScreen}
-            title="Preview the Red 'Not Authorized' Warning Popup"
+            title="Lock Terminal / Preview Red Security Intercept"
           >
-            <ShieldAlert size={14} />
-            <span>TEST RED BLOCK</span>
+            <Lock size={12} />
+            <span>Lock</span>
           </button>
         </div>
       </div>

@@ -10800,7 +10800,7 @@ a {
   background: rgba(5, 5, 8, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
-  padding: 26px 26px;
+  padding: 32px 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10809,15 +10809,15 @@ a {
 .body-cta-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 22px;
 }
 
 .body-cta-form-header h3 {
   font-family: var(--font-display);
-  font-size: 1.22rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--ink-white);
-  margin: 4px 0 0;
+  margin: 6px 0 0;
 }
 
 .body-cta-form-kicker {
@@ -10834,7 +10834,7 @@ a {
 .body-cta-field-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 9px;
 }
 
 .body-cta-label {
@@ -10842,13 +10842,13 @@ a {
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .body-cta-chips-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 10px;
 }
 
 .body-cta-chip {
@@ -10856,7 +10856,7 @@ a {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 11px;
-  padding: 10px 12px;
+  padding: 11px 14px;
   color: var(--ink-silver);
   font-family: var(--font-display);
   font-size: 0.78rem;
@@ -10882,7 +10882,7 @@ a {
 .body-cta-input-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 12px;
+  gap: 18px;
 }
 
 .body-cta-input {
@@ -10892,7 +10892,7 @@ a {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 11px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   color: var(--ink-white);
   font-family: var(--font-sans);
   font-size: 15px;
@@ -10908,10 +10908,10 @@ a {
 .body-cta-submit-btn {
   width: 100%;
   justify-content: center;
-  padding: 15px 22px;
+  padding: 16px 22px;
   font-size: 0.88rem;
   border-radius: 12px;
-  margin-top: 2px;
+  margin-top: 6px;
 }
 
 .body-cta-success-box {

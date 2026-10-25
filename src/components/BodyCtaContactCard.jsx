@@ -116,14 +116,14 @@ export default function BodyCtaContactCard() {
             </h2>
 
             <p className="body-cta-lead">
-              Get <strong>25+ years of staying ahead of the tech curve</strong> with{' '}
+              With <strong>Wired Digital</strong>, you&apos;re getting{' '}
+              <strong>over 25 years of staying ahead of the tech curve</strong>—bringing{' '}
               <strong>
-                AI website design, site modernization, Generative SEO (GEO), custom live
-                dashboards, 24/7 AI chatbots, full-service marketing, and 4K video
+                custom AI website design, site modernization, Generative SEO (GEO), live
+                admin dashboards, 24/7 AI chatbots, full-service marketing, and 4K video
               </strong>{' '}
-              all under one roof. No middlemen—work directly with{' '}
-              <strong>Wired Digital</strong> in Bristol, VA/TN (Tri-Cities) or remotely
-              worldwide.
+              together under one roof. Zero agency middlemen, whether you&apos;re right
+              here in the Tri-Cities (Bristol, VA/TN) or partnering remotely worldwide.
             </p>
 
             {/* Direct Contact Action Tiles */}
@@ -230,9 +230,9 @@ export default function BodyCtaContactCard() {
                   <h3>Start Your Project or Request a Free Site Audit</h3>
                 </div>
 
-                {/* 1. 1-Tap Service Chips */}
+                {/* 1-Tap Service Chips */}
                 <div className="body-cta-field-group">
-                  <label className="body-cta-label">1. TAP WHAT WE&apos;RE BUILDING:</label>
+                  <label className="body-cta-label">WHAT WE&apos;RE BUILDING</label>
                   <div className="body-cta-chips-grid">
                     {BODY_CTA_CHIPS.map((chip) => {
                       const isSelected = formState.service === chip.label;
@@ -250,11 +250,11 @@ export default function BodyCtaContactCard() {
                   </div>
                 </div>
 
-                {/* 2. Name & Phone Row */}
+                {/* Name & Phone Row */}
                 <div className="body-cta-input-row">
                   <div className="body-cta-field-group">
                     <label htmlFor="body-cta-name" className="body-cta-label">
-                      2. YOUR NAME OR BUSINESS *
+                      NAME OR BUSINESS *
                     </label>
                     <input
                       id="body-cta-name"
@@ -271,7 +271,7 @@ export default function BodyCtaContactCard() {
 
                   <div className="body-cta-field-group">
                     <label htmlFor="body-cta-phone" className="body-cta-label">
-                      3. PHONE NUMBER *
+                      PHONE NUMBER *
                     </label>
                     <input
                       id="body-cta-phone"
@@ -287,11 +287,11 @@ export default function BodyCtaContactCard() {
                   </div>
                 </div>
 
-                {/* 3. Email Address & Website URL Row */}
+                {/* Email Address & Website URL Row */}
                 <div className="body-cta-input-row">
                   <div className="body-cta-field-group">
                     <label htmlFor="body-cta-email" className="body-cta-label">
-                      4. EMAIL ADDRESS *
+                      EMAIL ADDRESS *
                     </label>
                     <input
                       id="body-cta-email"
@@ -308,7 +308,7 @@ export default function BodyCtaContactCard() {
 
                   <div className="body-cta-field-group">
                     <label htmlFor="body-cta-url" className="body-cta-label">
-                      5. WEBSITE URL (OPTIONAL)
+                      WEBSITE URL (OPTIONAL)
                     </label>
                     <input
                       id="body-cta-url"

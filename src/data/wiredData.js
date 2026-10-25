@@ -110,7 +110,7 @@ export const AI_SEO_PILLARS = [
     tag: '01 // AI-ERA SEARCH & GENERATIVE SEO (GEO)',
     title: 'Built for How Search Engines Actually Work in the Age of AI',
     description:
-      'Search is changing faster than ever. Traditional SEO alone isn’t enough when customers in Bristol, Kingsport, or Johnson City use Google AI Overviews, ChatGPT, Gemini, and Perplexity to choose who to trust. Our Generative Engine Optimization (GEO) architecture—structured JSON-LD entities, semantic authority hubs, and sub-second speed—keeps your business ahead.',
+      'Traditional SEO alone isn’t enough when customers use Google AI Overviews, ChatGPT, Gemini, and Perplexity to choose who to trust. Our Generative Engine Optimization (GEO) architecture—structured JSON-LD entities, semantic authority hubs, and sub-second speed—keeps your business cited #1.',
     bullets: [
       'Generative Engine Optimization (ChatGPT, Google AI Overviews, Gemini, Perplexity)',
       'Tri-Cities Hyper-Local Dominance (Bristol VA/TN, Johnson City, Kingsport, Abingdon)',
@@ -123,7 +123,7 @@ export const AI_SEO_PILLARS = [
     tag: '02 // CUSTOM ADMIN DASHBOARDS & PORTALS',
     title: 'Replace Clunky Templates With Custom Software Built Around Your Business',
     description:
-      'Stop fighting bloated WordPress plugins or cookie-cutter Wix pages. We build sleek, iOS-inspired custom admin dashboards that let you manage inventory, properties, leads, pricing, and AI content in seconds from your phone or desktop.',
+      'Stop fighting bloated WordPress plugins or cookie-cutter Wix pages. We engineer sleek, custom admin dashboards and 24/7 AI concierges that let you track live visitor click streams, manage inventory or properties, capture leads, and publish AI-ready content in seconds from phone or desktop.',
     bullets: [
       'Bespoke Inventory, Property, or Service Management Portals',
       'Real-Time Lead Tracking, Financing/Quote Funnels & CRM Sync',
@@ -136,7 +136,7 @@ export const AI_SEO_PILLARS = [
     tag: '03 // AI SITE MODERNIZATION & FULL-SERVICE MARKETING',
     title: 'Modernize Your Website & Scale With Full-Service Marketing',
     description:
-      'We design brand-new AI-native websites, redesign outdated legacy sites from the ground up, and back them with full-service marketing—combining custom UI artistry, brand identity, content & ad campaigns, interactive AI concierges, and conversion-focused funnels that turn Tri-Cities and national traffic into paying clients.',
+      'We design brand-new AI-native websites, redesign outdated legacy sites from the ground up, and back them with full-service marketing—combining custom UI artistry, brand identity, ad campaigns, interactive AI concierges, and high-velocity funnels that turn traffic into paying clients.',
     bullets: [
       'Custom AI Website Design, Redesign & Full-Stack Modernization',
       'Full-Service Marketing, Brand Strategy, Ad Campaigns & Content Funnels',

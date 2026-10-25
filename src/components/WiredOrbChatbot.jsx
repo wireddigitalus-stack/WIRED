@@ -1325,10 +1325,10 @@ export default function WiredOrbChatbot() {
                     preserveAspectRatio="none"
                     aria-hidden="true"
                   >
-                    {/* Retro 64-Bit Perspective Horizon Grid */}
+                    {/* Retro 64-Bit Perspective Horizon Grid (Animated) */}
                     <line x1="0" y1="120" x2="360" y2="120" stroke="#00FF66" strokeOpacity="0.45" strokeWidth="1" />
-                    <line x1="0" y1="138" x2="360" y2="138" stroke="#00FF66" strokeOpacity="0.35" strokeWidth="1" />
-                    <line x1="0" y1="162" x2="360" y2="162" stroke="#00FF66" strokeOpacity="0.45" strokeWidth="1" />
+                    <line x1="0" y1="138" x2="360" y2="138" stroke="#00FF66" strokeOpacity="0.35" strokeWidth="1" className="w64-grid-pulse-line" />
+                    <line x1="0" y1="162" x2="360" y2="162" stroke="#00FF66" strokeOpacity="0.45" strokeWidth="1" className="w64-grid-pulse-line delay-1" />
                     <line x1="0" y1="190" x2="360" y2="190" stroke="#FFEE00" strokeOpacity="0.55" strokeWidth="1.2" />
                     {[-160, -100, -50, 0, 50, 100, 160].map((offset) => (
                       <line
@@ -1410,20 +1410,53 @@ export default function WiredOrbChatbot() {
                 {!isMobileViewport && (
                 <div className="w64-crt-cartridge-screen">
                   <div className="w64-crt-screen-header">
-                    <span>ACTIVE MODULE // {activeCartridge.toUpperCase()}_64.SYS</span>
-                    <span className="w64-fps-tag">60FPS VECTOR</span>
+                    <span className="w64-module-title">ACTIVE MODULE // {activeCartridge.toUpperCase()}_64.SYS</span>
+                    <span className="w64-fps-tag">● 60FPS VECTOR</span>
                   </div>
 
                   {activeCartridge === 'geo' && (
                     <div className="w64-vector-scene">
                       <svg viewBox="0 0 320 130" className="w64-vector-svg">
-                        <circle cx="70" cy="65" r="46" fill="none" stroke="#00FF66" strokeWidth="1.5" strokeDasharray="4 3" />
-                        <circle cx="70" cy="65" r="28" fill="none" stroke="#FFEE00" strokeWidth="1.2" />
-                        <line x1="20" y1="65" x2="120" y2="65" stroke="#00FF66" strokeOpacity="0.5" />
-                        <line x1="70" y1="15" x2="70" y2="115" stroke="#00FF66" strokeOpacity="0.5" />
-                        <line x1="70" y1="65" x2="106" y2="36" stroke="#FFEE00" strokeWidth="2" />
-                        <circle cx="92" cy="46" r="4" fill="#FFEE00" />
-                        <circle cx="54" cy="82" r="3.5" fill="#00FF66" />
+                        {/* Counter-rotating dashed outer radar ring */}
+                        <circle
+                          cx="70"
+                          cy="65"
+                          r="46"
+                          fill="none"
+                          stroke="#00FF66"
+                          strokeWidth="1.5"
+                          strokeDasharray="6 4"
+                          className="w64-radar-outer-ring"
+                        />
+                        {/* Static middle calibration ring */}
+                        <circle cx="70" cy="65" r="28" fill="none" stroke="#FFEE00" strokeOpacity="0.65" strokeWidth="1.2" />
+                        {/* Expanding sonar pulse ring */}
+                        <circle
+                          cx="70"
+                          cy="65"
+                          r="12"
+                          fill="none"
+                          stroke="#00FF66"
+                          strokeWidth="1.4"
+                          className="w64-radar-sonar-ring"
+                        />
+                        {/* Crosshairs */}
+                        <line x1="20" y1="65" x2="120" y2="65" stroke="#00FF66" strokeOpacity="0.45" />
+                        <line x1="70" y1="15" x2="70" y2="115" stroke="#00FF66" strokeOpacity="0.45" />
+                        {/* Rotating 360-degree radar sweep cone & laser beam */}
+                        <g className="w64-radar-sweep-group">
+                          <path
+                            d="M 70 65 L 82 21 A 46 46 0 0 1 112 46 Z"
+                            fill="rgba(0, 255, 102, 0.24)"
+                          />
+                          <line x1="70" y1="65" x2="112" y2="46" stroke="#FFEE00" strokeWidth="2.2" />
+                        </g>
+                        {/* Center radar core */}
+                        <circle cx="70" cy="65" r="2.8" fill="#FFEE00" />
+                        {/* Pulsing target blips */}
+                        <circle cx="92" cy="46" r="4" fill="#FFEE00" className="w64-radar-blip" />
+                        <circle cx="54" cy="82" r="3.5" fill="#00FF66" className="w64-radar-blip delay-1" />
+                        <circle cx="48" cy="44" r="3" fill="#00FF66" className="w64-radar-blip delay-2" />
                         <text x="136" y="34" fill="#FFEE00" fontSize="10" fontFamily="monospace" fontWeight="bold">
                           [AI SEARCH &amp; GEO RADAR]
                         </text>
@@ -1447,12 +1480,26 @@ export default function WiredOrbChatbot() {
                     <div className="w64-vector-scene">
                       <svg viewBox="0 0 320 130" className="w64-vector-svg">
                         <rect x="14" y="18" width="135" height="94" fill="none" stroke="#FFEE00" strokeWidth="1.5" />
+                        {/* Sweeping vertical telemetry scanbar */}
+                        <line
+                          x1="24"
+                          y1="20"
+                          x2="24"
+                          y2="110"
+                          stroke="#00FF66"
+                          strokeOpacity="0.45"
+                          strokeWidth="1.5"
+                          className="w64-telemetry-scanbar"
+                        />
                         <polyline
                           points="22,92 48,70 72,78 98,42 122,50 140,28"
                           fill="none"
                           stroke="#00FF66"
                           strokeWidth="2.2"
+                          className="w64-telemetry-line"
                         />
+                        <circle cx="98" cy="42" r="3.5" fill="#FFEE00" className="w64-radar-blip" />
+                        <circle cx="140" cy="28" r="4" fill="#00FF66" className="w64-radar-blip delay-1" />
                         <text x="22" y="34" fill="#FFEE00" fontSize="9" fontFamily="monospace">
                           LIVE ADMIN TELEMETRY
                         </text>
@@ -1479,7 +1526,14 @@ export default function WiredOrbChatbot() {
                     <div className="w64-vector-scene">
                       <svg viewBox="0 0 320 130" className="w64-vector-svg">
                         <rect x="16" y="20" width="288" height="22" fill="none" stroke="#00FF66" strokeWidth="1.4" />
-                        <rect x="20" y="24" width="210" height="14" fill="#FFEE00" />
+                        <rect
+                          x="20"
+                          y="24"
+                          width="240"
+                          height="14"
+                          fill="#FFEE00"
+                          className="w64-scan-progress-fill"
+                        />
                         <text x="16" y="62" fill="#FFEE00" fontSize="10" fontFamily="monospace" fontWeight="bold">
                           [64-BIT DOM &amp; ENTITY SCANNER]
                         </text>
@@ -1506,6 +1560,8 @@ export default function WiredOrbChatbot() {
                               width="12"
                               height={h}
                               fill={i % 2 === 0 ? '#FFEE00' : '#00FF66'}
+                              className="w64-video-spec-bar"
+                              style={{ animationDelay: `${i * 0.11}s` }}
                             />
                           );
                         })}

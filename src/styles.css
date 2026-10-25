@@ -6539,7 +6539,9 @@ a {
 
 .w64-orb-holo-stage {
   position: relative;
-  height: 176px;
+  height: 206px;
+  min-height: 206px;
+  flex-shrink: 0;
   background: #030604;
   border: 1.5px solid #00ff66;
   border-radius: 12px;
@@ -6558,12 +6560,30 @@ a {
   height: 100%;
 }
 
+.w64-grid-pulse-line {
+  animation: w64GridHorizonPulse 2.4s ease-in-out infinite alternate;
+}
+
+.w64-grid-pulse-line.delay-1 {
+  animation-delay: 1.2s;
+}
+
+@keyframes w64GridHorizonPulse {
+  0% {
+    stroke-opacity: 0.22;
+  }
+  100% {
+    stroke-opacity: 0.72;
+  }
+}
+
 .w64-stage-mood-hud {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   align-self: center;
   width: 100%;
+  flex-shrink: 0;
   margin-top: -4px;
   font-family: var(--font-mono);
   font-size: 0.58rem;
@@ -6596,19 +6616,31 @@ a {
 .w64-stage-orb-wrap {
   position: relative;
   z-index: 2;
-  width: 88px;
-  height: 88px;
+  width: 96px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   user-select: none;
   outline: none;
+  animation: w64StageOrbFloat 3.4s ease-in-out infinite;
   transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+@keyframes w64StageOrbFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
 .w64-stage-orb-wrap:hover {
-  transform: translateY(-3px) scale(1.07) rotate(-3.5deg);
+  animation-play-state: paused;
+  transform: translateY(-4px) scale(1.07) rotate(-3.5deg);
 }
 
 .w64-stage-orb-wrap.mood-smile,
@@ -6811,14 +6843,26 @@ a {
 
 .w64-eq-bar {
   width: 5px;
-  height: 4px;
+  height: 5px;
   background: #00ff66;
   border-top: 2px solid #ffee00;
+  animation: eqIdleBreath64 1.3s ease-in-out infinite alternate;
   transition: height 0.2s ease;
 }
 
 .w64-voice-eq.active .w64-eq-bar {
-  animation: eqPulse64 0.45s ease-in-out infinite alternate;
+  animation: eqPulse64 0.42s ease-in-out infinite alternate;
+}
+
+@keyframes eqIdleBreath64 {
+  0% {
+    height: 4px;
+    opacity: 0.72;
+  }
+  100% {
+    height: 10px;
+    opacity: 1;
+  }
 }
 
 @keyframes eqPulse64 {
@@ -6832,15 +6876,19 @@ a {
 
 /* CRT Vector Cartridge Monitor */
 .w64-crt-cartridge-screen {
+  flex-shrink: 0;
   background: #030604;
   border: 1.5px solid #ffee00;
   border-radius: 12px;
   padding: 10px 12px;
+  box-shadow: inset 0 0 22px rgba(255, 238, 0, 0.08);
 }
 
 .w64-crt-screen-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 8px;
   font-size: 0.6rem;
   font-weight: 800;
   color: #ffee00;
@@ -6849,8 +6897,24 @@ a {
   margin-bottom: 6px;
 }
 
+.w64-module-title {
+  letter-spacing: 0.04em;
+}
+
 .w64-fps-tag {
   color: #00ff66;
+  letter-spacing: 0.05em;
+  animation: w64FpsTagPulse 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes w64FpsTagPulse {
+  0% {
+    opacity: 0.68;
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(0, 255, 102, 0.75);
+  }
 }
 
 .w64-vector-svg {
@@ -6859,8 +6923,138 @@ a {
   display: block;
 }
 
+/* 60FPS Vector Radar & Telemetry Keyframe Animations */
+.w64-radar-sweep-group {
+  transform-origin: 70px 65px;
+  animation: w64RadarSweepSpin 2.6s linear infinite;
+}
+
+@keyframes w64RadarSweepSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.w64-radar-outer-ring {
+  transform-origin: 70px 65px;
+  animation: w64RadarOuterCounterSpin 12s linear infinite;
+}
+
+@keyframes w64RadarOuterCounterSpin {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.w64-radar-sonar-ring {
+  transform-origin: 70px 65px;
+  animation: w64RadarSonarExpand 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes w64RadarSonarExpand {
+  0% {
+    transform: scale(0.35);
+    stroke-opacity: 0.95;
+  }
+  100% {
+    transform: scale(3.6);
+    stroke-opacity: 0;
+  }
+}
+
+.w64-radar-blip {
+  animation: w64RadarBlipPing 1.15s ease-in-out infinite alternate;
+}
+
+.w64-radar-blip.delay-1 {
+  animation-delay: 0.38s;
+}
+
+.w64-radar-blip.delay-2 {
+  animation-delay: 0.76s;
+}
+
+@keyframes w64RadarBlipPing {
+  0% {
+    opacity: 0.35;
+    filter: drop-shadow(0 0 2px #00ff66);
+  }
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px #ffee00);
+  }
+}
+
+.w64-telemetry-scanbar {
+  animation: w64TelemetryScanSweep 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes w64TelemetryScanSweep {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(118px);
+  }
+}
+
+.w64-telemetry-line {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 0;
+  animation: w64TelemetryWaveGlow 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes w64TelemetryWaveGlow {
+  0% {
+    stroke-opacity: 0.72;
+    filter: drop-shadow(0 0 2px #00ff66);
+  }
+  100% {
+    stroke-opacity: 1;
+    filter: drop-shadow(0 0 7px #00ff66);
+  }
+}
+
+.w64-scan-progress-fill {
+  transform-origin: 20px 31px;
+  animation: w64ScannerBarSweep 1.9s ease-in-out infinite alternate;
+}
+
+@keyframes w64ScannerBarSweep {
+  0% {
+    transform: scaleX(0.28);
+    fill: #00ff66;
+  }
+  100% {
+    transform: scaleX(1.16);
+    fill: #ffee00;
+  }
+}
+
+.w64-video-spec-bar {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: w64VideoSpecBounce 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes w64VideoSpecBounce {
+  0% {
+    transform: scaleY(0.32);
+  }
+  100% {
+    transform: scaleY(1.06);
+  }
+}
+
 /* Cartridge Buttons */
 .w64-cartridge-selector {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -7259,7 +7453,8 @@ a {
 }
 
 .wired64-overlay-backdrop.mode-docked .w64-orb-holo-stage {
-  height: 118px;
+  height: 176px;
+  min-height: 176px;
   flex-shrink: 0;
 }
 
@@ -7294,30 +7489,32 @@ a {
 
   .wired64-overlay-backdrop.mode-docked .w64-orb-holo-stage,
   .w64-orb-holo-stage {
-    height: 58px;
+    height: 96px;
+    min-height: 96px;
+    flex-shrink: 0;
     flex-direction: row;
-    gap: 16px;
-    padding: 0 14px;
+    gap: 18px;
+    padding: 0 16px;
   }
 
   .w64-stage-orb-wrap {
-    width: 46px;
-    height: 46px;
+    width: 64px;
+    height: 64px;
   }
 
   .orb-black-sphere.stage-sphere {
-    width: 44px;
-    height: 44px;
+    width: 60px;
+    height: 60px;
   }
 
   .orb-eyes-upper-zone.stage-eyes {
-    top: 11px;
-    gap: 8px;
+    top: 15px;
+    gap: 11px;
   }
 
   .orb-reflective-eye.stage-eye {
-    width: 6.5px;
-    height: 8.5px;
+    width: 8.5px;
+    height: 11px;
   }
 
   .w64-voice-eq {

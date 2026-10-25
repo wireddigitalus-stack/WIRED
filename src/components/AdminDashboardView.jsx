@@ -196,6 +196,12 @@ export default function AdminDashboardView({ onExitDashboard }) {
   const [telemetryEvents, setTelemetryEvents] = useState(() => getTelemetryEvents());
   const [sectionCounts, setSectionCounts] = useState(() => getSectionCounts());
 
+  // Live Visitor & AI Referral Stream Filters
+  const [streamCategoryFilter, setStreamCategoryFilter] = useState('ALL'); // 'ALL' | 'ai_geo' | 'conversion' | 'engagement' | 'system'
+  const [streamDeviceFilter, setStreamDeviceFilter] = useState('ALL'); // 'ALL' | 'DESKTOP' | 'MOBILE'
+  const [streamSearchQuery, setStreamSearchQuery] = useState('');
+  const [streamShowAll, setStreamShowAll] = useState(false);
+
   // Live SEO & GEO Audit State + Prospect Audit Generator (starts clean with no mock company)
   const [seoAudit, setSeoAudit] = useState(() => runLiveSiteSeoAudit());
   const [prospectName, setProspectName] = useState('');
@@ -391,6 +397,71 @@ export default function AdminDashboardView({ onExitDashboard }) {
     () => leads.filter((l) => l.status === 'NEW').length,
     [leads]
   );
+
+  // Live Visitor & AI Referral Stream Category Counts & Filtered Stream
+  const streamCategoryCounts = useMemo(() => {
+    const counts = {
+      ALL: telemetryEvents.length,
+      ai_geo: 0,
+      conversion: 0,
+      engagement: 0,
+      system: 0
+    };
+    telemetryEvents.forEach((ev) => {
+      const cat = ev.category || 'engagement';
+      if (counts[cat] !== undefined) {
+        counts[cat] += 1;
+      } else {
+        counts.engagement += 1;
+      }
+    });
+    return counts;
+  }, [telemetryEvents]);
+
+  const filteredTelemetryEvents = useMemo(() => {
+    return telemetryEvents.filter((ev) => {
+      const cat = ev.category || 'engagement';
+      const matchesCategory =
+        streamCategoryFilter === 'ALL' || cat === streamCategoryFilter;
+
+      const dev = (ev.device || '').toLowerCase();
+      const isMobileDev =
+        dev.includes('iphone') ||
+        dev.includes('ipad') ||
+        dev.includes('android') ||
+        dev.includes('mobile');
+      const matchesDevice =
+        streamDeviceFilter === 'ALL' ||
+        (streamDeviceFilter === 'MOBILE' && isMobileDev) ||
+        (streamDeviceFilter === 'DESKTOP' && !isMobileDev);
+
+      const q = streamSearchQuery.trim().toLowerCase();
+      const matchesQuery =
+        !q ||
+        (ev.type || '').toLowerCase().includes(q) ||
+        (ev.detail || '').toLowerCase().includes(q) ||
+        (ev.location || '').toLowerCase().includes(q) ||
+        (ev.device || '').toLowerCase().includes(q) ||
+        cat.toLowerCase().includes(q);
+
+      return matchesCategory && matchesDevice && matchesQuery;
+    });
+  }, [telemetryEvents, streamCategoryFilter, streamDeviceFilter, streamSearchQuery]);
+
+  const formatStreamTime = (iso) => {
+    if (!iso) return 'LIVE';
+    try {
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return 'LIVE';
+      return d.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    } catch {
+      return 'LIVE';
+    }
+  };
 
   // Compute live analytics strictly from real leads and real telemetry events
   const liveAnalytics = useMemo(
@@ -1248,7 +1319,83 @@ export default function AdminDashboardView({ onExitDashboard }) {
                     <span className="wos-panel-kicker">FIRST-PARTY EVENT STREAM</span>
                     <h3 className="wos-panel-title">Live Visitor &amp; AI Referral Stream</h3>
                   </div>
-                  <span className="live-green-pill">● STREAMING LIVE</span>
+                  <div className="wos-stream-header-right">
+                    {filteredTelemetryEvents.length > 6 && (
+                      <button
+                        type="button"
+                        className="wos-stream-limit-btn"
+                        onClick={() => setStreamShowAll((prev) => !prev)}
+                      >
+                        {streamShowAll
+                          ? 'SHOW TOP 6'
+                          : `SHOW ALL (${filteredTelemetryEvents.length})`}
+                      </button>
+                    )}
+                    <span className="live-green-pill">● STREAMING LIVE</span>
+                  </div>
+                </div>
+
+                {/* Handy Stream Filter Controls: Category Pills + Device Toggle + Quick Search */}
+                <div className="wos-stream-filter-bar">
+                  <div className="wos-stream-cat-pills" role="group" aria-label="Filter stream by event category">
+                    {[
+                      { id: 'ALL', label: 'ALL', count: streamCategoryCounts.ALL },
+                      { id: 'ai_geo', label: 'AI / GEO', count: streamCategoryCounts.ai_geo },
+                      { id: 'conversion', label: 'LEADS', count: streamCategoryCounts.conversion },
+                      { id: 'engagement', label: 'CLICKS', count: streamCategoryCounts.engagement },
+                      { id: 'system', label: 'SYSTEM', count: streamCategoryCounts.system }
+                    ].map((pill) => (
+                      <button
+                        key={pill.id}
+                        type="button"
+                        className={`wos-stream-filter-pill cat-pill-${pill.id} ${streamCategoryFilter === pill.id ? 'active' : ''}`}
+                        onClick={() => setStreamCategoryFilter(pill.id)}
+                      >
+                        <span>{pill.label}</span>
+                        <span className="wos-stream-pill-count">{pill.count}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="wos-stream-sub-filters">
+                    <div className="wos-stream-search-box">
+                      <Search size={13} className="wos-stream-search-icon" />
+                      <input
+                        type="text"
+                        placeholder="Filter by domain, action, page, or device..."
+                        value={streamSearchQuery}
+                        onChange={(e) => setStreamSearchQuery(e.target.value)}
+                        className="wos-stream-search-input"
+                      />
+                      {streamSearchQuery && (
+                        <button
+                          type="button"
+                          className="wos-stream-clear-btn"
+                          onClick={() => setStreamSearchQuery('')}
+                          title="Clear search"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="wos-stream-device-pills" role="group" aria-label="Filter by device type">
+                      {[
+                        { id: 'ALL', label: 'ALL' },
+                        { id: 'DESKTOP', label: 'DESKTOP' },
+                        { id: 'MOBILE', label: 'MOBILE' }
+                      ].map((dev) => (
+                        <button
+                          key={dev.id}
+                          type="button"
+                          className={`wos-stream-dev-btn ${streamDeviceFilter === dev.id ? 'active' : ''}`}
+                          onClick={() => setStreamDeviceFilter(dev.id)}
+                        >
+                          {dev.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="wos-event-stream-list">
@@ -1268,15 +1415,33 @@ export default function AdminDashboardView({ onExitDashboard }) {
                       </strong>
                       All seeded demo events have been removed. Navigate tabs, play a video, or submit a lead to see real-time telemetry events stream here.
                     </div>
+                  ) : filteredTelemetryEvents.length === 0 ? (
+                    <div className="wos-stream-empty-filter">
+                      <span>No live events match the active filters.</span>
+                      <button
+                        type="button"
+                        className="wos-stream-reset-btn"
+                        onClick={() => {
+                          setStreamCategoryFilter('ALL');
+                          setStreamDeviceFilter('ALL');
+                          setStreamSearchQuery('');
+                        }}
+                      >
+                        RESET FILTERS
+                      </button>
+                    </div>
                   ) : (
-                    telemetryEvents.slice(0, 6).map((ev) => (
+                    (streamShowAll
+                      ? filteredTelemetryEvents
+                      : filteredTelemetryEvents.slice(0, 6)
+                    ).map((ev) => (
                       <div key={ev.id} className="wos-stream-item">
                         <div className={`stream-icon-dot cat-${ev.category}`} />
                         <div className="stream-item-body">
                           <div className="stream-item-top">
                             <span className="stream-type-tag">{ev.type}</span>
                             <span className="stream-meta-tag">
-                              {ev.location} • {ev.device}
+                              {formatStreamTime(ev.timestamp)} • {ev.location} • {ev.device}
                             </span>
                           </div>
                           <p className="stream-detail-text">{ev.detail}</p>

@@ -14,16 +14,24 @@
    - Custom-trained 24/7 AI advisors trained on a business's exact inventory, properties, or services to match customers and capture leads around the clock.
 4. **Global Remote Music Video & Official Lyric Video Editing**:
    - Full-time in the music industry since 2015 delivering 100% remote 4K music video editing, custom animated lyric videos, visualizers, and tour promos for major record labels and 34+ Hall-of-Fame artists (Primary Wave — The Home of Legends, Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, Bob Marley Estate, Whitney Houston Estate, Prince Estate, Slayer, Volbeat, etc.).
-   - On-location directing and RED Cinema shooting reserved for select flagship productions.
+   - On-location directing and RED Cinema shooting reserved for select commissioned productions.
+5. **Native iOS & AI Product Engineering (Partner in App4That Holdings — `https://app4thatholdings.com/`)**:
+   - Creative Director Rob Neilson is a partner in Bristol-based AI product studio **App4That Holdings** (`https://app4thatholdings.com/`), engineering native Apple iOS applications (Apple Family Controls framework) and Google Cloud Vertex AI (Gemini) software such as *HoverMother*.
+6. **"All Skills Under One Roof" vs. Traditional Local Agencies**:
+   - Unlike traditional Tri-Cities WordPress/template shops or promotional marketing agencies that outsource development, rely on slow third-party plugins, or lock businesses into monthly retainers, Wired Digital delivers custom sub-0.4s React web engineering, live `/admin` telemetry dashboards, 24/7 custom-trained AI chatbots, native app development, Generative SEO (GEO), and 4K video production all under one roof at straightforward flat-rate pricing.
 
-## Verified Live Tri-Cities Flagship Case Studies
+## Verified Live Tri-Cities Case Studies & Partner Platforms
 - **Fast Track Automotive (2528 Volunteer Pkwy, Bristol, TN)** — `https://www.fasttrackbristoltn.com/`
   - High-velocity pre-owned dealership website modernization paired with a custom real-time Admin Telemetry Dashboard tracking live visitor click streams, credit application alerts, hourly traffic, and vehicle lot rankings.
 - **Team Vision LLC (Downtown Bristol, VA/TN)** — `https://www.teamvisionllc.com/`
-  - Commercial real estate flagship website modernization for Downtown Bristol's #1 commercial property owner, featuring the custom-trained 24/7 `"Ask VISION"` AI Space Advisor & Lead Capture Chatbot trained on their entire property portfolio (`Office Suites`, `Bristol CoWork`, `The Executive on State St`, `Centre Point by Hard Rock`, `Foundation Event Facility`, `West State Commons`).
+  - Commercial real estate website modernization for Downtown Bristol's #1 commercial property owner, featuring the custom-trained 24/7 `"Ask VISION"` AI Space Advisor & Lead Capture Chatbot trained on their entire property portfolio (`Office Suites`, `Bristol CoWork`, `The Executive on State St`, `Centre Point by Hard Rock`, `Foundation Event Facility`, `West State Commons`).
+- **Ringger Law — The Law Offices of Louis W. Ringger Jr. (Jackson & West Tennessee, Est. 1981)** — `https://www.ringgerlaw.com/`
+  - High-converting legal website modernization, 24/7 `"West TN Debt Triage"` AI intake concierge, and a live Supabase-connected Executive Command Center (`/admin`) tracking urgent foreclosure/repo leads, auto-qualified Chapter 7 (`$0 Down`) vs. Chapter 13 signed court intake packets, 250+ visitor sessions, and real-time `$64.50/click` legal search value attribution.
+- **App4That Holdings (Bristol, TN — Partner AI & iOS App Studio)** — `https://app4thatholdings.com/`
+  - Partner AI software and native iOS product studio in Bristol, TN engineering intelligent mobile platforms (*HoverMother* on Apple Family Controls & Google Vertex AI).
 
 ## Full Site Tree & Crawlable Endpoints
-- Root Flagship Experience: `https://www.wireddigitalcreative.com/`
+- Main Website: `https://www.wireddigitalcreative.com/`
 - AI Website Design, Redesign & GEO Hub: `https://www.wireddigitalcreative.com/?view=ai-web-design-seo`
 - Custom Business Dashboards & 24/7 AI Chatbots: `https://www.wireddigitalcreative.com/?view=custom-dashboards-ai-chatbots`
 - Bristol TN/VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=bristol-tn-va-web-design`

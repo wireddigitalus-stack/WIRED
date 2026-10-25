@@ -5,7 +5,7 @@
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
-  <!-- 1. ROOT FLAGSHIP HUB: AI Website Design, Redesign, Modernization & GEO -->
+  <!-- 1. MAIN HUB: AI Website Design, Redesign, Modernization & GEO -->
   <url>
     <loc>https://www.wireddigitalcreative.com/</loc>
     <lastmod>2026-10-23</lastmod>
@@ -22,6 +22,10 @@
     <image:image>
       <image:loc>https://www.wireddigitalcreative.com/teamvision-ai-advisor.png</image:loc>
       <image:title>Team Vision LLC Bristol — 24/7 Custom-Trained Ask VISION AI Space Advisor &amp; Lead Capture Chatbot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.wireddigitalcreative.com/ringgerlaw-admin-dash.png</image:loc>
+      <image:title>Ringger Law (ringgerlaw.com) — Live Legal CRM, Court Intakes &amp; 24/7 West TN Debt Triage AI by Wired Digital</image:title>
     </image:image>
   </url>
 
@@ -83,7 +87,7 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- 4. FLAGSHIP CASE STUDIES & CLIENT VAULT NODES -->
+  <!-- 4. CASE STUDIES & CLIENT VAULT NODES -->
   <url>
     <loc>https://www.wireddigitalcreative.com/?case=fast-track-bristol-tn</loc>
     <lastmod>2026-10-23</lastmod>
@@ -94,6 +98,13 @@
   <url>
     <loc>https://www.wireddigitalcreative.com/?case=team-vision-llc-bristol</loc>
     <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wireddigitalcreative.com/?case=ringger-law</loc>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.88</priority>
   </url>

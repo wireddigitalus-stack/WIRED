@@ -1245,9 +1245,9 @@ export const SITE_TREE_NODES = {
       corridors: 'Historic State Street • The Pinnacle • Volunteer Pkwy • Exit 5 & Exit 7',
       distanceLabel: '0.0 mi (Studio HQ)',
       priority: '0.92',
-      proofClient: 'Fast Track Bristol TN (fasttrackbristoltn.com)',
+      proofClient: 'Fast Track Bristol TN, Team Vision LLC & Partner in App4That Holdings',
       summary:
-        'Headquartered right on the Bristol VA/TN state line since 2022. We engineer high-converting websites, custom live inventory/lead dashboards, and #1 "website design near me" local search architecture for Bristol businesses.',
+        'Headquartered right on the Bristol VA/TN state line since 2022 and a partner in Bristol AI/iOS studio App4That Holdings (app4thatholdings.com). We engineer <0.4s React websites, custom live inventory/lead dashboards, 24/7 AI chatbots, and #1 "website design near me" local search architecture.',
       title:
         'Website Design Near Me in Bristol, TN & VA (37620 / 24201) | Wired Digital Studio HQ',
       description:
@@ -1341,6 +1341,21 @@ export const SITE_TREE_NODES = {
         'Case Study: Team Vision LLC — AI Website Modernization & 24/7 Ask VISION AI Chatbot | Wired Digital',
       description:
         'How Wired Digital modernized Team Vision LLC (teamvisionllc.com) with an executive dark UI and a custom-trained 24/7 "Ask VISION" AI Space Advisor & lead capture chatbot.',
+      tab: 'home',
+      section: 'case-studies'
+    },
+    {
+      id: 'case-ringgerlaw',
+      query: '?case=ringger-law',
+      canonical: 'https://www.wireddigitalcreative.com/?case=ringger-law',
+      label: 'Ringger Law — Live Legal CRM (/admin), Court Intakes & 24/7 Debt Triage AI',
+      externalUrl: 'https://www.ringgerlaw.com/',
+      pathDisplay: '/?case=ringger-law',
+      priority: '0.88',
+      title:
+        'Case Study: Ringger Law (Est. 1981) — Live Legal CRM Dashboard, Court Intakes & 24/7 AI Triage | Wired Digital',
+      description:
+        'How Wired Digital engineered Ringger Law (ringgerlaw.com, Jackson & West TN) with a 24/7 West TN Debt Triage AI chatbot and a live Supabase Executive Command Center (/admin) tracking urgent foreclosure/repo leads, signed court intake packets, and $64.50/click legal CPC value.',
       tab: 'home',
       section: 'case-studies'
     }

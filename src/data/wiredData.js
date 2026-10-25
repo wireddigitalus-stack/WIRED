@@ -71,13 +71,13 @@ export const TRI_CITIES_CASE_STUDIES = [
     frontendImg: '/teamvision-frontend.jpg',
     dashboardImg: '/teamvision-ai-advisor.jpg',
     primaryTabLabel: '24/7 AI Space Advisor',
-    secondaryTabLabel: 'Flagship Front-End',
+    secondaryTabLabel: 'Front-End',
     primaryTitle: 'Team Vision LLC — Custom-Trained 24/7 "Ask VISION" AI Space Advisor & Portfolio',
     primarySubtitle: 'Trained on Every Vision LLC Property • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-    secondaryTitle: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
+    secondaryTitle: 'Team Vision LLC — Commercial Real Estate Front-End',
     secondarySubtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
     badge: 'AI-MODERNIZED CRE PLATFORM + 24/7 CUSTOM-TRAINED AI CHATBOT + GEO',
-    headline: 'Commercial Real Estate Flagship + Custom-Trained 24/7 "Ask VISION" AI Lead Concierge',
+    headline: 'Commercial Real Estate Platform + Custom-Trained 24/7 "Ask VISION" AI Lead Concierge',
     summary:
       'Engineered for Downtown Bristol’s largest private commercial property developer. Features the custom-trained 24/7 "Ask VISION" AI Space Advisor—trained on every property in Vision LLC’s portfolio (City Centre, Bristol CoWork, The Executive on State St, Centre Point by Hard Rock, Foundation Event Facility & West State Commons)—matching tenants to spaces in under 2 minutes.',
     metrics: [
@@ -99,6 +99,46 @@ export const TRI_CITIES_CASE_STUDIES = [
         { label: 'AI Lead Capture', val: '24/7 Custom-Trained Space Advisor' },
         { label: 'Portfolio Coverage', val: 'Office • CoWork • Retail • Industrial' },
         { label: 'AI Search Visibility', val: '#1 Citation — Tri-Cities CRE' }
+      ]
+    }
+  },
+  {
+    id: 'ringger-law',
+    name: 'Ringger Law (Est. 1981)',
+    location: 'Jackson & West Tennessee (Where Wired Digital Was Founded in 1999)',
+    domain: 'ringgerlaw.com',
+    url: 'https://www.ringgerlaw.com/',
+    frontendImg: '/ringgerlaw-frontend.jpg',
+    dashboardImg: '/ringgerlaw-admin-dash.jpg',
+    primaryTabLabel: 'Live Legal CRM & Admin',
+    secondaryTabLabel: 'Public Site + 24/7 AI',
+    primaryTitle: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
+    primarySubtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+    secondaryTitle: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
+    secondarySubtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
+    badge: 'LEGAL AI PLATFORM + LIVE SUPABASE CRM (/ADMIN) + 24/7 DEBT TRIAGE AI + GEO',
+    headline: 'High-Converting Legal Funnel + 24/7 Debt Triage AI + Live Attorney CRM & Court Intake Portal',
+    summary:
+      'Engineered for The Law Offices of Louis W. Ringger Jr. (serving Jackson & West Tennessee since 1981—where Wired Digital was founded in 1999). Pairs an urgent foreclosure/garnishment legal front-end and 24/7 "West TN Debt Triage" AI chatbot with a live Supabase-connected Executive Command Center (/admin) tracking urgent leads, auto-qualified Chapter 7 vs. 13 court intake packets, 250+ visitor sessions, and real-time $64.50/click legal search value.',
+    metrics: [
+      { value: '250+', label: 'Tracked Visitor Sessions' },
+      { value: '24/7 AI', label: 'West TN Debt Triage Bot' },
+      { value: '$64.50', label: 'Per-Click Legal CPC Tracked' }
+    ],
+    features: [
+      'Live Attorney & Staff Portal (/admin): Lead Triage CRM (Emergency Foreclosure/Repo, 25% Garnishment, Unsecured Debt)',
+      'Auto-Qualified Chapter 7 ($0 Down Eligible) vs. Chapter 13 Pipeline + Digital Signed Court Intake Packets',
+      '24/7 "West TN Debt Triage" AI Concierge + Urgent Same-Day Automatic Stay Callback Funnel',
+      'Multi-Channel Traffic Attribution (Google Search, Paid Ads, Direct & AI) + Practice Asset Valuation Brief'
+    ],
+    accentColor: '#A3E635',
+    previewStats: {
+      route: 'ringgerlaw.com + /admin',
+      status: 'LIVE • JACKSON & WEST TN',
+      kpis: [
+        { label: 'Live Sessions Tracked', val: '250 Sessions (Ads, Organic, Direct & AI)' },
+        { label: 'Lead Auto-Triage', val: 'Foreclosure / Garnishment / Ch. 7 & 13' },
+        { label: 'Search Value Engine', val: '$64.50/Click Legal CPC Attribution' }
       ]
     }
   }
@@ -149,23 +189,23 @@ export const AI_SEO_PILLARS = [
 export const TRI_CITIES_MARKETS = [
   {
     city: 'Bristol, VA & Bristol, TN',
-    focus: 'State Street, Volunteer Pkwy, Hard Rock Corridor, I-81 Exit Hubs',
-    highlight: 'Home Base Since 2022 (Founded 1999 in Jackson, TN) — Creators of FastTrackBristolTN.com & TeamVisionLLC.com'
+    focus: 'State Street, Volunteer Pkwy, The Pinnacle, Hard Rock Corridor, I-81 Exits 1–7',
+    highlight: 'Home Base Since 2022 (Est. 1999) — FastTrackBristolTN.com, TeamVisionLLC.com & Partner in App4ThatHoldings.com'
   },
   {
     city: 'Johnson City, TN',
-    focus: 'Medical, Commercial Real Estate, Automotive, Professional & Tech Services',
-    highlight: 'AI Website Design, Redesign & Modernization + Local/Generative SEO'
+    focus: 'Med-Tech Corridor, State of Franklin, Downtown JC, Boones Creek & I-26',
+    highlight: 'AI Website Design, Redesign & Modernization + Local/Generative SEO (GEO)'
   },
   {
     city: 'Kingsport, TN',
-    focus: 'Industrial, Manufacturing, Retail, Contractors & Regional Enterprises',
-    highlight: 'Custom B2B/B2C Dashboards, Lead Funnels & AI-Era Search Authority'
+    focus: 'Eastman Corridor, Fort Henry Dr, Stone Drive, Downtown Kingsport & Industrial/Retail',
+    highlight: 'Custom B2B/B2C Admin Dashboards, 24/7 AI Chatbots & AI-Era Search Authority'
   },
   {
     city: 'Abingdon, VA & SWVA / NETN',
-    focus: 'Hospitality, Tourism, Legal, Real Estate & Regional Brands',
-    highlight: 'Bespoke Digital Flagships, Site Modernization & Automated Funnels'
+    focus: 'Historic Main Street, I-81 Exits 14–19, Hospitality, Legal, Real Estate & Regional Brands',
+    highlight: 'Custom Web Builds, Site Modernization & Automated Conversion Funnels'
   }
 ];
 
@@ -536,9 +576,9 @@ export const FEATURED_WORK = [
     title: 'Full Devil Jacket - Valley of Bones (Official Music Video)',
     shortTitle: 'Full Devil Jacket — "Valley of Bones" (VEVO / eOne)',
     client: 'Full Devil Jacket / eOne Music',
-    role: 'Flagship Commission — Directed & Edited by Rob Neilson',
+    role: 'Directed & Edited by Rob Neilson',
     date: 'VEVO / eOne Official Release',
-    category: 'FLAGSHIP COMMISSIONED PRODUCTION',
+    category: 'COMMISSIONED PRODUCTION',
     youtubeId: 'DkTGpDq6Pcg',
     youtubeUrl: 'https://www.youtube.com/watch?v=DkTGpDq6Pcg',
     vevoRestricted: true,
@@ -546,23 +586,23 @@ export const FEATURED_WORK = [
     fallbackThumb: 'https://i.ytimg.com/vi/DkTGpDq6Pcg/hqdefault.jpg',
     description:
       'The music video that helped land the band\'s deal with eOne.',
-    tags: ['Flagship Directing & Edit', '2D Animation Hybrid', 'VEVO / eOne']
+    tags: ['Directed & Edited', '2D Animation Hybrid', 'VEVO / eOne']
   },
   {
     id: 'full-devil-jacket-killers-video',
     title: 'Full Devil Jacket - Killers (Official Music Video)',
     shortTitle: 'Full Devil Jacket — "Killers" (VEVO / eOne)',
     client: 'Full Devil Jacket / eOne Music',
-    role: 'Flagship Commission — Directed & Edited by Rob Neilson',
+    role: 'Directed & Edited by Rob Neilson',
     date: 'VEVO / eOne Official Release',
-    category: 'FLAGSHIP COMMISSIONED PRODUCTION',
+    category: 'COMMISSIONED PRODUCTION',
     youtubeId: '-uM3mZFoUrU',
     youtubeUrl: 'https://youtu.be/-uM3mZFoUrU?si=xFjTCZA7TyakEIsH',
     thumbnail: 'https://i.ytimg.com/vi/-uM3mZFoUrU/hqdefault.jpg',
     fallbackThumb: 'https://i.ytimg.com/vi/-uM3mZFoUrU/0.jpg',
     description:
       'Cinematic rock performance and dark visual storytelling directed and edited by Rob Neilson for Full Devil Jacket’s official eOne / VEVO release "Killers".',
-    tags: ['Flagship Directing & Edit', 'Cinematic Rock Production', 'VEVO / eOne']
+    tags: ['Directed & Edited', 'Cinematic Rock Production', 'VEVO / eOne']
   }
 ];
 
@@ -590,10 +630,10 @@ export const VIDEO_PRODUCTION_SERVICES = [
   },
   {
     title: 'High-End Commissioned Directing',
-    subtitle: 'SELECT FLAGSHIP PRODUCTIONS',
+    subtitle: 'SELECT COMMISSIONED PRODUCTIONS',
     description:
       'While 95% of our music video work is delivered globally via remote editing and animation, we accept select high-end commissioned directing shoots and Tri-Cities commercial brand reels.',
-    highlights: ['Executive Flagship Commissions', 'RED Cinema Production Pipeline', 'Tri-Cities Web Client Brand Reels', 'End-to-End Creative Direction']
+    highlights: ['Commissioned Directing Shoots', 'RED Cinema Production Pipeline', 'Tri-Cities Web Client Brand Reels', 'End-to-End Creative Direction']
   }
 ];
 
@@ -613,11 +653,16 @@ export const WEB_CREATION_SERVICES = [
     highlights: ['Generative Engine Optimization (GEO)', 'Bristol, Kingsport & Johnson City SEO', 'Automated Schema.org Entity Graphs', 'AI Citation & Ranking Architecture']
   },
   {
-    title: 'Custom Admin Dashboards & Portals',
-    subtitle: 'BESPOKE SOFTWARE TAILORED TO YOUR WORKFLOW',
+    title: 'Custom Admin Dashboards, Portals & Native AI Apps',
+    subtitle: 'BESPOKE SOFTWARE & PARTNER IN APP4THAT HOLDINGS',
     description:
-      'Ditch clunky generic templates. We build custom iOS-inspired dashboards to manage vehicle inventory, commercial real estate, client leads, financing applications, and analytics.',
-    highlights: ['Custom Inventory & Property Portals', 'Live Lead & Financing Pipelines', 'Built-In AI Copy & Listing Tools', 'Proven on TeamVisionLLC.com']
+      'Ditch clunky generic templates. We build custom iOS-inspired owner dashboards, real-time telemetry portals, and native iOS/AI software (as a partner in Bristol-based App4That Holdings) to manage inventory, real estate, and client leads.',
+    highlights: [
+      'Custom Inventory, Property & Telemetry Dashboards',
+      'Partner in App4That Holdings (Native iOS & Vertex AI)',
+      'Live Lead, Click-Stream & Financing Pipelines',
+      'Proven on FastTrackBristolTN.com & TeamVisionLLC.com'
+    ]
   },
   {
     title: 'Interactive AI Concierges & Full-Service Marketing',

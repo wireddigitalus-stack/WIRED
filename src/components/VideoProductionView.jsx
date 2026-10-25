@@ -120,7 +120,7 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
             since <strong>2015</strong>, and headquartered in <strong>Bristol (VA/TN) since 2022</strong>—delivering
             100% remote <strong>4K music video editing, custom kinetic lyric videos, visualizers, and tour promos</strong> for{' '}
             <strong>Primary Wave (The Home of Legends), Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, and 34+ Hall-of-Fame artists</strong>{' '}
-            and major record labels worldwide (with on-location RED Cinema directing reserved for select flagship commissions).
+            and major record labels worldwide (with on-location RED Cinema directing reserved for select commissions).
           </p>
 
           <div className="subview-hero-actions">

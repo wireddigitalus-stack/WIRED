@@ -15,7 +15,8 @@ import {
   X,
   ArrowRightLeft,
   Search,
-  ArrowRight
+  ArrowRight,
+  Scale
 } from 'lucide-react';
 import {
   TRI_CITIES_CASE_STUDIES,
@@ -26,12 +27,14 @@ import { addLead, logTelemetryEvent } from '../utils/telemetry';
 import { normalizeDomain, runWebsiteDiagnostic } from '../utils/websiteDiagnostic';
 
 export default function AiSeoDashboardShowcase({ onOpenContact }) {
-  const [activeDemoTab, setActiveDemoTab] = useState('auto'); // 'auto' | 'cre' | 'geo'
+  const [activeDemoTab, setActiveDemoTab] = useState('auto'); // 'auto' | 'cre' | 'law' | 'geo'
   const [fastTrackView, setFastTrackView] = useState('split'); // 'split' | 'dash' | 'front'
   const [visionView, setVisionView] = useState('split'); // 'split' | 'ai' | 'front'
+  const [ringgerView, setRinggerView] = useState('split'); // 'split' | 'dash' | 'front'
   const [cardModes, setCardModes] = useState({
     'fast-track-bristol': 'primary',
-    'team-vision-llc': 'primary'
+    'team-vision-llc': 'primary',
+    'ringger-law': 'primary'
   });
   const [compareMode, setCompareMode] = useState('after'); // 'before' | 'after'
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -147,6 +150,16 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               >
                 <Building2 size={13} />
                 <span>Team Vision: 24/7 AI Space Advisor + CRE Site</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeDemoTab === 'law'}
+                className={`ios-seg-btn ${activeDemoTab === 'law' ? 'active' : ''}`}
+                onClick={() => setActiveDemoTab('law')}
+              >
+                <Scale size={13} />
+                <span>Ringger Law: Legal CRM Dash + 24/7 AI Triage</span>
               </button>
               <button
                 type="button"
@@ -407,7 +420,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               </div>
             )}
 
-            {/* TAB 2: TEAM VISION LLC (FLAGSHIP FRONT-END + 24/7 CUSTOM-TRAINED "ASK VISION" AI SPACE ADVISOR) */}
+            {/* TAB 2: TEAM VISION LLC (FRONT-END + 24/7 CUSTOM-TRAINED "ASK VISION" AI SPACE ADVISOR) */}
             {activeDemoTab === 'cre' && (
               <div className="ft-showcase-wrapper">
                 <div className="ft-showcase-toolbar">
@@ -441,20 +454,20 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       onClick={() => setVisionView('front')}
                     >
                       <Monitor size={13} />
-                      <span>Flagship Front-End</span>
+                      <span>Front-End</span>
                     </button>
                   </div>
                 </div>
 
                 {visionView === 'split' && (
                   <div className="ft-dual-stage-grid">
-                    {/* LEFT SCREEN: Team Vision Flagship Front-End */}
+                    {/* LEFT SCREEN: Team Vision Front-End */}
                     <div
                       className="ft-screen-card"
                       onClick={() =>
                         setLightboxImage({
                           src: '/teamvision-frontend.jpg',
-                          title: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
+                          title: 'Team Vision LLC — Commercial Real Estate Front-End',
                           subtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
                           altSrc: '/teamvision-ai-advisor.jpg',
                           altTitle: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
@@ -465,7 +478,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                     >
                       <div className="ft-screen-label-bar">
                         <div className="ft-screen-badge-group">
-                          <span className="ft-step-pill">01 // CRE FLAGSHIP FRONT-END</span>
+                          <span className="ft-step-pill">01 // CRE FRONT-END</span>
                           <span className="ft-route-mono">teamvisionllc.com</span>
                         </div>
                         <button type="button" className="ft-zoom-chip" aria-label="Expand Team Vision Front-End">
@@ -510,9 +523,9 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                           title: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
                           subtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
                           altSrc: '/teamvision-frontend.jpg',
-                          altTitle: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
+                          altTitle: 'Team Vision LLC — Commercial Real Estate Front-End',
                           altSubtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
-                          swapLabel: 'Switch to Flagship Front-End'
+                          swapLabel: 'Switch to Front-End'
                         })
                       }
                     >
@@ -560,13 +573,13 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                                 title: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
                                 subtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
                                 altSrc: '/teamvision-frontend.jpg',
-                                altTitle: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
+                                altTitle: 'Team Vision LLC — Commercial Real Estate Front-End',
                                 altSubtitle: '#1 Commercial Property Owner in Downtown Bristol',
-                                swapLabel: 'Switch to Flagship Front-End'
+                                swapLabel: 'Switch to Front-End'
                               }
                             : {
                                 src: '/teamvision-frontend.jpg',
-                                title: 'Team Vision LLC — Commercial Real Estate Flagship Front-End',
+                                title: 'Team Vision LLC — Commercial Real Estate Front-End',
                                 subtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
                                 altSrc: '/teamvision-ai-advisor.jpg',
                                 altTitle: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
@@ -581,7 +594,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                           <span className="ft-step-pill yellow">
                             {visionView === 'ai'
                               ? '24/7 CUSTOM-TRAINED "ASK VISION" AI SPACE ADVISOR & PORTFOLIO'
-                              : 'COMMERCIAL REAL ESTATE FLAGSHIP FRONT-END'}
+                              : 'COMMERCIAL REAL ESTATE FRONT-END'}
                           </span>
                           <span className="ft-route-mono">teamvisionllc.com</span>
                         </div>
@@ -642,7 +655,242 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               </div>
             )}
 
-            {/* TAB 3: AI-ERA SEARCH & GENERATIVE SEO (GEO) TELEMETRY */}
+            {/* TAB 3: RINGGER LAW (PUBLIC LEGAL FRONT-END + 24/7 DEBT TRIAGE AI + LIVE SUPABASE CRM /ADMIN) */}
+            {activeDemoTab === 'law' && (
+              <div className="ft-showcase-wrapper">
+                <div className="ft-showcase-toolbar">
+                  <div className="ft-toolbar-left">
+                    <span className="live-green-pill">● LIVE SUPABASE LEGAL CRM + 24/7 DEBT TRIAGE AI // JACKSON &amp; WEST TN</span>
+                    <span className="ft-toolbar-sub">
+                      Pairs an urgent foreclosure/garnishment funnel &amp; 24/7 AI intake bot with a live attorney CRM tracking signed court packets &amp; $64.50/click CPC value.
+                    </span>
+                  </div>
+
+                  <div className="ft-view-switcher" role="group" aria-label="Ringger Law Screen View">
+                    <button
+                      type="button"
+                      className={`ft-view-btn ${ringgerView === 'split' ? 'active' : ''}`}
+                      onClick={() => setRinggerView('split')}
+                    >
+                      <ArrowRightLeft size={13} />
+                      <span>Split: Front-End + Legal CRM</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`ft-view-btn ${ringgerView === 'dash' ? 'active' : ''}`}
+                      onClick={() => setRinggerView('dash')}
+                    >
+                      <Activity size={13} />
+                      <span>Executive Command Center (/admin)</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`ft-view-btn ${ringgerView === 'front' ? 'active' : ''}`}
+                      onClick={() => setRinggerView('front')}
+                    >
+                      <Monitor size={13} />
+                      <span>Public Site + 24/7 AI Triage</span>
+                    </button>
+                  </div>
+                </div>
+
+                {ringgerView === 'split' && (
+                  <div className="ft-dual-stage-grid">
+                    {/* LEFT SCREEN: Ringger Law Public Legal Front-End + 24/7 Debt Triage AI */}
+                    <div
+                      className="ft-screen-card"
+                      onClick={() =>
+                        setLightboxImage({
+                          src: '/ringgerlaw-frontend.jpg',
+                          title: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
+                          subtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
+                          altSrc: '/ringgerlaw-admin-dash.jpg',
+                          altTitle: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
+                          altSubtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+                          swapLabel: 'Switch to Live Legal CRM (/admin)'
+                        })
+                      }
+                    >
+                      <div className="ft-screen-label-bar">
+                        <div className="ft-screen-badge-group">
+                          <span className="ft-step-pill">01 // PUBLIC SITE + 24/7 DEBT TRIAGE AI</span>
+                          <span className="ft-route-mono">ringgerlaw.com</span>
+                        </div>
+                        <button type="button" className="ft-zoom-chip" aria-label="Expand Ringger Law Front-End">
+                          <Maximize2 size={12} />
+                          <span>EXPAND</span>
+                        </button>
+                      </div>
+
+                      <div className="ft-screen-viewport">
+                        <img
+                          src="/ringgerlaw-frontend.jpg"
+                          alt="Ringger Law Public Legal Platform and 24/7 West TN Debt Triage AI"
+                          className="ft-cropped-ui-img"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+
+                      <div className="ft-screen-caption-strip">
+                        <span>⚖️ Serving West TN Since 1981</span>
+                        <span>•</span>
+                        <span>🤖 24/7 Debt Triage AI Bot</span>
+                        <span>•</span>
+                        <span>⚡ Urgent Automatic Stay Funnel</span>
+                      </div>
+                    </div>
+
+                    {/* CENTER SUPABASE CRM CONNECTOR */}
+                    <div className="ft-pipeline-bridge" aria-hidden="true">
+                      <div className="pipeline-line" />
+                      <div className="pipeline-pulse-badge">
+                        <Zap size={14} fill="#050505" />
+                        <span>LIVE CRM</span>
+                      </div>
+                      <div className="pipeline-line" />
+                    </div>
+
+                    {/* RIGHT SCREEN: Ringger Law Executive Command Center (/admin) */}
+                    <div
+                      className="ft-screen-card highlight-dash"
+                      onClick={() =>
+                        setLightboxImage({
+                          src: '/ringgerlaw-admin-dash.jpg',
+                          title: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
+                          subtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+                          altSrc: '/ringgerlaw-frontend.jpg',
+                          altTitle: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
+                          altSubtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
+                          swapLabel: 'Switch to Public Site + 24/7 AI'
+                        })
+                      }
+                    >
+                      <div className="ft-screen-label-bar">
+                        <div className="ft-screen-badge-group">
+                          <span className="ft-step-pill yellow">02 // EXECUTIVE COMMAND CENTER (/ADMIN)</span>
+                          <span className="ft-route-mono">ringgerlaw.com/admin</span>
+                        </div>
+                        <button type="button" className="ft-zoom-chip" aria-label="Expand Ringger Law Admin Dashboard">
+                          <Maximize2 size={12} />
+                          <span>EXPAND</span>
+                        </button>
+                      </div>
+
+                      <div className="ft-screen-viewport">
+                        <img
+                          src="/ringgerlaw-admin-dash.jpg"
+                          alt="Ringger Law Executive Command Center Live Lead CRM and Court Intakes"
+                          className="ft-cropped-ui-img"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+
+                      <div className="ft-screen-caption-strip">
+                        <span>🟢 250 Tracked Sessions</span>
+                        <span>•</span>
+                        <span>🔴 Emergency Foreclosure/Repo Triage</span>
+                        <span>•</span>
+                        <span>💰 $64.50/Click CPC Value</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {(ringgerView === 'dash' || ringgerView === 'front') && (
+                  <div className="ft-single-focus-stage">
+                    <div
+                      className="ft-screen-card single-large highlight-dash"
+                      onClick={() =>
+                        setLightboxImage(
+                          ringgerView === 'dash'
+                            ? {
+                                src: '/ringgerlaw-admin-dash.jpg',
+                                title: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
+                                subtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets • $64.50/Click CPC Attribution',
+                                altSrc: '/ringgerlaw-frontend.jpg',
+                                altTitle: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
+                                altSubtitle: 'Serving Jackson & West Tennessee Since 1981',
+                                swapLabel: 'Switch to Public Site + 24/7 AI'
+                              }
+                            : {
+                                src: '/ringgerlaw-frontend.jpg',
+                                title: 'Ringger Law — Public Legal Platform & 24/7 "West TN Debt Triage" AI Advisor',
+                                subtitle: 'Serving Jackson & West Tennessee Since 1981 • Chapter 7 ($0 Down) & Chapter 13 Foreclosure/Repo Protection',
+                                altSrc: '/ringgerlaw-admin-dash.jpg',
+                                altTitle: 'Ringger Law — Executive Command Center (/admin): Live Lead CRM, Court Intakes & Traffic Attribution',
+                                altSubtitle: 'Live Supabase CRM • Urgent Foreclosure/Repo Triage • Signed Court Intake Packets',
+                                swapLabel: 'Switch to Live Legal CRM (/admin)'
+                              }
+                        )
+                      }
+                    >
+                      <div className="ft-screen-label-bar">
+                        <div className="ft-screen-badge-group">
+                          <span className="ft-step-pill yellow">
+                            {ringgerView === 'dash'
+                              ? 'EXECUTIVE COMMAND CENTER (/ADMIN): LIVE LEAD CRM & COURT INTAKES'
+                              : 'PUBLIC LEGAL PLATFORM + 24/7 "WEST TN DEBT TRIAGE" AI ADVISOR'}
+                          </span>
+                          <span className="ft-route-mono">
+                            {ringgerView === 'dash' ? 'ringgerlaw.com/admin' : 'ringgerlaw.com'}
+                          </span>
+                        </div>
+                        <button type="button" className="ft-zoom-chip">
+                          <Maximize2 size={12} />
+                          <span>FULLSCREEN ZOOM</span>
+                        </button>
+                      </div>
+
+                      <div className="ft-screen-viewport large-viewport">
+                        <img
+                          src={ringgerView === 'dash' ? '/ringgerlaw-admin-dash.jpg' : '/ringgerlaw-frontend.jpg'}
+                          alt="Ringger Law Platform Screen"
+                          className="ft-cropped-ui-img"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="ft-showcase-footer-bar">
+                  <div className="ft-kpi-pills-row">
+                    <div className="ft-mini-stat">
+                      <span className="ft-stat-val">250+ Sessions</span>
+                      <span className="ft-stat-lbl">Google Search, Ads, Direct &amp; AI</span>
+                    </div>
+                    <div className="ft-mini-stat">
+                      <span className="ft-stat-val">24/7 AI + CRM</span>
+                      <span className="ft-stat-lbl">Auto-Qualifies Chapter 7 vs. 13</span>
+                    </div>
+                    <div className="ft-mini-stat">
+                      <span className="ft-stat-val">$64.50 / Click</span>
+                      <span className="ft-stat-lbl">Live Legal CPC Value Attribution</span>
+                    </div>
+                  </div>
+
+                  <div className="ft-footer-cta-group">
+                    <a
+                      href="https://www.ringgerlaw.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-mini-outline"
+                    >
+                      <span>Visit RinggerLaw.com</span>
+                      <ExternalLink size={12} />
+                    </a>
+                    <button type="button" className="btn-mini-yellow" onClick={onOpenContact}>
+                      Build a Custom CRM, 24/7 AI &amp; Site →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 4: AI-ERA SEARCH & GENERATIVE SEO (GEO) TELEMETRY */}
             {activeDemoTab === 'geo' && (
               <div className="demo-grid-view">
                 {/* Left: Before vs After AI Site Modernization Toggle */}
@@ -916,19 +1164,20 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
         </div>
 
         {/* ====================================================================
-            REAL RECENT TRI-CITIES WEB & AI CASE STUDIES (FAST TRACK & TEAM VISION)
+            REAL RECENT WEB & AI CASE STUDIES (FAST TRACK, TEAM VISION & RINGGER LAW)
            ==================================================================== */}
         <div className="tricities-casestudies-block" id="case-studies">
           <div className="casestudies-header">
             <span className="eyebrow-tag">
               <MapPin size={14} />
-              <span>PROVEN IN THE TRI-CITIES // LIVE PRODUCTION PLATFORMS</span>
+              <span>PROVEN IN PRODUCTION // BRISTOL TN/VA (HQ) &amp; JACKSON TN (FOUNDED 1999)</span>
             </span>
-            <h3 className="section-title-tracked">RECENT TRI-CITIES BUILDS &amp; MODERNIZATIONS</h3>
+            <h3 className="section-title-tracked">RECENT CLIENT BUILDS &amp; AI MODERNIZATIONS</h3>
             <p className="legends-subtitle">
-              Explore two of our recent custom-engineered platforms in Bristol, TN/VA—designed
-              and modernized with custom live telemetry dashboards, 24/7 property-trained AI
-              lead concierges, and AI-era Generative SEO.
+              Explore three of our live custom-engineered platforms—spanning{' '}
+              <strong>Fast Track Automotive</strong> and <strong>Team Vision LLC</strong> in Bristol, TN/VA
+              plus <strong>Ringger Law (Est. 1981)</strong> in Jackson, TN (where Wired Digital was founded in 1999)—complete
+              with custom live admin &amp; legal CRM dashboards, 24/7 custom-trained AI concierges, and Generative SEO (GEO).
             </p>
           </div>
 

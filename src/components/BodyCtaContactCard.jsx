@@ -182,7 +182,7 @@ export default function BodyCtaContactCard() {
               </span>
               <span className="body-cta-trust-item">
                 <ShieldCheck size={13} className="text-yellow" />
-                <span>Flat-Rate Boutique Pricing • Same-Day Response</span>
+                <span>Flat-Rate Pricing • Same-Day Response</span>
               </span>
             </div>
           </div>

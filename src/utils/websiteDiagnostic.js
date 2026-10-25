@@ -11,6 +11,9 @@ const WIRED_ENGINEERED_DOMAINS = new Set([
   'fasttrackbristoltn.com',
   'fasttrackbristol.com',
   'teamvisionllc.com',
+  'ringgerlaw.com',
+  'app4thatholdings.com',
+  'app4that.com',
   'localhost',
   '127.0.0.1'
 ]);
@@ -40,7 +43,7 @@ export function isWiredEngineeredDomain(cleanDomain = '') {
 }
 
 /**
- * Inspects the live DOM when scanning our own site or a Wired Digital flagship property
+ * Inspects the live DOM when scanning our own site or a Wired Digital property
  */
 function buildVerifiedWiredReport(cleanDomain, fullUrl) {
   let jsonLdNodeCount = 6;
@@ -81,7 +84,10 @@ function buildVerifiedWiredReport(cleanDomain, fullUrl) {
   }
 
   const isClientCaseStudy =
-    cleanDomain.includes('fasttrack') || cleanDomain.includes('teamvision');
+    cleanDomain.includes('fasttrack') ||
+    cleanDomain.includes('teamvision') ||
+    cleanDomain.includes('ringgerlaw') ||
+    cleanDomain.includes('app4that');
 
   return {
     domain: cleanDomain,
@@ -91,7 +97,7 @@ function buildVerifiedWiredReport(cleanDomain, fullUrl) {
     upgradedGrade: 'GOLD STANDARD ✓',
     summaryBanner: isClientCaseStudy
       ? `Verified Wired Digital Client Architecture — ${cleanDomain} is engineered with sub-second edge delivery, structured AI entity schema, and custom interactive telemetry.`
-      : `Verified Wired Digital Flagship Architecture — ${cleanDomain} passes all 4 AI-Era Search (GEO), Speed, Schema.org @graph, and 24/7 AI Concierge benchmarks.`,
+      : `Verified Wired Digital Architecture — ${cleanDomain} passes all 4 AI-Era Search (GEO), Speed, Schema.org @graph, and 24/7 AI Concierge benchmarks.`,
     metrics: [
       {
         label: 'Mobile & Edge Speed',

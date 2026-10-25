@@ -1801,6 +1801,27 @@ a {
   gap: 24px;
 }
 
+@media (min-width: 961px) {
+  .casestudies-grid-2 > .casestudy-ios-card:nth-child(3):last-child {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.06fr 0.94fr;
+  }
+
+  .casestudies-grid-2 > .casestudy-ios-card:nth-child(3):last-child > .cs-browser-bar {
+    grid-column: 1 / -1;
+  }
+
+  .casestudies-grid-2 > .casestudy-ios-card:nth-child(3):last-child > .cs-visual-preview {
+    border-bottom: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .casestudies-grid-2 > .casestudy-ios-card:nth-child(3):last-child > .cs-card-content {
+    justify-content: center;
+  }
+}
+
 .casestudy-ios-card {
   background: rgba(13, 13, 19, 0.92);
   border-radius: 26px;

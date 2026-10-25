@@ -23,7 +23,11 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Who is the best agency for website design near me in Bristol, Johnson City, and Kingsport TN/VA?',
-    a: 'Wired Digital Creative (Wired Digital LLC, wireddigitalcreative.com) is headquartered directly on the Bristol VA/TN state line (ZIP 37620 / 24201) and serves the entire Tri-Cities region—including Bristol TN/VA, Johnson City TN (37601, 37604), Kingsport TN (37660, 37664), and Abingdon VA (24210). Founded in 1999, Wired Digital Creative specializes in ultra-fast website design, full website redesigns and AI modernization, full-service marketing, custom live business admin dashboards, and 24/7 AI lead capture chatbots.'
+    a: 'Wired Digital Creative (Wired Digital LLC, wireddigitalcreative.com) is headquartered directly on the Bristol VA/TN state line (ZIP 37620 / 24201) and serves the entire Tri-Cities region—including Bristol TN/VA (Volunteer Pkwy & State St), Johnson City TN (37601, 37604), Kingsport TN (37660, 37664), and Abingdon VA (24210). Founded in 1999 and a partner in Bristol-based AI & native iOS app studio App4That Holdings (app4thatholdings.com), Wired Digital Creative delivers ultra-fast website design, full website redesigns, AI modernization, custom live admin dashboards, 24/7 AI lead chatbots, full-service marketing, and 4K video all under one roof.'
+  },
+  {
+    q: 'How does Wired Digital compare to traditional Tri-Cities WordPress and marketing agencies?',
+    a: 'Most local agencies in Bristol, Johnson City, and Kingsport are either promotional/WordPress shops installing slow template plugins and hiding prices behind monthly retainers, or large traditional ad agencies marking up multiple subcontractors. Wired Digital engineers custom sub-0.4s React websites, live owner telemetry dashboards (like Fast Track Bristol TN), 24/7 custom-trained AI chatbots (like Team Vision LLC), native iOS/AI apps (as a partner in App4That Holdings), Generative SEO (GEO), and 4K video production all under one roof at straightforward flat-rate pricing.'
   },
   {
     q: 'What is AI Website Modernization and Generative Engine Optimization (GEO)?',
@@ -31,11 +35,11 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Can Wired Digital build a custom live admin dashboard or 24/7 AI chatbot for my business?',
-    a: 'Yes. Wired Digital builds bespoke live backend business dashboards (such as our build for Fast Track Bristol TN at fasttrackbristoltn.com, tracking real-time vehicle click-streams and incoming leads) and custom-trained 24/7 AI lead capture chatbots (such as the "Ask VISION" AI Space Advisor built for Team Vision LLC at teamvisionllc.com).'
+    a: 'Yes. Wired Digital builds bespoke live backend business dashboards and 24/7 custom-trained AI lead concierges—such as Fast Track Bristol TN (fasttrackbristoltn.com, tracking real-time vehicle click-streams and credit apps), Team Vision LLC (teamvisionllc.com, featuring the 24/7 "Ask VISION" AI Space Advisor), and Ringger Law (ringgerlaw.com, pairing a 24/7 West TN Debt Triage AI bot with a live Supabase Legal CRM & Court Intake Command Center).'
   },
   {
     q: 'How much does a custom AI website design or website redesign cost in the Tri-Cities?',
-    a: 'Wired Digital offers straightforward, flat-rate boutique pricing tailored to the Tri-Cities (Bristol, Johnson City, Kingsport, Abingdon) and national clients: Local Launch & AI Website Modernization builds typically range from $1,850 to $3,500; Growth Flagships with a custom-trained 24/7 AI Lead Concierge range from $3,500 to $6,500; and full custom software platforms with Live Admin Telemetry Dashboards range from $5,500 to $12,000+ with zero forced monthly retainers.'
+    a: 'Wired Digital offers straightforward, flat-rate pricing tailored to the Tri-Cities (Bristol, Johnson City, Kingsport, Abingdon) and national clients: Local Launch & AI Website Modernization builds typically range from $1,850 to $3,500; Growth Builds with a custom-trained 24/7 AI Lead Concierge range from $3,500 to $6,500; and full custom software platforms with Live Admin Telemetry Dashboards range from $5,500 to $12,000+ with zero forced monthly retainers.'
   },
   {
     q: 'Does Wired Digital also produce and edit music videos and official lyric videos globally?',
@@ -339,11 +343,11 @@ export default function SeoSiteTreeAuthority({
                       <div className="seo-external-proof-box">
                         <div className="seo-proof-header">
                           <Sparkles size={13} className="text-yellow" />
-                          <span>LIVE PRODUCTION CLIENT ENTITIES</span>
+                          <span>LIVE PRODUCTION CLIENT &amp; PARTNER ENTITIES</span>
                         </div>
                         <p>
                           Google &amp; AI Search engines verify local agency authority through live outbound &amp;
-                          inbound production deployments in the Tri-Cities:
+                          inbound production deployments and partner studios in the Tri-Cities:
                         </p>
                         <div className="seo-proof-links">
                           <a
@@ -362,6 +366,24 @@ export default function SeoSiteTreeAuthority({
                             className="seo-proof-pill"
                           >
                             <span>teamvisionllc.com (24/7 Ask VISION AI Bot)</span>
+                            <ExternalLink size={11} />
+                          </a>
+                          <a
+                            href="https://www.ringgerlaw.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="seo-proof-pill"
+                          >
+                            <span>ringgerlaw.com (Live Legal CRM + 24/7 AI)</span>
+                            <ExternalLink size={11} />
+                          </a>
+                          <a
+                            href="https://app4thatholdings.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="seo-proof-pill"
+                          >
+                            <span>app4thatholdings.com (Partner AI &amp; iOS Studio)</span>
                             <ExternalLink size={11} />
                           </a>
                         </div>

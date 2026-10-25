@@ -114,6 +114,131 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
       </section>
 
       {/* ====================================================================
+          COMPETITIVE MOAT: ALL SKILLS UNDER 1 ROOF VS. LOCAL WORDPRESS SHOPS
+         ==================================================================== */}
+      <section className="boutique-under-one-roof-section">
+        <div className="section-container">
+          <div className="boutique-roof-shell">
+            <div className="boutique-roof-top">
+              <div>
+                <span className="eyebrow-tag">
+                  <ShieldCheck size={14} />
+                  <span>WHY NO LOCAL AGENCY CAN MATCH THIS STACK // EST. 1999</span>
+                </span>
+                <h2 className="section-title-tracked" style={{ marginTop: '0.5rem' }}>
+                  ALL SKILLS <span className="text-yellow">UNDER ONE ROOF</span>
+                </h2>
+                <p className="boutique-roof-lead">
+                  Most web shops in <strong>Bristol, Johnson City, and Kingsport</strong> are either
+                  promotional/WordPress template agencies installing slow plugins and locking you into
+                  monthly retainers, or big traditional ad agencies charging $25K+ to coordinate four
+                  different subcontractors.
+                </p>
+                <p className="boutique-roof-sublead">
+                  At <strong>Wired Digital</strong> (and as a partner in Bristol-based AI &amp; native
+                  iOS app studio{' '}
+                  <a
+                    href="https://app4thatholdings.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow"
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    <strong>App4That Holdings</strong>
+                  </a>
+                  ), we engineer your <strong>custom website, live admin dashboard, 24/7 AI lead chatbot, native apps, Generative SEO (GEO), and 4K video</strong> directly in-house—at straightforward flat-rate pricing.
+                </p>
+              </div>
+
+              <div className="boutique-value-comparison-box">
+                <div className="boutique-compare-tier">
+                  <span className="tier-pill bad">
+                    <AlertTriangle size={11} /> TYPICAL LOCAL WORDPRESS / PROMO SHOPS
+                  </span>
+                  <p>
+                    Bloated WordPress themes, 30+ fragile plugins, hidden pricing behind sales calls,
+                    static contact forms, and zero custom AI chatbots or live owner telemetry dashboards.
+                  </p>
+                </div>
+
+                <div className="boutique-compare-tier">
+                  <span className="tier-pill bad">
+                    <AlertTriangle size={11} /> TRADITIONAL MULTI-VENDOR AD AGENCIES
+                  </span>
+                  <p>
+                    $15,000–$35,000+ markups and forced monthly retainers because you are paying
+                    separate middlemen for web dev, software, SEO, and video production.
+                  </p>
+                </div>
+
+                <div className="boutique-compare-tier highlight-tier">
+                  <span className="tier-pill gold">
+                    <Zap size={11} fill="#050505" /> WIRED DIGITAL // ALL SKILLS UNDER 1 ROOF
+                  </span>
+                  <p>
+                    <strong>25+ Years Ahead of the Curve (Est. 1999):</strong> Sub-0.4s custom React
+                    websites, live <code>/admin</code> telemetry dashboards, 24/7 custom-trained AI
+                    concierges, native iOS/AI apps (Partner in <strong>App4That Holdings</strong>), and
+                    major-label 4K video—at straightforward flat-rate pricing.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="under-one-roof-grid">
+              <div className="roof-skill-card">
+                <Code2 size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <h4>Sub-0.4s Custom Web &amp; Redesigns</h4>
+                  <p>Pure custom React &amp; edge architecture—never slow WordPress or Wix templates.</p>
+                </div>
+              </div>
+
+              <div className="roof-skill-card">
+                <Activity size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <h4>Live Owner Admin Dashboards</h4>
+                  <p>Real-time visitor click streams, lead pipelines &amp; inventory rankings (proven on Fast Track Bristol).</p>
+                </div>
+              </div>
+
+              <div className="roof-skill-card">
+                <Bot size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <h4>24/7 Custom-Trained AI Chatbots</h4>
+                  <p>Trained on your exact properties, inventory &amp; services to match buyers 24/7 (proven on Team Vision LLC).</p>
+                </div>
+              </div>
+
+              <div className="roof-skill-card">
+                <Cpu size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <h4>Native iOS &amp; AI Apps (App4That Partner)</h4>
+                  <p>Partner in Bristol-based App4That Holdings—engineering native Apple iOS &amp; Google Vertex AI apps.</p>
+                </div>
+              </div>
+
+              <div className="roof-skill-card">
+                <Globe size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <h4>Generative AI SEO (GEO) + Local #1</h4>
+                  <p>5-node Schema.org @graph + /llms.txt built to rank in Google Local Pack, ChatGPT &amp; Gemini.</p>
+                </div>
+              </div>
+
+              <div className="roof-skill-card">
+                <Film size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <h4>4K Video &amp; Full-Service Marketing</h4>
+                  <p>Major-label 4K video editing (34+ music legends), motion graphics, brand identity &amp; ad funnels.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
           NEW PILLAR 2A: LIVE ON-PAGE "60-SECOND WEBSITE AI & SEARCH GRADER"
          ==================================================================== */}
       <section className="live-website-grader-section" id="website-grader">
@@ -272,7 +397,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             </h2>
             <p className="subview-hero-lead" style={{ marginTop: '0.6rem' }}>
               Drag the comparison slider or click below to see the difference between a slow,
-              invisible legacy template website and a custom-engineered Wired Digital AI flagship.
+              invisible legacy template website and a custom-engineered Wired Digital AI platform.
             </p>
           </div>
 
@@ -340,7 +465,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 </div>
               </div>
 
-              {/* RIGHT SIDE: WIRED DIGITAL AI-MODERNIZED FLAGSHIP */}
+              {/* RIGHT SIDE: WIRED DIGITAL AI-MODERNIZED PLATFORM */}
               <div
                 className="mod-column wired-col"
                 style={{
@@ -350,7 +475,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
               >
                 <div className="mod-col-header good">
                   <span className="mod-status-pill good">
-                    <Zap size={12} fill="#050505" /> AFTER // WIRED AI-MODERNIZED FLAGSHIP
+                    <Zap size={12} fill="#050505" /> AFTER // WIRED AI-MODERNIZED SITE
                   </span>
                   <span className="mod-score-tag gold">LOAD: 0.36s • AI SCORE: 99/100</span>
                 </div>
@@ -389,7 +514,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                 className="modernization-range-input"
                 aria-label="Comparison emphasis slider"
               />
-              <span className="range-lbl gold">WIRED AI FLAGSHIP</span>
+              <span className="range-lbl gold">WIRED AI SITE</span>
             </div>
           </div>
         </div>

@@ -237,7 +237,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       topic: 'pricing',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `DIRECT ANSWER // We deliver high-impact custom engineering and creative at straightforward, real-world Tri-Cities & national pricing—with web, apps, software, AI, video & digital marketing all under one roof.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Wired Digital—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH FLAGSHIP + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page flagship + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD & AI OS ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track Bristol TN).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
+      reply: `DIRECT ANSWER // We deliver high-impact custom engineering and creative at straightforward, real-world Tri-Cities & national pricing—with web, apps, software, AI, video & digital marketing all under one roof.\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Wired Digital—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH PLATFORM + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page site + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD & AI OS ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track Bristol TN).\n• REMOTE 4K LYRIC / MUSIC VIDEOS: Scoped per track & animation complexity.`,
       subtext:
         'Every project is scoped flat-rate with zero surprise retainers required. Drop your Name + Email/Phone (or URL) for an exact quote!',
       chips: [
@@ -274,7 +274,39 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         'We can build a custom live command center tailored to your exact industry. Want one? Drop your Name + Email/Phone or explore further:',
       chips: [
         { label: '🏢 SEE TEAM VISION 24/7 AI BOT', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
+        { label: '⚖️ SEE RINGGER LAW LEGAL CRM', prompt: 'Show me the Ringger Law live legal CRM, court intake & 24/7 AI triage build.', cartridge: 'dash' },
         { label: '💎 DASHBOARD PRICING & TIMELINE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
+      ]
+    };
+  }
+
+  // 5B. TOPIC: RINGGER LAW (ringgerlaw.com) — LIVE LEGAL CRM, COURT INTAKES & 24/7 DEBT TRIAGE AI
+  if (
+    lower.includes('ringger') ||
+    lower.includes('law firm') ||
+    lower.includes('attorney') ||
+    lower.includes('lawyer') ||
+    lower.includes('legal') ||
+    lower.includes('bankruptcy') ||
+    lower.includes('court intake') ||
+    lower.includes('debt triage')
+  ) {
+    return {
+      nextStep: 'IDLE',
+      topic: 'ringgerlaw',
+      cartridge: 'dash',
+      leadPatch: {
+        cartridge: 'dash',
+        service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
+        details: q
+      },
+      reply: `CASE STUDY // RINGGER LAW (ringgerlaw.com + /admin):\nEngineered for The Law Offices of Louis W. Ringger Jr. (Est. 1981 in Jackson & West TN—where Wired Digital was founded in 1999).\n• 24/7 "WEST TN DEBT TRIAGE" AI + URGENT FUNNEL: Answers urgent foreclosure, repo & 25% wage garnishment questions 24/7 and routes Chapter 7 ($0 Down) vs. Chapter 13 leads.\n• LIVE SUPABASE LEGAL CRM (/ADMIN): Tracks emergency Foreclosure/Repo leads, signed digital court intake packets, 250+ visitor sessions (Ads, Organic, Direct & AI), and real-time $64.50/click legal CPC value.\n• BUILT-IN PRACTICE TOOLS: 1-click Print Report, PIN lock security & Practice Asset Brief.`,
+      subtext:
+        'Want a custom CRM, intake portal & 24/7 AI advisor built around your firm or business? Drop your Name + Email/Phone below!',
+      chips: [
+        { label: '🚗 SEE FAST TRACK LIVE DASHBOARD', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
+        { label: '🏢 SEE TEAM VISION 24/7 AI BOT', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
+        { label: '💎 PRICING & TIMELINE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
       ]
     };
   }
@@ -433,7 +465,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         service: 'Global Remote Music & Lyric Video Editing',
         details: q
       },
-      reply: `GLOBAL 4K VIDEO POST-PRODUCTION // Full-time in the music industry since 2015 for 34+ Hall of Fame legends & major labels.\n• ICON ROSTER: Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, Scorpions, Cypress Hill, Air Supply, Filter, Candlebox, Tesla, Blackberry Smoke, Full Devil Jacket & Primary Wave.\n• 100% REMOTE WORLDWIDE: Send footage/audio from anywhere (LA, NYC, Nashville, London); we edit, color-grade & build custom 3D/kinetic lyric worlds in 4K.\n• SELECT FLAGSHIP DIRECTING: On-location directing reserved for select flagship shoots (e.g., Halestorm's "Darkness Always Wins").`,
+      reply: `GLOBAL 4K VIDEO POST-PRODUCTION // Full-time in the music industry since 2015 for 34+ Hall of Fame legends & major labels.\n• ICON ROSTER: Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, Scorpions, Cypress Hill, Air Supply, Filter, Candlebox, Tesla, Blackberry Smoke, Full Devil Jacket & Primary Wave.\n• 100% REMOTE WORLDWIDE: Send footage/audio from anywhere (LA, NYC, Nashville, London); we edit, color-grade & build custom 3D/kinetic lyric worlds in 4K.\n• SELECT DIRECTING: On-location directing reserved for select commissioned shoots (e.g., Halestorm's "Darkness Always Wins").`,
       subtext:
         'Have an upcoming single, album campaign, or catalog release? Drop your artist/label name + Email/Phone to lock in an edit slot!',
       chips: [
@@ -484,14 +516,19 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     lower.includes('tri-cities') ||
     lower.includes('tricities') ||
     lower.includes('where') ||
-    lower.includes('location')
+    lower.includes('location') ||
+    lower.includes('app4that') ||
+    lower.includes('hovermother') ||
+    lower.includes('keen') ||
+    lower.includes('competit') ||
+    lower.includes('other agenc')
   ) {
     return {
       nextStep: 'IDLE',
       topic: 'history',
       cartridge: 'geo',
       leadPatch: { details: q },
-      reply: `25+ YEARS AHEAD OF THE TECH CURVE // Founded by Creative Director Rob Neilson in 1999:\n• 1999 (JACKSON, TN): Launched Wired Digital during Web 1.0, mastering code, design, and motion graphics under one roof.\n• 2015 (GLOBAL MUSIC INDUSTRY): Went full-time editing & animating 4K videos for 34+ rock/pop icons and Primary Wave.\n• 2022–2026 (BRISTOL VA/TN HQ): Relocated to the Tri-Cities—delivering AI Website Modernization, GEO, Live Telemetry Dashboards & 24/7 AI Bots locally (Bristol, Johnson City, Kingsport, Abingdon) and nationwide.`,
+      reply: `25+ YEARS AHEAD OF THE TECH CURVE // Founded by Creative Director Rob Neilson in 1999:\n• 1999 (JACKSON, TN): Launched Wired Digital during Web 1.0, mastering code, design, and motion graphics under one roof.\n• 2015 (GLOBAL MUSIC INDUSTRY): Went full-time editing & animating 4K videos for 34+ rock/pop icons and Primary Wave.\n• 2022–2026 (BRISTOL VA/TN HQ & APP4THAT HOLDINGS PARTNER): Headquartered in the Tri-Cities and a partner in Bristol AI & native iOS app studio App4That Holdings (app4thatholdings.com). Unlike local WordPress/promo shops, we engineer custom <0.4s React sites, live /admin dashboards, 24/7 AI chatbots, native apps, GEO & 4K video all under one roof.`,
       subtext:
         'When you hire Wired Digital, you work directly with Rob—not a junior account rep. Drop your Name + Email/Phone to connect directly!',
       chips: [

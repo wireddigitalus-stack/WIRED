@@ -297,7 +297,7 @@ export default function App() {
               className="mobile-nav-item"
               onClick={() => handleScrollToSection('case-studies')}
             >
-              <MapPin size={14} color="#FFEE00" /> TRI-CITIES BUILDS (FAST TRACK &amp; TEAM VISION)
+              <MapPin size={14} color="#FFEE00" /> RECENT BUILDS (FAST TRACK, TEAM VISION &amp; RINGGER LAW)
             </button>
             <button
               type="button"

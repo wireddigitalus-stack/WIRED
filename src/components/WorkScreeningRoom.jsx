@@ -22,13 +22,13 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
         <div className="work-header">
           <div className="eyebrow-tag">
             <Globe size={14} className="eyebrow-icon" />
-            <span>WORLDWIDE REMOTE POST-PRODUCTION, LYRIC VIDEOS &amp; FLAGSHIP REELS</span>
+            <span>WORLDWIDE REMOTE POST-PRODUCTION, LYRIC VIDEOS &amp; MUSIC VIDEOS</span>
           </div>
           <h2 className="section-title-tracked">SOME OF OUR WORK</h2>
           <p className="legends-subtitle">
             Delivering global remote <strong>4K music video editing, official kinetic lyric videos, and visualizers</strong> for
             major record labels and rock royalty worldwide—including{' '}
-            <strong>Halestorm, Paul Rodgers, Alice Cooper, and Full Devil Jacket</strong> (with on-location directing reserved for select flagship commissions).
+            <strong>Halestorm, Paul Rodgers, Alice Cooper, and Full Devil Jacket</strong> (with on-location directing reserved for select commissions).
           </p>
         </div>
 

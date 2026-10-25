@@ -49,10 +49,10 @@ export default function BodyCtaContactCard() {
   const [submitted, setSubmitted] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
-    contact: '',
+    phone: '',
+    email: '',
     companyUrl: '',
-    service: BODY_CTA_CHIPS[0].label,
-    details: ''
+    service: BODY_CTA_CHIPS[0].label
   });
 
   const handleCopyEmail = () => {
@@ -73,20 +73,24 @@ export default function BodyCtaContactCard() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formState.name.trim() || !formState.contact.trim()) return;
+    if (!formState.name.trim() || (!formState.phone.trim() && !formState.email.trim())) return;
+
+    const combinedContact = [formState.phone.trim(), formState.email.trim()]
+      .filter(Boolean)
+      .join(' • ');
 
     addLead({
       source: 'In-Body CTA Contact Card',
       status: 'NEW',
       priority: 'HIGH',
       name: formState.name.trim(),
-      contact: formState.contact.trim(),
+      phone: formState.phone.trim(),
+      email: formState.email.trim(),
+      contact: combinedContact,
       companyUrl: formState.companyUrl.trim(),
       service: formState.service,
       urgency: 'Ready to Start (This Month)',
-      details:
-        formState.details.trim() ||
-        `In-Body Contact Card Inquiry for ${formState.service}`
+      details: `In-Body Contact Card Inquiry for ${formState.service}`
     });
     setSubmitted(true);
   };
@@ -206,10 +210,10 @@ export default function BodyCtaContactCard() {
                     setSubmitted(false);
                     setFormState({
                       name: '',
-                      contact: '',
+                      phone: '',
+                      email: '',
                       companyUrl: '',
-                      service: BODY_CTA_CHIPS[0].label,
-                      details: ''
+                      service: BODY_CTA_CHIPS[0].label
                     });
                   }}
                 >
@@ -246,7 +250,7 @@ export default function BodyCtaContactCard() {
                   </div>
                 </div>
 
-                {/* 2. Name & Contact Row */}
+                {/* 2. Name & Phone Row */}
                 <div className="body-cta-input-row">
                   <div className="body-cta-field-group">
                     <label htmlFor="body-cta-name" className="body-cta-label">
@@ -266,52 +270,53 @@ export default function BodyCtaContactCard() {
                   </div>
 
                   <div className="body-cta-field-group">
-                    <label htmlFor="body-cta-contact" className="body-cta-label">
-                      3. BEST EMAIL OR MOBILE # *
+                    <label htmlFor="body-cta-phone" className="body-cta-label">
+                      3. PHONE NUMBER *
                     </label>
                     <input
-                      id="body-cta-contact"
-                      type="text"
+                      id="body-cta-phone"
+                      type="tel"
                       required
-                      placeholder="you@company.com or (423) 555-0199"
-                      value={formState.contact}
+                      placeholder="(423) 555-0199"
+                      value={formState.phone}
                       onChange={(e) =>
-                        setFormState({ ...formState, contact: e.target.value })
+                        setFormState({ ...formState, phone: e.target.value })
                       }
                       className="body-cta-input"
                     />
                   </div>
                 </div>
 
-                {/* 3. Website URL & Quick Note Row */}
+                {/* 3. Email Address & Website URL Row */}
                 <div className="body-cta-input-row">
                   <div className="body-cta-field-group">
-                    <label htmlFor="body-cta-url" className="body-cta-label">
-                      CURRENT WEBSITE URL (OPTIONAL)
+                    <label htmlFor="body-cta-email" className="body-cta-label">
+                      4. EMAIL ADDRESS *
                     </label>
                     <input
-                      id="body-cta-url"
-                      type="text"
-                      placeholder="yourbusiness.com (if you have one)"
-                      value={formState.companyUrl}
+                      id="body-cta-email"
+                      type="email"
+                      required
+                      placeholder="you@company.com"
+                      value={formState.email}
                       onChange={(e) =>
-                        setFormState({ ...formState, companyUrl: e.target.value })
+                        setFormState({ ...formState, email: e.target.value })
                       }
                       className="body-cta-input"
                     />
                   </div>
 
                   <div className="body-cta-field-group">
-                    <label htmlFor="body-cta-note" className="body-cta-label">
-                      PROJECT GOAL OR QUICK NOTE (OPTIONAL)
+                    <label htmlFor="body-cta-url" className="body-cta-label">
+                      5. WEBSITE URL (OPTIONAL)
                     </label>
                     <input
-                      id="body-cta-note"
+                      id="body-cta-url"
                       type="text"
-                      placeholder="New site, AI bot, dashboard, GEO, or video..."
-                      value={formState.details}
+                      placeholder="yourbusiness.com"
+                      value={formState.companyUrl}
                       onChange={(e) =>
-                        setFormState({ ...formState, details: e.target.value })
+                        setFormState({ ...formState, companyUrl: e.target.value })
                       }
                       className="body-cta-input"
                     />

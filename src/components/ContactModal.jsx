@@ -44,10 +44,10 @@ const MODAL_SERVICE_CHIPS = [
 export default function ContactModal({ isOpen, onClose }) {
   const [formState, setFormState] = useState({
     name: '',
-    contact: '',
+    phone: '',
+    email: '',
     companyUrl: '',
-    projectType: MODAL_SERVICE_CHIPS[0].label,
-    message: ''
+    projectType: MODAL_SERVICE_CHIPS[0].label
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -64,18 +64,21 @@ export default function ContactModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const combinedContact = [formState.phone.trim(), formState.email.trim()]
+      .filter(Boolean)
+      .join(' • ');
     addLead({
       source: 'Quick Project Modal',
       status: 'NEW',
       priority: 'HIGH',
       name: formState.name.trim(),
-      contact: formState.contact.trim(),
+      phone: formState.phone.trim(),
+      email: formState.email.trim(),
+      contact: combinedContact,
       companyUrl: formState.companyUrl.trim(),
       service: formState.projectType,
       urgency: 'Ready to Start (This Month)',
-      details:
-        formState.message.trim() ||
-        `Quick Modal Inquiry for ${formState.projectType}`
+      details: `Quick Modal Inquiry for ${formState.projectType}`
     });
     setSubmitted(true);
   };
@@ -126,10 +129,10 @@ export default function ContactModal({ isOpen, onClose }) {
                 setSubmitted(false);
                 setFormState({
                   name: '',
-                  contact: '',
+                  phone: '',
+                  email: '',
                   companyUrl: '',
-                  projectType: MODAL_SERVICE_CHIPS[0].label,
-                  message: ''
+                  projectType: MODAL_SERVICE_CHIPS[0].label
                 });
                 onClose();
               }}
@@ -159,7 +162,7 @@ export default function ContactModal({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* 2 Simple Required Fields */}
+            {/* Row 1: Name + Phone Number */}
             <div className="form-row-2">
               <div className="form-group">
                 <label htmlFor="wd-name">2. YOUR NAME OR BUSINESS *</label>
@@ -173,38 +176,39 @@ export default function ContactModal({ isOpen, onClose }) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="wd-contact">3. BEST EMAIL OR MOBILE # *</label>
+                <label htmlFor="wd-phone">3. PHONE NUMBER *</label>
                 <input
-                  id="wd-contact"
-                  type="text"
+                  id="wd-phone"
+                  type="tel"
                   required
-                  placeholder="you@company.com or (423) 555-0199"
-                  value={formState.contact}
-                  onChange={(e) => setFormState({ ...formState, contact: e.target.value })}
+                  placeholder="(423) 555-0199"
+                  value={formState.phone}
+                  onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
                 />
               </div>
             </div>
 
-            {/* Optional Website URL + Optional Quick Note */}
+            {/* Row 2: Email Address + Optional Website URL */}
             <div className="form-row-2">
               <div className="form-group">
-                <label htmlFor="wd-url">CURRENT WEBSITE URL (OPTIONAL)</label>
+                <label htmlFor="wd-email">4. EMAIL ADDRESS *</label>
                 <input
-                  id="wd-url"
-                  type="text"
-                  placeholder="yourbusiness.com (if you have one)"
-                  value={formState.companyUrl}
-                  onChange={(e) => setFormState({ ...formState, companyUrl: e.target.value })}
+                  id="wd-email"
+                  type="email"
+                  required
+                  placeholder="you@company.com"
+                  value={formState.email}
+                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="wd-msg">QUICK PROJECT NOTE (OPTIONAL)</label>
+                <label htmlFor="wd-url">5. WEBSITE URL (OPTIONAL)</label>
                 <input
-                  id="wd-msg"
+                  id="wd-url"
                   type="text"
-                  placeholder="Goals, timeline, or track details..."
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                  placeholder="yourbusiness.com"
+                  value={formState.companyUrl}
+                  onChange={(e) => setFormState({ ...formState, companyUrl: e.target.value })}
                 />
               </div>
             </div>

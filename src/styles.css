@@ -3947,7 +3947,7 @@ a {
 
 .form-row-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
 }
 
@@ -3955,19 +3955,23 @@ a {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 .form-group label {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--ink-silver);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: #050507;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
@@ -10439,12 +10443,14 @@ a {
 
 .body-cta-input-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
 }
 
 .body-cta-input {
   width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 11px;

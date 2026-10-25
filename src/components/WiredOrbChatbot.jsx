@@ -1175,18 +1175,22 @@ export default function WiredOrbChatbot() {
 
   const handlePacketSubmit = (e) => {
     e.preventDefault();
+    const combinedContact = [leadDraft.phone || '', leadDraft.contact || '']
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .join(' • ');
     addLead({
       source: 'WIRED-64 Orb Bot (64-Bit AI)',
       status: 'NEW',
       priority: 'URGENT',
       name: leadDraft.name,
-      contact: leadDraft.contact,
+      phone: leadDraft.phone || '',
+      email: leadDraft.contact || '',
+      contact: combinedContact,
       companyUrl: leadDraft.companyUrl,
       service: leadDraft.service,
       urgency: leadDraft.urgency,
-      details:
-        leadDraft.details ||
-        `Submitted via WIRED-64 64-Bit Lead Packet (${leadDraft.service})`,
+      details: `Submitted via WIRED-64 64-Bit Lead Packet (${leadDraft.service})`,
       notes: 'Submitted via WIRED-64 64-Bit Full-Screen Terminal.'
     });
 
@@ -1201,7 +1205,7 @@ export default function WiredOrbChatbot() {
         time: 'LEAD_VAULT // LOCKED',
         cartridge: activeCartridge,
         text: `LEAD PACKET TRANSMITTED // Thank you, ${leadDraft.name}!`,
-        subtext: `Dispatched directly to the WIRED_OS Command Center for "${leadDraft.service}". Wired Digital will reach out to ${leadDraft.contact} shortly.`
+        subtext: `Dispatched directly to the WIRED_OS Command Center for "${leadDraft.service}". Wired Digital will reach out to ${combinedContact} shortly.`
       }
     ]);
   };
@@ -1622,7 +1626,7 @@ export default function WiredOrbChatbot() {
 
                         <div className="w64-packet-grid">
                           <div className="w64-field">
-                            <label>YOUR NAME / ARTIST / COMPANY *</label>
+                            <label>YOUR NAME / BUSINESS *</label>
                             <input
                               type="text"
                               required
@@ -1634,25 +1638,26 @@ export default function WiredOrbChatbot() {
                             />
                           </div>
                           <div className="w64-field">
-                            <label>BEST EMAIL OR PHONE *</label>
+                            <label>PHONE NUMBER *</label>
                             <input
-                              type="text"
+                              type="tel"
                               required
-                              placeholder="you@company.com or (423) 555-0199"
-                              value={leadDraft.contact}
+                              placeholder="(423) 555-0199"
+                              value={leadDraft.phone || ''}
                               onChange={(e) =>
-                                setLeadDraft({ ...leadDraft, contact: e.target.value })
+                                setLeadDraft({ ...leadDraft, phone: e.target.value })
                               }
                             />
                           </div>
                           <div className="w64-field">
-                            <label>WEBSITE URL (OPTIONAL)</label>
+                            <label>EMAIL ADDRESS *</label>
                             <input
-                              type="text"
-                              placeholder="https://yourbusiness.com"
-                              value={leadDraft.companyUrl}
+                              type="email"
+                              required
+                              placeholder="you@company.com"
+                              value={leadDraft.contact}
                               onChange={(e) =>
-                                setLeadDraft({ ...leadDraft, companyUrl: e.target.value })
+                                setLeadDraft({ ...leadDraft, contact: e.target.value })
                               }
                             />
                           </div>
@@ -1678,18 +1683,6 @@ export default function WiredOrbChatbot() {
                               </option>
                             </select>
                           </div>
-                        </div>
-
-                        <div className="w64-field" style={{ marginTop: '8px' }}>
-                          <label>PROJECT GOALS / NOTES</label>
-                          <input
-                            type="text"
-                            placeholder="Tell Wired Digital what you want to build or modernize..."
-                            value={leadDraft.details}
-                            onChange={(e) =>
-                              setLeadDraft({ ...leadDraft, details: e.target.value })
-                            }
-                          />
                         </div>
 
                         <button type="submit" className="w64-transmit-btn">

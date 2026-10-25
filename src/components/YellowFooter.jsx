@@ -60,7 +60,8 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
   const [submitted, setSubmitted] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
-    contact: '',
+    phone: '',
+    email: '',
     companyUrl: '',
     service: QUICK_SERVICES[0].label,
     urgency: 'Ready to Start (This Month)',
@@ -87,11 +88,21 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
 
   const handleLeadSubmit = (e) => {
     e.preventDefault();
+    const combinedContact = [formState.phone.trim(), formState.email.trim()]
+      .filter(Boolean)
+      .join(' • ');
     addLead({
       source: 'Footer Collapsible Form',
       status: 'NEW',
-      priority: formState.urgency.includes('Urgent') ? 'URGENT' : 'HIGH',
-      ...formState
+      priority: 'HIGH',
+      name: formState.name.trim(),
+      phone: formState.phone.trim(),
+      email: formState.email.trim(),
+      contact: combinedContact,
+      companyUrl: formState.companyUrl.trim(),
+      service: formState.service,
+      urgency: 'Ready to Start (This Month)',
+      details: `Footer Lead Form Inquiry for ${formState.service}`
     });
     setSubmitted(true);
   };
@@ -101,7 +112,7 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
       `[Wired Digital Inquiry] ${formState.service} — ${formState.name}`
     );
     const body = encodeURIComponent(
-      `Name: ${formState.name}\nEmail / Phone: ${formState.contact}\nCompany / Site URL: ${formState.companyUrl || 'N/A'}\nService: ${formState.service}\nTimeline: ${formState.urgency}\n\nProject Details:\n${formState.details}`
+      `Name: ${formState.name}\nPhone: ${formState.phone}\nEmail: ${formState.email}\nService: ${formState.service}`
     );
     window.location.href = `mailto:${BRAND_INFO.email}?subject=${subject}&body=${body}`;
   };
@@ -341,32 +352,29 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                       </div>
 
                       <div className="footer-input-group">
-                        <label htmlFor="ft-lead-contact">3. BEST EMAIL OR MOBILE # *</label>
+                        <label htmlFor="ft-lead-phone">3. PHONE NUMBER *</label>
                         <input
-                          id="ft-lead-contact"
-                          type="text"
+                          id="ft-lead-phone"
+                          type="tel"
                           required
-                          placeholder="you@company.com or (423) 555-0199"
-                          value={formState.contact}
+                          placeholder="(423) 555-0199"
+                          value={formState.phone}
                           onChange={(e) =>
-                            setFormState({ ...formState, contact: e.target.value })
+                            setFormState({ ...formState, phone: e.target.value })
                           }
                         />
                       </div>
 
                       <div className="footer-input-group">
-                        <label htmlFor="ft-lead-url">4. WEBSITE URL OR QUICK NOTE (OPTIONAL)</label>
+                        <label htmlFor="ft-lead-email">4. EMAIL ADDRESS *</label>
                         <input
-                          id="ft-lead-url"
-                          type="text"
-                          placeholder="yourbusiness.com or project goal..."
-                          value={formState.details}
+                          id="ft-lead-email"
+                          type="email"
+                          required
+                          placeholder="you@company.com"
+                          value={formState.email}
                           onChange={(e) =>
-                            setFormState({
-                              ...formState,
-                              details: e.target.value,
-                              companyUrl: e.target.value.includes('.') ? e.target.value : formState.companyUrl
-                            })
+                            setFormState({ ...formState, email: e.target.value })
                           }
                         />
                       </div>

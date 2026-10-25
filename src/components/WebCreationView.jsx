@@ -28,6 +28,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState(null);
   const [leadName, setLeadName] = useState('');
+  const [leadPhone, setLeadPhone] = useState('');
   const [leadContact, setLeadContact] = useState('');
   const [blueprintSent, setBlueprintSent] = useState(false);
 
@@ -52,11 +53,16 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
 
   const handleSendBlueprintLead = (e) => {
     e.preventDefault();
-    if (!leadContact.trim()) return;
+    if (!leadPhone.trim() && !leadContact.trim()) return;
+    const combinedContact = [leadPhone.trim(), leadContact.trim()]
+      .filter(Boolean)
+      .join(' • ');
     addLead({
       source: 'On-Page 60-Second AI Website Grader',
       name: leadName.trim() || `Website Grader Lead (${scanResult?.domain || 'Site Scan'})`,
-      contact: leadContact.trim(),
+      phone: leadPhone.trim(),
+      email: leadContact.trim(),
+      contact: combinedContact,
       companyUrl: scanResult?.fullUrl || scanUrl.trim(),
       service: 'AI Website Design, Redesign & Modernization + GEO',
       urgency: 'Ready to Start (This Month)',
@@ -210,14 +216,23 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                     <div className="blueprint-capture-inputs">
                       <input
                         type="text"
-                        placeholder="Your Name / Business"
+                        placeholder="Your Name / Business *"
                         value={leadName}
                         onChange={(e) => setLeadName(e.target.value)}
+                        required
                         className="grader-lead-input"
                       />
                       <input
-                        type="text"
-                        placeholder="Best Email or Mobile # *"
+                        type="tel"
+                        placeholder="Phone Number *"
+                        value={leadPhone}
+                        onChange={(e) => setLeadPhone(e.target.value)}
+                        required
+                        className="grader-lead-input"
+                      />
+                      <input
+                        type="email"
+                        placeholder="Email Address *"
                         value={leadContact}
                         onChange={(e) => setLeadContact(e.target.value)}
                         required

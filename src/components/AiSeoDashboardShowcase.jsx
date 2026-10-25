@@ -41,6 +41,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
   const [isHomeScanning, setIsHomeScanning] = useState(false);
   const [homeScanResult, setHomeScanResult] = useState(null);
   const [homeLeadName, setHomeLeadName] = useState('');
+  const [homeLeadPhone, setHomeLeadPhone] = useState('');
   const [homeLeadContact, setHomeLeadContact] = useState('');
   const [homeBlueprintSent, setHomeBlueprintSent] = useState(false);
 
@@ -62,11 +63,16 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
 
   const handleHomeBlueprintSubmit = (e) => {
     e.preventDefault();
-    if (!homeLeadContact.trim()) return;
+    if (!homeLeadPhone.trim() && !homeLeadContact.trim()) return;
+    const combinedContact = [homeLeadPhone.trim(), homeLeadContact.trim()]
+      .filter(Boolean)
+      .join(' • ');
     addLead({
       source: 'Home 60-Second AI Website Grader',
       name: homeLeadName.trim() || `Website Grader Lead (${homeScanResult?.domain || 'Site Scan'})`,
-      contact: homeLeadContact.trim(),
+      phone: homeLeadPhone.trim(),
+      email: homeLeadContact.trim(),
+      contact: combinedContact,
       companyUrl: homeScanResult?.fullUrl || homeScanUrl.trim(),
       service: 'AI Website Design, Redesign & Modernization + GEO',
       urgency: 'Ready to Start (This Month)',
@@ -870,14 +876,23 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   <div className="blueprint-capture-inputs">
                     <input
                       type="text"
-                      placeholder="Your Name / Business"
+                      placeholder="Your Name / Business *"
                       value={homeLeadName}
                       onChange={(e) => setHomeLeadName(e.target.value)}
+                      required
                       className="grader-lead-input"
                     />
                     <input
-                      type="text"
-                      placeholder="Best Email or Mobile # *"
+                      type="tel"
+                      placeholder="Phone Number *"
+                      value={homeLeadPhone}
+                      onChange={(e) => setHomeLeadPhone(e.target.value)}
+                      required
+                      className="grader-lead-input"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email Address *"
                       value={homeLeadContact}
                       onChange={(e) => setHomeLeadContact(e.target.value)}
                       required

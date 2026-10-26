@@ -29,7 +29,11 @@ export default function App() {
     if (window.location.hash === '#admin') return 'admin';
     const initialNode = resolveInitialSeoNodeFromUrl();
     return initialNode?.tab || 'home';
-  }); // 'home' | 'web' | 'video' | 'admin'
+  }); // 'home' | 'web' | 'video' | 'legends' | 'admin'
+  const [activeSection, setActiveSection] = useState(() => {
+    const initialNode = resolveInitialSeoNodeFromUrl();
+    return initialNode?.section || null;
+  });
   const [activeSeoNodeId, setActiveSeoNodeId] = useState(() => {
     const initialNode = resolveInitialSeoNodeFromUrl();
     return initialNode?.id || 'root';
@@ -66,10 +70,14 @@ export default function App() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
+      if (window.scrollY < 200 && Date.now() - (window.__wosSectionJumpTs || 0) > 900) {
+        setActiveSection(null);
+      }
     };
     const onKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'd') {
         e.preventDefault();
+        setActiveSection(null);
         setActiveTab((prev) => (prev === 'admin' ? 'home' : 'admin'));
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -79,6 +87,7 @@ export default function App() {
     // Owner entrance: typing /#admin opens the dashboard without needing a refresh
     const onHashChange = () => {
       if (window.location.hash === '#admin') {
+        setActiveSection(null);
         setActiveTab('admin');
         window.scrollTo({ top: 0 });
       }
@@ -93,6 +102,7 @@ export default function App() {
 
   const handleNavigateTab = (tab) => {
     setActiveTab(tab);
+    setActiveSection(null);
     setMobileMenuOpen(false);
     if (tab === 'home') {
       setActiveSeoNodeId('root');
@@ -109,9 +119,31 @@ export default function App() {
         setActiveSeoNodeId(videoNode.id);
         applySeoRouteMeta(videoNode);
       }
+    } else if (tab === 'legends') {
+      const legendsNode = SITE_TREE_NODES.services.find((n) => n.id === 'view-legends-vault');
+      if (legendsNode) {
+        setActiveSeoNodeId(legendsNode.id);
+        applySeoRouteMeta(legendsNode);
+      }
     }
-    logTelemetryEvent('NAV_VIEW_SWITCH', `Visitor navigated to ${tab.toUpperCase()} view`, 'engagement');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    logTelemetryEvent(
+      'NAV_VIEW_SWITCH',
+      `Visitor navigated to ${tab.toUpperCase()} view`,
+      'engagement',
+      tab === 'legends' ? 'legends_vault' : null
+    );
+    window.scrollTo({ top: 0 });
+  };
+
+  const scrollToElementCleanly = (sectionId) => {
+    const jump = (behavior) => {
+      const el = document.getElementById(sectionId);
+      if (!el) return;
+      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 84);
+      window.scrollTo({ top, behavior });
+    };
+    requestAnimationFrame(() => jump('smooth'));
+    setTimeout(() => jump('smooth'), 240);
   };
 
   const handleSelectSeoNode = (node) => {
@@ -119,17 +151,20 @@ export default function App() {
     setActiveSeoNodeId(node.id);
     const targetTab = node.tab || 'home';
     setActiveTab(targetTab);
+    setActiveSection(node.section || null);
     if (node.section) {
-      setTimeout(() => {
-        document.getElementById(node.section)?.scrollIntoView({ behavior: 'smooth' });
-      }, 140);
+      scrollToElementCleanly(node.section);
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0 });
     }
   };
 
   const handleScrollToSection = (sectionId) => {
     setMobileMenuOpen(false);
+    if (sectionId === 'legends') {
+      handleNavigateTab('legends');
+      return;
+    }
     const sectionKeyMap = {
       'case-studies': 'case_studies_tricities',
       legends: 'legends_vault'
@@ -140,14 +175,15 @@ export default function App() {
       'engagement',
       sectionKeyMap[sectionId] || null
     );
+    window.__wosSectionJumpTs = Date.now();
+    setActiveSection(sectionId);
+    setActiveSeoNodeId('root');
+    applySeoRouteMeta(SITE_TREE_NODES.root);
     if (activeTab !== 'home') {
+      window.scrollTo(0, 0);
       setActiveTab('home');
-      setTimeout(() => {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-      }, 120);
-    } else {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     }
+    scrollToElementCleanly(sectionId);
   };
 
   return (
@@ -193,7 +229,7 @@ export default function App() {
           <nav className="island-nav-pills" aria-label="Main Navigation">
             <button
               type="button"
-              className={`island-pill-btn ${activeTab === 'home' ? 'active' : ''}`}
+              className={`island-pill-btn ${activeTab === 'home' && !activeSection ? 'active' : ''}`}
               onClick={() => handleNavigateTab('home')}
             >
               <span>HOME</span>
@@ -210,7 +246,7 @@ export default function App() {
 
             <button
               type="button"
-              className="island-pill-btn"
+              className={`island-pill-btn ${activeTab === 'home' && activeSection === 'case-studies' ? 'active' : ''}`}
               onClick={() => handleScrollToSection('case-studies')}
             >
               <MapPin size={13} className="pill-icon-yellow" />
@@ -228,8 +264,8 @@ export default function App() {
 
             <button
               type="button"
-              className="island-pill-btn"
-              onClick={() => handleScrollToSection('legends')}
+              className={`island-pill-btn ${activeTab === 'legends' ? 'active' : ''}`}
+              onClick={() => handleNavigateTab('legends')}
             >
               <Crown size={13} className="pill-icon-sub" />
               <span>LEGENDS</span>
@@ -289,7 +325,7 @@ export default function App() {
           <div className="mobile-ios-drawer">
             <button
               type="button"
-              className={`mobile-nav-item ${activeTab === 'home' ? 'active' : ''}`}
+              className={`mobile-nav-item ${activeTab === 'home' && !activeSection ? 'active' : ''}`}
               onClick={() => handleNavigateTab('home')}
             >
               <Zap size={14} fill="#FFEE00" color="#FFEE00" /> HOME
@@ -303,7 +339,7 @@ export default function App() {
             </button>
             <button
               type="button"
-              className="mobile-nav-item"
+              className={`mobile-nav-item ${activeTab === 'home' && activeSection === 'case-studies' ? 'active' : ''}`}
               onClick={() => handleScrollToSection('case-studies')}
             >
               <MapPin size={14} color="#FFEE00" /> RECENT BUILDS (FAST TRACK, TEAM VISION &amp; RINGGER LAW)
@@ -317,8 +353,8 @@ export default function App() {
             </button>
             <button
               type="button"
-              className="mobile-nav-item"
-              onClick={() => handleScrollToSection('legends')}
+              className={`mobile-nav-item ${activeTab === 'legends' ? 'active' : ''}`}
+              onClick={() => handleNavigateTab('legends')}
             >
               <Crown size={14} color="#FFEE00" /> WORKING WITH LEGENDS (34)
             </button>
@@ -380,6 +416,16 @@ export default function App() {
             />
             <LegendsWall />
           </Suspense>
+        )}
+
+        {activeTab === 'legends' && (
+          <>
+            <LegendsWall />
+            <WorkScreeningRoom
+              onOpenVideoModal={(proj) => setActiveVideoModal(proj)}
+              onNavigateTab={handleNavigateTab}
+            />
+          </>
         )}
 
         {activeTab === 'admin' && (

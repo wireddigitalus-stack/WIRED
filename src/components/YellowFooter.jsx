@@ -415,6 +415,10 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                 VIDEO PRODUCTION
               </button>
               <span className="footer-dot">•</span>
+              <button type="button" onClick={() => onNavigateTab('legends')}>
+                LEGENDS
+              </button>
+              <span className="footer-dot">•</span>
               <button type="button" onClick={onOpenContact}>
                 START A PROJECT
               </button>

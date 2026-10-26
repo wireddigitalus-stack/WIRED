@@ -1231,8 +1231,8 @@ export const SITE_TREE_NODES = {
         'Working With Legends — 34+ Hall-of-Fame Rock Artists, Estates & Record Labels | Wired Digital Creative',
       description:
         'Explore Wired Digital Creative’s verified roster of 34+ legendary music artists and major label catalogs including Primary Wave (The Home of Legends), Alice Cooper, Def Leppard, Halestorm, Paul Rodgers, Bob Marley, Whitney Houston, and Prince.',
-      tab: 'home',
-      section: 'legends'
+      tab: 'legends',
+      section: null
     }
   ],
   localCities: [
@@ -1421,12 +1421,17 @@ export function resolveInitialSeoNodeFromUrl() {
   if (typeof window === 'undefined') return null;
   const search = window.location.search || '';
   if (!search) return null;
+  const aliasMap = {
+    '?view=working-with-legends': '?view=legends-vault',
+    '?view=ai-lead-chatbots': '?view=ai-chatbots'
+  };
+  const normalized = aliasMap[search] || search;
   const allNodes = [
     ...SITE_TREE_NODES.services,
     ...SITE_TREE_NODES.localCities,
     ...SITE_TREE_NODES.caseStudies
   ];
-  return allNodes.find((n) => n.query === search) || null;
+  return allNodes.find((n) => n.query === normalized) || null;
 }
 
 export const AI_ENGINE_SHARE = [

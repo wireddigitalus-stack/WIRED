@@ -2192,6 +2192,11 @@ a {
 /* ==========================================================================
    5. "WORKING WITH LEGENDS" CLIENT WALL (WITH AMBIENT RED MESH STAGE LIGHTING)
    ========================================================================== */
+#case-studies,
+#legends {
+  scroll-margin-top: 90px;
+}
+
 .legends-section {
   position: relative;
   overflow: hidden;

@@ -7591,6 +7591,10 @@ a {
 /* Inline 64-Bit Quick Lead Packet Form */
 .w64-inline-packet-form {
   flex-shrink: 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin-top: 6px;
   margin-bottom: 10px;
   scroll-margin-bottom: 20px;
@@ -7634,7 +7638,7 @@ a {
 
 .w64-packet-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -7642,6 +7646,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .w64-field label {
@@ -7652,6 +7657,11 @@ a {
 
 .w64-field input,
 .w64-field select {
+  /* Fill the column instead of using the input's intrinsic ~20ch width,
+     which pushed fields past the right edge on phones */
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: #030604;
   border: 1.5px solid rgba(0, 255, 102, 0.5);
   border-radius: 6px;
@@ -7943,7 +7953,27 @@ a {
     font-size: 0.7rem;
   }
   .w64-packet-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .w64-inline-packet-form {
+    padding: 12px;
+  }
+  .w64-packet-head {
+    gap: 8px;
+    font-size: 0.66rem;
+    line-height: 1.35;
+  }
+  .w64-packet-close {
+    flex-shrink: 0;
+    min-height: 36px;
+  }
+  .w64-transmit-btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .w64-packet-last-resort {
+    overflow-wrap: anywhere;
   }
   .wired64-input-dock {
     padding: 8px 10px;

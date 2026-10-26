@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Maximize2, Sparkles, Film, TrendingUp, Cpu, Megaphone, ShieldCheck, Layers } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
 import MobileMore from './MobileMore';
@@ -6,10 +6,38 @@ import useIsMobile from '../utils/useIsMobile';
 
 export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOpenContact }) {
   const videoRef = useRef(null);
-  // Phones: don't auto-download/autoplay the 3 MB reel on cellular — show the poster, play on tap
   const isMobile = useIsMobile();
-  const [isPlaying, setIsPlaying] = useState(!isMobile);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [storyOpen, setStoryOpen] = useState(false);
+  // Reel loads only after the page itself has finished loading, so it never competes
+  // with the hero, fonts or scripts. Phones get a lighter 360p cut (~340 KB),
+  // desktop a 720p cut (~930 KB) — both sit under the halftone overlay anyway.
+  const [videoSrc, setVideoSrc] = useState(null);
+  const [reelReady, setReelReady] = useState(false);
+
+  useEffect(() => {
+    const src = isMobile ? BRAND_INFO.reelMp4Mobile : BRAND_INFO.reelMp4;
+    const start = () => setVideoSrc(src);
+    if (document.readyState === 'complete') {
+      const t = setTimeout(start, 120);
+      return () => clearTimeout(t);
+    }
+    window.addEventListener('load', start, { once: true });
+    return () => window.removeEventListener('load', start);
+  }, [isMobile]);
+
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!videoSrc || !vid) return;
+    const attempt = vid.play();
+    if (attempt && typeof attempt.catch === 'function') {
+      attempt.catch(() => {
+        // Autoplay blocked (e.g. iOS Low Power Mode) — drop the loader, show poster + PLAY LOOP
+        setIsPlaying(false);
+        setReelReady(true);
+      });
+    }
+  }, [videoSrc]);
 
   const togglePlay = () => {
     const vid = videoRef.current;
@@ -33,30 +61,28 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               ref={videoRef}
               className="since-bg-video"
               poster={BRAND_INFO.reelPoster}
-              preload={isMobile ? 'none' : 'metadata'}
-              autoPlay={!isMobile}
+              src={videoSrc || undefined}
+              preload="auto"
+              autoPlay
               muted
               loop
               playsInline
+              onPlaying={() => {
+                setReelReady(true);
+                setIsPlaying(true);
+              }}
               onClick={togglePlay}
-            >
-              <source src={BRAND_INFO.reelMp4} type="video/mp4" />
-            </video>
+            />
 
             {/* Halftone Dot Matrix Overlay */}
             <div className="video-halftone-overlay" aria-hidden="true" />
             <div className="video-vignette-overlay" aria-hidden="true" />
 
-            {!isPlaying && (
-              <button
-                type="button"
-                className="since-play-overlay"
-                onClick={togglePlay}
-                aria-label="Play studio reel loop"
-              >
-                <Film size={22} />
-                <span>PLAY REEL</span>
-              </button>
+            {/* Subtle loader over the poster until the loop starts */}
+            {!reelReady && (
+              <div className="since-reel-loader" aria-hidden="true">
+                <span className="since-reel-loader-bar" />
+              </div>
             )}
 
             <div className="studio-hud-top">

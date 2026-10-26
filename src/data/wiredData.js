@@ -15,7 +15,9 @@ export const BRAND_INFO = {
   facebookUrl: 'https://www.facebook.com/',
   logoSrc: '/WD-Brand-2017.png',
   roundStampSrc: '/WIRED DIGITAL 2024 email.avif',
-  reelMp4: '/wired-reel-2023.mp4',
+  // Compressed loop cuts of the 2023 studio reel (original 1080p master: /wired-reel-2023.mp4)
+  reelMp4: '/wired-reel-720.mp4',
+  reelMp4Mobile: '/wired-reel-360.mp4',
   reelPoster: '/wired-reel-poster.jpg',
   manifesto:
     'Wired Digital bridges rock-and-roll artistry with advanced AI software engineering and full-service marketing. Founded in Jackson, TN in 1999 and based in Bristol (VA/TN) since 2022, we specialize in AI website design, redesign, and modernization—engineered to keep pace with how search engines and AI discovery are rapidly evolving in the age of AI. From full-service marketing, Generative Engine Optimization (GEO + Local SEO), and custom admin dashboards to working full-time in the music industry since 2015 delivering global remote music & lyric video editing for Hall-of-Fame rock legends.'

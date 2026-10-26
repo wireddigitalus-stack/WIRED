@@ -134,35 +134,9 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
           <h1 className="subview-hero-title">
             ROCK-AND-ROLL <span className="text-yellow">VIDEO PRODUCTION</span> FOR LEGENDS
           </h1>
-          <p className="subview-hero-lead">
-            Founded in <strong>Jackson, TN in 1999</strong>, working full-time in the music industry
-            since <strong>2015</strong>, and headquartered in <strong>Bristol (VA/TN) since 2022</strong>—delivering
-            100% remote <strong>4K music video editing, custom kinetic lyric videos, visualizers, and tour promos</strong> for{' '}
-            <strong>Primary Wave (The Home of Legends), Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, and 34+ Hall-of-Fame artists</strong>{' '}
-            and major record labels worldwide (with on-location directing reserved for select commissions).
-          </p>
 
-          <div className="subview-hero-actions">
-            <button type="button" className="btn-wired-yellow" onClick={onOpenContact}>
-              BOOK A VIDEO PROJECT
-            </button>
-            <a
-              href={BRAND_INFO.youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-wired-outline"
-            >
-              <span>OFFICIAL YOUTUBE CHANNEL</span>
-              <ExternalLink size={15} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Studio Reel Spotlight */}
-      <section className="subview-reel-strip">
-        <div className="section-container">
-          <div className="subview-reel-card">
+          {/* Studio Reel Spotlight — Positioned Directly Under Headline & Above Lead Copy */}
+          <div className="subview-reel-card" style={{ width: '100%', textAlign: 'left', margin: '8px auto 28px' }}>
             <div className="subview-reel-media">
               <iframe
                 ref={reelIframeRef}
@@ -230,6 +204,29 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
                 </div>
               </div>
             </div>
+          </div>
+
+          <p className="subview-hero-lead">
+            Founded in <strong>Jackson, TN in 1999</strong>, working full-time in the music industry
+            since <strong>2015</strong>, and headquartered in <strong>Bristol (VA/TN) since 2022</strong>—delivering
+            100% remote <strong>4K music video editing, custom kinetic lyric videos, visualizers, and tour promos</strong> for{' '}
+            <strong>Primary Wave (The Home of Legends), Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, and 34+ Hall-of-Fame artists</strong>{' '}
+            and major record labels worldwide (with on-location directing reserved for select commissions).
+          </p>
+
+          <div className="subview-hero-actions">
+            <button type="button" className="btn-wired-yellow" onClick={onOpenContact}>
+              BOOK A VIDEO PROJECT
+            </button>
+            <a
+              href={BRAND_INFO.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-wired-outline"
+            >
+              <span>OFFICIAL YOUTUBE CHANNEL</span>
+              <ExternalLink size={15} />
+            </a>
           </div>
         </div>
       </section>

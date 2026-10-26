@@ -11158,6 +11158,20 @@ a {
 }
 
 @media (max-width: 640px) {
+  /* ---------- Phone type scale ----------
+     Before the horizontal-overflow fix the page was 442px wide on a 390px phone,
+     so iOS/Android silently zoomed everything out to ~88%. The design was tuned at
+     that scale, so we restore it explicitly here (all type is rem-based). */
+  html {
+    font-size: 88%;
+  }
+  /* Keep form fields at 16px so iOS Safari doesn't auto-zoom when they're tapped */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
   /* ---------- Utilities ---------- */
   .m-only {
     display: revert;

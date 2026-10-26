@@ -2176,18 +2176,18 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   <span>OPEN FULL 1200×630 CARD ↗</span>
                 </a>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 540px) 1fr', gap: '20px', alignItems: 'center' }}>
-                <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1.5px solid rgba(255, 238, 0, 0.45)', boxShadow: '0 16px 40px rgba(0,0,0,0.65)' }}>
+              <div className="wos-og-preview-grid">
+                <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1.5px solid rgba(255, 238, 0, 0.45)', boxShadow: '0 16px 40px rgba(0,0,0,0.65)', minWidth: 0 }}>
                   <img
                     src="/wired-og-seal-2026.jpg"
                     alt="Wired Digital Creative 1200x630 Social Share Card"
                     style={{ width: '100%', height: 'auto', display: 'block' }}
                   />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem', color: 'rgba(255,255,255,0.86)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem', color: 'rgba(255,255,255,0.86)', minWidth: 0, overflowWrap: 'anywhere' }}>
                   <div>
                     <strong style={{ color: '#FFEE00' }}>Primary Cache-Busted Open Graph URL:</strong>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '4px', color: '#30d158' }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '4px', color: '#30d158', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                       https://www.wireddigitalcreative.com/wired-og-seal-2026.jpg
                     </div>
                   </div>

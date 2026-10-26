@@ -2930,6 +2930,63 @@ a {
   margin-bottom: 28px;
 }
 
+/* Desktop-only cleanup for AI Web & SEO Hero (leaves mobile <= 640px 100% untouched) */
+@media (min-width: 641px) {
+  .web-creation-view .subview-hero {
+    padding: 36px 0 38px;
+  }
+
+  .web-creation-view .subview-hero-title {
+    max-width: 1120px;
+    font-size: clamp(2.15rem, 3.7vw, 3.3rem);
+    margin-bottom: 16px;
+    text-wrap: balance;
+  }
+
+  .web-creation-view .subview-hero-lead.web-hero-lead-structured {
+    max-width: 1020px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .web-creation-view .web-hero-lead-top {
+    display: block;
+    max-width: 880px;
+    font-size: 1.06rem;
+    line-height: 1.62;
+    color: var(--ink-silver);
+    text-wrap: balance;
+  }
+
+  .web-creation-view .web-hero-lead-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .web-creation-view .web-hero-lead-card {
+    display: block;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.94rem;
+    line-height: 1.58;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .web-creation-view .web-hero-lead-card--gold {
+    background: linear-gradient(135deg, rgba(255, 238, 0, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 238, 0, 0.34);
+  }
+}
+
 .subview-hero-actions {
   display: flex;
   flex-wrap: wrap;

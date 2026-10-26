@@ -83,19 +83,27 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
           <h1 className="subview-hero-title">
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; AI MODERNIZATION
           </h1>
-          <p className="subview-hero-lead">
-            Engineered with as high-end <strong>SEO &amp; Generative Engine Optimization (GEO)</strong> architecture as it gets—built for maximum organic visibility across{' '}
-            <strong>Google Search, ChatGPT, Google AI Overviews, Gemini, and Perplexity</strong> in{' '}
-            <strong>Bristol, Johnson City, Kingsport, Abingdon, and nationwide</strong>. When you partner with
-            Wired Digital, you are investing in{' '}
-            <strong>25+ years of real-world experience (Est. 1999)</strong> and a relentless track
-            record of <strong>staying ahead of every major technology wave</strong>—from early web
-            and mobile to custom apps, live telemetry dashboards, and AI-era search. We aren&apos;t cheap
-            bargain-bin template builders, and we aren&apos;t a bloated agency marking up 10
-            middlemen: we deliver{' '}
-            <span className="text-yellow">
-              high-impact custom engineering at straightforward, flat-rate
-              pricing—with web, apps, software, AI &amp; full-service digital marketing all under one roof.
+          <p className="subview-hero-lead web-hero-lead-structured">
+            <span className="web-hero-lead-top">
+              Engineered with as high-end <strong>SEO &amp; Generative Engine Optimization (GEO)</strong> architecture as it gets—built for maximum organic visibility across{' '}
+              <strong>Google Search, ChatGPT, Google AI Overviews, Gemini, and Perplexity</strong> in{' '}
+              <strong>Bristol, Johnson City, Kingsport, Abingdon, and nationwide</strong>.
+            </span>{' '}
+            <span className="web-hero-lead-cols">
+              <span className="web-hero-lead-card">
+                When you partner with Wired Digital, you are investing in{' '}
+                <strong>25+ years of real-world experience (Est. 1999)</strong> and a relentless track
+                record of <strong>staying ahead of every major technology wave</strong>—from early web
+                and mobile to custom apps, live telemetry dashboards, and AI-era search.
+              </span>{' '}
+              <span className="web-hero-lead-card web-hero-lead-card--gold">
+                We aren&apos;t cheap bargain-bin template builders, and we aren&apos;t a bloated agency marking up 10
+                middlemen: we deliver{' '}
+                <span className="text-yellow">
+                  high-impact custom engineering at straightforward, flat-rate
+                  pricing—with web, apps, software, AI &amp; full-service digital marketing all under one roof.
+                </span>
+              </span>
             </span>
           </p>
 

@@ -980,37 +980,66 @@ export default function WiredOrbChatbot() {
     };
   }, [isOpen]);
 
-  // Auto-scroll chat log when messages change or when Lead Packet drawer opens
+  // Reading-order auto-scroll: each new bot reply is pinned with its FIRST line at the top
+  // of the chat viewport so it reads top-down (scroll on for the rest of a long reply).
+  // Only the chat viewport scrolls — never the page behind it (no scrollIntoView).
+  const [replySpacerH, setReplySpacerH] = useState(0);
+  const lastAnchoredBotIdRef = useRef(null);
+
   useEffect(() => {
     if (!isOpen) return;
-    const scrollUpAboveInputLine = () => {
-      const el = chatViewportRef.current;
-      if (el) {
-        el.scrollTo({
-          top: el.scrollHeight,
-          behavior: 'smooth'
-        });
-      }
+    const viewport = chatViewportRef.current;
+    if (!viewport) return;
+
+    const offsetWithinViewport = (el) =>
+      el.getBoundingClientRect().top - viewport.getBoundingClientRect().top + viewport.scrollTop;
+
+    const run = () => {
+      // 1) Lead Packet drawer just opened → bring the whole form into view (bottom-aligned)
       if (showPacketForm && packetFormRef.current) {
-        packetFormRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'end'
-        });
-      } else {
-        messagesEndRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'end'
-        });
+        const form = packetFormRef.current;
+        const formBottom = offsetWithinViewport(form) + form.offsetHeight;
+        viewport.scrollTo({ top: Math.max(0, formBottom - viewport.clientHeight + 12), behavior: 'smooth' });
+        return;
       }
+
+      // 2) Waiting on a reply → drop the old spacer, keep the question + "computing" line visible
+      if (isBotTyping) {
+        setReplySpacerH(0);
+        requestAnimationFrame(() =>
+          viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' })
+        );
+        return;
+      }
+
+      // 3) New bot reply → pin the top of the reply to the top of the viewport
+      const lastMsg = messages[messages.length - 1];
+      if (!lastMsg || lastMsg.sender !== 'bot' || lastMsg.id === lastAnchoredBotIdRef.current) return;
+      const replyEl = viewport.querySelector(`[data-msg-id="${lastMsg.id}"]`);
+      if (!replyEl) return;
+      lastAnchoredBotIdRef.current = lastMsg.id;
+
+      // Give short replies enough room below them to reach the top of the viewport
+      const needed = Math.max(0, viewport.clientHeight - replyEl.offsetHeight - 16);
+      setReplySpacerH(needed);
+
+      requestAnimationFrame(() => {
+        viewport.scrollTo({ top: Math.max(0, offsetWithinViewport(replyEl) - 8), behavior: 'smooth' });
+        updateCustomScrollMetrics();
+      });
     };
 
-    const rafId = requestAnimationFrame(scrollUpAboveInputLine);
-    const timerId = setTimeout(scrollUpAboveInputLine, 120);
-    return () => {
-      cancelAnimationFrame(rafId);
-      clearTimeout(timerId);
-    };
+    const rafId = requestAnimationFrame(run);
+    return () => cancelAnimationFrame(rafId);
   }, [messages, isBotTyping, isOpen, showPacketForm]);
+
+  // Reset the anchor when the terminal closes so reopening re-pins the latest reply
+  useEffect(() => {
+    if (!isOpen) {
+      lastAnchoredBotIdRef.current = null;
+      setReplySpacerH(0);
+    }
+  }, [isOpen]);
 
   // Sync Custom 64-Bit Graphic Scrollbar Metrics
   const updateCustomScrollMetrics = () => {
@@ -1698,6 +1727,7 @@ export default function WiredOrbChatbot() {
                     {messages.map((msg) => (
                       <div
                         key={msg.id}
+                        data-msg-id={msg.id}
                         className={`w64-msg-block ${msg.sender === 'user' ? 'user-msg' : 'bot-msg'}`}
                       >
                         <div className="w64-msg-meta">
@@ -1834,6 +1864,14 @@ export default function WiredOrbChatbot() {
                     )}
 
                     <div ref={messagesEndRef} />
+                    {/* Breathing room so a short latest reply can scroll up to the top */}
+                    {replySpacerH > 0 && !showPacketForm && (
+                      <div
+                        className="w64-reply-spacer"
+                        style={{ height: replySpacerH, flexShrink: 0 }}
+                        aria-hidden="true"
+                      />
+                    )}
                   </div>
 
                   {/* Custom 64-Bit Graphic Vector Scrollbar Rail (Replaces Default Browser Scrollbar) */}

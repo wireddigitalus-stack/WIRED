@@ -355,7 +355,9 @@ export default function App() {
               onOpenContact={() => setContactOpen(true)}
               onNavigateTab={handleNavigateTab}
             />
-            <AiSeoDashboardShowcase onOpenContact={() => setContactOpen(true)} />
+            {/* AiSeoDashboardShowcase intentionally not repeated here — it already
+                renders in full on Home (≈11 phone screens), and duplicating it made
+                this view ≈29 screens on mobile. Case studies live at Home #case-studies. */}
             <LegendsWall />
           </Suspense>
         )}

@@ -1,10 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Maximize2, Sparkles, Film, TrendingUp, Cpu, Megaphone, ShieldCheck, Layers } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
+import MobileMore from './MobileMore';
+import useIsMobile from '../utils/useIsMobile';
 
 export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOpenContact }) {
   const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  // Phones: don't auto-download/autoplay the 3 MB reel on cellular — show the poster, play on tap
+  const isMobile = useIsMobile();
+  const [isPlaying, setIsPlaying] = useState(!isMobile);
+  const [storyOpen, setStoryOpen] = useState(false);
 
   const togglePlay = () => {
     const vid = videoRef.current;
@@ -28,8 +33,8 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               ref={videoRef}
               className="since-bg-video"
               poster={BRAND_INFO.reelPoster}
-              preload="metadata"
-              autoPlay
+              preload={isMobile ? 'none' : 'metadata'}
+              autoPlay={!isMobile}
               muted
               loop
               playsInline
@@ -41,6 +46,18 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
             {/* Halftone Dot Matrix Overlay */}
             <div className="video-halftone-overlay" aria-hidden="true" />
             <div className="video-vignette-overlay" aria-hidden="true" />
+
+            {!isPlaying && (
+              <button
+                type="button"
+                className="since-play-overlay"
+                onClick={togglePlay}
+                aria-label="Play studio reel loop"
+              >
+                <Film size={22} />
+                <span>PLAY REEL</span>
+              </button>
+            )}
 
             <div className="studio-hud-top">
               <span className="hud-rec-badge">
@@ -94,7 +111,11 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
 
             <h2 className="since-heading">SINCE 1999</h2>
 
-            <p className="since-manifesto">
+            <p
+              id="since-manifesto-copy"
+              className={`since-manifesto m-clamp ${storyOpen ? 'is-open' : ''}`}
+              style={{ '--m-lines': 5 }}
+            >
               <strong>Wired Digital Creative</strong> bridges{' '}
               <strong>rock-and-roll artistry</strong> with{' '}
               <strong>advanced AI software engineering</strong>. Founded in{' '}
@@ -113,6 +134,12 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               <strong>global remote 4K music &amp; lyric video editing</strong> for major record
               labels and 34+ Hall-of-Fame catalogs worldwide.
             </p>
+            <MobileMore
+              open={storyOpen}
+              onToggle={() => setStoryOpen((v) => !v)}
+              moreLabel="Read our full story"
+              controls="since-manifesto-copy"
+            />
 
             <div className="since-pillar-pills">
               <button

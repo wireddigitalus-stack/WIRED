@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Zap, Sun } from 'lucide-react';
 import { CLIENT_LOGOS, PRIMARY_WAVE_SPOTLIGHT } from '../data/wiredData';
 import SmartLogo from './SmartLogo';
+import MobileMore from './MobileMore';
 
 const CATEGORIES = [
   { id: 'all', label: `ALL LEGENDS (${CLIENT_LOGOS.length})` },
@@ -13,6 +14,10 @@ const CATEGORIES = [
 export default function LegendsWall() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [stageMode, setStageMode] = useState('dark'); // 'dark' | 'vault'
+  // Mobile: show the first 12 logos (3 × 4 grid) with a "Show all" toggle
+  const [showAllLogos, setShowAllLogos] = useState(false);
+  const [introOpen, setIntroOpen] = useState(false);
+  const MOBILE_LOGO_LIMIT = 12;
 
   const filteredLogos =
     activeCategory === 'all'
@@ -29,11 +34,20 @@ export default function LegendsWall() {
             <span>TRUSTED BY ROCK &amp; POP ROYALTY • FULL-TIME IN THE MUSIC INDUSTRY SINCE 2015</span>
           </div>
           <h2 className="section-title-tracked">WORKING WITH LEGENDS</h2>
-          <p className="legends-subtitle">
+          <p
+            id="legends-intro-copy"
+            className={`legends-subtitle m-clamp ${introOpen ? 'is-open' : ''}`}
+            style={{ '--m-lines': 3 }}
+          >
             Trusted by <strong>34+ Hall-of-Fame rock icons, estates, and major record labels</strong>—including{' '}
             <strong>Primary Wave, Alice Cooper, Def Leppard, Halestorm, Paul Rodgers, Bob Marley, Whitney Houston, and Prince</strong>—for
             4K music videos, official lyric videos, visualizers, and custom digital experiences.
           </p>
+          <MobileMore
+            open={introOpen}
+            onToggle={() => setIntroOpen((v) => !v)}
+            controls="legends-intro-copy"
+          />
 
           {/* Controls Bar: Category Filter + Dark Stage / Classic Vault Toggle */}
           <div className="legends-controls-bar">
@@ -92,7 +106,10 @@ export default function LegendsWall() {
             <span className="vault-ribbon-line" />
           </div>
 
-          <div className="legends-bento-grid">
+          <div
+            id="legends-bento-grid"
+            className={`legends-bento-grid m-limit ${showAllLogos ? 'is-open' : ''}`}
+          >
             {filteredLogos.map((item) => (
               <div
                 key={item.id}
@@ -109,6 +126,16 @@ export default function LegendsWall() {
               </div>
             ))}
           </div>
+          {filteredLogos.length > MOBILE_LOGO_LIMIT && (
+            <MobileMore
+              open={showAllLogos}
+              onToggle={() => setShowAllLogos((v) => !v)}
+              moreLabel={`Show all ${filteredLogos.length} legends`}
+              lessLabel="Show fewer"
+              controls="legends-bento-grid"
+              className="m-more-btn--center"
+            />
+          )}
         </div>
       </div>
     </section>

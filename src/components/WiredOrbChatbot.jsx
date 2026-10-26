@@ -802,6 +802,7 @@ export default function WiredOrbChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
   const [isOverYellowFooter, setIsOverYellowFooter] = useState(false);
+  const [isOverForm, setIsOverForm] = useState(false);
   const [isOrbHovered, setIsOrbHovered] = useState(false);
   const [orbMood, setOrbMood] = useState('idle'); // 'idle' | 'smile' | 'wink' | 'shades' | 'turbo' | 'scan'
   const [orbMoodBadge, setOrbMoodBadge] = useState('');
@@ -875,6 +876,17 @@ export default function WiredOrbChatbot() {
         setIsOverYellowFooter(footerRect.top < dockRect.bottom - 12 && footerRect.bottom > dockRect.top);
       } else {
         setIsOverYellowFooter(false);
+      }
+
+      // Phones: tuck the orb away while it would sit on top of the inline project form,
+      // so it never covers the right edge of inputs, chips or the Send button
+      const formEl = document.querySelector('.body-cta-form-col');
+      if (formEl && dockEl && window.innerWidth <= 640) {
+        const formRect = formEl.getBoundingClientRect();
+        const dockRect = dockEl.getBoundingClientRect();
+        setIsOverForm(formRect.top < dockRect.bottom && formRect.bottom > dockRect.top);
+      } else {
+        setIsOverForm(false);
       }
     };
     handleScroll();
@@ -1285,7 +1297,7 @@ export default function WiredOrbChatbot() {
          ==================================================================== */}
       <div
         ref={dockRef}
-        className={`wired-orb-dock ${isOpen ? 'orb-hidden' : ''} ${isNearOrb ? 'orb-proximity-surge' : ''} ${isOverYellowFooter ? 'over-yellow-footer' : ''}`}
+        className={`wired-orb-dock ${isOpen ? 'orb-hidden' : ''} ${isOverForm ? 'orb-tucked' : ''} ${isNearOrb ? 'orb-proximity-surge' : ''} ${isOverYellowFooter ? 'over-yellow-footer' : ''}`}
       >
         {!whisperDismissed && (
           <div className="orb-organic-whisper" onClick={handleOpenOrb}>

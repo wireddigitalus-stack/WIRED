@@ -25,8 +25,18 @@ import {
 } from '../data/wiredData';
 import { addLead, logTelemetryEvent } from '../utils/telemetry';
 import { normalizeDomain, runWebsiteDiagnostic } from '../utils/websiteDiagnostic';
+import MobileMore from './MobileMore';
 
 export default function AiSeoDashboardShowcase({ onOpenContact }) {
+  // Mobile progressive-disclosure state (no effect on desktop — see .m-* utilities in styles.css)
+  const [introOpen, setIntroOpen] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
+  const [casesIntroOpen, setCasesIntroOpen] = useState(false);
+  const [openCases, setOpenCases] = useState({});
+  const [openPillars, setOpenPillars] = useState({});
+  const [citiesOpen, setCitiesOpen] = useState(false);
+  const toggleKey = (setter, key) => setter((prev) => ({ ...prev, [key]: !prev[key] }));
+
   const [activeDemoTab, setActiveDemoTab] = useState('auto'); // 'auto' | 'cre' | 'law' | 'geo'
   const [fastTrackView, setFastTrackView] = useState('split'); // 'split' | 'dash' | 'front'
   const [visionView, setVisionView] = useState('split'); // 'split' | 'ai' | 'front'
@@ -101,7 +111,11 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
           </h2>
 
-          <p className="ai-sub-lead">
+          <p
+            id="ai-sub-lead-copy"
+            className={`ai-sub-lead m-clamp ${introOpen ? 'is-open' : ''}`}
+            style={{ '--m-lines': 4 }}
+          >
             Search engines are evolving faster than ever. As{' '}
             <strong>Google AI Overviews, ChatGPT Search, Gemini, and Perplexity</strong>{' '}
             transform how customers discover businesses in{' '}
@@ -112,12 +126,33 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
             <strong>custom-trained 24/7 AI lead concierges</strong>, and{' '}
             <strong>live custom admin dashboards</strong> engineered around your business.
           </p>
+          <MobileMore
+            open={introOpen}
+            onToggle={() => setIntroOpen((v) => !v)}
+            controls="ai-sub-lead-copy"
+          />
+        </div>
+
+        {/* Mobile-only teaser: the live dashboard demo is opt-in on phones (the same
+            three clients are also shown as swipeable case studies just below) */}
+        <div className="m-only m-demo-teaser">
+          <MobileMore
+            open={demoOpen}
+            onToggle={() => setDemoOpen((v) => !v)}
+            moreLabel="Open the live dashboard demo"
+            lessLabel="Close the dashboard demo"
+            controls="wired-os-demo-stage"
+            className="m-more-btn--panel"
+          />
         </div>
 
         {/* ====================================================================
             INTERACTIVE iOS × TIM BURTON LIVE DASHBOARD, AI CHATBOT & GEO STAGE
            ==================================================================== */}
-        <div className="ios-dashboard-stage">
+        <div
+          id="wired-os-demo-stage"
+          className={`ios-dashboard-stage m-collapse ${demoOpen ? 'is-open' : ''}`}
+        >
           {/* Top macOS / iOS Glass Window Bar */}
           <div className="ios-window-topbar">
             <div className="ios-window-dots">
@@ -1173,15 +1208,27 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               <span>PROVEN IN PRODUCTION // BRISTOL TN/VA (HQ) &amp; JACKSON TN (FOUNDED 1999)</span>
             </span>
             <h3 className="section-title-tracked">RECENT CLIENT BUILDS &amp; AI MODERNIZATIONS</h3>
-            <p className="legends-subtitle">
+            <p
+              id="casestudies-intro-copy"
+              className={`legends-subtitle m-clamp ${casesIntroOpen ? 'is-open' : ''}`}
+              style={{ '--m-lines': 3 }}
+            >
               Explore three of our live custom-engineered platforms—spanning{' '}
               <strong>Fast Track Automotive</strong> and <strong>Team Vision LLC</strong> in Bristol, TN/VA
               plus <strong>Ringger Law (Est. 1981)</strong> in Jackson, TN (where Wired Digital was founded in 1999)—complete
               with custom live admin &amp; legal CRM dashboards, 24/7 custom-trained AI concierges, and Generative SEO (GEO).
             </p>
+            <MobileMore
+              open={casesIntroOpen}
+              onToggle={() => setCasesIntroOpen((v) => !v)}
+              controls="casestudies-intro-copy"
+            />
+            <span className="m-only m-swipe-hint">
+              Swipe to see all {TRI_CITIES_CASE_STUDIES.length} builds →
+            </span>
           </div>
 
-          <div className="casestudies-grid-2">
+          <div className="casestudies-grid-2 m-swipe-row">
             {TRI_CITIES_CASE_STUDIES.map((cs) => {
               const mode = cardModes[cs.id] || 'primary';
               const isPrimary = mode === 'primary';
@@ -1317,16 +1364,29 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   {/* Case Study Details */}
                   <div className="cs-card-content">
                     <h5 className="cs-headline">{cs.headline}</h5>
-                    <p className="cs-summary">{cs.summary}</p>
 
-                    <ul className="cs-feature-list">
-                      {cs.features.map((feat) => (
-                        <li key={feat}>
-                          <CheckCircle2 size={15} className="check-yellow" />
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div
+                      id={`cs-details-${cs.id}`}
+                      className={`m-collapse ${openCases[cs.id] ? 'is-open' : ''}`}
+                    >
+                      <p className="cs-summary">{cs.summary}</p>
+
+                      <ul className="cs-feature-list">
+                        {cs.features.map((feat) => (
+                          <li key={feat}>
+                            <CheckCircle2 size={15} className="check-yellow" />
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <MobileMore
+                      open={!!openCases[cs.id]}
+                      onToggle={() => toggleKey(setOpenCases, cs.id)}
+                      moreLabel="Read the full case study"
+                      lessLabel="Hide details"
+                      controls={`cs-details-${cs.id}`}
+                    />
 
                     <div className="cs-card-actions">
                       <a
@@ -1362,7 +1422,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               <span className="pillar-tag-mono">{pillar.tag}</span>
               <h4>{pillar.title}</h4>
               <p>{pillar.description}</p>
-              <ul>
+              <ul
+                id={`pillar-bullets-${pillar.id}`}
+                className={`m-collapse ${openPillars[pillar.id] ? 'is-open' : ''}`}
+              >
                 {pillar.bullets.map((b) => (
                   <li key={b}>
                     <Zap size={13} className="text-yellow" />
@@ -1370,6 +1433,13 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   </li>
                 ))}
               </ul>
+              <MobileMore
+                open={!!openPillars[pillar.id]}
+                onToggle={() => toggleKey(setOpenPillars, pillar.id)}
+                moreLabel="What's included"
+                lessLabel="Show less"
+                controls={`pillar-bullets-${pillar.id}`}
+              />
             </div>
           ))}
         </div>
@@ -1386,7 +1456,10 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
             </button>
           </div>
 
-          <div className="tricities-cities-grid">
+          <div
+            id="tricities-cities-grid"
+            className={`tricities-cities-grid m-city-compact ${citiesOpen ? 'is-open' : ''}`}
+          >
             {TRI_CITIES_MARKETS.map((m) => (
               <div key={m.city} className="city-seo-card">
                 <div className="city-card-head">
@@ -1398,6 +1471,13 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               </div>
             ))}
           </div>
+          <MobileMore
+            open={citiesOpen}
+            onToggle={() => setCitiesOpen((v) => !v)}
+            moreLabel="See what we do in each market"
+            lessLabel="Show less"
+            controls="tricities-cities-grid"
+          />
         </div>
       </div>
 

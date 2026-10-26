@@ -15,8 +15,7 @@ import {
   LayoutDashboard,
   Film,
   Globe,
-  Megaphone,
-  Lock
+  Megaphone
 } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
 import { addLead, logTelemetryEvent } from '../utils/telemetry';
@@ -417,18 +416,10 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
               </button>
               <span className="footer-dot">•</span>
               <button type="button" onClick={onOpenContact}>
-                PROJECT MODAL
+                START A PROJECT
               </button>
-              <span className="footer-dot">•</span>
-              <button
-                type="button"
-                className="footer-admin-launch-pill"
-                onClick={() => onNavigateTab('admin')}
-                title="Open WIRED_OS Backend Command Center (Leads, SEO & Analytics)"
-              >
-                <Lock size={11} />
-                <span>WIRED_OS ADMIN</span>
-              </button>
+              {/* WIRED_OS Admin launcher intentionally removed from the public footer.
+                  Owner access: visit /#admin (then refresh) or press Cmd/Ctrl + Shift + D. */}
             </div>
 
             <p className="footer-copyright">

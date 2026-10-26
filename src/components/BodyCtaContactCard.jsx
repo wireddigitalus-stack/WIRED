@@ -115,7 +115,7 @@ export default function BodyCtaContactCard() {
               <span className="text-yellow">UNFORGETTABLE.</span>
             </h2>
 
-            <p className="body-cta-lead">
+            <p className="body-cta-lead m-hide">
               With <strong>Wired Digital</strong>, you&apos;re getting{' '}
               <strong>over 25 years of staying ahead of the tech curve</strong>—bringing{' '}
               <strong>
@@ -124,6 +124,11 @@ export default function BodyCtaContactCard() {
               </strong>{' '}
               together under one roof. Zero agency middlemen, whether you&apos;re right
               here in the Tri-Cities (Bristol, VA/TN) or partnering remotely worldwide.
+            </p>
+            {/* Phone-length version of the same pitch */}
+            <p className="body-cta-lead m-only">
+              <strong>25+ years ahead of the tech curve.</strong> Web, AI, SEO, marketing
+              and 4K video under one roof—no agency middlemen, in the Tri-Cities or worldwide.
             </p>
 
             {/* Direct Contact Action Tiles */}

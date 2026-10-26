@@ -79,35 +79,20 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
               <stop offset="0%" stopColor="#040405" stopOpacity="0.58" />
               <stop offset="42%" stopColor="#040405" stopOpacity="0.18" />
               <stop offset="85%" stopColor="#040405" stopOpacity="0.0" />
-              <stop offset="100%" stopColor="#040405" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#040405" stopOpacity="0.55" />
             </radialGradient>
 
-            {/* Torn grunge edge ONLY on the top and bottom horizontal boundaries (matching Screenshot 1) */}
-            <clipPath id="tornTopBottomClip">
-              <path
-                d="M -980,-192
-                   L -940,-202 L -905,-188 L -865,-200 L -820,-191 L -785,-204 L -740,-189
-                   L -700,-201 L -655,-187 L -610,-203 L -570,-190 L -525,-202 L -480,-188
-                   L -435,-204 L -390,-191 L -345,-201 L -300,-187 L -255,-203 L -210,-190
-                   L -165,-204 L -120,-189 L -75,-202 L -30,-188 L 15,-204 L 60,-190
-                   L 105,-202 L 150,-187 L 195,-203 L 240,-191 L 285,-204 L 330,-189
-                   L 375,-201 L 420,-188 L 465,-203 L 510,-190 L 555,-202 L 600,-187
-                   L 645,-204 L 690,-191 L 735,-202 L 780,-188 L 825,-203 L 870,-190
-                   L 915,-202 L 960,-189 L 980,-195
-                   L 980,195
-                   L 940,203 L 900,188 L 855,202 L 810,190 L 765,204 L 720,189
-                   L 675,201 L 630,187 L 585,203 L 540,190 L 495,202 L 450,188
-                   L 405,204 L 360,191 L 315,201 L 270,187 L 225,203 L 180,190
-                   L 135,204 L 90,189 L 45,202 L 0,188 L -45,204 L -90,190
-                   L -135,202 L -180,187 L -225,203 L -270,191 L -315,204 L -360,189
-                   L -405,201 L -450,188 L -495,203 L -540,190 L -585,202 L -630,187
-                   L -675,204 L -720,191 L -765,202 L -810,188 L -855,203 L -900,190
-                   L -945,202 L -980,192 Z"
-              />
-            </clipPath>
+            {/* Smooth top & bottom vertical fade into #040405 so the swirl never cuts off abruptly */}
+            <linearGradient id="swirlVerticalFade" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#040405" stopOpacity="0.96" />
+              <stop offset="18%" stopColor="#040405" stopOpacity="0.0" />
+              <stop offset="56%" stopColor="#040405" stopOpacity="0.0" />
+              <stop offset="82%" stopColor="#040405" stopOpacity="0.68" />
+              <stop offset="100%" stopColor="#040405" stopOpacity="1.0" />
+            </linearGradient>
           </defs>
 
-          <g clipPath="url(#tornTopBottomClip)">
+          <g>
             <rect x="-980" y="-240" width="1960" height="480" fill="#040405" />
 
             <g className="swirl-continuous-spin">
@@ -116,6 +101,8 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
 
             {/* Center studio depth shade so the iOS glass card & yellow title read with 100% clarity */}
             <rect x="-980" y="-240" width="1960" height="480" fill="url(#centerStageShade)" />
+            {/* Smooth vertical fade into the black background at top & bottom */}
+            <rect x="-980" y="-240" width="1960" height="480" fill="url(#swirlVerticalFade)" />
           </g>
         </svg>
 
@@ -161,8 +148,12 @@ export default function SpiralHero({ onScrollToSection, onNavigateTab }) {
       <div className="below-banner-pill-strip">
         <div className="ios-hero-top-pill below-banner-pill">
           <span className="pulse-dot" />
-          <span>
+          <span className="m-hide">
             WEBSITE DESIGN, REDESIGN &amp; MODERNIZATION • E-COMMERCE • GENERATIVE SEO (GEO) • CUSTOM AI &amp; DASHBOARDS • FULL-SERVICE MARKETING • VIDEO EDITING
+          </span>
+          {/* Phone-length version of the same service line */}
+          <span className="m-only">
+            WEB DESIGN • AI &amp; SEO • MARKETING • VIDEO
           </span>
         </div>
       </div>

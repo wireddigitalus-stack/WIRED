@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Play, ExternalLink, Heart, Film, Maximize2, Globe } from 'lucide-react';
 import { BRAND_INFO, FEATURED_WORK } from '../data/wiredData';
+import MobileMore from './MobileMore';
 
 export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
   const [inlinePlayingId, setInlinePlayingId] = useState(null);
+  const [introOpen, setIntroOpen] = useState(false);
+  const [showAllWork, setShowAllWork] = useState(false); // mobile: first 2 videos only
   const [likedIds, setLikedIds] = useState({
     'halestorm-shooting-star': true,
     'alice-cooper-lyric-video': true,
@@ -25,14 +28,26 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
             <span>WORLDWIDE REMOTE POST-PRODUCTION, LYRIC VIDEOS &amp; MUSIC VIDEOS</span>
           </div>
           <h2 className="section-title-tracked">SOME OF OUR WORK</h2>
-          <p className="legends-subtitle">
+          <p
+            id="work-intro-copy"
+            className={`legends-subtitle m-clamp ${introOpen ? 'is-open' : ''}`}
+            style={{ '--m-lines': 3 }}
+          >
             Delivering global remote <strong>4K music video editing, official kinetic lyric videos, and visualizers</strong> for
             major record labels and rock royalty worldwide—including{' '}
             <strong>Halestorm, Paul Rodgers, Alice Cooper, and Full Devil Jacket</strong> (with on-location directing reserved for select commissions).
           </p>
+          <MobileMore
+            open={introOpen}
+            onToggle={() => setIntroOpen((v) => !v)}
+            controls="work-intro-copy"
+          />
         </div>
 
-        <div className="work-cards-stack">
+        <div
+          id="work-cards-stack"
+          className={`work-cards-stack m-limit-2 ${showAllWork ? 'is-open' : ''}`}
+        >
           {FEATURED_WORK.map((project) => {
             const isPlayingInline = inlinePlayingId === project.id;
             const isLiked = !!likedIds[project.id];
@@ -167,6 +182,16 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
             );
           })}
         </div>
+        {FEATURED_WORK.length > 2 && (
+          <MobileMore
+            open={showAllWork}
+            onToggle={() => setShowAllWork((v) => !v)}
+            moreLabel={`Show ${FEATURED_WORK.length - 2} more videos`}
+            lessLabel="Show fewer"
+            controls="work-cards-stack"
+            className="m-more-btn--center"
+          />
+        )}
 
         {/* Iconic Oversized Yellow YouTube CTA Button */}
         <div className="youtube-giant-cta-wrap">

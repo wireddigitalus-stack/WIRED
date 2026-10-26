@@ -48,6 +48,7 @@ import {
   getClientHardwareSignature,
   getLastDbStatus,
   getLeads,
+  getPinLockout,
   getSectionCounts,
   getSupabaseConfig,
   getTelemetryEvents,
@@ -58,11 +59,13 @@ import {
   runLiveSiteSeoAudit,
   saveSupabaseConfig,
   syncLeadsWithSupabase,
-  updateLead
+  updateLead,
+  verifyStudioDeviceToken,
+  verifyStudioPin
 } from '../utils/telemetry';
 
-const PIN_STORAGE_KEY = 'wired_os_admin_unlocked';
-const STUDIO_PIN = '1999';
+// Studio PIN is verified against a salted SHA-256 fingerprint in utils/telemetry.js —
+// the PIN itself is not stored in the site code.
 
 /**
  * Generates a smooth cubic Bézier SVG path + closed area fill path from array of [x, y] coordinates
@@ -150,16 +153,17 @@ function IosScoreRing({ score, label, sublabel, color = '#FFEE00' }) {
 export default function AdminDashboardView({ onExitDashboard }) {
   const [unlocked, setUnlocked] = useState(() => {
     try {
-      return (
-        isStudioDeviceAuthorized() ||
-        sessionStorage.getItem(PIN_STORAGE_KEY) === 'true'
-      );
+      return isStudioDeviceAuthorized();
     } catch {
       return false;
     }
   });
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
+  const [pinBusy, setPinBusy] = useState(false);
+  const [pinLockedUntil, setPinLockedUntil] = useState(() => getPinLockout().lockedUntil);
+  const [pinAttemptsLeft, setPinAttemptsLeft] = useState(() => getPinLockout().attemptsLeft);
+  const [lockNow, setLockNow] = useState(() => Date.now());
   const [showOwnerKeyEntry, setShowOwnerKeyEntry] = useState(false);
   const [shieldTapCount, setShieldTapCount] = useState(0);
 
@@ -330,9 +334,44 @@ export default function AdminDashboardView({ onExitDashboard }) {
     return () => window.removeEventListener('wired-leads-updated', onLeadsUpdated);
   }, []);
 
-  const handleUnlockWithPin = (code) => {
-    if (code === STUDIO_PIN) {
-      authorizeStudioDevice();
+  // Double-check the trusted-device pass signature (catches hand-edited browser storage)
+  useEffect(() => {
+    if (!unlocked) return undefined;
+    let cancelled = false;
+    verifyStudioDeviceToken().then((ok) => {
+      if (!cancelled && !ok) {
+        revokeStudioDevice();
+        setUnlocked(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [unlocked]);
+
+  // Tick a countdown while the keypad is locked out
+  useEffect(() => {
+    if (!pinLockedUntil) return undefined;
+    const id = setInterval(() => {
+      const now = Date.now();
+      setLockNow(now);
+      if (now >= pinLockedUntil) {
+        setPinLockedUntil(0);
+        setPinAttemptsLeft(getPinLockout().attemptsLeft);
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [pinLockedUntil]);
+
+  const isPinLocked = pinLockedUntil > lockNow;
+  const lockSecondsLeft = isPinLocked ? Math.ceil((pinLockedUntil - lockNow) / 1000) : 0;
+
+  const handleUnlockWithPin = async (code) => {
+    setPinBusy(true);
+    const result = await verifyStudioPin(code);
+    setPinBusy(false);
+    if (result.ok) {
+      await authorizeStudioDevice();
       setUnlocked(true);
       setPinError(false);
       setShowOwnerKeyEntry(false);
@@ -340,6 +379,11 @@ export default function AdminDashboardView({ onExitDashboard }) {
     } else {
       setPinError(true);
       setPinInput('');
+      setPinAttemptsLeft(result.attemptsLeft);
+      if (result.lockedUntil) {
+        setLockNow(Date.now());
+        setPinLockedUntil(result.lockedUntil);
+      }
     }
   };
 
@@ -361,6 +405,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
   };
 
   const handlePinDigit = (digit) => {
+    if (isPinLocked || pinBusy) return;
     setPinError(false);
     const next = (pinInput + digit).slice(0, 4);
     setPinInput(next);
@@ -650,13 +695,26 @@ export default function AdminDashboardView({ onExitDashboard }) {
                   ))}
                 </div>
 
-                {pinError && (
+                {isPinLocked ? (
                   <span className="wos-pin-error-msg">
-                    UNAUTHORIZED HARDWARE PIN — ACCESS DENIED
+                    TOO MANY WRONG PINS — KEYPAD LOCKED FOR {lockSecondsLeft}s
                   </span>
+                ) : (
+                  pinError && (
+                    <span className="wos-pin-error-msg">
+                      UNAUTHORIZED HARDWARE PIN — ACCESS DENIED
+                      {pinAttemptsLeft > 0 && pinAttemptsLeft <= 3
+                        ? ` (${pinAttemptsLeft} ${pinAttemptsLeft === 1 ? 'TRY' : 'TRIES'} LEFT)`
+                        : ''}
+                    </span>
+                  )
                 )}
 
-                <div className="wos-keypad-grid">
+                <div
+                  className="wos-keypad-grid"
+                  style={isPinLocked || pinBusy ? { opacity: 0.35, pointerEvents: 'none' } : undefined}
+                  aria-disabled={isPinLocked || pinBusy}
+                >
                   {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((digit) => (
                     <button
                       key={digit}

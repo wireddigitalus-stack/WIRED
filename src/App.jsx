@@ -76,9 +76,18 @@ export default function App() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('keydown', onKeyDown);
+    // Owner entrance: typing /#admin opens the dashboard without needing a refresh
+    const onHashChange = () => {
+      if (window.location.hash === '#admin') {
+        setActiveTab('admin');
+        window.scrollTo({ top: 0 });
+      }
+    };
+    window.addEventListener('hashchange', onHashChange);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('hashchange', onHashChange);
     };
   }, []);
 

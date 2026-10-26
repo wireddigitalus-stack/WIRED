@@ -1608,8 +1608,92 @@ export function runLiveSiteSeoAudit() {
 // STUDIO MAC & iPHONE HARDWARE FIREWALL (ADMIN AUTHORIZATION ENGINE)
 // ============================================================================
 
-const TRUSTED_DEVICE_STORAGE_KEY = 'wired_os_trusted_device_v1';
-const TRUSTED_DEVICE_TOKEN = 'ROB_STUDIO_APPLE_HARDWARE_VERIFIED_1999';
+const TRUSTED_DEVICE_STORAGE_KEY = 'wired_os_trusted_device_v2';
+const LEGACY_DEVICE_STORAGE_KEYS = ['wired_os_trusted_device_v1'];
+const LEGACY_SESSION_KEY = 'wired_os_admin_unlocked';
+
+// The studio PIN is never stored in the site code — only this salted SHA-256 fingerprint.
+// To change the PIN: run  echo -n "wired-os-studio::NEWPIN" | shasum -a 256  and paste the hash here.
+const PIN_SALT = 'wired-os-studio::';
+const STUDIO_PIN_SHA256 = '69857de1acad560fcf56f75d704f4e329dde2de6b62f62d070ce0a6f17d46090';
+
+const TRUSTED_DEVICE_TTL_MS = 30 * 24 * 60 * 60 * 1000; // re-enter PIN every 30 days per device
+const PIN_ATTEMPTS_STORAGE_KEY = 'wired_os_pin_attempts_v1';
+const PIN_MAX_ATTEMPTS = 5; // wrong tries before a lockout
+const PIN_BASE_LOCKOUT_MS = 60 * 1000; // 1 min, doubling each lockout…
+const PIN_MAX_LOCKOUT_MS = 15 * 60 * 1000; // …up to 15 min
+
+async function sha256Hex(text) {
+  if (typeof crypto === 'undefined' || !crypto.subtle) {
+    throw new Error('Secure crypto unavailable (site must be served over HTTPS)');
+  }
+  const bytes = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function readPinAttempts() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PIN_ATTEMPTS_STORAGE_KEY) || '{}');
+    return { fails: raw.fails || 0, lockouts: raw.lockouts || 0, lockedUntil: raw.lockedUntil || 0 };
+  } catch {
+    return { fails: 0, lockouts: 0, lockedUntil: 0 };
+  }
+}
+
+function writePinAttempts(state) {
+  try {
+    localStorage.setItem(PIN_ATTEMPTS_STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+/** Current lockout status for the PIN keypad. */
+export function getPinLockout() {
+  const s = readPinAttempts();
+  const now = Date.now();
+  return {
+    lockedUntil: s.lockedUntil > now ? s.lockedUntil : 0,
+    attemptsLeft: Math.max(0, PIN_MAX_ATTEMPTS - s.fails)
+  };
+}
+
+/**
+ * Checks a PIN against the stored fingerprint, with escalating lockouts after
+ * repeated wrong attempts. Resolves { ok, lockedUntil, attemptsLeft }.
+ */
+export async function verifyStudioPin(pin) {
+  const now = Date.now();
+  const s = readPinAttempts();
+  if (s.lockedUntil > now) {
+    return { ok: false, lockedUntil: s.lockedUntil, attemptsLeft: 0 };
+  }
+
+  let match = false;
+  try {
+    match = (await sha256Hex(`${PIN_SALT}${pin}`)) === STUDIO_PIN_SHA256;
+  } catch {
+    match = false;
+  }
+
+  if (match) {
+    writePinAttempts({ fails: 0, lockouts: 0, lockedUntil: 0 });
+    return { ok: true, lockedUntil: 0, attemptsLeft: PIN_MAX_ATTEMPTS };
+  }
+
+  const fails = s.fails + 1;
+  if (fails >= PIN_MAX_ATTEMPTS) {
+    const lockouts = s.lockouts + 1;
+    const lockMs = Math.min(PIN_MAX_LOCKOUT_MS, PIN_BASE_LOCKOUT_MS * 2 ** (lockouts - 1));
+    const lockedUntil = now + lockMs;
+    writePinAttempts({ fails: 0, lockouts, lockedUntil });
+    logTelemetryEvent('ADMIN_PIN_LOCKOUT', `Admin keypad locked for ${Math.round(lockMs / 1000)}s after repeated wrong PINs`, 'system');
+    return { ok: false, lockedUntil, attemptsLeft: 0 };
+  }
+  writePinAttempts({ ...s, fails, lockedUntil: 0 });
+  return { ok: false, lockedUntil: 0, attemptsLeft: PIN_MAX_ATTEMPTS - fails };
+}
 
 export function isAppleStudioHardware() {
   if (typeof navigator === 'undefined') return false;
@@ -1630,18 +1714,45 @@ export function getClientHardwareSignature() {
   return 'Unrecognized Browser Signature';
 }
 
-export function isStudioDeviceAuthorized() {
+function readTrustedDevice() {
   try {
-    return localStorage.getItem(TRUSTED_DEVICE_STORAGE_KEY) === TRUSTED_DEVICE_TOKEN;
+    const raw = JSON.parse(localStorage.getItem(TRUSTED_DEVICE_STORAGE_KEY) || 'null');
+    if (!raw || !raw.nonce || !raw.exp || !raw.sig) return null;
+    return raw;
+  } catch {
+    return null;
+  }
+}
+
+/** Fast synchronous check: this device holds an unexpired trusted-device pass. */
+export function isStudioDeviceAuthorized() {
+  const rec = readTrustedDevice();
+  return Boolean(rec && rec.exp > Date.now());
+}
+
+/** Full check: the pass's signature matches (catches hand-edited storage). */
+export async function verifyStudioDeviceToken() {
+  const rec = readTrustedDevice();
+  if (!rec || rec.exp <= Date.now()) return false;
+  try {
+    const expected = await sha256Hex(`${rec.nonce}|${rec.exp}|${STUDIO_PIN_SHA256}`);
+    return expected === rec.sig;
   } catch {
     return false;
   }
 }
 
-export function authorizeStudioDevice() {
+/** Issues a 30-day trusted-device pass. Call only after verifyStudioPin() succeeds. */
+export async function authorizeStudioDevice() {
   try {
-    localStorage.setItem(TRUSTED_DEVICE_STORAGE_KEY, TRUSTED_DEVICE_TOKEN);
-    sessionStorage.setItem('wired_os_admin_unlocked', 'true');
+    const nonceBytes = new Uint8Array(16);
+    crypto.getRandomValues(nonceBytes);
+    const nonce = [...nonceBytes].map((b) => b.toString(16).padStart(2, '0')).join('');
+    const exp = Date.now() + TRUSTED_DEVICE_TTL_MS;
+    const sig = await sha256Hex(`${nonce}|${exp}|${STUDIO_PIN_SHA256}`);
+    localStorage.setItem(TRUSTED_DEVICE_STORAGE_KEY, JSON.stringify({ nonce, exp, sig }));
+    LEGACY_DEVICE_STORAGE_KEYS.forEach((k) => localStorage.removeItem(k));
+    sessionStorage.removeItem(LEGACY_SESSION_KEY);
   } catch {
     // Ignore storage errors
   }
@@ -1656,7 +1767,8 @@ export function authorizeStudioDevice() {
 export function revokeStudioDevice() {
   try {
     localStorage.removeItem(TRUSTED_DEVICE_STORAGE_KEY);
-    sessionStorage.removeItem('wired_os_admin_unlocked');
+    LEGACY_DEVICE_STORAGE_KEYS.forEach((k) => localStorage.removeItem(k));
+    sessionStorage.removeItem(LEGACY_SESSION_KEY);
   } catch {
     // Ignore storage errors
   }

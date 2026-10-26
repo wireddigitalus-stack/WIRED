@@ -419,10 +419,23 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
                 START A PROJECT
               </button>
               {/* WIRED_OS Admin launcher intentionally removed from the public footer.
-                  Owner access: visit /#admin (then refresh) or press Cmd/Ctrl + Shift + D. */}
+                  Owner access: tap the © line below 5×, visit /#admin, or press Cmd/Ctrl + Shift + D. */}
             </div>
 
-            <p className="footer-copyright">
+            {/* Hidden owner entrance: tap this copyright line 5 times quickly (works on phones) */}
+            <p
+              className="footer-copyright"
+              onClick={() => {
+                const now = Date.now();
+                const taps = (window.__wosTaps || []).filter((t) => now - t < 2500);
+                taps.push(now);
+                window.__wosTaps = taps;
+                if (taps.length >= 5) {
+                  window.__wosTaps = [];
+                  onNavigateTab('admin');
+                }
+              }}
+            >
               © MMXXVI WIRED DIGITAL LLC • EST. 1999 • BRISTOL VA/TN &amp; GLOBAL
             </p>
           </div>

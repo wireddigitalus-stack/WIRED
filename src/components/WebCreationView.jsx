@@ -84,7 +84,8 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
             WEBSITE <span className="text-yellow">DESIGN, REDESIGN</span> &amp; AI MODERNIZATION
           </h1>
           <p className="subview-hero-lead">
-            Engineered to rank #1 in <strong>Google Search, ChatGPT, Google AI Overviews, Gemini, and Perplexity (GEO)</strong> across{' '}
+            Engineered with as high-end <strong>SEO &amp; Generative Engine Optimization (GEO)</strong> architecture as it gets—built for maximum organic visibility across{' '}
+            <strong>Google Search, ChatGPT, Google AI Overviews, Gemini, and Perplexity</strong> in{' '}
             <strong>Bristol, Johnson City, Kingsport, Abingdon, and nationwide</strong>. When you partner with
             Wired Digital, you are investing in{' '}
             <strong>25+ years of real-world experience (Est. 1999)</strong> and a relentless track
@@ -101,13 +102,6 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
           <div className="subview-hero-actions">
             <button type="button" className="btn-wired-yellow" onClick={onOpenContact}>
               BUILD YOUR SITE OR AI APP
-            </button>
-            <button
-              type="button"
-              className="btn-wired-outline"
-              onClick={() => onNavigateTab('home')}
-            >
-              VIEW CLIENT ROSTER
             </button>
           </div>
         </div>
@@ -221,8 +215,8 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
               <div className="roof-skill-card">
                 <Globe size={20} className="text-yellow" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
-                  <h4>Generative AI SEO (GEO) + Local #1</h4>
-                  <p>5-node Schema.org @graph + /llms.txt built to rank in Google Local Pack, ChatGPT &amp; Gemini.</p>
+                  <h4>High-End SEO &amp; Generative AI (GEO)</h4>
+                  <p>5-node Schema.org @graph + /llms.txt built for maximum visibility in Google Local Pack, ChatGPT &amp; Gemini.</p>
                 </div>
               </div>
 
@@ -487,8 +481,8 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                       <p>Instant edge-cached architecture with iOS Liquid Glass tactile polish and 99+ Google Core Web Vitals.</p>
                     </li>
                     <li>
-                      <span className="mod-tag good">AI SEARCH (GEO) #1</span>
-                      <p>Full JSON-LD Entity Graph + <code>/llms.txt</code> manifest so ChatGPT, Gemini, and Google Local Pack cite you first.</p>
+                      <span className="mod-tag good">HIGH-END SEO &amp; GEO</span>
+                      <p>Full JSON-LD Entity Graph + <code>/llms.txt</code> manifest engineered for top-tier ChatGPT, Gemini, and Google Local Pack visibility.</p>
                     </li>
                     <li>
                       <span className="mod-tag good">24/7 AI CONCIERGE</span>

@@ -14,6 +14,18 @@ export default function VideoLightboxModal({ project, onClose }) {
   const iframeRef = useRef(null);
   const [embedBlocked, setEmbedBlocked] = useState(false);
 
+  const sendDisableCaptions = () => {
+    try {
+      const win = iframeRef.current?.contentWindow;
+      if (!win) return;
+      win.postMessage(JSON.stringify({ event: 'listening' }), '*');
+      win.postMessage(JSON.stringify({ event: 'command', func: 'unloadModule', args: ['captions'] }), '*');
+      win.postMessage(JSON.stringify({ event: 'command', func: 'unloadModule', args: ['cc'] }), '*');
+    } catch {
+      // Ignore
+    }
+  };
+
   useEffect(() => {
     setEmbedBlocked(false);
     if (!project) return;
@@ -26,6 +38,9 @@ export default function VideoLightboxModal({ project, onClose }) {
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
         if (data?.event === 'onError' && (data.info === 101 || data.info === 150 || data.info === 153)) {
           setEmbedBlocked(true);
+        }
+        if (data?.event === 'onReady' || data?.event === 'onStateChange' || data?.event === 'infoDelivery') {
+          sendDisableCaptions();
         }
       } catch {
         // Ignore non-JSON messages
@@ -131,17 +146,8 @@ export default function VideoLightboxModal({ project, onClose }) {
           ) : (
             <iframe
               ref={iframeRef}
-              src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&enablejsapi=1`}
-              onLoad={() => {
-                try {
-                  iframeRef.current?.contentWindow?.postMessage(
-                    JSON.stringify({ event: 'listening' }),
-                    '*'
-                  );
-                } catch {
-                  // Ignore
-                }
-              }}
+              src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&cc_load_policy=0&iv_load_policy=3&enablejsapi=1`}
+              onLoad={sendDisableCaptions}
               title={project.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

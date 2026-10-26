@@ -261,7 +261,7 @@ function analyzeFetchedHtml(cleanDomain, fullUrl, htmlString, fetchMs) {
         currentLabel: 'Citation Signals:',
         current: geoCurrent,
         targetLabel: 'Wired Upgrade:',
-        target: '#1 Cited Regional Authority (GEO)',
+        target: 'High-End SEO & GEO Authority',
         status: hasGeoMeta && hasFaqSchema ? 'PARTIAL GEO' : 'HIGH OPPORTUNITY',
         passed: false
       },
@@ -320,7 +320,7 @@ function buildHeuristicExternalReport(cleanDomain, fullUrl) {
         currentLabel: 'Legacy State:',
         current: 'Low AI Citation Visibility',
         targetLabel: 'Wired Upgrade:',
-        target: '#1 Cited Regional Authority',
+        target: 'High-End SEO & GEO Authority',
         status: 'HIGH OPPORTUNITY',
         passed: false
       },

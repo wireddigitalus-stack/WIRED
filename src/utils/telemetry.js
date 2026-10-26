@@ -1037,26 +1037,26 @@ export const TRACKED_SEO_KEYWORDS = [
   {
     keyword: 'Wired Digital Creative (wireddigitalcreative.com)',
     region: 'Brand Entity • Local & Global',
-    rank: '#1',
+    rank: 'TOP',
     aiCitation: 'Verified Primary Entity in Google & AI',
     volume: '1,180/mo',
     intent: 'BRAND AUTHORITY',
-    trend: 'LOCKED #1'
+    trend: 'VERIFIED'
   },
   {
     keyword: 'website design near me (Bristol / Tri-Cities)',
     region: 'Bristol TN/VA • 37620 / 24201',
-    rank: '#1',
+    rank: 'TOP',
     aiCitation: 'Google Local Pack + Sitelinks Tree',
     volume: '1,650/mo',
     intent: 'NEAR ME LOCAL',
-    trend: 'NEW #1'
+    trend: 'INDEXED'
   },
   {
     keyword: 'website design near me Johnson City & Kingsport TN',
     region: '37601 • 37604 • 37660',
-    rank: '#1',
-    aiCitation: 'Cited #1 in Google AI Overviews',
+    rank: 'TOP',
+    aiCitation: 'Indexed in Google AI Overviews',
     volume: '1,420/mo',
     intent: 'NEAR ME LOCAL',
     trend: '+5 spots'
@@ -1064,8 +1064,8 @@ export const TRACKED_SEO_KEYWORDS = [
   {
     keyword: 'AI website design Bristol TN',
     region: 'Bristol TN/VA',
-    rank: '#1',
-    aiCitation: 'Cited #1 in ChatGPT & Google AI',
+    rank: 'TOP',
+    aiCitation: 'Indexed in ChatGPT & Google AI',
     volume: '480/mo',
     intent: 'HIGH COMMERCIAL',
     trend: '+3 spots'
@@ -1073,8 +1073,8 @@ export const TRACKED_SEO_KEYWORDS = [
   {
     keyword: 'website redesign and modernization Tri-Cities TN',
     region: 'Tri-Cities TN/VA',
-    rank: '#1',
-    aiCitation: 'Cited #1 in Perplexity & Gemini',
+    rank: 'TOP',
+    aiCitation: 'Indexed in Perplexity & Gemini',
     volume: '720/mo',
     intent: 'HIGH COMMERCIAL',
     trend: '+4 spots'
@@ -1082,17 +1082,17 @@ export const TRACKED_SEO_KEYWORDS = [
   {
     keyword: 'custom business dashboards Johnson City TN',
     region: 'Johnson City TN',
-    rank: '#1',
-    aiCitation: 'Cited #1 in ChatGPT Search',
+    rank: 'TOP',
+    aiCitation: 'Indexed in ChatGPT Search',
     volume: '390/mo',
     intent: 'ENTERPRISE',
-    trend: 'NEW #1'
+    trend: 'INDEXED'
   },
   {
     keyword: '24/7 AI lead capture chatbot Tri-Cities',
     region: 'Bristol / Kingsport / JC',
-    rank: '#1',
-    aiCitation: 'Cited #1 in Google AI Overviews',
+    rank: 'TOP',
+    aiCitation: 'Indexed in Google AI Overviews',
     volume: '540/mo',
     intent: 'HIGH COMMERCIAL',
     trend: '+6 spots'
@@ -1100,16 +1100,16 @@ export const TRACKED_SEO_KEYWORDS = [
   {
     keyword: 'Generative SEO (GEO) agency Bristol VA TN',
     region: 'Tri-Cities Region',
-    rank: '#1',
+    rank: 'TOP',
     aiCitation: 'Primary Entity Authority',
     volume: '410/mo',
     intent: 'HIGH COMMERCIAL',
-    trend: 'NEW #1'
+    trend: 'INDEXED'
   },
   {
     keyword: 'remote rock music video & lyric video editor',
     region: 'National / Global',
-    rank: '#2',
+    rank: 'TOP',
     aiCitation: 'Cited with Primary Wave & Legends Vault',
     volume: '1,900/mo',
     intent: 'GLOBAL LABEL',
@@ -1247,11 +1247,11 @@ export const SITE_TREE_NODES = {
       priority: '0.92',
       proofClient: 'Fast Track Bristol TN, Team Vision LLC & Partner in App4That Holdings',
       summary:
-        'Headquartered right on the Bristol VA/TN state line since 2022 and a partner in Bristol AI/iOS studio App4That Holdings (app4thatholdings.com). We engineer <0.4s React websites, custom live inventory/lead dashboards, 24/7 AI chatbots, and #1 "website design near me" local search architecture.',
+        'Headquartered right on the Bristol VA/TN state line since 2022 and a partner in Bristol AI/iOS studio App4That Holdings (app4thatholdings.com). We engineer <0.4s React websites, custom live inventory/lead dashboards, 24/7 AI chatbots, and high-end "website design near me" local SEO & GEO architecture.',
       title:
         'Website Design Near Me in Bristol, TN & VA (37620 / 24201) | Wired Digital Studio HQ',
       description:
-        'Looking for website design near me in Bristol, TN or Bristol, VA? Wired Digital is headquartered in Bristol (37620 / 24201), building AI-ready websites, custom live business dashboards, and #1 local SEO.',
+        'Looking for website design near me in Bristol, TN or Bristol, VA? Wired Digital is headquartered in Bristol (37620 / 24201), building AI-ready websites, custom live business dashboards, and high-end local SEO & GEO.',
       tab: 'home',
       section: 'case-studies'
     },
@@ -1325,7 +1325,7 @@ export const SITE_TREE_NODES = {
       title:
         'Case Study: Fast Track Bristol TN — Custom Live Admin Dashboard & Local SEO | Wired Digital',
       description:
-        'How Wired Digital engineered Fast Track Bristol TN (fasttrackbristoltn.com) with a custom live backend admin dashboard, real-time vehicle click-stream analytics, and #1 Bristol local search dominance.',
+        'How Wired Digital engineered Fast Track Bristol TN (fasttrackbristoltn.com) with a custom live backend admin dashboard, real-time vehicle click-stream analytics, and high-end Bristol local SEO & GEO.',
       tab: 'home',
       section: 'case-studies'
     },

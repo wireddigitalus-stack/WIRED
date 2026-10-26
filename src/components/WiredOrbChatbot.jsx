@@ -208,7 +208,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
       nextStep: 'IDLE',
       topic: 'geo',
       cartridge: 'geo',
-      reply: `DEEP DIVE // UNDER THE HOOD OF GEO + AI WEB MODERNIZATION:\n• 1. @GRAPH JSON-LD INJECTION: Maps your Organization, LocalBusiness, Service catalog, GeoCoordinates & verified reviews so LLMs trust your authority.\n• 2. /LLMS.TXT MACHINE MANIFEST: Gives ChatGPT, Claude, Gemini & Perplexity a clean markdown fact-sheet of why you are #1 in your market.\n• 3. <0.4s REACT EDGE DOM: Eliminates WordPress plugin bloat, boosting mobile conversions by up to +64%.`,
+      reply: `DEEP DIVE // UNDER THE HOOD OF GEO + AI WEB MODERNIZATION:\n• 1. @GRAPH JSON-LD INJECTION: Maps your Organization, LocalBusiness, Service catalog, GeoCoordinates & verified reviews so LLMs trust your authority.\n• 2. /LLMS.TXT MACHINE MANIFEST: Gives ChatGPT, Claude, Gemini & Perplexity a clean markdown fact-sheet of your services, credentials, and market authority.\n• 3. <0.4s REACT EDGE DOM: Eliminates WordPress plugin bloat, boosting mobile conversions by up to +64%.`,
       subtext: 'Type your current website URL below to test your site, or drop your Name + Email/Phone for a custom game plan:',
       chips: [
         { label: '🔍 SCAN MY WEBSITE NOW', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' },
@@ -392,7 +392,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         service: 'AI Website Design, Redesign & Modernization + GEO',
         details: q
       },
-      reply: `DIRECT ANSWER // Traditional SEO fights for 10 blue links. GEO (Generative Engine Optimization) makes ChatGPT, Google AI Overviews, Gemini & Perplexity cite YOUR business as the #1 definitive answer.\n• @GRAPH JSON-LD SCHEMA: We hard-code your services, credentials, GeoCoordinates & reviews into machine-readable entity graphs.\n• /LLMS.TXT ARCHITECTURE: Feeds AI crawlers structured, high-authority fact blocks instead of messy HTML.\n• LOCAL + NATIONAL LOCK: Dominates Tri-Cities ("near me" in Bristol, Johnson City, Kingsport) and national niche queries simultaneously.`,
+      reply: `DIRECT ANSWER // Traditional SEO only targets legacy keyword strings. Our high-end SEO + GEO (Generative Engine Optimization) architecture is built as deep as it gets so ChatGPT, Google AI Overviews, Gemini & Perplexity can directly understand, trust, and cite your business.\n• @GRAPH JSON-LD SCHEMA: We hard-code your services, credentials, GeoCoordinates & reviews into machine-readable entity graphs.\n• /LLMS.TXT ARCHITECTURE: Feeds AI crawlers structured, high-authority fact blocks instead of messy HTML.\n• LOCAL + NATIONAL AUTHORITY: Built for maximum visibility across Tri-Cities ("near me" in Bristol, Johnson City, Kingsport) and national niche queries.`,
       subtext:
         'Want to see how AI search engines currently view your site? Type your website URL below for an instant scan!',
       chips: [
@@ -614,7 +614,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
     topic: lastTopic || 'geo',
     cartridge: leadDraft.cartridge || 'geo',
     leadPatch: { details: q },
-    reply: `WIRED-64 // EXECUTIVE BRIEFING:\nBacked by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital Creative engineers custom web & AI software under 1 roof:\n• AI WEBSITE MODERNIZATION & GEO: Sub-0.4s React builds ranked #1 in ChatGPT, Gemini & Google.\n• CUSTOM TELEMETRY & 24/7 AI BOTS: Live /admin CRM dashboards (Fast Track & Ringger Law) & 24/7 AI advisors (Team Vision LLC).\n• TOP-TIER FULL MARKETING PACKAGES: Full-service digital marketing, brand growth, and custom commercial video creative.`,
+    reply: `WIRED-64 // EXECUTIVE BRIEFING:\nBacked by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital Creative engineers custom web & AI software under 1 roof:\n• AI WEBSITE MODERNIZATION & GEO: Sub-0.4s React builds with high-end SEO & GEO architecture for ChatGPT, Gemini & Google.\n• CUSTOM TELEMETRY & 24/7 AI BOTS: Live /admin CRM dashboards (Fast Track & Ringger Law) & 24/7 AI advisors (Team Vision LLC).\n• TOP-TIER FULL MARKETING PACKAGES: Full-service digital marketing, brand growth, and custom commercial video creative.`,
     subtext:
       'Click any topic below for a smart deep dive, drop your URL for a scan, or leave your Name + Email/Phone for Wired Digital:',
     chips: [
@@ -1527,7 +1527,7 @@ export default function WiredOrbChatbot() {
                           [AI SEARCH &amp; GEO RADAR]
                         </text>
                         <text x="136" y="54" fill="#00FF66" fontSize="9.5" fontFamily="monospace">
-                          &gt; CHATGPT CITATION: #1 LOCK
+                          &gt; HIGH-END SEO + GEO: ACTIVE
                         </text>
                         <text x="136" y="72" fill="#00FF66" fontSize="9.5" fontFamily="monospace">
                           &gt; GOOGLE AI / GEMINI: 99%

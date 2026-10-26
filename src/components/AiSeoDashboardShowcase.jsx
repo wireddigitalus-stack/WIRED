@@ -955,8 +955,8 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                           <span>Custom-trained AI lead chatbots &amp; live telemetry dashboards</span>
                         </li>
                         <li>
-                          <span className="good-badge">Tri-Cities #1</span>
-                          <span>Hyper-local authority across Bristol VA/TN, Johnson City &amp; Kingsport</span>
+                          <span className="good-badge">High-End SEO</span>
+                          <span>Hyper-local &amp; GEO authority across Bristol VA/TN, Johnson City &amp; Kingsport</span>
                         </li>
                       </ul>
                     </div>

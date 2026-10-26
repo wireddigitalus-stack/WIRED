@@ -98,7 +98,7 @@ export const TRI_CITIES_CASE_STUDIES = [
       kpis: [
         { label: 'AI Lead Capture', val: '24/7 Custom-Trained Space Advisor' },
         { label: 'Portfolio Coverage', val: 'Office • CoWork • Retail • Industrial' },
-        { label: 'AI Search Visibility', val: '#1 Citation — Tri-Cities CRE' }
+        { label: 'AI Search Visibility', val: 'High-Authority CRE GEO Architecture' }
       ]
     }
   },
@@ -150,7 +150,7 @@ export const AI_SEO_PILLARS = [
     tag: '01 // AI-ERA SEARCH & GENERATIVE SEO (GEO)',
     title: 'Built for How Search Engines Actually Work in the Age of AI',
     description:
-      'Traditional SEO alone isn’t enough when customers use Google AI Overviews, ChatGPT, Gemini, and Perplexity to choose who to trust. Our Generative Engine Optimization (GEO) architecture—structured JSON-LD entities, semantic authority hubs, and sub-second speed—keeps your business cited #1.',
+      'Traditional SEO alone isn’t enough when customers use Google AI Overviews, ChatGPT, Gemini, and Perplexity to choose who to trust. Our high-end SEO and Generative Engine Optimization (GEO) architecture—structured JSON-LD entities, semantic authority hubs, and sub-second speed—is engineered as deep as it gets for maximum search and AI discovery.',
     bullets: [
       'Generative Engine Optimization (ChatGPT, Google AI Overviews, Gemini, Perplexity)',
       'Tri-Cities Hyper-Local Dominance (Bristol VA/TN, Johnson City, Kingsport, Abingdon)',
@@ -633,7 +633,7 @@ export const VIDEO_PRODUCTION_SERVICES = [
     subtitle: 'SELECT COMMISSIONED PRODUCTIONS',
     description:
       'While 95% of our music video work is delivered globally via remote editing and animation, we accept select high-end commissioned directing shoots and Tri-Cities commercial brand reels.',
-    highlights: ['Commissioned Directing Shoots', 'RED Cinema Production Pipeline', 'Tri-Cities Web Client Brand Reels', 'End-to-End Creative Direction']
+    highlights: ['Commissioned Directing Shoots', '4K Cinema Production Pipeline', 'Tri-Cities Web Client Brand Reels', 'End-to-End Creative Direction']
   }
 ];
 

@@ -23,7 +23,20 @@ import {
 
 export default function VideoProductionView({ onOpenVideoModal, onOpenContact, onNavigateTab }) {
   const theaterPlayerRef = useRef(null);
+  const reelIframeRef = useRef(null);
   const iframeRef = useRef(null);
+
+  const sendDisableCaptions = (iframeEl) => {
+    try {
+      const win = iframeEl?.contentWindow;
+      if (!win) return;
+      win.postMessage(JSON.stringify({ event: 'listening' }), '*');
+      win.postMessage(JSON.stringify({ event: 'command', func: 'unloadModule', args: ['captions'] }), '*');
+      win.postMessage(JSON.stringify({ event: 'command', func: 'unloadModule', args: ['cc'] }), '*');
+    } catch {
+      // Ignore cross-origin errors
+    }
+  };
 
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +68,7 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
     !embedPlaylistMode &&
     Boolean(activeVideoObj.vevoRestricted || runtimeBlockedIds[activeVideoObj.videoId]);
 
-  // Listen for YouTube IFrame API onError (101 / 150 = VEVO / label embed disabled)
+  // Listen for YouTube IFrame API onError (101 / 150 = VEVO / label embed disabled) & auto-unload CC
   useEffect(() => {
     const handleYtMessage = (event) => {
       if (!event.origin || !event.origin.includes('youtube.com')) return;
@@ -63,6 +76,10 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
         if (data?.event === 'onError' && (data.info === 101 || data.info === 150 || data.info === 153)) {
           setRuntimeBlockedIds((prev) => ({ ...prev, [activeVideoObj.videoId]: true }));
+        }
+        if (data?.event === 'onReady' || data?.event === 'onStateChange' || data?.event === 'infoDelivery') {
+          sendDisableCaptions(reelIframeRef.current);
+          sendDisableCaptions(iframeRef.current);
         }
       } catch {
         // Ignore non-JSON messages
@@ -115,14 +132,14 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
             <span>WIRED DIGITAL // GLOBAL 4K MUSIC VIDEO, OFFICIAL LYRIC VIDEO &amp; VISUALIZER PRODUCTION</span>
           </div>
           <h1 className="subview-hero-title">
-            ROCK-AND-ROLL <span className="text-yellow">4K VIDEO PRODUCTION</span> FOR LEGENDS
+            ROCK-AND-ROLL <span className="text-yellow">VIDEO PRODUCTION</span> FOR LEGENDS
           </h1>
           <p className="subview-hero-lead">
             Founded in <strong>Jackson, TN in 1999</strong>, working full-time in the music industry
             since <strong>2015</strong>, and headquartered in <strong>Bristol (VA/TN) since 2022</strong>—delivering
             100% remote <strong>4K music video editing, custom kinetic lyric videos, visualizers, and tour promos</strong> for{' '}
             <strong>Primary Wave (The Home of Legends), Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, and 34+ Hall-of-Fame artists</strong>{' '}
-            and major record labels worldwide (with on-location RED Cinema directing reserved for select commissions).
+            and major record labels worldwide (with on-location directing reserved for select commissions).
           </p>
 
           <div className="subview-hero-actions">
@@ -148,7 +165,9 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
           <div className="subview-reel-card">
             <div className="subview-reel-media">
               <iframe
-                src="https://www.youtube.com/embed/i2yjCTNWJPA?rel=0&enablejsapi=1"
+                ref={reelIframeRef}
+                src="https://www.youtube.com/embed/i2yjCTNWJPA?rel=0&cc_load_policy=0&iv_load_policy=3&enablejsapi=1"
+                onLoad={() => sendDisableCaptions(reelIframeRef.current)}
                 title="Wired Digital — Official Video Production Reel"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -187,7 +206,7 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
                   </a>
                 </div>
               </div>
-              <h2>From RED Cinema Shoots to Custom Animated Lyric Worlds</h2>
+              <h2>From Commissioned Directing Shoots to Custom Animated Lyric Worlds</h2>
               <p>
                 Whether cutting a multi-cam rock collaboration for{' '}
                 <strong>Halestorm &amp; Paul Rodgers</strong>, crafting custom-animated
@@ -328,19 +347,10 @@ export default function VideoProductionView({ onOpenVideoModal, onOpenContact, o
                     }
                     src={
                       embedPlaylistMode
-                        ? `https://www.youtube.com/embed/videoseries?list=${activePlaylistObj.playlistId}&rel=0&enablejsapi=1`
-                        : `https://www.youtube.com/embed/${activeVideoObj.videoId}?autoplay=${autoPlayEmbed ? 1 : 0}&rel=0&enablejsapi=1`
+                        ? `https://www.youtube.com/embed/videoseries?list=${activePlaylistObj.playlistId}&rel=0&cc_load_policy=0&iv_load_policy=3&enablejsapi=1`
+                        : `https://www.youtube.com/embed/${activeVideoObj.videoId}?autoplay=${autoPlayEmbed ? 1 : 0}&rel=0&cc_load_policy=0&iv_load_policy=3&enablejsapi=1`
                     }
-                    onLoad={() => {
-                      try {
-                        iframeRef.current?.contentWindow?.postMessage(
-                          JSON.stringify({ event: 'listening' }),
-                          '*'
-                        );
-                      } catch {
-                        // Ignore cross-origin errors
-                      }
-                    }}
+                    onLoad={() => sendDisableCaptions(iframeRef.current)}
                     title={activeVideoObj.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen

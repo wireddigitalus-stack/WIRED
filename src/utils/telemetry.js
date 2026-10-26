@@ -1131,9 +1131,9 @@ export const SITE_TREE_NODES = {
     schemaType: 'ProfessionalService + LocalBusiness + WebSite',
     priority: '1.0',
     title:
-      'Wired Digital Creative | AI Website Design, Redesign & Modernization, Generative SEO (GEO), Custom AI Dashboards & 4K Video | Bristol, Johnson City & Kingsport TN/VA',
+      'Wired Digital Creative | Website Design, Redesign & Modernization, Generative SEO (GEO), Custom AI Dashboards & 4K Video | Bristol, Johnson City & Kingsport TN/VA',
     description:
-      'Wired Digital Creative (Wired Digital LLC — wireddigitalcreative.com, Est. 1999). 25+ years ahead of the tech curve in Bristol TN/VA, Johnson City, Kingsport & Abingdon: AI website design, redesign & modernization, Generative SEO (ChatGPT & Google AI), custom live admin dashboards, 24/7 AI chatbots, full-service marketing & 4K music videos.',
+      'Wired Digital Creative (Wired Digital LLC — wireddigitalcreative.com, Est. 1999). 25+ years ahead of the tech curve in Bristol TN/VA, Johnson City, Kingsport & Abingdon: website design, redesign & modernization, Generative SEO (ChatGPT & Google AI), custom live admin dashboards, 24/7 AI chatbots, full-service marketing & 4K music videos.',
     tab: 'home',
     section: null
   },
@@ -1142,15 +1142,15 @@ export const SITE_TREE_NODES = {
       id: 'view-web-design',
       query: '?view=web-design',
       canonical: 'https://www.wireddigitalcreative.com/?view=web-design',
-      label: 'AI Website Design, Redesign & Modernization',
+      label: 'Website Design, Redesign & Modernization',
       pathDisplay: '/?view=web-design',
       schemaType: 'SiteNavigationElement • Service',
       priority: '0.95',
       badge: 'CORE SERVICE #1',
       title:
-        'AI Website Design, Redesign & Modernization + Generative SEO (GEO) | Wired Digital Creative — Bristol, Johnson City & Kingsport TN/VA',
+        'Website Design, Redesign & Modernization + Generative SEO (GEO) | Wired Digital Creative — Bristol, Johnson City & Kingsport TN/VA',
       description:
-        'Custom AI website design, full website redesigns, apps, and Generative Engine Optimization (GEO for ChatGPT, Google AI Overviews & Perplexity) in Bristol, Johnson City & Kingsport TN/VA. 25+ years of custom engineering, sub-0.4s load speed, live dashboards & 24/7 AI chatbots all under one roof.',
+        'Custom website design, full website redesigns, apps, and Generative Engine Optimization (GEO for ChatGPT, Google AI Overviews & Perplexity) in Bristol, Johnson City & Kingsport TN/VA. 25+ years of custom engineering, sub-0.4s load speed, live dashboards & 24/7 AI chatbots all under one roof.',
       tab: 'web',
       section: null
     },
@@ -1268,9 +1268,9 @@ export const SITE_TREE_NODES = {
       summary:
         'Serving Johnson City commercial real estate groups, medical/dental practices, contractors, and enterprises with sub-0.4s AI websites, 24/7 custom AI intake chatbots, and Generative Engine Optimization (GEO).',
       title:
-        'Website Design Near Me in Johnson City, TN (37601 / 37604) | AI Web Design & Local SEO — Wired Digital',
+        'Website Design Near Me in Johnson City, TN (37601 / 37604) | Web Design & Local SEO — Wired Digital',
       description:
-        'Top-rated website design near me for Johnson City, TN (37601, 37604, 37615). Custom AI website modernization, live business telemetry dashboards, and 24/7 AI lead capture chatbots by Wired Digital.',
+        'Top-rated website design near me for Johnson City, TN (37601, 37604, 37615). Custom website modernization, live business telemetry dashboards, and 24/7 AI lead capture chatbots by Wired Digital.',
       tab: 'web',
       section: null
     },
@@ -1285,11 +1285,11 @@ export const SITE_TREE_NODES = {
       priority: '0.92',
       proofClient: 'Team Vision LLC (teamvisionllc.com — 24/7 Ask VISION AI)',
       summary:
-        'Powering Kingsport industrial leaders, commercial contractors, and service companies with modern AI web architecture, Schema.org entity graphs, and 24/7 custom-trained AI space & project advisors.',
+        'Powering Kingsport industrial leaders, commercial contractors, and service companies with modern web architecture, Schema.org entity graphs, and 24/7 custom-trained AI space & project advisors.',
       title:
-        'Website Design Near Me in Kingsport, TN (37660 / 37664) | AI Website Modernization & SEO — Wired Digital',
+        'Website Design Near Me in Kingsport, TN (37660 / 37664) | Website Design, Modernization & SEO — Wired Digital',
       description:
-        'Searching for website design near me in Kingsport, TN (37660, 37664)? Wired Digital delivers AI website design, redesigns, 24/7 AI lead capture bots, and Tri-Cities Local SEO domination.',
+        'Searching for website design near me in Kingsport, TN (37660, 37664)? Wired Digital delivers website design, redesigns, 24/7 AI lead capture bots, and Tri-Cities Local SEO domination.',
       tab: 'home',
       section: 'case-studies'
     },

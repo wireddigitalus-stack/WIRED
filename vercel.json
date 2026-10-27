@@ -1,0 +1,185 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "web-design"
+        }
+      ],
+      "destination": "/web-design/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "full-service-marketing"
+        }
+      ],
+      "destination": "/marketing/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "custom-dashboards"
+        }
+      ],
+      "destination": "/custom-dashboards/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "ai-chatbots"
+        }
+      ],
+      "destination": "/ai-chatbots/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "ai-lead-chatbots"
+        }
+      ],
+      "destination": "/ai-chatbots/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "video-production"
+        }
+      ],
+      "destination": "/video-production/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "legends-vault"
+        }
+      ],
+      "destination": "/legends/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "view",
+          "value": "working-with-legends"
+        }
+      ],
+      "destination": "/legends/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "city",
+          "value": "bristol-tn-va"
+        }
+      ],
+      "destination": "/bristol-tn-va-web-design/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "city",
+          "value": "johnson-city-tn"
+        }
+      ],
+      "destination": "/johnson-city-tn-web-design/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "city",
+          "value": "kingsport-tn"
+        }
+      ],
+      "destination": "/kingsport-tn-web-design/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "city",
+          "value": "abingdon-va"
+        }
+      ],
+      "destination": "/abingdon-va-web-design/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "fasttrack-bristol"
+        }
+      ],
+      "destination": "/work/fast-track-bristol/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "team-vision-llc"
+        }
+      ],
+      "destination": "/work/team-vision/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "case",
+          "value": "ringger-law"
+        }
+      ],
+      "destination": "/work/ringger-law/",
+      "permanent": true
+    }
+  ]
+}

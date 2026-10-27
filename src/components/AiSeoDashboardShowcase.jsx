@@ -955,15 +955,15 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 {/* Right: Live AI Search & Local Telemetry Metrics */}
                 <div className="demo-panel-card telemetry-card">
                   <div className="demo-panel-head">
-                    <span className="panel-kicker">LIVE GENERATIVE SEO (GEO) TELEMETRY</span>
-                    <span className="live-green-pill">● ACTIVE AI INDEXING</span>
+                    <span className="panel-kicker">GEO TARGET PROFILE (ILLUSTRATIVE)</span>
+                    <span className="live-green-pill">● EXAMPLE TARGETS</span>
                   </div>
 
                   <div className="telemetry-bars">
                     <div className="telemetry-row">
                       <div className="telemetry-label-row">
                         <span>Google Local Pack &amp; Organic (Tri-Cities TN/VA)</span>
-                        <span className="telemetry-val">98 / 100</span>
+                        <span className="telemetry-val">Target 98</span>
                       </div>
                       <div className="telemetry-track">
                         <div className="telemetry-fill" style={{ width: '98%' }} />
@@ -973,7 +973,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                     <div className="telemetry-row">
                       <div className="telemetry-label-row">
                         <span>ChatGPT / OpenAI Local Entity Citation Score</span>
-                        <span className="telemetry-val">96 / 100</span>
+                        <span className="telemetry-val">Target 96</span>
                       </div>
                       <div className="telemetry-track">
                         <div className="telemetry-fill" style={{ width: '96%' }} />
@@ -983,7 +983,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                     <div className="telemetry-row">
                       <div className="telemetry-label-row">
                         <span>Google Gemini &amp; AI Overviews Authority</span>
-                        <span className="telemetry-val">97 / 100</span>
+                        <span className="telemetry-val">Target 97</span>
                       </div>
                       <div className="telemetry-track">
                         <div className="telemetry-fill" style={{ width: '97%' }} />
@@ -992,8 +992,8 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
 
                     <div className="telemetry-row">
                       <div className="telemetry-label-row">
-                        <span>Mobile Conversion &amp; 24/7 AI Funnel Velocity</span>
-                        <span className="telemetry-val">+310% Lift</span>
+                        <span>Real Result: Fast Track Credit Apps (First 30 Days)</span>
+                        <span className="telemetry-val">47 Apps</span>
                       </div>
                       <div className="telemetry-track">
                         <div className="telemetry-fill" style={{ width: '94%' }} />
@@ -1002,7 +1002,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                   </div>
 
                   <div className="telemetry-footer-note">
-                    <span>Built with automated Schema.org graphs, local geo-coordinates &amp; AI-readable endpoints.</span>
+                    <span>Target scores are illustrative goals, not measured client results. Built with Schema.org graphs, local geo-coordinates &amp; AI-readable endpoints.</span>
                     <button type="button" className="btn-mini-yellow" onClick={onOpenContact}>
                       Request Free Site Audit →
                     </button>

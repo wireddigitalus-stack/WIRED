@@ -429,7 +429,7 @@ function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo
         service: 'AI Website Design, Redesign & Modernization + GEO',
         details: q
       },
-      reply: `AI WEBSITE MODERNIZATION // Legacy WordPress, Wix & Squarespace templates average 3.8s–5.2s load times, losing 60%+ of mobile visitors before the page even renders.\n• <0.4s REACT / EDGE ARCHITECTURE: We engineer custom, zero-bloat platforms scoring 99/100 on Core Web Vitals.\n• INTERACTIVE CONVERSION TOOLS: Custom ROI calculators, instant graders, interactive portfolios & 24/7 AI lead capture.\n• FUTURE-PROOF CODE: Built with 25+ years of staying ahead of the tech curve—engineered for both human conversion and AI crawlers.`,
+      reply: `AI WEBSITE MODERNIZATION // Legacy WordPress, Wix & Squarespace templates average 3.8s–5.2s load times, losing 60%+ of mobile visitors before the page even renders.\n• <0.4s REACT / EDGE ARCHITECTURE: We engineer custom, zero-bloat platforms built to pass Google Core Web Vitals with 90+ Lighthouse performance targets.\n• INTERACTIVE CONVERSION TOOLS: Custom ROI calculators, instant graders, interactive portfolios & 24/7 AI lead capture.\n• FUTURE-PROOF CODE: Built with 25+ years of staying ahead of the tech curve—engineered for both human conversion and AI crawlers.`,
       subtext:
         'Drop your current URL below to benchmark your speed & AI readiness, or leave your Name + Email/Phone to connect with Wired Digital:',
       chips: [

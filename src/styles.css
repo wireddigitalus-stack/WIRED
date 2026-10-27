@@ -12300,3 +12300,195 @@ a {
     display: none;
   }
 }
+
+/* ============================================================================
+   PRERENDERED SEO LANDING INTRO (SeoPageIntro.jsx + scripts/prerender.mjs)
+   Same markup is baked into static HTML for city, case-study & service URLs.
+   ============================================================================ */
+.seo-page-intro {
+  padding: 120px 0 36px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 238, 0, 0.1), transparent 60%),
+    var(--bg-void, #050505);
+}
+
+.seo-intro-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 14px;
+}
+
+.seo-intro-breadcrumb a {
+  color: var(--wired-yellow, #ffee00);
+  text-decoration: none;
+}
+
+.seo-intro-card {
+  background: linear-gradient(155deg, rgba(16, 16, 24, 0.96) 0%, rgba(8, 8, 12, 0.99) 100%);
+  border: 1.5px solid rgba(255, 238, 0, 0.36);
+  border-radius: 26px;
+  padding: 34px 36px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75);
+}
+
+.seo-intro-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--wired-yellow, #ffee00);
+  background: rgba(255, 238, 0, 0.1);
+  border: 1px solid rgba(255, 238, 0, 0.34);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.seo-intro-h1 {
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--ink-white, #fff);
+  margin: 14px 0 12px;
+  max-width: 900px;
+}
+
+.seo-intro-lead {
+  font-size: 1rem;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 12px;
+  max-width: 860px;
+}
+
+.seo-intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 8px;
+}
+
+.seo-intro-actions a {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.seo-intro-sections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.seo-intro-block {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+.seo-intro-block h2,
+.seo-intro-faqs h2 {
+  font-family: var(--font-display, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--wired-yellow, #ffee00);
+  margin: 0 0 10px;
+}
+
+.seo-intro-block p,
+.seo-intro-faqs p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+  margin: 0 0 8px;
+}
+
+.seo-intro-block ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.seo-intro-block li {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.seo-intro-block li::marker {
+  color: var(--wired-yellow, #ffee00);
+}
+
+.seo-intro-faqs {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.seo-intro-faqs details {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.seo-intro-faqs summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--ink-white, #fff);
+  font-size: 0.92rem;
+}
+
+.seo-intro-faqs details p {
+  margin-top: 8px;
+}
+
+/* Static crawler copy for pages whose React view renders the equivalent
+   content itself; hidden as soon as JavaScript is available (like <noscript>). */
+.js .seo-static--deferred {
+  display: none;
+}
+
+.seo-static-nav {
+  margin-top: 22px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.seo-static-nav a {
+  color: var(--wired-yellow, #ffee00);
+  margin-right: 12px;
+}
+
+@media (max-width: 860px) {
+  .seo-intro-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .seo-page-intro {
+    padding: 96px 0 24px;
+  }
+  .seo-intro-card {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+  .seo-intro-actions > * {
+    width: 100%;
+    justify-content: center;
+  }
+}

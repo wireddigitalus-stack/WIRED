@@ -1,4 +1,10 @@
 // First-Party Site Telemetry, Leads CRM Storage Engine, and Live DOM/Schema SEO Auditor
+import {
+  getSeoPageById,
+  canonicalFor,
+  findSeoPageByPath,
+  findSeoPageByLegacyQuery
+} from '../data/seoPages';
 
 const LEADS_STORAGE_KEY = 'wired_digital_leads';
 const TELEMETRY_EVENTS_KEY = 'wired_site_telemetry_events';
@@ -1366,7 +1372,7 @@ export const SITE_TREE_NODES = {
       path: '/sitemap.xml',
       label: 'Google XML Sitemap + Image Extensions',
       protocol: 'sitemaps.org 0.9 + xmlns:image',
-      status: 'LIVE • 11 INDEXED NODES'
+      status: 'LIVE • 14 PRERENDERED PAGES'
     },
     {
       id: 'ep-robots',
@@ -1392,6 +1398,27 @@ export const SITE_TREE_NODES = {
   ]
 };
 
+// Merge the canonical SEO page data (real paths, short titles, descriptions,
+// tab/section routing) from src/data/seoPages.js into every Site Tree node so
+// the app, the prerender script, sitemap.xml and llms.txt never drift apart.
+[
+  SITE_TREE_NODES.root,
+  ...SITE_TREE_NODES.services,
+  ...SITE_TREE_NODES.localCities,
+  ...SITE_TREE_NODES.caseStudies
+].forEach((node) => {
+  const page = getSeoPageById(node.id);
+  if (!page) return;
+  node.path = page.path;
+  node.canonical = canonicalFor(page);
+  node.pathDisplay = page.path;
+  node.title = page.title;
+  node.description = page.description;
+  node.tab = page.tab;
+  node.section = page.section;
+  node.showIntro = page.showIntro;
+});
+
 export function applySeoRouteMeta(node) {
   if (typeof document === 'undefined' || !node) return;
   if (node.title) {
@@ -1406,32 +1433,41 @@ export function applySeoRouteMeta(node) {
     if (descEl) descEl.setAttribute('content', node.description);
     const ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc) ogDesc.setAttribute('content', node.description);
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute('content', node.description);
   }
   if (node.canonical) {
     const canonEl = document.querySelector('link[rel="canonical"]');
     if (canonEl) canonEl.setAttribute('href', node.canonical);
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', node.canonical);
   }
-  if (typeof window !== 'undefined' && window.history?.replaceState) {
-    const targetUrl = node.query ? `${window.location.pathname}${node.query}` : window.location.pathname;
-    window.history.replaceState({}, '', targetUrl);
+  if (typeof window !== 'undefined' && window.history?.replaceState && node.path) {
+    const current = `${window.location.pathname}${window.location.search}`;
+    if (current !== node.path) {
+      window.history.replaceState({}, '', node.path);
+    }
   }
 }
 
 export function resolveInitialSeoNodeFromUrl() {
   if (typeof window === 'undefined') return null;
-  const search = window.location.search || '';
-  if (!search) return null;
-  const aliasMap = {
-    '?view=working-with-legends': '?view=legends-vault',
-    '?view=ai-lead-chatbots': '?view=ai-chatbots'
-  };
-  const normalized = aliasMap[search] || search;
   const allNodes = [
     ...SITE_TREE_NODES.services,
     ...SITE_TREE_NODES.localCities,
     ...SITE_TREE_NODES.caseStudies
   ];
-  return allNodes.find((n) => n.query === normalized) || null;
+  // 1. Real prerendered paths (/web-design/, /bristol-tn-va-web-design/, ...)
+  const byPath = findSeoPageByPath(window.location.pathname);
+  if (byPath && byPath.id !== 'root') {
+    return allNodes.find((n) => n.id === byPath.id) || null;
+  }
+  // 2. Legacy ?view= / ?city= / ?case= links (also 301-redirected by vercel.json)
+  const byLegacy = findSeoPageByLegacyQuery(window.location.search || '');
+  if (byLegacy) {
+    return allNodes.find((n) => n.id === byLegacy.id) || null;
+  }
+  return null;
 }
 
 export const AI_ENGINE_SHARE = [

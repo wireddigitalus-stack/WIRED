@@ -298,7 +298,7 @@ export default function WebCreationView({ onOpenContact, onNavigateTab }) {
                   <span className="mod-status-pill good">
                     <Zap size={12} fill="#050505" /> AFTER // WIRED AI-MODERNIZED SITE
                   </span>
-                  <span className="mod-score-tag gold">LOAD: 0.36s • AI SCORE: 99/100</span>
+                  <span className="mod-score-tag gold">TARGET: SUB-1s LOAD • 90+ LIGHTHOUSE</span>
                 </div>
                 <div className="mod-col-body">
                   <h3>Custom-Engineered AI &amp; GEO Revenue Engine</h3>

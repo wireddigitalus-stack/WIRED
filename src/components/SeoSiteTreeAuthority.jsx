@@ -257,7 +257,7 @@ export default function SeoSiteTreeAuthority({
                         {SITE_TREE_NODES.services.map((node) => (
                           <li key={node.id}>
                             <a
-                              href={`/${node.query}`}
+                              href={node.path}
                               onClick={(e) => handleNodeClick(e, node)}
                               className={`seo-tree-node-card ${activeSeoNodeId === node.id ? 'is-active' : ''}`}
                             >
@@ -289,12 +289,12 @@ export default function SeoSiteTreeAuthority({
                         {SITE_TREE_NODES.localCities.map((node) => (
                           <li key={node.id}>
                             <a
-                              href={`/${node.query}`}
+                              href={node.path}
                               onClick={(e) => handleNodeClick(e, node)}
                               className={`seo-tree-node-card ${activeSeoNodeId === node.id ? 'is-active' : ''}`}
                             >
                               <div className="seo-node-top">
-                                <span className="seo-node-path">{node.query}</span>
+                                <span className="seo-node-path">{node.path}</span>
                                 <span className="seo-node-zip">ZIP: {node.zipCodes}</span>
                               </div>
                               <div className="seo-node-title">
@@ -321,7 +321,7 @@ export default function SeoSiteTreeAuthority({
                         {SITE_TREE_NODES.caseStudies.map((node) => (
                           <li key={node.id}>
                             <a
-                              href={`/${node.query}`}
+                              href={node.path}
                               onClick={(e) => handleNodeClick(e, node)}
                               className={`seo-tree-node-card ${activeSeoNodeId === node.id ? 'is-active' : ''}`}
                             >
@@ -419,7 +419,7 @@ export default function SeoSiteTreeAuthority({
                       </div>
                       <div className="seo-city-actions">
                         <a
-                          href={`/${cityNode.query}`}
+                          href={cityNode.path}
                           onClick={(e) => handleNodeClick(e, cityNode)}
                           className="seo-city-route-btn"
                         >

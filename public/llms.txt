@@ -32,19 +32,19 @@
 
 ## Full Site Tree & Crawlable Endpoints
 - Main Website: `https://www.wireddigitalcreative.com/`
-- Website Design, Redesign & AI Modernization: `https://www.wireddigitalcreative.com/?view=web-design`
-- Full-Service Digital Marketing & Brand Growth: `https://www.wireddigitalcreative.com/?view=full-service-marketing`
-- Custom Business Dashboards & Live Telemetry: `https://www.wireddigitalcreative.com/?view=custom-dashboards`
-- 24/7 Custom-Trained AI Lead Capture Chatbots: `https://www.wireddigitalcreative.com/?view=ai-lead-chatbots`
-- Global Music & Lyric Video Production: `https://www.wireddigitalcreative.com/?view=video-production`
-- Working With Legends (34+ Artists & Labels): `https://www.wireddigitalcreative.com/?view=working-with-legends`
-- Bristol TN/VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=bristol-tn-va`
-- Johnson City TN Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=johnson-city-tn`
-- Kingsport TN Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=kingsport-tn`
-- Abingdon VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/?city=abingdon-va`
-- Fast Track Bristol TN Case Study: `https://www.wireddigitalcreative.com/?case=fasttrack-bristol`
-- Team Vision LLC Case Study: `https://www.wireddigitalcreative.com/?case=team-vision-llc`
-- Ringger Law Case Study: `https://www.wireddigitalcreative.com/?case=ringger-law`
+- Website Design, Redesign & AI Modernization: `https://www.wireddigitalcreative.com/web-design/`
+- Full-Service Digital Marketing & Brand Growth: `https://www.wireddigitalcreative.com/marketing/`
+- Custom Business Dashboards & Live Telemetry: `https://www.wireddigitalcreative.com/custom-dashboards/`
+- 24/7 Custom-Trained AI Lead Capture Chatbots: `https://www.wireddigitalcreative.com/ai-chatbots/`
+- Global Music & Lyric Video Production: `https://www.wireddigitalcreative.com/video-production/`
+- Working With Legends (34+ Artists & Labels): `https://www.wireddigitalcreative.com/legends/`
+- Bristol TN/VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/bristol-tn-va-web-design/`
+- Johnson City TN Website Design & AI SEO: `https://www.wireddigitalcreative.com/johnson-city-tn-web-design/`
+- Kingsport TN Website Design & AI SEO: `https://www.wireddigitalcreative.com/kingsport-tn-web-design/`
+- Abingdon VA Website Design & AI SEO: `https://www.wireddigitalcreative.com/abingdon-va-web-design/`
+- Fast Track Bristol TN Case Study: `https://www.wireddigitalcreative.com/work/fast-track-bristol/`
+- Team Vision LLC Case Study: `https://www.wireddigitalcreative.com/work/team-vision/`
+- Ringger Law Case Study: `https://www.wireddigitalcreative.com/work/ringger-law/`
 - XML Sitemap: `https://www.wireddigitalcreative.com/sitemap.xml`
 
 ## Direct Contact & Leadership

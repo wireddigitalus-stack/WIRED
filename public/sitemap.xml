@@ -1,132 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
-  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
->
-  <!-- 1. MAIN HUB: AI Website Design, Redesign, Modernization & GEO -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.wireddigitalcreative.com/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://www.wireddigitalcreative.com/wired-og-seal-2026.jpg</image:loc>
-      <image:title>Wired Digital Creative — Website Design, Redesign &amp; AI Modernization (Bristol VA/TN &amp; Tri-Cities)</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.wireddigitalcreative.com/fasttrack-admin-dash.jpg</image:loc>
-      <image:title>Fast Track Automotive Bristol TN — Custom Live Telemetry &amp; Lead Admin Dashboard by Wired Digital</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.wireddigitalcreative.com/teamvision-ai-advisor.jpg</image:loc>
-      <image:title>Team Vision LLC Bristol — 24/7 Custom-Trained Ask VISION AI Space Advisor &amp; Lead Capture Chatbot</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.wireddigitalcreative.com/ringgerlaw-admin-dash.jpg</image:loc>
-      <image:title>Ringger Law (ringgerlaw.com) — Live Database Legal CRM, Court Intakes &amp; 24/7 West TN Debt Triage AI by Wired Digital</image:title>
-    </image:image>
   </url>
-
-  <!-- 2. CORE SERVICE PILLARS (SITELINKS TREE) -->
   <url>
-    <loc>https://www.wireddigitalcreative.com/?view=web-design</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?view=full-service-marketing</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.94</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?view=custom-dashboards</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.93</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?view=ai-chatbots</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.92</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?view=video-production</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.91</priority>
-    <video:video>
-      <video:thumbnail_loc>https://i.ytimg.com/vi/i2yjCTNWJPA/hqdefault.jpg</video:thumbnail_loc>
-      <video:title>Wired Digital Creative — Official Video Production Reel (Rob Neilson)</video:title>
-      <video:description>Official video production showreel for Wired Digital Creative (Directed &amp; Edited by Rob Neilson). Working full-time in the music industry since 2015 delivering music videos, custom animated lyric videos, and visualizers for 34+ legends.</video:description>
-      <video:player_loc>https://www.youtube.com/embed/i2yjCTNWJPA</video:player_loc>
-    </video:video>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?view=legends-vault</loc>
-    <lastmod>2026-10-26</lastmod>
+    <loc>https://www.wireddigitalcreative.com/web-design/</loc>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.89</priority>
+    <priority>0.9</priority>
   </url>
-
-  <!-- 3. LOCAL "WEBSITE DESIGN NEAR ME" TRI-CITIES SERVICE NODES -->
   <url>
-    <loc>https://www.wireddigitalcreative.com/?city=bristol-tn-va</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.92</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?city=johnson-city-tn</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.92</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?city=kingsport-tn</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.92</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?city=abingdon-va</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <!-- 4. LIVE CASE STUDIES -->
-  <url>
-    <loc>https://www.wireddigitalcreative.com/?case=fasttrack-bristol</loc>
-    <lastmod>2026-10-26</lastmod>
+    <loc>https://www.wireddigitalcreative.com/marketing/</loc>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://www.wireddigitalcreative.com/?case=team-vision-llc</loc>
-    <lastmod>2026-10-26</lastmod>
+    <loc>https://www.wireddigitalcreative.com/custom-dashboards/</loc>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://www.wireddigitalcreative.com/?case=ringger-law</loc>
-    <lastmod>2026-10-26</lastmod>
+    <loc>https://www.wireddigitalcreative.com/ai-chatbots/</loc>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/video-production/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/legends/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/bristol-tn-va-web-design/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/johnson-city-tn-web-design/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/kingsport-tn-web-design/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/abingdon-va-web-design/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/work/fast-track-bristol/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.wireddigitalcreative.com/fasttrack-admin-dash.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/work/team-vision/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.wireddigitalcreative.com/teamvision-ai-advisor.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.wireddigitalcreative.com/work/ringger-law/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.wireddigitalcreative.com/ringgerlaw-admin-dash.jpg</image:loc></image:image>
   </url>
 </urlset>

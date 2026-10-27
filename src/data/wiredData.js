@@ -11,8 +11,10 @@ export const BRAND_INFO = {
   phone: '731-616-5121',
   phoneHref: 'tel:+17316165121',
   youtubeUrl: 'https://www.youtube.com/@WiredDigitalCreative',
-  instagramUrl: '', // TODO: add real Instagram profile URL (icon hidden while empty)
-  facebookUrl: '', // TODO: add real Facebook page URL (icon hidden while empty)
+  instagramUrl: 'https://www.instagram.com/wireddigitalcreative/',
+  facebookUrl: 'https://www.facebook.com/WiredDigital',
+  linkedinUrl: 'https://www.linkedin.com/in/wired-%CF%9F-digital-b60361309/',
+  googleBusinessUrl: '', // TODO: add Google Business Profile share link (g.page / maps.app.goo.gl)
   logoSrc: '/WD-Brand-2017.png',
   roundStampSrc: '/WIRED DIGITAL 2024 email.avif',
   // Compressed loop cuts of the 2023 studio reel (original 1080p master: /wired-reel-2023.mp4)

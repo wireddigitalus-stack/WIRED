@@ -12766,3 +12766,9 @@ a {
     font-size: 0.98rem;
   }
 }
+
+/* BLOG link in header nav + mobile drawer (rendered as <a>, styled like the pill buttons) */
+a.island-pill-btn,
+a.mobile-nav-item {
+  text-decoration: none;
+}

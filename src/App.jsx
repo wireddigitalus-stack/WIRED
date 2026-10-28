@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { Menu, X, Zap, Cpu, MapPin, Film, Crown } from 'lucide-react';
+import { Menu, X, Zap, Cpu, MapPin, Film, Crown, BookOpen } from 'lucide-react';
 import { BRAND_INFO } from './data/wiredData';
 import SpiralHero from './components/SpiralHero';
 import Since1999Section from './components/Since1999Section';
@@ -279,6 +279,14 @@ export default function App() {
               <Crown size={13} className="pill-icon-sub" />
               <span>LEGENDS</span>
             </button>
+
+            <a
+              href="/blog/"
+              className={`island-pill-btn ${activeTab === 'blog' ? 'active' : ''}`}
+            >
+              <BookOpen size={13} className="pill-icon-yellow" />
+              <span>BLOG</span>
+            </a>
           </nav>
 
           {/* Right: Socials + Single-Line iOS CTA Pill */}
@@ -371,6 +379,12 @@ export default function App() {
             >
               <Crown size={14} color="#FFEE00" /> WORKING WITH LEGENDS (34)
             </button>
+            <a
+              href="/blog/"
+              className={`mobile-nav-item ${activeTab === 'blog' ? 'active' : ''}`}
+            >
+              <BookOpen size={14} color="#FFEE00" /> BLOG (PRICING GUIDES &amp; CASE STUDIES)
+            </a>
             <button
               type="button"
               className="btn-wired-yellow mobile-drawer-cta"

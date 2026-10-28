@@ -12964,3 +12964,281 @@ a.mobile-nav-item {
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }
+
+/* ============================================================================
+   SITE BRAIN ADMIN TAB — IDE CODE VIEWER, MODERN EDITOR FIELDS & SLIM SCROLLBARS
+   ============================================================================ */
+.wos-slim-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 238, 0, 0.32) rgba(8, 10, 15, 0.65);
+}
+
+.wos-slim-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.wos-slim-scroll::-webkit-scrollbar-track {
+  background: rgba(8, 10, 15, 0.65);
+  border-radius: 999px;
+}
+
+.wos-slim-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  transition: background 0.18s ease;
+}
+
+.wos-slim-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 238, 0, 0.78);
+}
+
+/* IDE-Grade JSON / Code Window */
+.wos-code-window {
+  border-radius: 12px;
+  background: linear-gradient(180deg, #0b0e14 0%, #07090d 100%);
+  border: 1px solid rgba(56, 189, 248, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 26px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.wos-code-window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wos-code-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wos-code-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.wos-code-dot.red {
+  background: #ff5f56;
+}
+.wos-code-dot.amber {
+  background: #ffbd2e;
+}
+.wos-code-dot.green {
+  background: #27c93f;
+}
+
+.wos-code-path {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.03em;
+}
+
+.wos-code-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wos-code-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.67rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.wos-code-tool-btn:hover {
+  border-color: rgba(255, 238, 0, 0.55);
+  color: #ffee00;
+  background: rgba(255, 238, 0, 0.1);
+}
+
+.wos-code-body {
+  padding: 10px 12px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.wos-code-line {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.wos-code-line:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.wos-code-ln {
+  user-select: none;
+  text-align: right;
+  color: rgba(148, 163, 184, 0.42);
+  font-size: 0.68rem;
+}
+
+.wos-code-txt {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e2e8f0;
+}
+
+.wos-json-key {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.wos-json-str {
+  color: #f8fafc;
+}
+
+.wos-json-num {
+  color: #ffee00;
+  font-weight: 700;
+}
+
+.wos-json-bool {
+  color: #30d158;
+  font-weight: 700;
+}
+
+/* Modern Studio Editor Fields (.wos-brain-field) */
+.wos-brain-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 14px;
+  border-radius: 13px;
+  background: linear-gradient(180deg, rgba(14, 18, 26, 0.92) 0%, rgba(8, 10, 15, 0.96) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.wos-brain-field:focus-within {
+  border-color: rgba(255, 238, 0, 0.65);
+  box-shadow:
+    0 0 0 3px rgba(255, 238, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.wos-brain-field.has-error {
+  border-color: rgba(255, 69, 58, 0.65);
+  box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.14);
+}
+
+.wos-brain-field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wos-brain-field-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.78);
+  text-transform: uppercase;
+}
+
+.wos-brain-field-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wos-brain-mini-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.wos-brain-mini-pill.cyan {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.wos-brain-mini-pill.green {
+  background: rgba(48, 209, 88, 0.14);
+  color: #30d158;
+  border-color: rgba(48, 209, 88, 0.35);
+}
+
+.wos-brain-mini-pill.amber {
+  background: rgba(255, 214, 10, 0.15);
+  color: #ffd60a;
+  border-color: rgba(255, 214, 10, 0.38);
+}
+
+.wos-brain-mini-pill.red {
+  background: rgba(255, 69, 58, 0.18);
+  color: #ff453a;
+  border-color: rgba(255, 69, 58, 0.45);
+}
+
+.wos-brain-input,
+.wos-brain-textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+
+.wos-brain-input.mono,
+.wos-brain-textarea.mono {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.82rem;
+}
+
+.wos-brain-input:focus,
+.wos-brain-textarea:focus {
+  background: rgba(0, 0, 0, 0.68);
+  border-color: rgba(255, 238, 0, 0.5);
+}
+
+.wos-brain-textarea {
+  resize: vertical;
+  min-height: 118px;
+  overflow-y: auto;
+}
+

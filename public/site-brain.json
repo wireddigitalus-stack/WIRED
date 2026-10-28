@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-28T20:16:45.033Z",
+  "generatedAt": "2026-10-28T20:27:17.477Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -579,8 +579,8 @@
       {
         "file": "src/components/SiteBrainAdminTab.jsx",
         "name": "SiteBrainAdminTab.jsx",
-        "lines": 1237,
-        "sizeKb": 44.6
+        "lines": 1423,
+        "sizeKb": 52.7
       },
       {
         "file": "src/components/SmartLogo.jsx",
@@ -693,8 +693,8 @@
       {
         "file": "src/styles.css",
         "name": "styles.css",
-        "lines": 12967,
-        "sizeKb": 253.5
+        "lines": 13245,
+        "sizeKb": 259.3
       }
     ]
   },
@@ -718,6 +718,11 @@
     }
   ],
   "recentCommits": [
+    {
+      "hash": "e342c1b",
+      "date": "2026-10-28",
+      "subject": "Add Site Brain knowledge tree, Guardrail Doctor CLI, snapshot rollback, and /#admin Safe Editor tab"
+    },
     {
       "hash": "d42fd2c",
       "date": "2026-10-28",
@@ -787,11 +792,6 @@
       "hash": "870c5be",
       "date": "2026-10-27",
       "subject": "SEO/GEO: prerender 14 real pages (unique title/desc/canonical/H1/copy/JSON-LD) for Google + AI crawlers, 301 legacy ?view/?city/?case URLs, fix schema types & sameAs, shorten tags, hide placeholder socials, relabel unverifiable scores"
-    },
-    {
-      "hash": "4175f67",
-      "date": "2026-10-26",
-      "subject": "Sync sitemap.xml canonical URLs and lastmod for Google Search Console"
     }
   ]
 }

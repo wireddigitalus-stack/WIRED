@@ -45,12 +45,35 @@ const DEFAULT_SANDBOX = {
 
 const wordCount = (str = '') => String(str).trim().split(/\s+/).filter(Boolean).length;
 
+function renderHighlightedJsonLine(line) {
+  const keyMatch = line.match(/^(\s*)"([^"]+)"(:\s*)(.*)$/);
+  if (!keyMatch) {
+    return <span className="wos-code-txt">{line}</span>;
+  }
+  const [, indent, key, colon, rest] = keyMatch;
+  let valueNode = <span className="wos-json-str">{rest}</span>;
+  if (/^(true|false|null),?$/.test(rest.trim())) {
+    valueNode = <span className="wos-json-bool">{rest}</span>;
+  } else if (/^-?\d+(\.\d+)?,?$/.test(rest.trim())) {
+    valueNode = <span className="wos-json-num">{rest}</span>;
+  }
+  return (
+    <span className="wos-code-txt">
+      {indent}
+      <span className="wos-json-key">&quot;{key}&quot;</span>
+      {colon}
+      {valueNode}
+    </span>
+  );
+}
+
 export default function SiteBrainAdminTab() {
   const [brainData, setBrainData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lastDoctorRun, setLastDoctorRun] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedNodeId, setExpandedNodeId] = useState('node-brand-contact');
+  const [expandedCodeNodes, setExpandedCodeNodes] = useState({});
   const [copiedId, setCopiedId] = useState('');
   const [sandbox, setSandbox] = useState(() => {
     try {
@@ -723,31 +746,74 @@ export default function SiteBrainAdminTab() {
                     </div>
 
                     <div>
-                      <div
-                        style={{
-                          fontSize: '0.7rem',
-                          fontWeight: 800,
-                          color: '#38BDF8',
-                          marginBottom: '6px'
-                        }}
-                      >
-                        LIVE EXTRACTED VALUES
+                      <div className="wos-code-window">
+                        <div className="wos-code-window-bar">
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span className="wos-code-dots" aria-hidden="true">
+                              <span className="wos-code-dot red" />
+                              <span className="wos-code-dot amber" />
+                              <span className="wos-code-dot green" />
+                            </span>
+                            <span className="wos-code-path">
+                              {node.primaryFile} // LIVE JSON
+                            </span>
+                          </div>
+
+                          <div className="wos-code-actions">
+                            <button
+                              type="button"
+                              className="wos-code-tool-btn"
+                              onClick={() =>
+                                setExpandedCodeNodes((prev) => ({
+                                  ...prev,
+                                  [node.id]: !prev[node.id]
+                                }))
+                              }
+                            >
+                              <span>
+                                {expandedCodeNodes[node.id] ? 'COMPACT VIEW' : 'EXPAND FULL'}
+                              </span>
+                            </button>
+                            <button
+                              type="button"
+                              className="wos-code-tool-btn"
+                              onClick={() =>
+                                copyText(
+                                  `json-${node.id}`,
+                                  JSON.stringify(node.liveValues, null, 2)
+                                )
+                              }
+                            >
+                              {copiedId === `json-${node.id}` ? (
+                                <Check size={11} />
+                              ) : (
+                                <Copy size={11} />
+                              )}
+                              <span>
+                                {copiedId === `json-${node.id}` ? 'COPIED' : 'COPY JSON'}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div
+                          className="wos-code-body wos-slim-scroll"
+                          style={{
+                            maxHeight: expandedCodeNodes[node.id] ? '540px' : '235px'
+                          }}
+                        >
+                          {JSON.stringify(node.liveValues, null, 2)
+                            .split('\n')
+                            .map((line, lineIdx) => (
+                              <div key={lineIdx} className="wos-code-line">
+                                <span className="wos-code-ln">
+                                  {String(lineIdx + 1).padStart(2, '0')}
+                                </span>
+                                {renderHighlightedJsonLine(line)}
+                              </div>
+                            ))}
+                        </div>
                       </div>
-                      <pre
-                        style={{
-                          margin: 0,
-                          padding: '10px 12px',
-                          borderRadius: '8px',
-                          background: 'rgba(0,0,0,0.45)',
-                          border: '1px solid rgba(255,255,255,0.08)',
-                          color: '#E2E8F0',
-                          fontSize: '0.72rem',
-                          maxHeight: '190px',
-                          overflow: 'auto'
-                        }}
-                      >
-                        {JSON.stringify(node.liveValues, null, 2)}
-                      </pre>
                     </div>
                   </div>
                 )}
@@ -844,106 +910,224 @@ export default function SiteBrainAdminTab() {
           </div>
         )}
 
+        {/* Compact Row: Contact & 3-Tier Flat-Rate Pricing */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
             gap: '12px'
           }}
         >
-          <div className="footer-input-group">
-            <label>STUDIO PHONE (SYNCS 5 FILES)</label>
+          <div
+            className={`wos-brain-field ${
+              !/^\d{3}-\d{3}-\d{4}$/.test(sandbox.phone.trim()) ? 'has-error' : ''
+            }`}
+          >
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Studio Phone</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill cyan">SYNCS 5 FILES</span>
+              </span>
+            </div>
             <input
               type="text"
+              className="wos-brain-input mono"
               value={sandbox.phone}
               onChange={(e) => setSandbox({ ...sandbox, phone: e.target.value })}
             />
           </div>
 
-          <div className="footer-input-group">
-            <label>STUDIO EMAIL (SYNCS 5 FILES)</label>
+          <div
+            className={`wos-brain-field ${
+              !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sandbox.email.trim()) ? 'has-error' : ''
+            }`}
+          >
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Studio Email</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill cyan">SYNCS 5 FILES</span>
+              </span>
+            </div>
             <input
               type="text"
+              className="wos-brain-input mono"
               value={sandbox.email}
               onChange={(e) => setSandbox({ ...sandbox, email: e.target.value })}
             />
           </div>
 
-          <div className="footer-input-group">
-            <label>TIER 1: LOCAL LAUNCH PRICE</label>
+          <div className="wos-brain-field">
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Tier 1: Local Launch</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill green">FLAT-RATE</span>
+              </span>
+            </div>
             <input
               type="text"
+              className="wos-brain-input mono"
               value={sandbox.tier1Price}
               onChange={(e) => setSandbox({ ...sandbox, tier1Price: e.target.value })}
             />
           </div>
 
-          <div className="footer-input-group">
-            <label>TIER 2: GROWTH + 24/7 AI BOT PRICE</label>
+          <div className="wos-brain-field">
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Tier 2: Growth + 24/7 AI Bot</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill green">FLAT-RATE</span>
+              </span>
+            </div>
             <input
               type="text"
+              className="wos-brain-input mono"
               value={sandbox.tier2Price}
               onChange={(e) => setSandbox({ ...sandbox, tier2Price: e.target.value })}
             />
           </div>
 
-          <div className="footer-input-group">
-            <label>TIER 3: CUSTOM PLATFORM + DASH PRICE</label>
+          <div className="wos-brain-field">
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Tier 3: Custom Platform + Dash</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill green">FLAT-RATE</span>
+              </span>
+            </div>
             <input
               type="text"
+              className="wos-brain-input mono"
               value={sandbox.tier3Price}
               onChange={(e) => setSandbox({ ...sandbox, tier3Price: e.target.value })}
             />
           </div>
-
-          <div className="footer-input-group">
-            <label>FAST TRACK CARD HEADLINE</label>
-            <input
-              type="text"
-              value={sandbox.fastTrackHeadline}
-              onChange={(e) => setSandbox({ ...sandbox, fastTrackHeadline: e.target.value })}
-            />
-          </div>
         </div>
 
+        {/* Wide Row: Case Study Card Headlines (No Horizontal Clipping) */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
             gap: '12px',
             marginTop: '12px'
           }}
         >
-          <div className="footer-input-group">
-            <label>
-              TEAM VISION HEADLINE (GUARDRAIL: KEEP LOW-KEY, NO HYPE, ≤ 22 WORDS)
-            </label>
+          <div className="wos-brain-field">
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Fast Track Automotive — Home Headline</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill">
+                  {wordCount(sandbox.fastTrackHeadline)} WORDS
+                </span>
+              </span>
+            </div>
             <input
               type="text"
+              className="wos-brain-input"
+              value={sandbox.fastTrackHeadline}
+              onChange={(e) => setSandbox({ ...sandbox, fastTrackHeadline: e.target.value })}
+            />
+          </div>
+
+          <div
+            className={`wos-brain-field ${
+              wordCount(sandbox.teamVisionHeadline) > 22 ? 'has-error' : ''
+            }`}
+          >
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">Team Vision LLC — Low-Key Home Headline</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill cyan">GUARDRAIL: LOW-KEY</span>
+                <span
+                  className={`wos-brain-mini-pill ${
+                    wordCount(sandbox.teamVisionHeadline) <= 22 ? 'green' : 'red'
+                  }`}
+                >
+                  {wordCount(sandbox.teamVisionHeadline)} / 22 WORDS
+                </span>
+              </span>
+            </div>
+            <input
+              type="text"
+              className="wos-brain-input"
               value={sandbox.teamVisionHeadline}
               onChange={(e) => setSandbox({ ...sandbox, teamVisionHeadline: e.target.value })}
             />
           </div>
+        </div>
 
-          <div className="footer-input-group">
-            <label>
-              WIRED-64 POLITE SIGN-OFF ({sandboxValidation.signoffWords}/45 WORDS • MUST INCLUDE
-              &quot;: )&quot;)
-            </label>
+        {/* Auto-Expanding Multi-Line Terminal Editors for WIRED-64 Replies */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '12px',
+            marginTop: '12px'
+          }}
+        >
+          <div
+            className={`wos-brain-field ${
+              sandboxValidation.signoffWords > 45 ? 'has-error' : ''
+            }`}
+          >
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">WIRED-64 Polite Sign-Off Reply</span>
+              <span className="wos-brain-field-badges">
+                <span
+                  className={`wos-brain-mini-pill ${
+                    sandbox.botSignoffReply.includes(': )') ? 'green' : 'amber'
+                  }`}
+                >
+                  {sandbox.botSignoffReply.includes(': )') ? '✓ : ) ACTIVE' : 'MISSING : )'}
+                </span>
+                <span
+                  className={`wos-brain-mini-pill ${
+                    sandboxValidation.signoffWords <= 45
+                      ? sandboxValidation.signoffWords >= 38
+                        ? 'amber'
+                        : 'green'
+                      : 'red'
+                  }`}
+                >
+                  {sandboxValidation.signoffWords} / 45 WORDS
+                </span>
+              </span>
+            </div>
             <textarea
-              rows={3}
+              className="wos-brain-textarea mono wos-slim-scroll"
+              rows={Math.max(4, sandbox.botSignoffReply.split('\n').length + 1)}
               value={sandbox.botSignoffReply}
               onChange={(e) => setSandbox({ ...sandbox, botSignoffReply: e.target.value })}
             />
           </div>
 
-          <div className="footer-input-group">
-            <label>
-              WIRED-64 PRICING REPLY ({sandboxValidation.sampleWords}/45 WORDS • NO TEAM VISION
-              PITCH)
-            </label>
+          <div
+            className={`wos-brain-field ${
+              sandboxValidation.sampleWords > 45 ||
+              /team vision|ask vision/i.test(sandbox.botSampleReply)
+                ? 'has-error'
+                : ''
+            }`}
+          >
+            <div className="wos-brain-field-head">
+              <span className="wos-brain-field-label">WIRED-64 Pricing Topic Reply</span>
+              <span className="wos-brain-field-badges">
+                <span className="wos-brain-mini-pill cyan">NO TEAM VISION PITCH</span>
+                <span
+                  className={`wos-brain-mini-pill ${
+                    sandboxValidation.sampleWords <= 45
+                      ? sandboxValidation.sampleWords >= 38
+                        ? 'amber'
+                        : 'green'
+                      : 'red'
+                  }`}
+                >
+                  {sandboxValidation.sampleWords} / 45 WORDS
+                </span>
+              </span>
+            </div>
             <textarea
-              rows={3}
+              className="wos-brain-textarea mono wos-slim-scroll"
+              rows={Math.max(5, sandbox.botSampleReply.split('\n').length + 1)}
               value={sandbox.botSampleReply}
               onChange={(e) => setSandbox({ ...sandbox, botSampleReply: e.target.value })}
             />
@@ -1181,13 +1365,15 @@ export default function SiteBrainAdminTab() {
           </div>
 
           <div
+            className="wos-slim-scroll"
             style={{
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
               marginTop: '10px',
               maxHeight: '320px',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              paddingRight: '4px'
             }}
           >
             {(brainData?.recentCommits || []).map((c) => (

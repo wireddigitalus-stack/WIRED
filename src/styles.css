@@ -379,6 +379,106 @@ a {
   }
 }
 
+/* Large-desktop scaling: wider, roomier nav for 15" MacBook Pro (1440–1728px)
+   and 27" displays (1920–2560px+) instead of a narrow 1280px bar. */
+@media (min-width: 1400px) {
+  .ios-dynamic-island-nav {
+    max-width: 1560px;
+    min-height: 64px;
+    padding: 7px 20px;
+    gap: 20px;
+  }
+  .island-raven-ring {
+    width: 40px;
+    height: 40px;
+  }
+  .island-brand-title {
+    font-size: 1rem;
+  }
+  .island-nav-pills {
+    gap: 6px;
+    padding: 5px;
+    border-radius: 14px;
+  }
+  .island-pill-btn {
+    padding: 8px 18px;
+    font-size: 0.82rem;
+    border-radius: 10px;
+    gap: 7px;
+  }
+  .island-pill-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+  .island-cta-pill {
+    padding: 10px 22px;
+    font-size: 0.8rem;
+    gap: 7px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .ios-burton-header-wrap {
+    padding: 16px 32px 10px;
+  }
+  .ios-dynamic-island-nav {
+    max-width: 1840px;
+    min-height: 72px;
+    padding: 8px 26px;
+    gap: 28px;
+  }
+  .island-raven-ring {
+    width: 46px;
+    height: 46px;
+  }
+  .island-brand-title {
+    font-size: 1.12rem;
+  }
+  .inline-yellow-bolt {
+    width: 20px;
+    height: 29px;
+  }
+  .island-nav-pills {
+    gap: 8px;
+    padding: 6px;
+  }
+  .island-pill-btn {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+  .island-pill-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .island-cta-pill {
+    padding: 12px 28px;
+    font-size: 0.88rem;
+  }
+  .island-cta-pill svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (min-width: 2400px) {
+  .ios-dynamic-island-nav {
+    max-width: 2200px;
+    min-height: 80px;
+  }
+  .island-brand-title {
+    font-size: 1.24rem;
+  }
+  .island-pill-btn {
+    padding: 11px 28px;
+    font-size: 1rem;
+  }
+  .island-cta-pill {
+    padding: 13px 32px;
+    font-size: 0.98rem;
+  }
+}
+
 /* ==========================================================================
    2. FULL-WIDTH TOP SITE BANNER (TIM BURTON OPTICAL SWIRL × iOS GLASS DOCK)
    ========================================================================== */

@@ -14,7 +14,7 @@ export const BRAND_INFO = {
   instagramUrl: 'https://www.instagram.com/wireddigitalcreative/',
   facebookUrl: 'https://www.facebook.com/WiredDigital',
   linkedinUrl: 'https://www.linkedin.com/in/wired-%CF%9F-digital-b60361309/',
-  googleBusinessUrl: '', // TODO: add Google Business Profile share link (g.page / maps.app.goo.gl)
+  googleBusinessUrl: 'https://www.google.com/maps?cid=9585866241141725780',
   logoSrc: '/WD-Brand-2017.png',
   roundStampSrc: '/WIRED DIGITAL 2024 email.avif',
   // Compressed loop cuts of the 2023 studio reel (original 1080p master: /wired-reel-2023.mp4)

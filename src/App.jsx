@@ -12,6 +12,7 @@ import SeoSiteTreeAuthority from './components/SeoSiteTreeAuthority';
 import BodyCtaContactCard from './components/BodyCtaContactCard';
 import SeoPageIntro from './components/SeoPageIntro';
 import { getSeoPageById } from './data/seoPages';
+import { parseBlogPath } from './data/blogPosts';
 import {
   logTelemetryEvent,
   SITE_TREE_NODES,
@@ -24,14 +25,19 @@ const VideoProductionView = lazy(() => import('./components/VideoProductionView'
 const AdminDashboardView = lazy(() => import('./components/AdminDashboardView'));
 const VideoLightboxModal = lazy(() => import('./components/VideoLightboxModal'));
 const ContactModal = lazy(() => import('./components/ContactModal'));
+const BlogView = lazy(() => import('./components/BlogView'));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window === 'undefined') return 'home';
     if (window.location.hash === '#admin') return 'admin';
+    if (parseBlogPath(window.location.pathname)) return 'blog';
     const initialNode = resolveInitialSeoNodeFromUrl();
     return initialNode?.tab || 'home';
-  }); // 'home' | 'web' | 'video' | 'legends' | 'admin'
+  }); // 'home' | 'web' | 'video' | 'legends' | 'blog' | 'admin'
+  const [blogSlug] = useState(() =>
+    typeof window === 'undefined' ? null : parseBlogPath(window.location.pathname)?.slug || null
+  );
   const [activeSection, setActiveSection] = useState(() => {
     const initialNode = resolveInitialSeoNodeFromUrl();
     return initialNode?.section || null;
@@ -444,6 +450,12 @@ export default function App() {
               onNavigateTab={handleNavigateTab}
             />
           </>
+        )}
+
+        {activeTab === 'blog' && (
+          <Suspense fallback={null}>
+            <BlogView slug={blogSlug} />
+          </Suspense>
         )}
 
         {activeTab === 'admin' && (

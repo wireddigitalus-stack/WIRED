@@ -17,6 +17,15 @@ import {
   BUSINESS_FACTS,
   canonicalFor
 } from '../src/data/seoPages.js';
+import {
+  BLOG_POSTS,
+  BLOG_INDEX,
+  BLOG_AUTHOR,
+  blogPostPath,
+  publishedPosts,
+  renderBlogIndexHtml,
+  renderBlogPostHtml
+} from '../src/data/blogPosts.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.resolve(__dirname, '../dist');
@@ -198,66 +207,141 @@ function buildStaticBody(page) {
     </section>`;
 }
 
-function renderPage(template, page) {
-  const url = canonicalFor(page);
-  const id = page.id;
+function renderDoc(template, doc) {
+  const { id, url, title, description, ld, body, noindex, ogType, image } = doc;
   let html = template;
 
-  html = setTag(html, /<title>[\s\S]*?<\/title>/, `<title>${esc(page.title)}</title>`, 'title', id);
-  html = setTag(
-    html,
-    /(<meta\s+name="description"\s+content=")[^"]*(")/,
-    `$1${esc(page.description)}$2`,
-    'meta description',
-    id
-  );
-  html = setTag(
-    html,
-    /(<link\s+rel="canonical"[^>]*href=")[^"]*(")/,
-    `$1${url}$2`,
-    'canonical',
-    id
-  );
+  html = setTag(html, /<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`, 'title', id);
+  html = setTag(html, /(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${esc(description)}$2`, 'meta description', id);
+  html = setTag(html, /(<link\s+rel="canonical"[^>]*href=")[^"]*(")/, `$1${url}$2`, 'canonical', id);
   html = setTag(html, /(property="og:url"\s+content=")[^"]*(")/, `$1${url}$2`, 'og:url', id);
-  html = setTag(
-    html,
-    /(property="og:title"\s+content=")[^"]*(")/,
-    `$1${esc(page.title)}$2`,
-    'og:title',
-    id
-  );
-  html = setTag(
-    html,
-    /(property="og:description"\s+content=")[^"]*(")/,
-    `$1${esc(page.description)}$2`,
-    'og:description',
-    id
-  );
-  html = setTag(
-    html,
-    /(name="twitter:title"\s+content=")[^"]*(")/,
-    `$1${esc(page.title)}$2`,
-    'twitter:title',
-    id
-  );
-  html = setTag(
-    html,
-    /(name="twitter:description"\s+content=")[^"]*(")/,
-    `$1${esc(page.description)}$2`,
-    'twitter:description',
-    id
-  );
+  html = setTag(html, /(property="og:title"\s+content=")[^"]*(")/, `$1${esc(title)}$2`, 'og:title', id);
+  html = setTag(html, /(property="og:description"\s+content=")[^"]*(")/, `$1${esc(description)}$2`, 'og:description', id);
+  html = setTag(html, /(name="twitter:title"\s+content=")[^"]*(")/, `$1${esc(title)}$2`, 'twitter:title', id);
+  html = setTag(html, /(name="twitter:description"\s+content=")[^"]*(")/, `$1${esc(description)}$2`, 'twitter:description', id);
+  if (ogType) {
+    html = setTag(html, /(property="og:type"\s+content=")[^"]*(")/, `$1${ogType}$2`, 'og:type', id);
+  }
+  if (image) {
+    const abs = `${SITE_BASE}${image}`;
+    html = html
+      .replace(/(property="og:image"\s+content=")[^"]*(")/, `$1${abs}$2`)
+      .replace(/(property="og:image:secure_url"\s+content=")[^"]*(")/, `$1${abs}$2`)
+      .replace(/(name="twitter:image"\s+content=")[^"]*(")/, `$1${abs}$2`);
+  }
+  if (noindex) {
+    html = html
+      .replace(/(<meta\s+name="robots"\s+content=")[^"]*(")/, '$1noindex, nofollow$2')
+      .replace(/(<meta\s+name="googlebot"\s+content=")[^"]*(")/, '$1noindex, nofollow$2');
+  }
   html = setTag(
     html,
     /(<script type="application\/ld\+json" id="ld-page">)[\s\S]*?(<\/script>)/,
-    `$1\n${buildPageJsonLd(page)}\n    $2`,
+    `$1\n${ld}\n    $2`,
     'ld-page JSON-LD',
     id
   );
-  html = setTag(html, /<!--seo-static-->/, buildStaticBody(page), 'seo-static placeholder', id);
-
+  html = setTag(html, /<!--seo-static-->/, body, 'seo-static placeholder', id);
   return html;
 }
+
+function renderPage(template, page) {
+  return renderDoc(template, {
+    id: page.id,
+    url: canonicalFor(page),
+    title: page.title,
+    description: page.description,
+    ld: buildPageJsonLd(page),
+    body: buildStaticBody(page),
+    image: page.image
+  });
+}
+
+// ------------------------------------------------------------------ BLOG
+function blogBreadcrumb(items) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item }))
+  };
+}
+
+function buildBlogIndexJsonLd() {
+  const url = `${SITE_BASE}${BLOG_INDEX.path}`;
+  return JSON.stringify(
+    {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Blog',
+          '@id': `${url}#blog`,
+          url,
+          name: BLOG_INDEX.h1,
+          description: BLOG_INDEX.description,
+          publisher: { '@id': ORG_ID },
+          blogPost: publishedPosts().map((p) => ({
+            '@type': 'BlogPosting',
+            headline: p.h1,
+            url: `${SITE_BASE}${blogPostPath(p)}`,
+            datePublished: p.datePublished
+          }))
+        },
+        blogBreadcrumb([
+          ['Home', `${SITE_BASE}/`],
+          ['Blog', url]
+        ])
+      ]
+    },
+    null,
+    2
+  );
+}
+
+function buildBlogPostJsonLd(post) {
+  const url = `${SITE_BASE}${blogPostPath(post)}`;
+  const graph = [
+    {
+      '@type': 'BlogPosting',
+      '@id': `${url}#article`,
+      mainEntityOfPage: url,
+      headline: post.h1,
+      description: post.description,
+      image: `${SITE_BASE}${post.cover}`,
+      datePublished: post.datePublished,
+      dateModified: post.dateModified || post.datePublished,
+      inLanguage: 'en-US',
+      keywords: post.tags.join(', '),
+      author: {
+        '@type': 'Person',
+        '@id': `${SITE_BASE}/#founder`,
+        name: BLOG_AUTHOR.name,
+        jobTitle: BLOG_AUTHOR.role,
+        url: `${SITE_BASE}/`
+      },
+      publisher: { '@id': ORG_ID },
+      isPartOf: { '@id': `${SITE_BASE}${BLOG_INDEX.path}#blog` }
+    },
+    blogBreadcrumb([
+      ['Home', `${SITE_BASE}/`],
+      ['Blog', `${SITE_BASE}${BLOG_INDEX.path}`],
+      [post.h1, url]
+    ])
+  ];
+  if (post.faqs?.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: post.faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a }
+      }))
+    });
+  }
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
+}
+
+const wrapStatic = (inner) =>
+  `\n    <section class="seo-page-intro blog-view seo-static"><div class="section-container">${inner}</div></section>`;
 
 function buildSitemap() {
   const today = new Date().toISOString().slice(0, 10);
@@ -275,9 +359,19 @@ function buildSitemap() {
     }
   </url>`
   ).join('\n');
+  const posts = publishedPosts();
+  const blogUrls = posts.length
+    ? [
+        `  <url>\n    <loc>${SITE_BASE}${BLOG_INDEX.path}</loc>\n    <lastmod>${posts[0].dateModified || posts[0].datePublished}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`,
+        ...posts.map(
+          (p) =>
+            `  <url>\n    <loc>${SITE_BASE}${blogPostPath(p)}</loc>\n    <lastmod>${p.dateModified || p.datePublished}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n    <image:image><image:loc>${SITE_BASE}${p.cover}</image:loc></image:image>\n  </url>`
+        )
+      ].join('\n')
+    : '';
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${urls}
+${urls}${blogUrls ? `\n${blogUrls}` : ''}
 </urlset>
 `;
 }
@@ -305,6 +399,42 @@ function main() {
       .split(/\s+/)
       .filter(Boolean).length;
     console.log(`  ✓ ${page.path.padEnd(32)} ${String(words).padStart(4)} words`);
+  }
+
+  // Blog index + posts
+  const hasPublished = publishedPosts().length > 0;
+  const blogDocs = [
+    {
+      id: 'blog-index',
+      path: BLOG_INDEX.path,
+      url: `${SITE_BASE}${BLOG_INDEX.path}`,
+      title: BLOG_INDEX.title,
+      description: BLOG_INDEX.description,
+      ld: buildBlogIndexJsonLd(),
+      body: wrapStatic(renderBlogIndexHtml()),
+      noindex: !hasPublished
+    },
+    ...BLOG_POSTS.map((post) => ({
+      id: post.slug,
+      path: blogPostPath(post),
+      url: `${SITE_BASE}${blogPostPath(post)}`,
+      title: post.title,
+      description: post.description,
+      ld: buildBlogPostJsonLd(post),
+      body: wrapStatic(renderBlogPostHtml(post)),
+      noindex: Boolean(post.draft),
+      ogType: 'article',
+      image: post.cover
+    }))
+  ];
+  for (const doc of blogDocs) {
+    if (doc.title.length > 60) console.warn(`  ⚠ [${doc.id}] title ${doc.title.length} chars`);
+    if (doc.description.length > 155) console.warn(`  ⚠ [${doc.id}] description ${doc.description.length} chars`);
+    const outDir = path.join(DIST, doc.path);
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(path.join(outDir, 'index.html'), renderDoc(template, doc));
+    const words = doc.body.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+    console.log(`  ✓ ${doc.path.padEnd(32)} ${String(words).padStart(4)} words${doc.noindex ? '  (noindex draft)' : ''}`);
   }
 
   fs.writeFileSync(path.join(DIST, 'sitemap.xml'), buildSitemap());

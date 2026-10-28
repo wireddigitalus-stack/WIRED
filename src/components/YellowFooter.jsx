@@ -18,6 +18,7 @@ import {
   Megaphone
 } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
+import { publishedPosts } from '../data/blogPosts';
 import { addLead, logTelemetryEvent } from '../utils/telemetry';
 
 const QUICK_SERVICES = [
@@ -441,6 +442,12 @@ export default function YellowFooter({ onOpenContact, onNavigateTab }) {
               <button type="button" onClick={() => onNavigateTab('legends')}>
                 LEGENDS
               </button>
+              {publishedPosts().length > 0 && (
+                <>
+                  <span className="footer-dot">•</span>
+                  <a href="/blog/" className="footer-blog-link">BLOG</a>
+                </>
+              )}
               <span className="footer-dot">•</span>
               <button type="button" onClick={onOpenContact}>
                 START A PROJECT

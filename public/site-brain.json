@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-28T20:39:22.294Z",
+  "generatedAt": "2026-10-28T21:09:16.276Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -72,7 +72,7 @@
     "caseStudiesCount": 3,
     "legendsCount": 34,
     "featuredVideosCount": 4,
-    "snapshotsCount": 1
+    "snapshotsCount": 2
   },
   "knowledgeTree": [
     {
@@ -700,6 +700,23 @@
   },
   "snapshots": [
     {
+      "id": "snap-20261028-210908",
+      "label": "Before BRAIN.md accuracy fixes",
+      "createdAt": "2026-10-28T21:09:08.812Z",
+      "filesCount": 9,
+      "files": [
+        "BRAIN.md",
+        "src/data/wiredData.js",
+        "src/data/seoPages.js",
+        "src/data/blogPosts.js",
+        "src/utils/wired64Brain.js",
+        "src/components/Since1999Section.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/WebCreationView.jsx",
+        "index.html"
+      ]
+    },
+    {
       "id": "snap-20261028-201105",
       "label": "Baseline checkpoint (all guardrails green)",
       "createdAt": "2026-10-28T20:11:05.156Z",
@@ -718,6 +735,11 @@
     }
   ],
   "recentCommits": [
+    {
+      "hash": "d99f89f",
+      "date": "2026-10-28",
+      "subject": "Collapse Supabase connection card into a compact status bar by default in /#admin Leads CRM"
+    },
     {
       "hash": "b59c568",
       "date": "2026-10-28",
@@ -787,11 +809,6 @@
       "hash": "bcaf5a7",
       "date": "2026-10-27",
       "subject": "Link Google Business Profile (CID) in schema sameAs/hasMap and llms.txt"
-    },
-    {
-      "hash": "f925f45",
-      "date": "2026-10-27",
-      "subject": "Add real Instagram, Facebook & LinkedIn profiles (footer/header icons, schema sameAs, llms.txt)"
     }
   ]
 }

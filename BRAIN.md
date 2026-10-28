@@ -20,17 +20,21 @@
 
 ---
 
-## 2. Two-Ring Knowledge Tree (Where Everything Lives)
+## 2. 3-Ring Knowledge Tree (Where Everything Lives)
+
+- **Ring 1 — Safe Data & Content**: the 4 data files below. Edit here first.
+- **Ring 2 — UI Components**: view/section components (edit with care, keep visuals & animations intact).
+- **Ring 3 — Core Engine (locked unless explicitly asked)**: `src/App.jsx` (routing + lazy chunks), `scripts/prerender.mjs`, `scripts/build-brain.mjs`, `scripts/brain-snapshot.mjs`, `vite.config.js`, `vercel.json`.
 
 ### Ring 1 — Safe Data & Content Layer (Client/Admin Editable — Edit Here First!)
 95% of content, pricing, SEO, blog, and chatbot updates live in these 4 structured files:
 
 | File | Controls What | Key Exports |
 | :--- | :--- | :--- |
-| [`src/data/wiredData.js`](file:///Users/robertneilson/Desktop/WDC/src/data/wiredData.js) | Brand contact info, 3 Home case studies, 3 AI/SEO pillars, 34 Legends Vault logos, 4 featured YouTube videos | `BRAND_INFO`, `TRI_CITIES_CASE_STUDIES`, `AI_SEO_PILLARS`, `LEGENDS_VAULT`, `FEATURED_WORK` |
-| [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js) | All 14 prerendered SEO/GEO landing pages, titles, meta descriptions, FAQs, 3 pricing tiers, social/GBP URLs | `SEO_PAGES`, `PRICING_TIERS`, `SOCIAL_URLS`, `GBP_URL`, `getSeoPageById` |
+| [`src/data/wiredData.js`](file:///Users/robertneilson/Desktop/WDC/src/data/wiredData.js) | Brand contact info, 3 Home case studies, 3 AI/SEO pillars, 34 Legends Vault logos, 4 featured YouTube videos | `BRAND_INFO` (incl. social + `googleBusinessUrl`), `TRI_CITIES_CASE_STUDIES`, `AI_SEO_PILLARS`, `CLIENT_LOGOS` (34 legends), `FEATURED_WORK`, `YOUTUBE_CHANNEL_DATA` |
+| [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js) | All 14 prerendered SEO/GEO landing pages, titles, meta descriptions, FAQs, 3 pricing tiers (internal `PRICING_SECTION` bullets) | `SITE_BASE`, `BUSINESS_FACTS`, `SEO_PAGES`, `getSeoPageById`, `canonicalFor`, `findSeoPageByPath` |
 | [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js) | Company blog index (`/blog/`) and all blog articles (`/blog/<slug>/`), including `draft: true/false` flag | `BLOG_AUTHOR`, `BLOG_INDEX`, `BLOG_POSTS`, `renderBlogPostHtml` |
-| [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js) | `WIRED-64` chatbot brain: 16 topic handlers, 3-question lead capture state machine, polite sign-off, knowledge cards | `generateWired64Reply`, `nextLeadCaptureState`, `KNOWLEDGE_CARDS`, `QUICK_PROMPTS` |
+| [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js) | `WIRED-64` chatbot brain: 16 topic handlers, 3-question lead capture state machine, polite sign-off, knowledge cards | `wired64Respond`, `createChatState`, `formatScanSummary`, `WIRED64_INTRO`, `PHONE`, `EMAIL` (topics live in internal `TOPICS` array) |
 
 ### Ring 2 — UI Components, Routing & Build Engine
 
@@ -40,7 +44,7 @@
 | **Home Top Swirl Banner** | [`src/components/SpiralHero.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/SpiralHero.jsx) | Tim Burton optical swirl SVG + `WIRED ⚡ DIGITAL` lockup + `creative + intelligent + fast` tagline |
 | **Home 50/50 Reel + Stamp** | [`src/components/Since1999Section.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/Since1999Section.jsx) | Left: studio reel loop (`wired-reel-360.mp4` mobile / `wired-reel-720.mp4` desktop). Right: circular stamp + `SINCE 1999` manifesto |
 | **Recent Work & Live Demo** | [`src/components/AiSeoDashboardShowcase.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/AiSeoDashboardShowcase.jsx) | `variant="home"` → 3 slim Recent Work cards + 3 service cards + city links. `variant="demo"` → interactive live dashboard demo (shown on `/web-design/`) |
-| **Web Design Subpage** | [`src/components/WebCreationView.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/WebCreationView.jsx) | `/web-design/` view, 6-pillar bento grid, 3-tier pricing cards, embedded `WebsiteAiGraderCard` |
+| **Web Design Subpage** | [`src/components/WebCreationView.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/WebCreationView.jsx) | `/web-design/` view, 6-pillar bento grid, before/after slider, embedded `WebsiteAiGraderCard` |
 | **Video Subpage** | [`src/components/VideoProductionView.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/VideoProductionView.jsx) | `/video-production/` view, playlists (`Official Music Videos`, `Lyric Videos`, `Promo`), client quote calculator |
 | **34 Legends Vault** | [`src/components/LegendsWall.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/LegendsWall.jsx) + [`src/components/SmartLogo.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/SmartLogo.jsx) | 34 iconic artist/label logos with automatic canvas background removal & `IntersectionObserver` lazy gate |
 | **Video Screening Room** | [`src/components/WorkScreeningRoom.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/WorkScreeningRoom.jsx) | 4 featured widescreen music/lyric videos with viewport-gated YouTube thumbnails |
@@ -56,13 +60,13 @@
 ## 3. "If You Change X → Also Update Y" Sync Matrix
 
 1. **Changing Pricing Tiers (`$1,850–$3,500`, `$3,500–$6,500`, `$5,500–$12,000+`)**:
-   - Update `PRICING_TIERS` in [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js)
-   - Update the 3 pricing cards in [`src/components/WebCreationView.jsx`](file:///Users/robertneilson/Desktop/WDC/src/components/WebCreationView.jsx)
-   - Update `pricing` topic + `KNOWLEDGE_CARDS.pricing` in [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js)
+   - Update `PRICING_SECTION.bullets` in [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js)
+   - Update the `pricing` topic in the `TOPICS` array of [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js)
+   - Update the `PRICING_TIERS` mirror in [`scripts/build-brain.mjs`](file:///Users/robertneilson/Desktop/WDC/scripts/build-brain.mjs) (used by the Guardrail Doctor)
    - Update pricing callout/table in [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js) (`website-cost-tri-cities`)
 2. **Changing Phone (`731-616-5121`) or Email (`WiredDigitalUS@gmail.com`)**:
    - Update `BRAND_INFO` in [`src/data/wiredData.js`](file:///Users/robertneilson/Desktop/WDC/src/data/wiredData.js)
-   - Update `PHONE` / `EMAIL` in [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js), [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js), [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js), and JSON-LD in [`index.html`](file:///Users/robertneilson/Desktop/WDC/index.html)
+   - Update `BUSINESS_FACTS` in [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js), `PHONE` in [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js), `PHONE` / `EMAIL` in [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js), and JSON-LD in [`index.html`](file:///Users/robertneilson/Desktop/WDC/index.html)
 3. **Adding a New Blog Post**:
    - Add an entry to `BLOG_POSTS` in [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js) (`draft: true` to preview privately at `/blog/<slug>/`, `draft: false` to publish + auto-include in `/blog/` and `sitemap.xml`)
    - Run `npm run build`

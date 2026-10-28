@@ -16,6 +16,14 @@ import {
 } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
 import { addLead, logTelemetryEvent } from '../utils/telemetry';
+import { runWebsiteDiagnostic } from '../utils/websiteDiagnostic';
+import {
+  wired64Respond,
+  createChatState,
+  formatScanSummary,
+  extractDomainUrl,
+  WIRED64_INTRO
+} from '../utils/wired64Brain';
 
 const CARTRIDGES = [
   {
@@ -23,28 +31,28 @@ const CARTRIDGES = [
     code: 'CART_01',
     title: 'AI SITE MODERNIZATION & GEO',
     subtitle: 'KEEP PACE WITH AI-ERA SEARCH',
-    prompt: 'I want to modernize my website and rank in AI Search (GEO) & Google.'
+    prompt: 'I want a new website that ranks on Google and in AI search.'
   },
   {
     id: 'dash',
     code: 'CART_02',
     title: 'CUSTOM DASH & 24/7 AI BOT',
-    subtitle: 'LIKE FAST TRACK & TEAM VISION',
-    prompt: 'I want a custom live admin dashboard or a 24/7 custom-trained AI lead chatbot.'
+    subtitle: 'LIKE FAST TRACK & RINGGER LAW',
+    prompt: 'Tell me about AI chatbots.'
   },
   {
     id: 'scan',
     code: 'CART_03',
-    title: 'SCAN MY CURRENT WEBSITE',
-    subtitle: '64-BIT AI & SEO DIAGNOSTIC',
-    prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.'
+    title: 'CHECK MY CURRENT WEBSITE',
+    subtitle: 'QUICK SPEED & SEO LOOK',
+    prompt: 'Check my current website.'
   },
   {
     id: 'video',
     code: 'CART_04',
     title: 'GLOBAL MUSIC / LYRIC VIDEO',
     subtitle: 'REMOTE EDITING FOR LEGENDS',
-    prompt: 'I want to book a remote music video, official lyric video, or visualizer edit.'
+    prompt: 'Tell me about music video editing.'
   }
 ];
 
@@ -52,579 +60,14 @@ const INITIAL_MESSAGES = [
   {
     id: 'msg_boot_1',
     sender: 'bot',
-    time: 'WIRED_64 // 24/7 IQ',
+    time: 'WIRED_64',
     cartridge: 'geo',
-    text: 'ONLINE // Concise answers. Deep technical IQ. Zero agency fluff.',
-    subtext:
-      'Ask anything about AI Website Modernization, GEO (ranking in ChatGPT & Google AI), Custom Dashboards, 24/7 AI Bots, Flat-Rate Pricing, or Full-Service Marketing—or drop your URL for an instant scan.',
-    chips: [
-      { label: '⚡ HOW GEO RANKS IN CHATGPT', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-      { label: '💎 FLAT-RATE PRICING & PACKAGES', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
-      { label: '📊 FAST TRACK, VISION & RINGGER PROOF', prompt: 'Deep dive into the Fast Track live dashboard, Team Vision 24/7 AI bot, and Ringger Law CRM.', cartridge: 'dash' },
-      { label: '⏱️ 3-PHASE WEBSITE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
-    ]
+    text: WIRED64_INTRO.text,
+    chips: WIRED64_INTRO.chips
   }
 ];
 
-function extractEmail(str) {
-  const match = str.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
-  return match ? match[0] : null;
-}
-
-function extractPhone(str) {
-  const match = str.match(/(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
-  return match ? match[0] : null;
-}
-
-function extractDomainUrl(str) {
-  if (extractEmail(str)) {
-    const withoutEmail = str.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '');
-    const matchAfter = withoutEmail.match(
-      /\b(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]{2,}\.(?:com|net|org|io|co|us|ai|biz|info|tv|me|dev|app)\b(?:\/[^\s]*)?/i
-    );
-    return matchAfter ? matchAfter[0] : null;
-  }
-  const match = str.match(
-    /\b(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]{2,}\.(?:com|net|org|io|co|us|ai|biz|info|tv|me|dev|app)\b(?:\/[^\s]*)?/i
-  );
-  return match ? match[0] : null;
-}
-
-/**
- * WIRED-64 // 24/7 IQ — Concise Direct Executive Answers + Smart Technical Deep-Dive Brain
- */
-function generateWired64Response(input, currentStep, leadDraft, lastTopic = 'geo') {
-  const q = input.trim();
-  const lower = q.toLowerCase();
-
-  const detectedEmail = extractEmail(q);
-  const detectedPhone = extractPhone(q);
-  const detectedUrl = extractDomainUrl(q);
-
-  // 1. REAL CONTACT DETECTION (Email or Phone) — Never misfires on regular questions!
-  if (detectedEmail || detectedPhone) {
-    const contactStr = [detectedEmail, detectedPhone].filter(Boolean).join(' • ');
-    const nameGuess =
-      leadDraft.name ||
-      q
-        .replace(detectedEmail || '', '')
-        .replace(detectedPhone || '', '')
-        .replace(/[,•|-]/g, ' ')
-        .trim()
-        .split(/\s+/)
-        .slice(0, 3)
-        .join(' ') ||
-      (detectedEmail ? detectedEmail.split('@')[0] : 'WIRED-64 VIP Lead');
-
-    return {
-      nextStep: 'COMPLETED',
-      topic: lastTopic,
-      cartridge: leadDraft.cartridge || 'geo',
-      leadPatch: {
-        name: nameGuess,
-        contact: contactStr,
-        companyUrl: detectedUrl || leadDraft.companyUrl || '',
-        details: leadDraft.details ? `${leadDraft.details} | Contact: ${q}` : `WIRED-64 Direct Capture: ${q}`
-      },
-      autoSubmitLead: true,
-      reply: `DIRECT DISPATCH LOCKED [ ${contactStr} ] → WIRED_OS COMMAND CENTER // 100% TRANSMITTED.`,
-      subtext:
-        'Dispatched directly to the WIRED_OS Command Center — Wired Digital will reach out to you shortly. Feel free to keep asking questions below!',
-      chips: [
-        { label: '⚡ DEEP DIVE: GEO ARCHITECTURE', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-        { label: '⏱️ TIMELINE & 3-PHASE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 2. WEBSITE URL DIAGNOSTIC DETECTION (Either during scan prompt or typed anytime)
-  if (detectedUrl) {
-    const cleanUrl = detectedUrl.startsWith('http')
-      ? detectedUrl
-      : `https://${detectedUrl.replace(/^www\./i, '')}`;
-    return {
-      nextStep: 'ASK_CONTACT_AFTER_SCAN',
-      topic: 'scan',
-      cartridge: 'scan',
-      leadPatch: {
-        companyUrl: cleanUrl,
-        service: 'AI Website Design, Redesign & Modernization + GEO'
-      },
-      reply: `64-BIT DIAGNOSTIC // [ ${cleanUrl.toUpperCase()} ]\n• DOM SPEED ESTIMATE: ~3.6s Legacy Load (Modern Target: <0.4s Edge React)\n• AI ENTITY SCHEMA (@graph JSON-LD): MISSING (Invisible to ChatGPT, Gemini & Perplexity)\n• /LLMS.TXT & CITATION FEED: NOT DETECTED\n• 24/7 AI CONCIERGE & LIVE TELEMETRY: NOT INSTALLED`,
-      subtext:
-        'Bottom line: We can cut load times by ~85%, inject full Tri-Cities/National AI Schema, and wire in a 24/7 AI lead advisor. Drop your Name + Email/Phone to get a custom Wired Digital blueprint, or pick a deep dive below:',
-      chips: [
-        { label: '🔧 HOW WE FIX THIS IN 3 WEEKS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' },
-        { label: '💎 BOUTIQUE COST FOR THIS UPGRADE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
-        { label: '📊 ADD A LIVE ADMIN DASHBOARD', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
-      ]
-    };
-  }
-
-  // 3. CONTEXTUAL "GO DEEPER / EXPLAIN MORE" HANDLER
-  const isAskingDeeper =
-    lower === 'more' ||
-    lower === 'go deeper' ||
-    lower === 'tell me more' ||
-    lower === 'explain more' ||
-    lower === 'how does that work' ||
-    lower === 'how does it work' ||
-    (lower.includes('deep dive') &&
-      !lower.includes('geo') &&
-      !lower.includes('fast track') &&
-      !lower.includes('vision') &&
-      !lower.includes('price') &&
-      !lower.includes('video'));
-
-  if (isAskingDeeper) {
-    if (lastTopic === 'video') {
-      return {
-        nextStep: 'IDLE',
-        topic: 'video',
-        cartridge: 'video',
-        reply: `DEEP DIVE // 4K REMOTE POST-PRODUCTION ARCHITECTURE:\n• STEM & CAMERA INGEST: Direct 4K ProRes/RAW & multi-track audio ingest from labels/artists globally.\n• KINETIC 3D LYRIC WORLDS: Custom Unreal/After Effects 3D environments, beat-synced typography & custom visualizers—never stock lyric templates.\n• VEVO & BROADCAST DELIVERY: Mastered to SMPTE standards for VEVO, YouTube 4K60, Apple Music & arena tour screens.`,
-        subtext: 'Want to lock in an edit window with Wired Digital? Drop your track title + Email/Phone, or explore another topic:',
-        chips: [
-          { label: '🎸 SEE 34+ LEGEND ROSTER', prompt: 'Which 34+ music legends and labels have you worked with?', cartridge: 'video' },
-          { label: '⏱️ VIDEO TURNAROUND TIME', prompt: 'How fast is your turnaround time for a lyric or music video?', cartridge: 'video' }
-        ]
-      };
-    }
-    if (lastTopic === 'dash' || lastTopic === 'fasttrack' || lastTopic === 'teamvision') {
-      return {
-        nextStep: 'IDLE',
-        topic: 'dash',
-        cartridge: 'dash',
-        reply: `DEEP DIVE // CUSTOM TELEMETRY + 24/7 AI CONCIERGE STACK:\n• ZERO-COOKIE FIRST-PARTY TELEMETRY: Tracks every click, phone tap, vehicle/property view & form action directly into your private /admin dashboard.\n• RAG-TRAINED AI BRAIN: We train your 24/7 bot on your exact inventory, sq ft, pricing rules, and FAQs—zero hallucination.\n• INSTANT SMS/EMAIL DISPATCH: Qualified leads fire straight to your phone in <2 seconds with full conversation transcripts.`,
-        subtext: 'Drop your Name + Email/Phone if you want a live Wired Digital demo for your business!',
-        chips: [
-          { label: '🚗 FAST TRACK (FIRST 30 DAYS: 2,751+ VISITS)', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
-          { label: '🏢 TEAM VISION AI ADVISOR PROOF', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
-          { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-        ]
-      };
-    }
-    return {
-      nextStep: 'IDLE',
-      topic: 'geo',
-      cartridge: 'geo',
-      reply: `DEEP DIVE // UNDER THE HOOD OF GEO + AI WEB MODERNIZATION:\n• 1. @GRAPH JSON-LD INJECTION: Maps your Organization, LocalBusiness, Service catalog, GeoCoordinates & verified reviews so LLMs trust your authority.\n• 2. /LLMS.TXT MACHINE MANIFEST: Gives ChatGPT, Claude, Gemini & Perplexity a clean markdown fact-sheet of your services, credentials, and market authority.\n• 3. <0.4s REACT EDGE DOM: Eliminates WordPress plugin bloat, boosting mobile conversions by up to +64%.`,
-      subtext: 'Type your current website URL below to test your site, or drop your Name + Email/Phone for a custom game plan:',
-      chips: [
-        { label: '🔍 SCAN MY WEBSITE NOW', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' },
-        { label: '💎 PRICING & 25-YR VALUE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 4. TOPIC: PRICING, COST, BUDGET & 25+ YEARS VALUE
-  if (
-    lower.includes('price') ||
-    lower.includes('pricing') ||
-    lower.includes('cost') ||
-    lower.includes('how much') ||
-    lower.includes('budget') ||
-    lower.includes('rate') ||
-    lower.includes('cheap') ||
-    lower.includes('expensive') ||
-    lower.includes('worth') ||
-    lower.includes('boutique') ||
-    lower.includes('tier') ||
-    lower.includes('package') ||
-    lower.includes('under 1 roof') ||
-    lower.includes('under one roof')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'pricing',
-      cartridge: 'geo',
-      leadPatch: { details: q },
-      reply: `DIRECT ANSWER // We deliver high-impact custom web & AI engineering at straightforward, flat-rate pricing:\n• WHY IT WORKS: You get 25+ years of staying ahead of the tech curve (Est. 1999) working directly with Wired Digital—never cheap template junk, and never bloated $25K+ agency markup.\n• TIER 01 — LOCAL LAUNCH & AI MODERNIZATION ($1,850 – $3,500): Custom <0.4s React website or legacy site modernization + Local SEO & AI Search (GEO) Schema.\n• TIER 02 — GROWTH PLATFORM + 24/7 AI CONCIERGE ($3,500 – $6,500): Multi-page custom site + custom-trained 24/7 AI lead advisor (like Team Vision LLC) + deep GEO.\n• TIER 03 — CUSTOM LIVE ADMIN DASHBOARD, AI OS & FULL MARKETING ($5,500 – $12,000+): Full platform + live /admin telemetry & CRM dashboard (like Fast Track & Ringger Law) + Full-Service Marketing & custom commercial video creative (video production is included exclusively with top-tier full-marketing packages).`,
-      subtext:
-        'Every project is scoped flat-rate with zero surprise retainers required. Drop your Name + Email/Phone (or URL) for an exact quote!',
-      chips: [
-        { label: '⏱️ TURNAROUND & 3-PHASE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' },
-        { label: '⚡ HOW GEO PAYS FOR ITSELF', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-        { label: '📊 SEE FAST TRACK, VISION & RINGGER', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
-      ]
-    };
-  }
-
-  // 5. TOPIC: FAST TRACK BRISTOL TN & LIVE ADMIN DASHBOARDS / TELEMETRY
-  if (
-    lower.includes('fast track') ||
-    lower.includes('fasttrack') ||
-    lower.includes('dealership') ||
-    lower.includes('car lot') ||
-    lower.includes('telemetry') ||
-    lower.includes('click stream') ||
-    lower.includes('2,751') ||
-    (lower.includes('dashboard') && !lower.includes('vision')) ||
-    lower.includes('admin')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'fasttrack',
-      cartridge: 'dash',
-      leadPatch: {
-        cartridge: 'dash',
-        service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
-        details: q
-      },
-      reply: `CASE STUDY // FAST TRACK BRISTOL TN (fasttrackbristoltn.com):\nWe engineered both their high-speed public showroom AND their private /admin telemetry command center.\n• FIRST 30 DAYS LIVE PROOF: In the first 30 days, tracked 2,751+ visits • 4,591 visitor actions • 1,719 vehicle clicks • 164 financing clicks • 47 credit applications.\n• LOT DEMAND INTELLIGENCE: Automatically ranks top-clicked vehicles (#1 Jeep Wrangler Unlimited, #2 F-150 XLT) + 70% mobile vs 30% desktop split.\n• DEALER TOOLS BUILT-IN: 1-click printable QR window flyers & instant lead alerts.`,
-      subtext:
-        'We can build a custom live command center tailored to your exact industry. Want one? Drop your Name + Email/Phone or explore further:',
-      chips: [
-        { label: '🏢 SEE TEAM VISION 24/7 AI BOT', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
-        { label: '⚖️ SEE RINGGER LAW LEGAL CRM', prompt: 'Show me the Ringger Law live legal CRM, court intake & 24/7 AI triage build.', cartridge: 'dash' },
-        { label: '💎 DASHBOARD PRICING & TIMELINE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 5B. TOPIC: RINGGER LAW (ringgerlaw.com) — LIVE LEGAL CRM, COURT INTAKES & 24/7 DEBT TRIAGE AI
-  if (
-    lower.includes('ringger') ||
-    lower.includes('law firm') ||
-    lower.includes('attorney') ||
-    lower.includes('lawyer') ||
-    lower.includes('legal') ||
-    lower.includes('bankruptcy') ||
-    lower.includes('court intake') ||
-    lower.includes('debt triage')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'ringgerlaw',
-      cartridge: 'dash',
-      leadPatch: {
-        cartridge: 'dash',
-        service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
-        details: q
-      },
-      reply: `CASE STUDY // RINGGER LAW (ringgerlaw.com + /admin):\nEngineered for The Law Offices of Louis W. Ringger Jr. (Est. 1981 in Jackson & West TN—where Wired Digital was founded in 1999).\n• 24/7 "WEST TN DEBT TRIAGE" AI + URGENT FUNNEL: Answers urgent foreclosure, repo & 25% wage garnishment questions 24/7 and routes Chapter 7 ($0 Down) vs. Chapter 13 leads.\n• LIVE DATABASE LEGAL CRM (/ADMIN): Tracks emergency Foreclosure/Repo leads, signed digital court intake packets, 3,800+ visitor sessions across a 90-day cross-section (Ads, Organic, Direct & AI), and real-time $64.50/click legal CPC value.\n• BUILT-IN PRACTICE TOOLS: 1-click Print Report, PIN lock security & Practice Asset Brief.`,
-      subtext:
-        'Want a custom CRM, intake portal & 24/7 AI advisor built around your firm or business? Drop your Name + Email/Phone below!',
-      chips: [
-        { label: '🚗 SEE FAST TRACK LIVE DASHBOARD', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
-        { label: '🏢 SEE TEAM VISION 24/7 AI BOT', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
-        { label: '💎 PRICING & TIMELINE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 6. TOPIC: TEAM VISION LLC & 24/7 CUSTOM-TRAINED AI CHATBOTS
-  if (
-    lower.includes('team vision') ||
-    lower.includes('ask vision') ||
-    lower.includes('real estate') ||
-    lower.includes('tenant') ||
-    lower.includes('state street') ||
-    lower.includes('chatbot') ||
-    lower.includes('ai bot') ||
-    lower.includes('concierge') ||
-    lower.includes('advisor') ||
-    (lower.includes('vision') && !lower.includes('video'))
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'teamvision',
-      cartridge: 'dash',
-      leadPatch: {
-        cartridge: 'dash',
-        service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
-        details: q
-      },
-      reply: `CASE STUDY // TEAM VISION LLC (teamvisionllc.com):\nBuilt for Downtown Bristol’s #1 commercial property owner (18+ historic properties, 100% occupancy track record).\n• "ASK VISION" 24/7 AI SPACE ADVISOR: Custom-trained on every building, square footage (120 to 54,000 sq ft), and historic tax credit detail.\n• <2 MINUTE TENANT MATCH: Walks prospects through 5 smart questions to recommend ideal retail, office, restaurant, or loft spaces.\n• 24/7 LEAD CAPTURE: Captures and qualifies high-value tenants day or night and routes them straight to ownership.`,
-      subtext:
-        'We can train a custom 24/7 AI advisor on your exact products, properties, or services. Drop your Name + Email/Phone or click below:',
-      chips: [
-        { label: '🚗 SEE FAST TRACK LIVE DASHBOARD', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
-        { label: '🧠 GO DEEPER ON AI BOT TECH', prompt: 'go deeper', cartridge: 'dash' },
-        { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 7. TOPIC: COMBINED DASHBOARD + AI BOT CARTRIDGE
-  if (lower.includes('dash') || lower.includes('bot') || lower.includes('24/7')) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'dash',
-      cartridge: 'dash',
-      leadPatch: {
-        cartridge: 'dash',
-        service: 'Custom Live Dashboard / 24/7 AI Lead Chatbot',
-        details: q
-      },
-      reply: `CUSTOM LIVE DASHBOARDS & 24/7 AI BOTS // Your website should work like your smartest employee and live analytics suite.\n• LIVE TELEMETRY (Like Fast Track Bristol TN): See every visitor click, hot product/vehicle ranking, phone tap & conversion in real time.\n• 24/7 AI CONCIERGE (Like Team Vision LLC's "Ask VISION"): Custom-trained on your business to answer complex questions and lock in leads in <2 mins.\n• 100% PROPRIETARY: Built in-house by Wired Digital—no clunky third-party SaaS monthly per-seat traps.`,
-      subtext:
-        'Which side interests you most—a Live Admin Dashboard, a 24/7 Custom AI Bot, or both?',
-      chips: [
-        { label: '🚗 DEEP DIVE: FAST TRACK DASHBOARD', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' },
-        { label: '🏢 DEEP DIVE: TEAM VISION AI BOT', prompt: 'How does the Team Vision LLC "Ask VISION" 24/7 AI bot qualify tenants?', cartridge: 'dash' },
-        { label: '💎 PRICING & TURNAROUND', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 8. TOPIC: DEEP DIVE ON GEO (GENERATIVE ENGINE OPTIMIZATION) & AI SEARCH
-  if (
-    lower.includes('geo') ||
-    lower.includes('chatgpt') ||
-    lower.includes('gemini') ||
-    lower.includes('perplexity') ||
-    lower.includes('claude') ||
-    lower.includes('ai search') ||
-    lower.includes('ai overview') ||
-    lower.includes('llms.txt') ||
-    lower.includes('json-ld') ||
-    lower.includes('schema') ||
-    lower.includes('seo') ||
-    lower.includes('rank')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'geo',
-      cartridge: 'geo',
-      leadPatch: {
-        cartridge: 'geo',
-        service: 'AI Website Design, Redesign & Modernization + GEO',
-        details: q
-      },
-      reply: `DIRECT ANSWER // Traditional SEO only targets legacy keyword strings. Our high-end SEO + GEO (Generative Engine Optimization) architecture is built as deep as it gets so ChatGPT, Google AI Overviews, Gemini & Perplexity can directly understand, trust, and cite your business.\n• @GRAPH JSON-LD SCHEMA: We hard-code your services, credentials, GeoCoordinates & reviews into machine-readable entity graphs.\n• /LLMS.TXT ARCHITECTURE: Feeds AI crawlers structured, high-authority fact blocks instead of messy HTML.\n• LOCAL + NATIONAL AUTHORITY: Built for maximum visibility across Tri-Cities ("near me" in Bristol, Johnson City, Kingsport) and national niche queries.`,
-      subtext:
-        'Want to see how AI search engines currently view your site? Type your website URL below for an instant scan!',
-      chips: [
-        { label: '🔍 SCAN MY WEBSITE URL', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' },
-        { label: '⚡ MODERNIZE OLD WORDPRESS / WIX', prompt: 'Why do legacy WordPress/Wix templates fail in AI search and how do you modernize them?', cartridge: 'geo' },
-        { label: '💎 PRICING & 25-YR VALUE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 9. TOPIC: WEBSITE MODERNIZATION, TECH STACK, SPEED & REPLACING LEGACY TEMPLATES
-  if (
-    lower.includes('modern') ||
-    lower.includes('redesign') ||
-    lower.includes('wordpress') ||
-    lower.includes('wix') ||
-    lower.includes('squarespace') ||
-    lower.includes('template') ||
-    lower.includes('speed') ||
-    lower.includes('slow') ||
-    lower.includes('react') ||
-    lower.includes('stack') ||
-    lower.includes('website') ||
-    lower.includes('web design') ||
-    lower.includes('app') ||
-    lower.includes('software')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'modernization',
-      cartridge: 'geo',
-      leadPatch: {
-        cartridge: 'geo',
-        service: 'AI Website Design, Redesign & Modernization + GEO',
-        details: q
-      },
-      reply: `AI WEBSITE MODERNIZATION // Legacy WordPress, Wix & Squarespace templates average 3.8s–5.2s load times, losing 60%+ of mobile visitors before the page even renders.\n• <0.4s REACT / EDGE ARCHITECTURE: We engineer custom, zero-bloat platforms built to pass Google Core Web Vitals with 90+ Lighthouse performance targets.\n• INTERACTIVE CONVERSION TOOLS: Custom ROI calculators, instant graders, interactive portfolios & 24/7 AI lead capture.\n• FUTURE-PROOF CODE: Built with 25+ years of staying ahead of the tech curve—engineered for both human conversion and AI crawlers.`,
-      subtext:
-        'Drop your current URL below to benchmark your speed & AI readiness, or leave your Name + Email/Phone to connect with Wired Digital:',
-      chips: [
-        { label: '🔍 SCAN MY CURRENT SITE', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' },
-        { label: '⚡ DEEP DIVE: GEO vs. SEO', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-        { label: '💎 BOUTIQUE PRICING & TIMELINE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 10. TOPIC: GLOBAL REMOTE 4K MUSIC & LYRIC VIDEOS + 34+ LEGENDS
-  if (
-    lower.includes('video') ||
-    lower.includes('music') ||
-    lower.includes('lyric') ||
-    lower.includes('edit') ||
-    lower.includes('label') ||
-    lower.includes('legend') ||
-    lower.includes('halestorm') ||
-    lower.includes('alice cooper') ||
-    lower.includes('paul rodgers') ||
-    lower.includes('def leppard') ||
-    lower.includes('scorpions') ||
-    lower.includes('primary wave') ||
-    lower.includes('vevo') ||
-    lower.includes('4k') ||
-    lower.includes('visualizer')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'video',
-      cartridge: 'video',
-      leadPatch: {
-        cartridge: 'video',
-        service: 'Global Remote Music & Lyric Video Editing',
-        details: q
-      },
-      reply: `GLOBAL 4K VIDEO POST-PRODUCTION // Full-time in the music industry since 2015 for 34+ Hall of Fame legends & major labels.\n• ICON ROSTER: Alice Cooper, Halestorm, Paul Rodgers, Def Leppard, Scorpions, Cypress Hill, Air Supply, Filter, Candlebox, Tesla, Blackberry Smoke, Full Devil Jacket & Primary Wave.\n• 100% REMOTE WORLDWIDE: Send footage/audio from anywhere (LA, NYC, Nashville, London); we edit, color-grade & build custom 3D/kinetic lyric worlds in 4K.\n• SELECT DIRECTING: On-location directing reserved for select commissioned shoots (e.g., Halestorm's "Darkness Always Wins").`,
-      subtext:
-        'Have an upcoming single, album campaign, or catalog release? Drop your artist/label name + Email/Phone to lock in an edit slot!',
-      chips: [
-        { label: '🧠 DEEP DIVE: 4K EDIT PIPELINE', prompt: 'go deeper', cartridge: 'video' },
-        { label: '⏱️ VIDEO TURNAROUND & RATES', prompt: 'How fast is your turnaround time for a lyric or music video?', cartridge: 'video' }
-      ]
-    };
-  }
-
-  // 11. TOPIC: TIMELINE, TURNAROUND SPEED & 3-PHASE WEBSITE PROCESS
-  if (
-    lower.includes('timeline') ||
-    lower.includes('turnaround') ||
-    lower.includes('how long') ||
-    lower.includes('how fast') ||
-    lower.includes('process') ||
-    lower.includes('phase') ||
-    lower.includes('steps') ||
-    lower.includes('start')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'timeline',
-      cartridge: leadDraft.cartridge || 'geo',
-      leadPatch: { details: q },
-      reply: `THE 3-PHASE WIRED WEBSITE METHOD // Creative + Intelligent + Fast (No agency drag):\n• PHASE 1 — ARCHITECT (Days 1–4): Deep site audit, AI Search (GEO) entity mapping, custom UI wireframe & conversion strategy directly with Wired Digital.\n• PHASE 2 — ENGINEER (Weeks 1–3): Custom sub-second React build, 5-node Schema.org @graph, 24/7 custom-trained AI chatbot & live /admin telemetry dashboard with live staging previews.\n• PHASE 3 — IGNITE (Launch): Edge deployment, Google Local Pack + AI citation indexing (/llms.txt & /sitemap.xml) & live owner dashboard handoff.\n• TYPICAL WEBSITE TURNAROUND: Custom websites & AI platforms launch in 2–4 weeks.`,
-      subtext:
-        'Ready to claim a website build slot this month? Drop your Name + Email/Phone below or open the Quick Packet form!',
-      chips: [
-        { label: '💎 FLAT-RATE PRICING RANGES', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
-        { label: '🔍 SCAN MY WEBSITE FIRST', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' }
-      ]
-    };
-  }
-
-  // 12. TOPIC: ROB NEILSON, 25+ YEARS STUDIO HISTORY (EST. 1999) & TRI-CITIES / LOCATION
-  if (
-    lower.includes('rob') ||
-    lower.includes('neilson') ||
-    lower.includes('who') ||
-    lower.includes('founder') ||
-    lower.includes('history') ||
-    lower.includes('1999') ||
-    lower.includes('25 year') ||
-    lower.includes('jackson') ||
-    lower.includes('bristol') ||
-    lower.includes('johnson city') ||
-    lower.includes('kingsport') ||
-    lower.includes('tri-cities') ||
-    lower.includes('tricities') ||
-    lower.includes('where') ||
-    lower.includes('location') ||
-    lower.includes('app4that') ||
-    lower.includes('hovermother') ||
-    lower.includes('keen') ||
-    lower.includes('competit') ||
-    lower.includes('other agenc')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'history',
-      cartridge: 'geo',
-      leadPatch: { details: q },
-      reply: `25+ YEARS AHEAD OF THE TECH CURVE // Founded by Creative Director Rob Neilson in 1999:\n• 1999 (JACKSON, TN): Launched Wired Digital during Web 1.0, mastering code, design, and custom digital engineering under one roof.\n• 2022–2026 (BRISTOL VA/TN HQ & APP4THAT HOLDINGS PARTNER): Headquartered in the Tri-Cities and a partner in Bristol AI & native iOS app studio App4That Holdings (app4thatholdings.com).\n• WHY WE BEAT LOCAL WORDPRESS SHOPS: We engineer custom <0.4s React websites, live /admin CRM dashboards (Fast Track & Ringger Law), 24/7 AI chatbots (Team Vision LLC), native apps, and GEO in-house—with custom video creative included in our top-tier full-marketing packages.`,
-      subtext:
-        'When you hire Wired Digital, you work directly with Rob—not a junior account rep. Drop your Name + Email/Phone to connect directly!',
-      chips: [
-        { label: '💎 FLAT-RATE PRICING & TIERS', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
-        { label: '📊 SEE CLIENT CASE STUDIES', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' }
-      ]
-    };
-  }
-
-  // 13. TOPIC: DIGITAL MARKETING, BRANDING, 3D & FULL-STACK GROWTH
-  if (
-    lower.includes('marketing') ||
-    lower.includes('ads') ||
-    lower.includes('social') ||
-    lower.includes('brand') ||
-    lower.includes('logo') ||
-    lower.includes('3d') ||
-    lower.includes('funnel') ||
-    lower.includes('leads')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'marketing',
-      cartridge: 'geo',
-      leadPatch: { details: q },
-      reply: `FULL-SERVICE DIGITAL MARKETING & BRANDING // Built so your traffic actually converts:\n• AI & LOCAL SEARCH DOMINATION: Google Map Pack, organic SEO, and AI Search (GEO) citation engineering.\n• TOP-TIER FULL MARKETING PACKAGES: Our top-tier full-service marketing packages include custom commercial video ads, social reels, and motion graphics alongside your custom AI platform.\n• CLOSED-LOOP ATTRIBUTION: Every ad and search click feeds into custom landing pages and live telemetry so you see exact ROI.`,
-      subtext:
-        'Want a unified growth & modernization plan? Drop your Name + Email/Phone or your current URL below:',
-      chips: [
-        { label: '⚡ HOW GEO DRIVES ORGANIC LEADS', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-        { label: '📊 LIVE ROI TELEMETRY DASHBOARDS', prompt: 'Show me the exact metrics from the Fast Track Bristol TN live dashboard.', cartridge: 'dash' }
-      ]
-    };
-  }
-
-  // 14. TOPIC: EXPLICIT SCAN REQUEST
-  if (lower.includes('scan') || lower.includes('audit') || lower.includes('current website') || lower.includes('check my site')) {
-    return {
-      nextStep: 'ASK_URL_FOR_SCAN',
-      topic: 'scan',
-      cartridge: 'scan',
-      leadPatch: { cartridge: 'scan', service: 'AI Website Design, Redesign & Modernization + GEO' },
-      reply: '64-BIT URL SCANNER ARMED // Type your website URL below (e.g., yourbusiness.com) for an instant diagnostic on DOM speed, JSON-LD AI Schema, and conversion gaps.',
-      subtext: 'No website yet? Tell me your industry and city, or click a deep dive below:',
-      chips: [
-        { label: '⚡ WHAT DOES THE SCAN CHECK?', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-        { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' }
-      ]
-    };
-  }
-
-  // 15. TOPIC: DIRECT CONTACT, EMAIL & LAST-RESORT PHONE LINE
-  if (
-    lower.includes('phone') ||
-    lower.includes('call') ||
-    lower.includes('text') ||
-    lower.includes('email') ||
-    lower.includes('contact') ||
-    lower.includes('reach') ||
-    lower.includes('number')
-  ) {
-    return {
-      nextStep: 'IDLE',
-      topic: 'contact',
-      cartridge: leadDraft.cartridge || 'geo',
-      leadPatch: { details: q },
-      reply: `DIRECT STUDIO CONTACT // WIRED DIGITAL:\n• FASTEST WAY: Type your Name + Email or Mobile # right here in the chat for instant dispatch.\n• DIRECT EMAIL: WiredDigitalUS@gmail.com\n• DIRECT STUDIO LINE (Call or Text): 731-616-5121`,
-      subtext:
-        'Drop your Name + best Email/Phone below for instant dispatch to the WIRED_OS Command Center!',
-      chips: [
-        { label: '💎 BOUTIQUE PRICING & SCOPE', prompt: 'How does your boutique pricing work and what makes 25+ years under 1 roof different?', cartridge: 'geo' },
-        { label: '🔍 SCAN MY WEBSITE URL', prompt: 'Run a 64-bit AI & SEO diagnostic scan on my current website.', cartridge: 'scan' }
-      ]
-    };
-  }
-
-  // 15. SMART CONCISE EXECUTIVE FALLBACK (Answers directly & offers instant deep-dive paths)
-  return {
-    nextStep: 'IDLE',
-    topic: lastTopic || 'geo',
-    cartridge: leadDraft.cartridge || 'geo',
-    leadPatch: { details: q },
-    reply: `WIRED-64 // EXECUTIVE BRIEFING:\nBacked by 25+ years of staying ahead of the tech curve (Est. 1999), Wired Digital Creative engineers custom web & AI software under 1 roof:\n• AI WEBSITE MODERNIZATION & GEO: Sub-0.4s React builds with high-end SEO & GEO architecture for ChatGPT, Gemini & Google.\n• CUSTOM TELEMETRY & 24/7 AI BOTS: Live /admin CRM dashboards (Fast Track & Ringger Law) & 24/7 AI advisors (Team Vision LLC).\n• TOP-TIER FULL MARKETING PACKAGES: Full-service digital marketing, brand growth, and custom commercial video creative.`,
-    subtext:
-      'Click any topic below for a smart deep dive, drop your URL for a scan, or leave your Name + Email/Phone for Wired Digital:',
-    chips: [
-      { label: '⚡ DEEP DIVE: GEO & AI SEARCH', prompt: 'Deep dive: How does GEO rank my business in ChatGPT & Google AI?', cartridge: 'geo' },
-      { label: '💎 FLAT-RATE PRICING & PACKAGES', prompt: 'How does your flat-rate pricing work and what is included in each tier?', cartridge: 'geo' },
-      { label: '📊 FAST TRACK, VISION & RINGGER', prompt: 'Deep dive into the Fast Track live dashboard and Team Vision 24/7 AI bot.', cartridge: 'dash' },
-      { label: '⏱️ 3-PHASE WEBSITE PROCESS', prompt: 'What is the typical turnaround timeline and 3-phase process?', cartridge: 'geo' }
-    ]
-  };
-}
+// Answer logic lives in src/utils/wired64Brain.js (pure + tested by scripts/test-wired64.mjs)
 
 const ORB_SECRET_MOODS = [
   {
@@ -700,7 +143,7 @@ function playWired64Chirp(mood = 'smile') {
  * - Renders all Headings, Titles & Bullet Labels in Phosphor Green (#00FF66)
  * - Renders all Paragraph & Explanation Body Text in High-Contrast Yellow (#FFEE00)
  */
-function renderDyslexiaFriendlyBotContent(text, subtext) {
+function renderDyslexiaFriendlyBotContent(text, subtext, subtextLabel = 'NEXT STEP //') {
   const rawLines = (text || '')
     .split('\n')
     .map((l) => l.trim())
@@ -773,7 +216,7 @@ function renderDyslexiaFriendlyBotContent(text, subtext) {
 
       {subtext && (
         <div className="w64-msg-subtext-block">
-          <div className="w64-subtext-heading-green">NEXT STEP //</div>
+          <div className="w64-subtext-heading-green">{subtextLabel}</div>
           <p className="w64-para-yellow">{subtext}</p>
         </div>
       )}
@@ -818,11 +261,10 @@ export default function WiredOrbChatbot() {
     return window.innerWidth <= 768;
   });
   const [activeCartridge, setActiveCartridge] = useState('geo');
-  const [lastTopic, setLastTopic] = useState('geo');
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [inputText, setInputText] = useState('');
   const [isBotTyping, setIsBotTyping] = useState(false);
-  const [chatStep, setChatStep] = useState('IDLE');
+  const [brainState, setBrainState] = useState(createChatState);
   const [whisperDismissed, setWhisperDismissed] = useState(false);
   const [whisperText, setWhisperText] = useState('Ask WIRED-64');
   const [isNearOrb, setIsNearOrb] = useState(false);
@@ -1202,6 +644,19 @@ export default function WiredOrbChatbot() {
     );
   };
 
+  const pushBotMessage = (msg) => {
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `msg_b_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        sender: 'bot',
+        time: 'WIRED_64',
+        chips: [],
+        ...msg
+      }
+    ]);
+  };
+
   const pushUserAndBotTurn = (userText, forcedCartridge = null) => {
     const userMsg = {
       id: `msg_u_${Date.now()}`,
@@ -1215,53 +670,81 @@ export default function WiredOrbChatbot() {
 
     if (extractDomainUrl(userText)) {
       setOrbMood('scan');
-      setOrbMoodBadge('SCANNING DOMAIN // 64-BIT TELEMETRY');
+      setOrbMoodBadge('CHECKING SITE');
     }
 
     setTimeout(() => {
-      const response = generateWired64Response(userText, chatStep, leadDraft, lastTopic);
+      const response = wired64Respond(userText, brainState);
+      const nextState = response.state;
+      setBrainState(nextState);
+
       const nextCart = forcedCartridge || response.cartridge || activeCartridge;
       setActiveCartridge(nextCart);
-      setLastTopic(response.topic || lastTopic);
-      setChatStep(response.nextStep);
 
       const mergedDraft = {
         ...leadDraft,
-        ...(response.leadPatch || {}),
+        name: nextState.name || leadDraft.name,
+        contact: nextState.contact || leadDraft.contact,
+        service: nextState.service || leadDraft.service,
+        companyUrl: response.scanUrl || leadDraft.companyUrl,
         cartridge: nextCart
       };
       setLeadDraft(mergedDraft);
 
       if (response.autoSubmitLead) {
+        const asked = nextState.questions.length
+          ? `Questions asked in chat: ${nextState.questions.map((q) => `"${q}"`).join(' | ')}`
+          : 'Shared contact info in WIRED-64 chat.';
         addLead({
           source: 'WIRED-64 Orb Bot (64-Bit AI)',
           status: 'NEW',
           priority: 'URGENT',
           name: mergedDraft.name || 'WIRED-64 Chat Inquiry',
-          contact: mergedDraft.contact || userText,
+          contact: nextState.contact,
           companyUrl: mergedDraft.companyUrl || '',
           service: mergedDraft.service || 'AI Website Design, Redesign & Modernization',
           urgency: mergedDraft.urgency || 'Ready to Start (This Month)',
-          details: mergedDraft.details || userText,
-          notes: 'Captured automatically via WIRED-64 64-Bit Full-Screen Orb Terminal.'
+          details: asked,
+          notes: 'Captured automatically via WIRED-64 chat (3-question flow).'
         });
         setPacketSubmitted(true);
         triggerOrbJoySurge(ORB_SECRET_MOODS[0], false);
-      } else if (orbMood === 'scan') {
-        triggerOrbJoySurge(ORB_SECRET_MOODS[1], false);
+        logTelemetryEvent('W64_LEAD_CAPTURED', `WIRED-64 captured lead after ${nextState.questionCount} questions`, 'conversion');
+      } else if (response.leadAsk) {
+        logTelemetryEvent('W64_LEAD_ASK', `WIRED-64 asked for contact info (${nextState.step})`, 'engagement');
       }
 
-      const botMsg = {
-        id: `msg_b_${Date.now()}`,
-        sender: 'bot',
-        time: 'WIRED_64 // 24/7 IQ',
+      // Site check: show "checking…" now, then the real result (lead ask rides on the result)
+      if (response.scanUrl) {
+        pushBotMessage({ cartridge: 'scan', text: response.reply });
+        runWebsiteDiagnostic(response.scanUrl)
+          .catch(() => null)
+          .then((report) => {
+            pushBotMessage({
+              cartridge: 'scan',
+              text: formatScanSummary(report),
+              subtext: response.subtext,
+              subtextLabel: response.subtextLabel,
+              chips: response.leadAsk
+                ? response.chips
+                : [
+                    { label: '📞 TALK TO ROB', prompt: 'How do I contact Rob?', cartridge: 'geo' },
+                    { label: '💎 PRICING', prompt: 'How much does a website cost?', cartridge: 'geo' }
+                  ]
+            });
+            setIsBotTyping(false);
+            triggerOrbJoySurge(ORB_SECRET_MOODS[1], false);
+          });
+        return;
+      }
+
+      pushBotMessage({
         cartridge: nextCart,
         text: response.reply,
         subtext: response.subtext,
+        subtextLabel: response.subtextLabel,
         chips: response.chips || []
-      };
-
-      setMessages((prev) => [...prev, botMsg]);
+      });
       setIsBotTyping(false);
     }, 520);
   };
@@ -1303,6 +786,7 @@ export default function WiredOrbChatbot() {
 
     setPacketSubmitted(true);
     setShowPacketForm(false);
+    setBrainState((prev) => ({ ...prev, captured: true, step: 'COMPLETED', name: leadDraft.name || prev.name }));
     triggerOrbJoySurge(ORB_SECRET_MOODS[0], false);
     setMessages((prev) => [
       ...prev,
@@ -1311,8 +795,7 @@ export default function WiredOrbChatbot() {
         sender: 'bot',
         time: 'LEAD_VAULT // LOCKED',
         cartridge: activeCartridge,
-        text: `LEAD PACKET TRANSMITTED // Thank you, ${leadDraft.name}!`,
-        subtext: `Dispatched directly to the WIRED_OS Command Center for "${leadDraft.service}". Wired Digital will reach out to ${combinedContact} shortly.`
+        text: `GOT IT //\nThanks${leadDraft.name ? `, ${leadDraft.name.split(' ')[0]}` : ''}. Rob will reach out soon.\nAsk me anything else in the meantime.`
       }
     ]);
   };
@@ -1611,16 +1094,16 @@ export default function WiredOrbChatbot() {
                           LIVE ADMIN TELEMETRY
                         </text>
                         <text x="162" y="34" fill="#FFEE00" fontSize="10" fontFamily="monospace" fontWeight="bold">
-                          [FAST TRACK &amp; VISION OS]
+                          [FAST TRACK &amp; RINGGER LAW]
                         </text>
                         <text x="162" y="54" fill="#00FF66" fontSize="9.5" fontFamily="monospace">
-                          &gt; 24/7 AI ADVISOR: ONLINE
+                          &gt; 24/7 AI TRIAGE: ONLINE
                         </text>
                         <text x="162" y="72" fill="#00FF66" fontSize="9.5" fontFamily="monospace">
                           &gt; CLICK STREAM: REAL-TIME
                         </text>
                         <text x="162" y="90" fill="#00FF66" fontSize="9.5" fontFamily="monospace">
-                          &gt; LEAD MATCH: &lt; 2 MINS
+                          &gt; LEAD ALERTS: INSTANT
                         </text>
                         <text x="162" y="108" fill="#FFEE00" fontSize="9" fontFamily="monospace">
                           &gt; CUSTOM BUILT IN-HOUSE
@@ -1737,7 +1220,7 @@ export default function WiredOrbChatbot() {
                           <span className="w64-msg-time">{msg.time}</span>
                         </div>
                         {msg.sender === 'bot' ? (
-                          renderDyslexiaFriendlyBotContent(msg.text, msg.subtext)
+                          renderDyslexiaFriendlyBotContent(msg.text, msg.subtext, msg.subtextLabel)
                         ) : (
                           <>
                             <div className="w64-msg-text">{msg.text}</div>

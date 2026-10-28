@@ -294,6 +294,8 @@ function buildHeuristicExternalReport(cleanDomain, fullUrl) {
     domain: cleanDomain,
     fullUrl,
     isVerifiedWired: false,
+    // Site blocked live inspection; numbers below are estimates, not measurements
+    estimated: true,
     overallGrade: `${gradeLetter} (${score}/100)`,
     upgradedGrade: 'A+ (99/100)',
     metrics: [

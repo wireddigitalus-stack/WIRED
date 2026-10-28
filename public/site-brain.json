@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-28T20:27:17.477Z",
+  "generatedAt": "2026-10-28T20:39:22.294Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -519,8 +519,8 @@
       {
         "file": "src/components/AdminDashboardView.jsx",
         "name": "AdminDashboardView.jsx",
-        "lines": 2384,
-        "sizeKb": 95.1
+        "lines": 2509,
+        "sizeKb": 98.8
       },
       {
         "file": "src/components/AiSeoDashboardShowcase.jsx",
@@ -719,6 +719,11 @@
   ],
   "recentCommits": [
     {
+      "hash": "b59c568",
+      "date": "2026-10-28",
+      "subject": "Modernize Site Brain UI: IDE code window with line numbers & expand/copy, auto-sizing studio fields with live pills, and slim dark scrollbars"
+    },
+    {
       "hash": "e342c1b",
       "date": "2026-10-28",
       "subject": "Add Site Brain knowledge tree, Guardrail Doctor CLI, snapshot rollback, and /#admin Safe Editor tab"
@@ -787,11 +792,6 @@
       "hash": "f925f45",
       "date": "2026-10-27",
       "subject": "Add real Instagram, Facebook & LinkedIn profiles (footer/header icons, schema sameAs, llms.txt)"
-    },
-    {
-      "hash": "870c5be",
-      "date": "2026-10-27",
-      "subject": "SEO/GEO: prerender 14 real pages (unique title/desc/canonical/H1/copy/JSON-LD) for Google + AI crawlers, 301 legacy ?view/?city/?case URLs, fix schema types & sameAs, shorten tags, hide placeholder socials, relabel unverifiable scores"
     }
   ]
 }

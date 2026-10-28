@@ -218,6 +218,7 @@ export default function AdminDashboardView({ onExitDashboard }) {
   const [sbKeyInput, setSbKeyInput] = useState(() => getSupabaseConfig().anonKey || '');
   const [sbSyncStatus, setSbSyncStatus] = useState(() => getLastDbStatus());
   const [isSbSyncing, setIsSbSyncing] = useState(false);
+  const [showSbPanel, setShowSbPanel] = useState(false);
   const [showSbSqlModal, setShowSbSqlModal] = useState(false);
   const [copiedSbSql, setCopiedSbSql] = useState(false);
 
@@ -1528,106 +1529,230 @@ export default function AdminDashboardView({ onExitDashboard }) {
            ================================================================== */}
         {activeModule === 'leads' && (
           <div className="wos-module-stack">
-            {/* SUPABASE CLOUD DATABASE CONNECTION & LIVE SYNC PANEL */}
-            <div className="wos-glass-panel" style={{ border: '1px solid rgba(48, 209, 88, 0.4)', padding: '18px 22px' }}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-                <div>
-                  <span className="wos-panel-kicker" style={{ color: '#30D158' }}>
-                    ⚡ SUPABASE CLOUD POSTGRES // {SUPABASE_PROJECT_URL}
+            {/* SUPABASE CLOUD DATABASE CONNECTION & LIVE SYNC PANEL (COLLAPSED BY DEFAULT) */}
+            <div
+              className="wos-glass-panel"
+              style={{
+                border: '1px solid rgba(48, 209, 88, 0.28)',
+                padding: showSbPanel ? '16px 20px' : '10px 16px'
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '10px'
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    flexWrap: 'wrap',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setShowSbPanel((prev) => !prev)}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      color: sbConfig.isConfigured ? '#30D158' : '#FFD60A',
+                      letterSpacing: '0.06em'
+                    }}
+                  >
+                    {sbConfig.isConfigured ? '● SUPABASE CLOUD CONNECTED' : '○ SUPABASE CLOUD SETUP'}
                   </span>
-                  <h3 className="wos-panel-title" style={{ fontSize: '1.05rem', marginTop: '2px' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.68)' }}>
                     {sbConfig.isConfigured
-                      ? '● LIVE: Saving All Site & CRM Leads to Supabase (public.wired_leads)'
-                      : '○ Connect Your Supabase Anon / Publishable Key to Save All Leads to Cloud Postgres'}
-                  </h3>
+                      ? 'Saving all leads to public.wired_leads'
+                      : 'Click to connect Supabase key'}
+                  </span>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
                   <button
                     type="button"
                     className="btn-mini-yellow"
                     onClick={handleSupabaseSync}
                     disabled={isSbSyncing || !sbConfig.isConfigured}
                   >
-                    <RefreshCw size={13} />
-                    <span>{isSbSyncing ? 'SYNCING...' : 'SYNC CLOUD LEADS'}</span>
+                    <RefreshCw size={12} />
+                    <span>{isSbSyncing ? 'SYNCING...' : 'SYNC LEADS'}</span>
                   </button>
                   <button
                     type="button"
                     className="btn-mini-outline"
-                    onClick={handleSendTestLeadToSupabase}
-                    disabled={isSbSyncing}
-                    style={{ borderColor: '#30D158', color: '#30D158' }}
-                    title="Insert a real verification lead and verify round-trip save to public.wired_leads"
+                    onClick={() => setShowSbPanel((prev) => !prev)}
                   >
-                    <Send size={12} />
-                    <span>TEST DB SAVE</span>
+                    <span>{showSbPanel ? 'HIDE DB SETTINGS ▲' : 'DB SETTINGS ▼'}</span>
                   </button>
-                  <button
-                    type="button"
-                    className="btn-mini-outline"
-                    onClick={() => setShowSbSqlModal(!showSbSqlModal)}
-                  >
-                    <Layers size={13} />
-                    <span>{showSbSqlModal ? 'HIDE SQL SETUP' : 'SQL TABLE SCRIPT'}</span>
-                  </button>
-                  <a
-                    href="https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/editor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-mini-outline"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <span>OPEN SUPABASE</span>
-                    <ExternalLink size={12} />
-                  </a>
                 </div>
               </div>
 
-              <form
-                onSubmit={handleSaveSupabaseKey}
-                style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '12px', alignItems: 'center' }}
-              >
-                <input
-                  type="password"
-                  placeholder="Paste Supabase anon / publishable key (eyJ... or sb_publishable_...) for urzkegplrgskzfejgudc.supabase.co"
-                  value={sbKeyInput}
-                  onChange={(e) => setSbKeyInput(e.target.value)}
-                  className="wos-crm-search-input"
-                  style={{ flex: 1, minWidth: '260px', background: 'rgba(0,0,0,0.55)', padding: '9px 14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.16)' }}
-                />
-                <button type="submit" className="btn-mini-yellow" style={{ padding: '9px 16px' }}>
-                  <Check size={13} />
-                  <span>SAVE KEY &amp; CONNECT</span>
-                </button>
-              </form>
-
-              {sbSyncStatus && (
-                <div style={{ marginTop: '10px', fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#FFEE00' }}>
-                  &gt; {sbSyncStatus}
-                </div>
-              )}
-
-              {showSbSqlModal && (
-                <div style={{ marginTop: '14px', padding: '14px', borderRadius: '12px', background: 'rgba(0,0,0,0.65)', border: '1px solid rgba(255,238,0,0.35)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#FFEE00' }}>
-                      RUN THIS ONCE IN SUPABASE SQL EDITOR (https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/sql/new):
-                    </span>
-                    <button
-                      type="button"
-                      className="btn-mini-yellow"
-                      onClick={() => {
-                        navigator.clipboard?.writeText(SUPABASE_SQL_SCHEMA);
-                        setCopiedSbSql(true);
-                        setTimeout(() => setCopiedSbSql(false), 2500);
+              {showSbPanel && (
+                <div
+                  style={{
+                    marginTop: '14px',
+                    paddingTop: '12px',
+                    borderTop: '1px solid rgba(255,255,255,0.08)'
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: '10px',
+                      marginBottom: '10px'
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.72rem',
+                        color: 'rgba(255,255,255,0.65)'
                       }}
                     >
-                      <span>{copiedSbSql ? 'COPIED TO CLIPBOARD!' : 'COPY SQL SCRIPT'}</span>
-                    </button>
+                      PROJECT ENDPOINT: {SUPABASE_PROJECT_URL}
+                    </span>
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                      <button
+                        type="button"
+                        className="btn-mini-outline"
+                        onClick={handleSendTestLeadToSupabase}
+                        disabled={isSbSyncing}
+                        style={{ borderColor: '#30D158', color: '#30D158' }}
+                        title="Insert a real verification lead and verify round-trip save to public.wired_leads"
+                      >
+                        <Send size={12} />
+                        <span>TEST DB SAVE</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-mini-outline"
+                        onClick={() => setShowSbSqlModal(!showSbSqlModal)}
+                      >
+                        <Layers size={13} />
+                        <span>{showSbSqlModal ? 'HIDE SQL SETUP' : 'SQL TABLE SCRIPT'}</span>
+                      </button>
+                      <a
+                        href="https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/editor"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-mini-outline"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <span>OPEN SUPABASE</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    </div>
                   </div>
-                  <pre style={{ margin: 0, fontSize: '0.68rem', color: '#30D158', overflowX: 'auto', fontFamily: 'var(--font-mono)', lineHeight: 1.45 }}>
-                    {SUPABASE_SQL_SCHEMA}
-                  </pre>
+
+                  <form
+                    onSubmit={handleSaveSupabaseKey}
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '10px',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <input
+                      type="password"
+                      placeholder="Paste Supabase anon / publishable key (eyJ... or sb_publishable_...) for urzkegplrgskzfejgudc.supabase.co"
+                      value={sbKeyInput}
+                      onChange={(e) => setSbKeyInput(e.target.value)}
+                      className="wos-crm-search-input"
+                      style={{
+                        flex: 1,
+                        minWidth: '260px',
+                        background: 'rgba(0,0,0,0.55)',
+                        padding: '9px 14px',
+                        borderRadius: '10px',
+                        border: '1px solid rgba(255,255,255,0.16)'
+                      }}
+                    />
+                    <button type="submit" className="btn-mini-yellow" style={{ padding: '9px 16px' }}>
+                      <Check size={13} />
+                      <span>SAVE KEY &amp; CONNECT</span>
+                    </button>
+                  </form>
+
+                  {sbSyncStatus && (
+                    <div
+                      style={{
+                        marginTop: '10px',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.74rem',
+                        color: '#FFEE00'
+                      }}
+                    >
+                      &gt; {sbSyncStatus}
+                    </div>
+                  )}
+
+                  {showSbSqlModal && (
+                    <div
+                      style={{
+                        marginTop: '14px',
+                        padding: '14px',
+                        borderRadius: '12px',
+                        background: 'rgba(0,0,0,0.65)',
+                        border: '1px solid rgba(255,238,0,0.35)'
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          marginBottom: '8px',
+                          flexWrap: 'wrap',
+                          gap: '8px'
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.7rem',
+                            color: '#FFEE00'
+                          }}
+                        >
+                          RUN THIS ONCE IN SUPABASE SQL EDITOR (https://supabase.com/dashboard/project/urzkegplrgskzfejgudc/sql/new):
+                        </span>
+                        <button
+                          type="button"
+                          className="btn-mini-yellow"
+                          onClick={() => {
+                            navigator.clipboard?.writeText(SUPABASE_SQL_SCHEMA);
+                            setCopiedSbSql(true);
+                            setTimeout(() => setCopiedSbSql(false), 2500);
+                          }}
+                        >
+                          <span>{copiedSbSql ? 'COPIED TO CLIPBOARD!' : 'COPY SQL SCRIPT'}</span>
+                        </button>
+                      </div>
+                      <pre
+                        style={{
+                          margin: 0,
+                          fontSize: '0.68rem',
+                          color: '#30D158',
+                          overflowX: 'auto',
+                          fontFamily: 'var(--font-mono)',
+                          lineHeight: 1.45
+                        }}
+                      >
+                        {SUPABASE_SQL_SCHEMA}
+                      </pre>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

@@ -13,3 +13,6 @@ dist/
 .env.*
 *.log
 npm-debug.log*
+
+# Local Site Brain rollback snapshots
+.brain/snapshots/

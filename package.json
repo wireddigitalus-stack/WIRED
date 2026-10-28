@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "brain": "node scripts/build-brain.mjs",
+    "snapshot": "node scripts/brain-snapshot.mjs snapshot",
+    "rollback": "node scripts/brain-snapshot.mjs rollback",
+    "build": "node scripts/build-brain.mjs && vite build && node scripts/prerender.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

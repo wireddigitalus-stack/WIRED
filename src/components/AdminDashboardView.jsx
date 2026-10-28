@@ -35,6 +35,7 @@ import {
   Zap
 } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
+import SiteBrainAdminTab from './SiteBrainAdminTab';
 import {
   AI_ENGINE_SHARE,
   SUPABASE_PROJECT_URL,
@@ -897,6 +898,15 @@ export default function AdminDashboardView({ onExitDashboard }) {
           >
             <ShieldCheck size={14} />
             <span>SEO &amp; GEO REPORTS</span>
+          </button>
+
+          <button
+            type="button"
+            className={`wos-dock-tab ${activeModule === 'brain' ? 'active' : ''}`}
+            onClick={() => setActiveModule('brain')}
+          >
+            <Cpu size={14} />
+            <span>SITE BRAIN</span>
           </button>
         </div>
 
@@ -2362,6 +2372,11 @@ export default function AdminDashboardView({ onExitDashboard }) {
             </div>
           </div>
         )}
+
+        {/* ==================================================================
+            MODULE 5: SITE BRAIN, KNOWLEDGE TREE, GUARDRAIL DOCTOR & EDITOR
+           ================================================================== */}
+        {activeModule === 'brain' && <SiteBrainAdminTab />}
       </div>
     </div>
   );

@@ -1,0 +1,797 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-28T20:16:45.033Z",
+  "masterDocPath": "BRAIN.md",
+  "healthStatus": {
+    "overall": "HEALTHY",
+    "passedCount": 7,
+    "totalChecks": 7,
+    "checks": [
+      {
+        "id": "assets-exist",
+        "category": "ASSET INTEGRITY",
+        "title": "All local images, mobile -sm.jpg screenshots, logos & video reels exist in public/",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Verified 52 referenced media assets in public/"
+      },
+      {
+        "id": "contact-sync",
+        "category": "SYNC MATRIX",
+        "title": "Studio phone (731-616-5121) & email (WiredDigitalUS@gmail.com) synced across all files",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Phone: 731-616-5121 • Email: WiredDigitalUS@gmail.com"
+      },
+      {
+        "id": "pricing-sync",
+        "category": "SYNC MATRIX",
+        "title": "3-Tier flat-rate pricing ($1,850–$3,500 / $3,500–$6,500 / $5,500–$12,000+) synced",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Local Launch & Website Modernization: $1,850 – $3,500 | Growth Website + 24/7 AI Lead Chatbot: $3,500 – $6,500 | Custom Platform + Live Admin Dashboard: $5,500 – $12,000+"
+      },
+      {
+        "id": "team-vision-guardrail",
+        "category": "BRAND GUARDRAIL",
+        "title": "Team Vision LLC kept low-key (never pitched in default chatbot replies)",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Chatbot general replies cite Fast Track & Ringger Law only unless asked specifically about Team Vision"
+      },
+      {
+        "id": "wired64-guardrail",
+        "category": "CHATBOT BRAIN",
+        "title": "WIRED-64 replies ≤ 45 words + \"YOU'RE WELCOME // That is literally my only job. : )\"",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Max tested reply length: 36 words (limit 45) • Sign-off: \"YOU'RE WELCOME //\nThat is literally my only job. : )\nIf anything comes up, Rob's at 731-616-5121.\""
+      },
+      {
+        "id": "mobile-speed-guardrail",
+        "category": "MOBILE SPEED",
+        "title": "Mobile code-splitting, deferred below-fold hydration & unified favicon URL intact",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Chatbot, BlogPosts, LegendsWall, WorkScreeningRoom & Footer isolated from initial bundle"
+      },
+      {
+        "id": "seo-blog-routes",
+        "category": "SEO & BLOG",
+        "title": "14 SEO routes + 2 published blog posts configured",
+        "status": "PASS",
+        "passed": true,
+        "detail": "14 SEO pages + /blog/ + /blog/website-cost-tri-cities/, /blog/fast-track-automotive-first-30-days/"
+      }
+    ]
+  },
+  "summaryStats": {
+    "seoPagesCount": 14,
+    "publishedBlogPostsCount": 2,
+    "totalBlogPostsCount": 2,
+    "caseStudiesCount": 3,
+    "legendsCount": 34,
+    "featuredVideosCount": 4,
+    "snapshotsCount": 1
+  },
+  "knowledgeTree": [
+    {
+      "id": "node-brand-contact",
+      "ring": "RING 1 // SAFE DATA",
+      "title": "Studio Identity, Timeline & Direct Contact",
+      "summary": "Controls brand name (Wired Digital / Wired Digital LLC), 1999→2015→2022 timeline, phone (731-616-5121), email (WiredDigitalUS@gmail.com), and social/GBP URLs.",
+      "primaryFile": "src/data/wiredData.js",
+      "syncFiles": [
+        "src/data/seoPages.js",
+        "src/data/blogPosts.js",
+        "src/utils/wired64Brain.js",
+        "index.html"
+      ],
+      "guardrails": [
+        "Always keep entity name as Wired Digital (legal: Wired Digital LLC).",
+        "Never change phone or email in one file without syncing all 5 files."
+      ],
+      "liveValues": {
+        "name": "WIRED DIGITAL",
+        "phone": "731-616-5121",
+        "email": "WiredDigitalUS@gmail.com",
+        "socials": {
+          "youtube": "https://www.youtube.com/@WiredDigitalCreative",
+          "instagram": "https://www.instagram.com/wireddigitalcreative/",
+          "facebook": "https://www.facebook.com/WiredDigital",
+          "linkedin": "https://www.linkedin.com/in/wired-%CF%9F-digital-b60361309/"
+        },
+        "googleBusinessProfile": "https://www.google.com/maps?cid=9585866241141725780"
+      }
+    },
+    {
+      "id": "node-pricing-tiers",
+      "ring": "RING 1 // SAFE DATA",
+      "title": "3-Tier Flat-Rate Website Pricing",
+      "summary": "Controls the 3 flat-rate website packages ($1,850–$3,500 Starter, $3,500–$6,500 Growth + AI Bot, $5,500–$12,000+ Custom Platform + Live Dashboard).",
+      "primaryFile": "src/data/seoPages.js",
+      "syncFiles": [
+        "src/components/WebCreationView.jsx",
+        "src/utils/wired64Brain.js",
+        "src/data/blogPosts.js"
+      ],
+      "guardrails": [
+        "Pricing cards live on /web-design/ and SEO pages — do not put a 3-card pricing grid above the fold on Home.",
+        "Always emphasize flat-rate project quotes with zero mandatory monthly retainers."
+      ],
+      "liveValues": {
+        "tiers": [
+          {
+            "name": "Local Launch & Website Modernization",
+            "price": "$1,850 – $3,500",
+            "timeline": "~2–3 weeks",
+            "summary": "5–8 pages, mobile-first custom build, local SEO & AI search schema."
+          },
+          {
+            "name": "Growth Website + 24/7 AI Lead Chatbot",
+            "price": "$3,500 – $6,500",
+            "timeline": "~3–5 weeks",
+            "summary": "8–15 pages, 24/7 custom-trained AI lead chatbot, city & service pages."
+          },
+          {
+            "name": "Custom Platform + Live Admin Dashboard",
+            "price": "$5,500 – $12,000+",
+            "timeline": "~4–6 weeks",
+            "summary": "Live owner telemetry/CRM dashboard, custom calculators & multi-location funnels."
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-home-sections",
+      "ring": "RING 1 & 2 // HOME VIEW",
+      "title": "Home Page Flow (Swirl Hero → Since 1999 → Recent Work → Legends → Videos)",
+      "summary": "Decluttered Home view with Tim Burton optical swirl hero, 50/50 studio reel + stamp, 3 slim Recent Work cards, 34 Legends logos, and 4 featured music videos.",
+      "primaryFile": "src/components/AiSeoDashboardShowcase.jsx",
+      "syncFiles": [
+        "src/components/SpiralHero.jsx",
+        "src/components/Since1999Section.jsx",
+        "src/data/wiredData.js"
+      ],
+      "guardrails": [
+        "Keep Home decluttered: 3 slim Recent Work cards only (interactive live dashboard demo stays on /web-design/).",
+        "Keep Team Vision LLC low-key with light copy and realistic metrics.",
+        "Every case study image in public/ must have both <name>.jpg (1012w) and <name>-sm.jpg (680w)."
+      ],
+      "liveValues": {
+        "caseStudies": [
+          {
+            "id": "fast-track-bristol",
+            "name": "Fast Track Automotive",
+            "city": "Bristol, TN",
+            "domain": "fasttrackbristoltn.com",
+            "caseUrl": "/work/fast-track-bristol/",
+            "headline": "A dealership site that shows the owner every shopper in real time.",
+            "metrics": [
+              {
+                "value": "2,751+",
+                "label": "First 30 Days: Tracked Visits"
+              },
+              {
+                "value": "47 Apps",
+                "label": "First 30 Days: Credit Leads"
+              },
+              {
+                "value": "1,719",
+                "label": "First 30 Days: Vehicle Clicks"
+              }
+            ]
+          },
+          {
+            "id": "team-vision-llc",
+            "name": "Team Vision LLC",
+            "city": "Downtown Bristol",
+            "domain": "teamvisionllc.com",
+            "caseUrl": "/work/team-vision/",
+            "headline": "A commercial real estate site with an AI assistant that helps tenants find space.",
+            "metrics": [
+              {
+                "value": "24/7",
+                "label": "AI Assistant for Tenants"
+              },
+              {
+                "value": "< 2 Min",
+                "label": "To Suggest a Space"
+              },
+              {
+                "value": "Downtown",
+                "label": "Bristol Properties"
+              }
+            ]
+          },
+          {
+            "id": "ringger-law",
+            "name": "Ringger Law (Est. 1981)",
+            "city": "Jackson, TN",
+            "domain": "ringgerlaw.com",
+            "caseUrl": "/work/ringger-law/",
+            "headline": "A law firm site that sorts urgent clients and routes them for same-day callbacks.",
+            "metrics": [
+              {
+                "value": "3,800+",
+                "label": "90-Day Tracked Sessions"
+              },
+              {
+                "value": "24/7 AI",
+                "label": "West TN Debt Triage Bot"
+              },
+              {
+                "value": "$64.50",
+                "label": "Per-Click Legal CPC Tracked"
+              }
+            ]
+          }
+        ],
+        "servicePillars": [
+          {
+            "id": "websites",
+            "title": "Websites & Redesigns",
+            "href": "/web-design/"
+          },
+          {
+            "id": "dashboards-ai",
+            "title": "Live Dashboards & AI Chatbots",
+            "href": "/custom-dashboards/"
+          },
+          {
+            "id": "seo-marketing",
+            "title": "Local SEO & Marketing",
+            "href": "/marketing/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-wired64-bot",
+      "ring": "RING 1 // CHATBOT BRAIN",
+      "title": "WIRED-64 Chatbot Brain & 3-Question Lead Capture",
+      "summary": "Controls all 16 chatbot topic replies, dry-humor tone, ≤45-word limit, 3-question lead capture state machine, and \": )\" polite sign-off.",
+      "primaryFile": "src/utils/wired64Brain.js",
+      "syncFiles": [
+        "src/components/WiredOrbChatbot.jsx",
+        "scripts/test-wired64.mjs"
+      ],
+      "guardrails": [
+        "Every topic reply must stay ≤ 45 words.",
+        "After 3 answered questions, ask for first name → then email or phone → save lead + question transcript.",
+        "Saying \"no thank you\" / \"thanks\" must return: \"YOU'RE WELCOME // That is literally my only job. : )\"",
+        "Run `node scripts/test-wired64.mjs` after any edit."
+      ],
+      "liveValues": {
+        "quickPrompts": [
+          {
+            "label": "💎 PRICING",
+            "prompt": "How much does a website cost?",
+            "cartridge": "geo"
+          },
+          {
+            "label": "⏱️ HOW LONG?",
+            "prompt": "How long does a website take?",
+            "cartridge": "geo"
+          },
+          {
+            "label": "🤖 AI CHATBOTS",
+            "prompt": "Tell me about AI chatbots.",
+            "cartridge": "dash"
+          },
+          {
+            "label": "🎬 MUSIC VIDEOS",
+            "prompt": "Tell me about music video editing.",
+            "cartridge": "video"
+          }
+        ],
+        "knowledgeCardKeys": [
+          "identity",
+          "videoPricing",
+          "pricing",
+          "timeline",
+          "fasttrack",
+          "ringger",
+          "teamvision",
+          "chatbot",
+          "dashboard",
+          "scanRequest",
+          "geo",
+          "music",
+          "website",
+          "clients",
+          "contact",
+          "location",
+          "about",
+          "marketing",
+          "blog"
+        ]
+      }
+    },
+    {
+      "id": "node-seo-geo-pages",
+      "ring": "RING 1 // 14 PRERENDERED SEO ROUTES",
+      "title": "14 Prerendered Local & Service SEO/GEO Pages",
+      "summary": "Controls static HTML prerendering, canonical URLs, JSON-LD @graph schemas, and 301 legacy query redirects for Bristol, Johnson City, Kingsport, Abingdon, services & case studies.",
+      "primaryFile": "src/data/seoPages.js",
+      "syncFiles": [
+        "scripts/prerender.mjs",
+        "src/components/SeoPageIntro.jsx",
+        "vercel.json"
+      ],
+      "guardrails": [
+        "Always run `npm run build` after editing seoPages.js so static HTML files and public/sitemap.xml regenerate."
+      ],
+      "liveValues": {
+        "routes": [
+          {
+            "id": "root",
+            "path": "/",
+            "title": "Website Design Bristol TN/VA & Tri-Cities | Wired Digital",
+            "h1": "Website Design, AI Chatbots & Local SEO in Bristol and the Tri-Cities"
+          },
+          {
+            "id": "view-web-design",
+            "path": "/web-design/",
+            "title": "Website Design & Redesign in the Tri-Cities | Wired Digital",
+            "h1": "Custom Website Design and Redesign for Tri-Cities Businesses"
+          },
+          {
+            "id": "view-full-service-marketing",
+            "path": "/marketing/",
+            "title": "Digital Marketing & Local SEO, Tri-Cities | Wired Digital",
+            "h1": "Digital Marketing, Local SEO and Video Ads for Tri-Cities Businesses"
+          },
+          {
+            "id": "view-custom-dashboards",
+            "path": "/custom-dashboards/",
+            "title": "Custom Business Dashboards & Lead CRM | Wired Digital",
+            "h1": "Custom Live Admin Dashboards That Show What Your Website Is Doing"
+          },
+          {
+            "id": "view-ai-chatbots",
+            "path": "/ai-chatbots/",
+            "title": "24/7 AI Chatbots Trained on Your Business | Wired Digital",
+            "h1": "AI Chatbots Trained on Your Business That Capture Leads 24/7"
+          },
+          {
+            "id": "view-video-production",
+            "path": "/video-production/",
+            "title": "Music Video & Lyric Video Editing | Wired Digital",
+            "h1": "Remote Music Video, Lyric Video and Visualizer Editing"
+          },
+          {
+            "id": "view-legends-vault",
+            "path": "/legends/",
+            "title": "Music Clients: Primary Wave, Alice Cooper | Wired Digital",
+            "h1": "Artists, Estates and Labels We Have Worked With"
+          },
+          {
+            "id": "city-bristol",
+            "path": "/bristol-tn-va-web-design/",
+            "title": "Website Design in Bristol, TN & VA | Wired Digital",
+            "h1": "Website Design in Bristol, Tennessee and Virginia"
+          },
+          {
+            "id": "city-johnson-city",
+            "path": "/johnson-city-tn-web-design/",
+            "title": "Website Design in Johnson City, TN | Wired Digital",
+            "h1": "Website Design for Johnson City, Tennessee Businesses"
+          },
+          {
+            "id": "city-kingsport",
+            "path": "/kingsport-tn-web-design/",
+            "title": "Website Design in Kingsport, TN | Wired Digital",
+            "h1": "Website Design for Kingsport, Tennessee Companies"
+          },
+          {
+            "id": "city-abingdon",
+            "path": "/abingdon-va-web-design/",
+            "title": "Website Design in Abingdon, VA | Wired Digital",
+            "h1": "Website Design for Abingdon and Southwest Virginia"
+          },
+          {
+            "id": "case-fasttrack",
+            "path": "/work/fast-track-bristol/",
+            "title": "Case Study: Fast Track Automotive Bristol TN | Wired Digital",
+            "h1": "Fast Track Automotive: Dealership Website and Live Admin Dashboard"
+          },
+          {
+            "id": "case-teamvision",
+            "path": "/work/team-vision/",
+            "title": "Case Study: Team Vision LLC AI Space Advisor | Wired Digital",
+            "h1": "Team Vision LLC: Commercial Real Estate Website and 24/7 AI Advisor"
+          },
+          {
+            "id": "case-ringgerlaw",
+            "path": "/work/ringger-law/",
+            "title": "Case Study: Ringger Law CRM & AI Triage | Wired Digital",
+            "h1": "Ringger Law: Legal Website, 24/7 AI Triage and Attorney CRM"
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-company-blog",
+      "ring": "RING 1 // PRERENDERED BLOG",
+      "title": "Company Blog (/blog/ & Article Posts)",
+      "summary": "Single-file blog publishing system. Supports draft: true (private review URL, noindex) and draft: false (published on /blog/ and in sitemap.xml).",
+      "primaryFile": "src/data/blogPosts.js",
+      "syncFiles": [
+        "src/components/BlogView.jsx",
+        "scripts/prerender.mjs"
+      ],
+      "guardrails": [
+        "Do not import blogPosts.js in src/App.jsx — keep it isolated inside lazy BlogView.jsx for mobile speed."
+      ],
+      "liveValues": {
+        "indexPath": "/blog/",
+        "posts": [
+          {
+            "slug": "website-cost-tri-cities",
+            "path": "/blog/website-cost-tri-cities/",
+            "title": "How Much Does a Website Cost in the Tri-Cities? (2026)",
+            "draft": false,
+            "datePublished": "2026-10-27",
+            "readMinutes": 7
+          },
+          {
+            "slug": "fast-track-automotive-first-30-days",
+            "path": "/blog/fast-track-automotive-first-30-days/",
+            "title": "Fast Track Automotive: 30 Days of Live Dashboard Data",
+            "draft": false,
+            "datePublished": "2026-10-27",
+            "readMinutes": 6
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-legends-video",
+      "ring": "RING 1 & 2 // VIDEO & LEGENDS",
+      "title": "34 Legends Vault & Global 4K Music Video Screening Room",
+      "summary": "Controls the 34 iconic artist/record-label logos (Alice Cooper, Halestorm, Def Leppard, Primary Wave, etc.) and YouTube video showcases.",
+      "primaryFile": "src/data/wiredData.js",
+      "syncFiles": [
+        "src/components/LegendsWall.jsx",
+        "src/components/SmartLogo.jsx",
+        "src/components/WorkScreeningRoom.jsx",
+        "src/components/VideoProductionView.jsx"
+      ],
+      "guardrails": [
+        "Position video services as 100% worldwide remote 4K editing, official lyric videos & visualizers (with on-location directing reserved for select commissions).",
+        "Keep SmartLogo and WorkScreeningRoom IntersectionObserver gates intact so offscreen logos/thumbnails never slow down mobile load."
+      ],
+      "liveValues": {
+        "legendsCount": 34,
+        "featuredVideosCount": 4,
+        "featuredVideos": [
+          {
+            "id": "halestorm-shooting-star",
+            "title": "Halestorm - Shooting Star (feat. Paul Rodgers) edited by Rob Neilson",
+            "category": "GLOBAL REMOTE VIDEO EDIT",
+            "youtubeId": "Qmf-dN9gsGM"
+          },
+          {
+            "id": "alice-cooper-lyric-video",
+            "title": "Alice Cooper - Lyric Video",
+            "category": "GLOBAL LYRIC VIDEO & ANIMATION",
+            "youtubeId": "rcEbSkaAqkg"
+          },
+          {
+            "id": "full-devil-jacket-music-video",
+            "title": "Full Devil Jacket - Valley of Bones (Official Music Video)",
+            "category": "COMMISSIONED PRODUCTION",
+            "youtubeId": "DkTGpDq6Pcg"
+          },
+          {
+            "id": "full-devil-jacket-killers-video",
+            "title": "Full Devil Jacket - Killers (Official Music Video)",
+            "category": "COMMISSIONED PRODUCTION",
+            "youtubeId": "-uM3mZFoUrU"
+          }
+        ]
+      }
+    }
+  ],
+  "fileInventory": {
+    "data": [
+      {
+        "file": "src/data/blogPosts.js",
+        "name": "blogPosts.js",
+        "lines": 431,
+        "sizeKb": 21.6
+      },
+      {
+        "file": "src/data/seoPages.js",
+        "name": "seoPages.js",
+        "lines": 779,
+        "sizeKb": 34.3
+      },
+      {
+        "file": "src/data/wiredData.js",
+        "name": "wiredData.js",
+        "lines": 1019,
+        "sizeKb": 37.6
+      }
+    ],
+    "components": [
+      {
+        "file": "src/components/AdminDashboardView.jsx",
+        "name": "AdminDashboardView.jsx",
+        "lines": 2384,
+        "sizeKb": 95.1
+      },
+      {
+        "file": "src/components/AiSeoDashboardShowcase.jsx",
+        "name": "AiSeoDashboardShowcase.jsx",
+        "lines": 1017,
+        "sizeKb": 47.5
+      },
+      {
+        "file": "src/components/BlogView.jsx",
+        "name": "BlogView.jsx",
+        "lines": 19,
+        "sizeKb": 0.6
+      },
+      {
+        "file": "src/components/BodyCtaContactCard.jsx",
+        "name": "BodyCtaContactCard.jsx",
+        "lines": 343,
+        "sizeKb": 12.4
+      },
+      {
+        "file": "src/components/ContactModal.jsx",
+        "name": "ContactModal.jsx",
+        "lines": 240,
+        "sizeKb": 8
+      },
+      {
+        "file": "src/components/LegendsWall.jsx",
+        "name": "LegendsWall.jsx",
+        "lines": 144,
+        "sizeKb": 5.7
+      },
+      {
+        "file": "src/components/MobileMore.jsx",
+        "name": "MobileMore.jsx",
+        "lines": 36,
+        "sizeKb": 1
+      },
+      {
+        "file": "src/components/SeoPageIntro.jsx",
+        "name": "SeoPageIntro.jsx",
+        "lines": 99,
+        "sizeKb": 3.2
+      },
+      {
+        "file": "src/components/SeoSiteTreeAuthority.jsx",
+        "name": "SeoSiteTreeAuthority.jsx",
+        "lines": 484,
+        "sizeKb": 24.6
+      },
+      {
+        "file": "src/components/Since1999Section.jsx",
+        "name": "Since1999Section.jsx",
+        "lines": 227,
+        "sizeKb": 7.8
+      },
+      {
+        "file": "src/components/SiteBrainAdminTab.jsx",
+        "name": "SiteBrainAdminTab.jsx",
+        "lines": 1237,
+        "sizeKb": 44.6
+      },
+      {
+        "file": "src/components/SmartLogo.jsx",
+        "name": "SmartLogo.jsx",
+        "lines": 451,
+        "sizeKb": 14.3
+      },
+      {
+        "file": "src/components/SpiralHero.jsx",
+        "name": "SpiralHero.jsx",
+        "lines": 163,
+        "sizeKb": 6.4
+      },
+      {
+        "file": "src/components/VideoLightboxModal.jsx",
+        "name": "VideoLightboxModal.jsx",
+        "lines": 162,
+        "sizeKb": 5.6
+      },
+      {
+        "file": "src/components/VideoProductionView.jsx",
+        "name": "VideoProductionView.jsx",
+        "lines": 601,
+        "sizeKb": 25.4
+      },
+      {
+        "file": "src/components/WebCreationView.jsx",
+        "name": "WebCreationView.jsx",
+        "lines": 470,
+        "sizeKb": 21.1
+      },
+      {
+        "file": "src/components/WebsiteAiGraderCard.jsx",
+        "name": "WebsiteAiGraderCard.jsx",
+        "lines": 471,
+        "sizeKb": 16.2
+      },
+      {
+        "file": "src/components/WiredOrbChatbot.jsx",
+        "name": "WiredOrbChatbot.jsx",
+        "lines": 1481,
+        "sizeKb": 60.7
+      },
+      {
+        "file": "src/components/WorkScreeningRoom.jsx",
+        "name": "WorkScreeningRoom.jsx",
+        "lines": 254,
+        "sizeKb": 9.8
+      },
+      {
+        "file": "src/components/YellowFooter.jsx",
+        "name": "YellowFooter.jsx",
+        "lines": 481,
+        "sizeKb": 19.8
+      }
+    ],
+    "utils": [
+      {
+        "file": "src/utils/telemetry.js",
+        "name": "telemetry.js",
+        "lines": 1823,
+        "sizeKb": 64.2
+      },
+      {
+        "file": "src/utils/useIsMobile.js",
+        "name": "useIsMobile.js",
+        "lines": 23,
+        "sizeKb": 0.7
+      },
+      {
+        "file": "src/utils/websiteDiagnostic.js",
+        "name": "websiteDiagnostic.js",
+        "lines": 380,
+        "sizeKb": 13.3
+      },
+      {
+        "file": "src/utils/wired64Brain.js",
+        "name": "wired64Brain.js",
+        "lines": 558,
+        "sizeKb": 22.5
+      }
+    ],
+    "scripts": [
+      {
+        "file": "scripts/brain-snapshot.mjs",
+        "name": "brain-snapshot.mjs",
+        "lines": 146,
+        "sizeKb": 4.9
+      },
+      {
+        "file": "scripts/build-brain.mjs",
+        "name": "build-brain.mjs",
+        "lines": 493,
+        "sizeKb": 17.2
+      },
+      {
+        "file": "scripts/prerender.mjs",
+        "name": "prerender.mjs",
+        "lines": 449,
+        "sizeKb": 14.8
+      },
+      {
+        "file": "scripts/test-wired64.mjs",
+        "name": "test-wired64.mjs",
+        "lines": 170,
+        "sizeKb": 7
+      }
+    ],
+    "styles": [
+      {
+        "file": "src/styles.css",
+        "name": "styles.css",
+        "lines": 12967,
+        "sizeKb": 253.5
+      }
+    ]
+  },
+  "snapshots": [
+    {
+      "id": "snap-20261028-201105",
+      "label": "Baseline checkpoint (all guardrails green)",
+      "createdAt": "2026-10-28T20:11:05.156Z",
+      "filesCount": 9,
+      "files": [
+        "BRAIN.md",
+        "src/data/wiredData.js",
+        "src/data/seoPages.js",
+        "src/data/blogPosts.js",
+        "src/utils/wired64Brain.js",
+        "src/components/Since1999Section.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/WebCreationView.jsx",
+        "index.html"
+      ]
+    }
+  ],
+  "recentCommits": [
+    {
+      "hash": "d42fd2c",
+      "date": "2026-10-28",
+      "subject": "Mobile speed optimization: code-split below-fold & chatbot, responsive -sm case study images, lazy YouTube/SmartLogo gates, and poster/favicon compression"
+    },
+    {
+      "hash": "ed3848d",
+      "date": "2026-10-28",
+      "subject": "WIRED-64: 'You're welcome : )' for thanks, friendly sign-off for 'no thanks/that's all/bye', soft reply to plain 'no' (none count toward lead ask)"
+    },
+    {
+      "hash": "869d8d3",
+      "date": "2026-10-28",
+      "subject": "WIRED-64 rewrite: short plain answers (<=45 words, light humor), friendly 3-question lead flow (name -> email/phone, saves question transcript), whole-word topic matching, Team Vision low-key, honest claims + real site check; brain extracted to src/utils/wired64Brain.js with scripts/test-wired64.mjs"
+    },
+    {
+      "hash": "317a1d9",
+      "date": "2026-10-28",
+      "subject": "Lighten Team Vision home card: softer metric labels, screen labels and lightbox titles"
+    },
+    {
+      "hash": "26feac9",
+      "date": "2026-10-28",
+      "subject": "Declutter home: single slim Recent Work section (7 elements/card, 2 buttons), plain-English labels, linked service cards, one-line city links, short Since 1999 copy; move live dashboard demo to /web-design/; Team Vision kept low-key; drop self-scored grader preset"
+    },
+    {
+      "hash": "1e417bf",
+      "date": "2026-10-28",
+      "subject": "Widen and scale header nav for large desktops: 1400px+ (15in MacBook), 1800px+ and 2400px+ (27in displays)"
+    },
+    {
+      "hash": "0f09b74",
+      "date": "2026-10-28",
+      "subject": "Remove YouTube/Instagram icons from header nav to give BLOG pill room (socials remain in footer)"
+    },
+    {
+      "hash": "a3a0713",
+      "date": "2026-10-28",
+      "subject": "Add BLOG to main header nav and mobile menu"
+    },
+    {
+      "hash": "a9809d1",
+      "date": "2026-10-27",
+      "subject": "Publish first two blog posts (website cost guide + Fast Track 30-day case study); add to sitemap, llms.txt and footer"
+    },
+    {
+      "hash": "c02bc01",
+      "date": "2026-10-27",
+      "subject": "Add prerendered company blog (/blog/) with BlogPosting schema; first two posts as noindex drafts: Tri-Cities website cost guide + Fast Track 30-day dashboard case study"
+    },
+    {
+      "hash": "45d4c0d",
+      "date": "2026-10-27",
+      "subject": "Align entity name to legal/GBP name: Wired Digital (Wired Digital LLC); keep Wired Digital Creative as alternateName"
+    },
+    {
+      "hash": "bcaf5a7",
+      "date": "2026-10-27",
+      "subject": "Link Google Business Profile (CID) in schema sameAs/hasMap and llms.txt"
+    },
+    {
+      "hash": "f925f45",
+      "date": "2026-10-27",
+      "subject": "Add real Instagram, Facebook & LinkedIn profiles (footer/header icons, schema sameAs, llms.txt)"
+    },
+    {
+      "hash": "870c5be",
+      "date": "2026-10-27",
+      "subject": "SEO/GEO: prerender 14 real pages (unique title/desc/canonical/H1/copy/JSON-LD) for Google + AI crawlers, 301 legacy ?view/?city/?case URLs, fix schema types & sameAs, shorten tags, hide placeholder socials, relabel unverifiable scores"
+    },
+    {
+      "hash": "4175f67",
+      "date": "2026-10-26",
+      "subject": "Sync sitemap.xml canonical URLs and lastmod for Google Search Console"
+    }
+  ]
+}

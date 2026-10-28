@@ -1,0 +1,1 @@
+Always read BRAIN.md at the root of this repository first on turn 1 before searching files. Follow all sync rules and guardrails in BRAIN.md and verify changes with `npm run brain` and `npm run build`.

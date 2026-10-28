@@ -45,6 +45,9 @@
 - Fast Track Bristol TN Case Study: `https://www.wireddigitalcreative.com/work/fast-track-bristol/`
 - Team Vision LLC Case Study: `https://www.wireddigitalcreative.com/work/team-vision/`
 - Ringger Law Case Study: `https://www.wireddigitalcreative.com/work/ringger-law/`
+- Blog: `https://www.wireddigitalcreative.com/blog/`
+  - How Much Does a Website Cost in the Tri-Cities? (2026): `https://www.wireddigitalcreative.com/blog/website-cost-tri-cities/`
+  - Fast Track Automotive: 30 Days of Live Dashboard Data: `https://www.wireddigitalcreative.com/blog/fast-track-automotive-first-30-days/`
 - XML Sitemap: `https://www.wireddigitalcreative.com/sitemap.xml`
 
 ## Direct Contact & Leadership

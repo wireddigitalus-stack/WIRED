@@ -31,7 +31,7 @@ export const BLOG_POSTS = [
   // --------------------------------------------------------------------------
   {
     slug: 'website-cost-tri-cities',
-    draft: true,
+    draft: false,
     title: 'How Much Does a Website Cost in the Tri-Cities? (2026)',
     description:
       'Real 2026 website pricing for Bristol, Johnson City, Kingsport and Abingdon businesses: what freelancers, agencies and custom studios charge, and why.',
@@ -163,7 +163,7 @@ export const BLOG_POSTS = [
   // --------------------------------------------------------------------------
   {
     slug: 'fast-track-automotive-first-30-days',
-    draft: true,
+    draft: false,
     title: 'Fast Track Automotive: 30 Days of Live Dashboard Data',
     description:
       'What a new dealership website and live admin dashboard showed in its first 30 days in Bristol, TN: 2,751+ visits, 1,719 vehicle clicks and 47 credit apps.',

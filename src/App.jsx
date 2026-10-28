@@ -4,15 +4,8 @@ import { BRAND_INFO } from './data/wiredData';
 import SpiralHero from './components/SpiralHero';
 import Since1999Section from './components/Since1999Section';
 import AiSeoDashboardShowcase from './components/AiSeoDashboardShowcase';
-import LegendsWall from './components/LegendsWall';
-import WorkScreeningRoom from './components/WorkScreeningRoom';
-import YellowFooter from './components/YellowFooter';
-import WiredOrbChatbot from './components/WiredOrbChatbot';
-import SeoSiteTreeAuthority from './components/SeoSiteTreeAuthority';
-import BodyCtaContactCard from './components/BodyCtaContactCard';
 import SeoPageIntro from './components/SeoPageIntro';
 import { getSeoPageById } from './data/seoPages';
-import { parseBlogPath } from './data/blogPosts';
 import {
   logTelemetryEvent,
   SITE_TREE_NODES,
@@ -20,6 +13,18 @@ import {
   resolveInitialSeoNodeFromUrl
 } from './utils/telemetry';
 
+function parseBlogPath(pathname = '') {
+  const m = String(pathname).match(/^\/blog(?:\/([a-z0-9-]+))?\/?$/i);
+  if (!m) return null;
+  return { slug: m[1] || null };
+}
+
+const LegendsWall = lazy(() => import('./components/LegendsWall'));
+const WorkScreeningRoom = lazy(() => import('./components/WorkScreeningRoom'));
+const BodyCtaContactCard = lazy(() => import('./components/BodyCtaContactCard'));
+const SeoSiteTreeAuthority = lazy(() => import('./components/SeoSiteTreeAuthority'));
+const YellowFooter = lazy(() => import('./components/YellowFooter'));
+const WiredOrbChatbot = lazy(() => import('./components/WiredOrbChatbot'));
 const WebCreationView = lazy(() => import('./components/WebCreationView'));
 const VideoProductionView = lazy(() => import('./components/VideoProductionView'));
 const AdminDashboardView = lazy(() => import('./components/AdminDashboardView'));
@@ -51,6 +56,7 @@ export default function App() {
   const [activeVideoModal, setActiveVideoModal] = useState(null);
   const [contactOpen, setContactOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [deferredReady, setDeferredReady] = useState(false);
 
   useEffect(() => {
     const initialNode = resolveInitialSeoNodeFromUrl();
@@ -63,6 +69,17 @@ export default function App() {
       }
     }
 
+    // Hydrate below-the-fold sections & chatbot right after initial load so
+    // stylesheet layout and above-the-fold height are 100% settled on Slow 4G.
+    const markDeferred = () => setDeferredReady(true);
+    let deferTimer = null;
+    if (document.readyState === 'complete') {
+      deferTimer = setTimeout(markDeferred, 40);
+    } else {
+      window.addEventListener('load', markDeferred, { once: true });
+      deferTimer = setTimeout(markDeferred, 4000);
+    }
+
     // Warm-prefetch secondary tab views during browser idle time so tab clicks are 0ms instant
     const prefetchSecondaryViews = () => {
       import('./components/WebCreationView').catch(() => {});
@@ -70,10 +87,18 @@ export default function App() {
     };
     if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
       const idleId = window.requestIdleCallback(prefetchSecondaryViews, { timeout: 2500 });
-      return () => window.cancelIdleCallback?.(idleId);
+      return () => {
+        if (deferTimer) clearTimeout(deferTimer);
+        window.removeEventListener('load', markDeferred);
+        window.cancelIdleCallback?.(idleId);
+      };
     }
     const timerId = setTimeout(prefetchSecondaryViews, 1800);
-    return () => clearTimeout(timerId);
+    return () => {
+      if (deferTimer) clearTimeout(deferTimer);
+      window.removeEventListener('load', markDeferred);
+      clearTimeout(timerId);
+    };
   }, []);
 
   useEffect(() => {
@@ -395,11 +420,15 @@ export default function App() {
               onOpenContact={() => setContactOpen(true)}
             />
             <AiSeoDashboardShowcase onOpenContact={() => setContactOpen(true)} />
-            <LegendsWall />
-            <WorkScreeningRoom
-              onOpenVideoModal={(proj) => setActiveVideoModal(proj)}
-              onNavigateTab={handleNavigateTab}
-            />
+            {deferredReady && (
+              <Suspense fallback={null}>
+                <LegendsWall />
+                <WorkScreeningRoom
+                  onOpenVideoModal={(proj) => setActiveVideoModal(proj)}
+                  onNavigateTab={handleNavigateTab}
+                />
+              </Suspense>
+            )}
           </>
         )}
 
@@ -428,13 +457,13 @@ export default function App() {
         )}
 
         {activeTab === 'legends' && (
-          <>
+          <Suspense fallback={null}>
             <LegendsWall />
             <WorkScreeningRoom
               onOpenVideoModal={(proj) => setActiveVideoModal(proj)}
               onNavigateTab={handleNavigateTab}
             />
-          </>
+          </Suspense>
         )}
 
         {activeTab === 'blog' && (
@@ -450,24 +479,32 @@ export default function App() {
         )}
 
         {/* Always-Visible In-Body Call-to-Action Contact Card */}
-        {activeTab !== 'admin' && <BodyCtaContactCard />}
+        {activeTab !== 'admin' && deferredReady && (
+          <Suspense fallback={null}>
+            <BodyCtaContactCard />
+          </Suspense>
+        )}
       </main>
 
       {/* Google Sitelinks, Full Site Tree Architecture & "Website Design Near Me" Authority Hub */}
-      {activeTab !== 'admin' && (
-        <SeoSiteTreeAuthority
-          activeSeoNodeId={activeSeoNodeId}
-          onSelectSeoNode={handleSelectSeoNode}
-          onOpenContact={() => setContactOpen(true)}
-        />
+      {activeTab !== 'admin' && deferredReady && (
+        <Suspense fallback={null}>
+          <SeoSiteTreeAuthority
+            activeSeoNodeId={activeSeoNodeId}
+            onSelectSeoNode={handleSelectSeoNode}
+            onOpenContact={() => setContactOpen(true)}
+          />
+        </Suspense>
       )}
 
       {/* Signature Full-Bleed Electric Yellow Footer Finale */}
-      {activeTab !== 'admin' && (
-        <YellowFooter
-          onOpenContact={() => setContactOpen(true)}
-          onNavigateTab={handleNavigateTab}
-        />
+      {activeTab !== 'admin' && deferredReady && (
+        <Suspense fallback={null}>
+          <YellowFooter
+            onOpenContact={() => setContactOpen(true)}
+            onNavigateTab={handleNavigateTab}
+          />
+        </Suspense>
       )}
 
       {/* Cinema Video Lightbox Modal */}
@@ -491,7 +528,11 @@ export default function App() {
       )}
 
       {/* Floating Shiny Black Orb Lead-Capture Bot + 64-Bit Yellow/Green Retro Terminal */}
-      {activeTab !== 'admin' && <WiredOrbChatbot />}
+      {activeTab !== 'admin' && deferredReady && (
+        <Suspense fallback={null}>
+          <WiredOrbChatbot />
+        </Suspense>
+      )}
     </div>
   );
 }

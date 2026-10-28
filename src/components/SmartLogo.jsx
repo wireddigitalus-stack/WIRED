@@ -312,7 +312,7 @@ export default function SmartLogo({ item, mode = 'dark', className = '' }) {
           observer.disconnect();
         }
       },
-      { rootMargin: '550px 0px' }
+      { rootMargin: '250px 0px' }
     );
     observer.observe(el);
 
@@ -439,7 +439,7 @@ export default function SmartLogo({ item, mode = 'dark', className = '' }) {
   return (
     <img
       ref={imgRef}
-      src={renderedSrc || item.src}
+      src={renderedSrc || (shouldProcess ? item.src : undefined)}
       alt={item.name}
       loading="lazy"
       decoding="async"

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, ExternalLink, Heart, Film, Maximize2, Globe } from 'lucide-react';
 import { BRAND_INFO, FEATURED_WORK } from '../data/wiredData';
 import MobileMore from './MobileMore';
 
 export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
+  const sectionRef = useRef(null);
+  const [thumbsReady, setThumbsReady] = useState(false);
   const [inlinePlayingId, setInlinePlayingId] = useState(null);
   const [introOpen, setIntroOpen] = useState(false);
   const [showAllWork, setShowAllWork] = useState(false); // mobile: first 2 videos only
@@ -14,12 +16,31 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
     'full-devil-jacket-killers-video': true
   });
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setThumbsReady(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setThumbsReady(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '320px 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const toggleLike = (id) => {
     setLikedIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
-    <section className="work-screening-section" id="work">
+    <section ref={sectionRef} className="work-screening-section" id="work">
       <div className="section-container work-narrow-container">
         {/* Headline with Global Remote Editing Positioning */}
         <div className="work-header">
@@ -80,25 +101,29 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
                       }}
                       aria-label={`Play ${project.title}`}
                     >
-                      <img
-                        src={project.thumbnail}
-                        onLoad={(e) => {
-                          if (
-                            e.currentTarget.naturalWidth <= 120 &&
-                            project.fallbackThumb &&
-                            e.currentTarget.src !== project.fallbackThumb
-                          ) {
-                            e.currentTarget.src = project.fallbackThumb;
-                          }
-                        }}
-                        onError={(e) => {
-                          if (project.fallbackThumb && e.currentTarget.src !== project.fallbackThumb) {
-                            e.currentTarget.src = project.fallbackThumb;
-                          }
-                        }}
-                        alt={project.title}
-                        className="work-thumb-img"
-                      />
+                      {thumbsReady && (
+                        <img
+                          src={project.thumbnail}
+                          loading="lazy"
+                          decoding="async"
+                          onLoad={(e) => {
+                            if (
+                              e.currentTarget.naturalWidth <= 120 &&
+                              project.fallbackThumb &&
+                              e.currentTarget.src !== project.fallbackThumb
+                            ) {
+                              e.currentTarget.src = project.fallbackThumb;
+                            }
+                          }}
+                          onError={(e) => {
+                            if (project.fallbackThumb && e.currentTarget.src !== project.fallbackThumb) {
+                              e.currentTarget.src = project.fallbackThumb;
+                            }
+                          }}
+                          alt={project.title}
+                          className="work-thumb-img"
+                        />
+                      )}
                       <div className="work-thumb-gradient" />
 
                       <span className="work-category-badge">{project.category}</span>
@@ -115,7 +140,7 @@ export default function WorkScreeningRoom({ onOpenVideoModal, onNavigateTab }) {
                   <div className="work-card-top">
                     <div className="work-author-row">
                       <div className="work-author-avatar">
-                        <img src={BRAND_INFO.logoSrc} alt="Wired Digital" />
+                        <img src={BRAND_INFO.logoSrc} alt="Wired Digital" loading="lazy" decoding="async" />
                       </div>
                       <div className="work-author-meta">
                         <span className="author-name">Wired Digital</span>

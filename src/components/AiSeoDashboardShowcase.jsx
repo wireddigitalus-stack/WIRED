@@ -24,6 +24,8 @@ import {
 } from '../data/wiredData';
 import MobileMore from './MobileMore';
 
+const toSmallImg = (src) => (src ? src.replace(/\.jpg$/i, '-sm.jpg') : src);
+
 export default function AiSeoDashboardShowcase({ onOpenContact, variant = 'home' }) {
   // 'home'  → slim Recent Work cards + service cards + city links
   // 'demo'  → interactive live client dashboard demo (shown on /web-design/)
@@ -856,13 +858,15 @@ export default function AiSeoDashboardShowcase({ onOpenContact, variant = 'home'
                         >
                           <img
                             src={mainImg}
+                            srcSet={`${toSmallImg(mainImg)} 680w, ${mainImg} 1012w`}
+                            sizes="(max-width: 768px) 220px, 480px"
                             alt={`${cs.name} ${isPrimary ? cs.primaryTabLabel : cs.secondaryTabLabel}`}
                             className="cs-primary-screen-img"
                             loading="lazy"
                             decoding="async"
                           />
                           <img
-                            src={pipImg}
+                            src={toSmallImg(pipImg)}
                             alt={`${cs.name} ${isPrimary ? cs.secondaryTabLabel : cs.primaryTabLabel}`}
                             className="cs-secondary-pip-img"
                             loading="lazy"

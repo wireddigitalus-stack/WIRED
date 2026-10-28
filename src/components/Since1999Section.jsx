@@ -15,13 +15,34 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
 
   useEffect(() => {
     const src = isMobile ? BRAND_INFO.reelMp4Mobile : BRAND_INFO.reelMp4;
-    const start = () => setVideoSrc(src);
+    let timerId = null;
+    const triggerStart = () => {
+      cleanup();
+      setVideoSrc(src);
+    };
+    const schedule = () => {
+      if (!isMobile) {
+        timerId = setTimeout(triggerStart, 120);
+        return;
+      }
+      // On phones, let the crisp poster lock in an instant LCP first, then start
+      // the 360p loop on first scroll/touch or after initial paint settles.
+      window.addEventListener('scroll', triggerStart, { passive: true, once: true });
+      window.addEventListener('touchstart', triggerStart, { passive: true, once: true });
+      timerId = setTimeout(triggerStart, 2800);
+    };
+    const cleanup = () => {
+      if (timerId) clearTimeout(timerId);
+      window.removeEventListener('load', schedule);
+      window.removeEventListener('scroll', triggerStart);
+      window.removeEventListener('touchstart', triggerStart);
+    };
     if (document.readyState === 'complete') {
-      const t = setTimeout(start, 120);
-      return () => clearTimeout(t);
+      schedule();
+    } else {
+      window.addEventListener('load', schedule, { once: true });
     }
-    window.addEventListener('load', start, { once: true });
-    return () => window.removeEventListener('load', start);
+    return cleanup;
   }, [isMobile]);
 
   useEffect(() => {

@@ -12953,3 +12953,14 @@ a.mobile-nav-item {
 .tricities-city-line a:hover {
   border-bottom-color: var(--wired-yellow, #ffee00);
 }
+
+/* ============================================================================
+   BELOW-THE-FOLD RENDER CONTAINMENT (Fast mobile initial layout & paint)
+   ============================================================================ */
+.work-screening-section,
+.body-cta-contact-section,
+.seo-sitetree-section,
+.yellow-footer-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

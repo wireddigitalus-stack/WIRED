@@ -19,18 +19,13 @@ import { normalizeDomain, runWebsiteDiagnostic } from '../utils/websiteDiagnosti
 
 const QUICK_PRESETS = [
   {
-    label: 'Wired Digital (99 A+)',
+    label: 'Wired Digital',
     domain: 'wireddigitalcreative.com',
-    tag: 'VERIFIED'
+    tag: 'OUR SITE'
   },
   {
     label: 'Fast Track Bristol',
     domain: 'fasttrackbristoltn.com',
-    tag: 'CLIENT'
-  },
-  {
-    label: 'Team Vision LLC',
-    domain: 'teamvisionllc.com',
     tag: 'CLIENT'
   },
   {

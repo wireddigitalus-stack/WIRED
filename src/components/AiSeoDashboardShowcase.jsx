@@ -20,13 +20,14 @@ import {
 } from 'lucide-react';
 import {
   TRI_CITIES_CASE_STUDIES,
-  AI_SEO_PILLARS,
-  TRI_CITIES_MARKETS
+  AI_SEO_PILLARS
 } from '../data/wiredData';
 import MobileMore from './MobileMore';
-import WebsiteAiGraderCard from './WebsiteAiGraderCard';
 
-export default function AiSeoDashboardShowcase({ onOpenContact }) {
+export default function AiSeoDashboardShowcase({ onOpenContact, variant = 'home' }) {
+  // 'home'  → slim Recent Work cards + service cards + city links
+  // 'demo'  → interactive live client dashboard demo (shown on /web-design/)
+  const isDemo = variant === 'demo';
   // Mobile progressive-disclosure state (no effect on desktop — see .m-* utilities in styles.css)
   const [introOpen, setIntroOpen] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
@@ -59,34 +60,34 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
         <div className="ai-section-header">
           <span className="eyebrow-tag" style={{ marginBottom: '0.6rem' }}>
             <Sparkles size={14} />
-            <span>AI-ERA WEB ENGINEERING • GENERATIVE SEO (GEO) • BRISTOL, JOHNSON CITY &amp; KINGSPORT TN/VA</span>
+            <span>{isDemo ? 'SEE IT LIVE' : 'WEBSITES • AI • LOCAL SEO'}</span>
           </span>
-          <h2 className="ai-main-heading">
-            WEBSITE <span className="text-yellow">DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
-          </h2>
-
-          <p
-            id="ai-sub-lead-copy"
-            className={`ai-sub-lead m-clamp ${introOpen ? 'is-open' : ''}`}
-            style={{ '--m-lines': 4 }}
-          >
-            Search engines are evolving faster than ever. As{' '}
-            <strong>Google AI Overviews, ChatGPT Search, Gemini, and Perplexity</strong>{' '}
-            transform how customers discover businesses in{' '}
-            <strong>Bristol, Johnson City, Kingsport, Abingdon, and nationwide</strong>, static
-            legacy websites are getting left behind. We design, redesign, and modernize websites to
-            keep pace with AI-era search—combining{' '}
-            <strong>Generative Engine Optimization (GEO + Local Pack SEO)</strong>,{' '}
-            <strong>custom-trained 24/7 AI lead concierges</strong>, and{' '}
-            <strong>live custom admin dashboards</strong> engineered around your business.
+          {isDemo ? (
+            <h2 className="ai-main-heading">
+              CLIENT DASHBOARDS <span className="text-yellow">IN ACTION</span>
+            </h2>
+          ) : (
+            <h2 className="ai-main-heading">
+              WEBSITE <span className="text-yellow">DESIGN, REDESIGN &amp; AI MODERNIZATION</span>
+            </h2>
+          )}
+          <p className="ai-sub-lead">
+            {isDemo ? (
+              <>
+                Click through real client front-ends and the private dashboards behind them. Every
+                customer action on the public site shows up in the owner&apos;s dashboard.
+              </>
+            ) : (
+              <>
+                Fast, custom websites built to win on <strong>Google and in AI search</strong>, plus AI
+                chatbots and live dashboards when your business needs them.
+              </>
+            )}
           </p>
-          <MobileMore
-            open={introOpen}
-            onToggle={() => setIntroOpen((v) => !v)}
-            controls="ai-sub-lead-copy"
-          />
         </div>
 
+        {isDemo && (
+          <>
         {/* Mobile-only teaser: the live dashboard demo is opt-in on phones (the same
             three clients are also shown as swipeable case studies just below) */}
         <div className="m-only m-demo-teaser">
@@ -114,7 +115,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               <span className="dot-yellow" />
               <span className="dot-green" />
               <span className="window-title-mono">
-                WIRED_OS // LIVE CLIENT PLATFORMS, CUSTOM DASHBOARDS &amp; 24/7 AI AGENTS
+                LIVE CLIENT DASHBOARDS
               </span>
             </div>
 
@@ -128,17 +129,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 onClick={() => setActiveDemoTab('auto')}
               >
                 <Car size={13} />
-                <span>Fast Track: Front-End + Live Admin Dash</span>
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={activeDemoTab === 'cre'}
-                className={`ios-seg-btn ${activeDemoTab === 'cre' ? 'active' : ''}`}
-                onClick={() => setActiveDemoTab('cre')}
-              >
-                <Building2 size={13} />
-                <span>Team Vision: 24/7 AI Space Advisor + CRE Site</span>
+                <span>Fast Track Automotive</span>
               </button>
               <button
                 type="button"
@@ -148,7 +139,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 onClick={() => setActiveDemoTab('law')}
               >
                 <Scale size={13} />
-                <span>Ringger Law: Legal CRM Dash + 24/7 AI Triage</span>
+                <span>Ringger Law</span>
               </button>
               <button
                 type="button"
@@ -158,7 +149,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                 onClick={() => setActiveDemoTab('geo')}
               >
                 <Sparkles size={13} />
-                <span>AI-Era Search &amp; GEO Telemetry</span>
+                <span>AI Search (GEO)</span>
               </button>
             </div>
           </div>
@@ -403,241 +394,6 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                     </a>
                     <button type="button" className="btn-mini-yellow" onClick={onOpenContact}>
                       Build a Custom Site + Dashboard Like This →
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 2: TEAM VISION LLC (FRONT-END + 24/7 CUSTOM-TRAINED "ASK VISION" AI SPACE ADVISOR) */}
-            {activeDemoTab === 'cre' && (
-              <div className="ft-showcase-wrapper">
-                <div className="ft-showcase-toolbar">
-                  <div className="ft-toolbar-left">
-                    <span className="live-green-pill">● 24/7 CUSTOM-TRAINED AI AGENT // DOWNTOWN BRISTOL</span>
-                    <span className="ft-toolbar-sub">
-                      Custom-trained on every Vision LLC property—matching tenants to spaces in under 2 minutes &amp; capturing leads 24/7.
-                    </span>
-                  </div>
-
-                  <div className="ft-view-switcher" role="group" aria-label="Team Vision Screen View">
-                    <button
-                      type="button"
-                      className={`ft-view-btn ${visionView === 'split' ? 'active' : ''}`}
-                      onClick={() => setVisionView('split')}
-                    >
-                      <ArrowRightLeft size={13} />
-                      <span>Split: Front-End + 24/7 AI Chatbot</span>
-                    </button>
-                    <button
-                      type="button"
-                      className={`ft-view-btn ${visionView === 'ai' ? 'active' : ''}`}
-                      onClick={() => setVisionView('ai')}
-                    >
-                      <Bot size={13} />
-                      <span>24/7 &ldquo;Ask VISION&rdquo; AI Advisor</span>
-                    </button>
-                    <button
-                      type="button"
-                      className={`ft-view-btn ${visionView === 'front' ? 'active' : ''}`}
-                      onClick={() => setVisionView('front')}
-                    >
-                      <Monitor size={13} />
-                      <span>Front-End</span>
-                    </button>
-                  </div>
-                </div>
-
-                {visionView === 'split' && (
-                  <div className="ft-dual-stage-grid">
-                    {/* LEFT SCREEN: Team Vision Front-End */}
-                    <div
-                      className="ft-screen-card"
-                      onClick={() =>
-                        setLightboxImage({
-                          src: '/teamvision-frontend.jpg',
-                          title: 'Team Vision LLC — Commercial Real Estate Front-End',
-                          subtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
-                          altSrc: '/teamvision-ai-advisor.jpg',
-                          altTitle: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
-                          altSubtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-                          swapLabel: 'Switch to 24/7 AI Space Advisor'
-                        })
-                      }
-                    >
-                      <div className="ft-screen-label-bar">
-                        <div className="ft-screen-badge-group">
-                          <span className="ft-step-pill">01 // CRE FRONT-END</span>
-                          <span className="ft-route-mono">teamvisionllc.com</span>
-                        </div>
-                        <button type="button" className="ft-zoom-chip" aria-label="Expand Team Vision Front-End">
-                          <Maximize2 size={12} />
-                          <span>EXPAND</span>
-                        </button>
-                      </div>
-
-                      <div className="ft-screen-viewport">
-                        <img
-                          src="/teamvision-frontend.jpg"
-                          alt="Team Vision LLC Commercial Real Estate Front-End"
-                          className="ft-cropped-ui-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-
-                      <div className="ft-screen-caption-strip">
-                        <span>🏢 #1 Downtown Bristol CRE Owner</span>
-                        <span>•</span>
-                        <span>📍 Bristol • Kingsport • JC • Abingdon</span>
-                      </div>
-                    </div>
-
-                    {/* CENTER AI PIPELINE CONNECTOR */}
-                    <div className="ft-pipeline-bridge" aria-hidden="true">
-                      <div className="pipeline-line" />
-                      <div className="pipeline-pulse-badge">
-                        <Bot size={14} />
-                        <span>24/7 AI LEAD BOT</span>
-                      </div>
-                      <div className="pipeline-line" />
-                    </div>
-
-                    {/* RIGHT SCREEN: 24/7 Custom-Trained "Ask VISION" AI Space Advisor & Portfolio */}
-                    <div
-                      className="ft-screen-card highlight-dash"
-                      onClick={() =>
-                        setLightboxImage({
-                          src: '/teamvision-ai-advisor.jpg',
-                          title: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
-                          subtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-                          altSrc: '/teamvision-frontend.jpg',
-                          altTitle: 'Team Vision LLC — Commercial Real Estate Front-End',
-                          altSubtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
-                          swapLabel: 'Switch to Front-End'
-                        })
-                      }
-                    >
-                      <div className="ft-screen-label-bar">
-                        <div className="ft-screen-badge-group">
-                          <span className="ft-step-pill yellow">02 // 24/7 CUSTOM-TRAINED AI ADVISOR</span>
-                          <span className="ft-route-mono">Ask VISION Space Matcher</span>
-                        </div>
-                        <button type="button" className="ft-zoom-chip" aria-label="Expand Team Vision AI Advisor">
-                          <Maximize2 size={12} />
-                          <span>EXPAND</span>
-                        </button>
-                      </div>
-
-                      <div className="ft-screen-viewport">
-                        <img
-                          src="/teamvision-ai-advisor.jpg"
-                          alt="Team Vision LLC Ask VISION 24/7 AI Chatbot and Portfolio"
-                          className="ft-cropped-ui-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-
-                      <div className="ft-screen-caption-strip">
-                        <span>Trained on All Properties</span>
-                        <span>•</span>
-                        <span><Zap size={11} fill="#FFEE00" color="#FFEE00" style={{ verticalAlign: '-1px', marginRight: '3px' }} />5-Question Space Match (&lt;2 Min)</span>
-                        <span>•</span>
-                        <span>24/7 Lead Capture</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {(visionView === 'ai' || visionView === 'front') && (
-                  <div className="ft-single-focus-stage">
-                    <div
-                      className="ft-screen-card single-large highlight-dash"
-                      onClick={() =>
-                        setLightboxImage(
-                          visionView === 'ai'
-                            ? {
-                                src: '/teamvision-ai-advisor.jpg',
-                                title: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
-                                subtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-                                altSrc: '/teamvision-frontend.jpg',
-                                altTitle: 'Team Vision LLC — Commercial Real Estate Front-End',
-                                altSubtitle: '#1 Commercial Property Owner in Downtown Bristol',
-                                swapLabel: 'Switch to Front-End'
-                              }
-                            : {
-                                src: '/teamvision-frontend.jpg',
-                                title: 'Team Vision LLC — Commercial Real Estate Front-End',
-                                subtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
-                                altSrc: '/teamvision-ai-advisor.jpg',
-                                altTitle: 'Team Vision LLC — 24/7 Custom-Trained "Ask VISION" AI Space Advisor',
-                                altSubtitle: 'Trained on All Properties • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-                                swapLabel: 'Switch to 24/7 AI Space Advisor'
-                              }
-                        )
-                      }
-                    >
-                      <div className="ft-screen-label-bar">
-                        <div className="ft-screen-badge-group">
-                          <span className="ft-step-pill yellow">
-                            {visionView === 'ai'
-                              ? '24/7 CUSTOM-TRAINED "ASK VISION" AI SPACE ADVISOR & PORTFOLIO'
-                              : 'COMMERCIAL REAL ESTATE FRONT-END'}
-                          </span>
-                          <span className="ft-route-mono">teamvisionllc.com</span>
-                        </div>
-                        <button type="button" className="ft-zoom-chip">
-                          <Maximize2 size={12} />
-                          <span>FULLSCREEN ZOOM</span>
-                        </button>
-                      </div>
-
-                      <div className="ft-screen-viewport large-viewport">
-                        <img
-                          src={
-                            visionView === 'ai'
-                              ? '/teamvision-ai-advisor.jpg'
-                              : '/teamvision-frontend.jpg'
-                          }
-                          alt="Team Vision LLC Platform Screen"
-                          className="ft-cropped-ui-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="ft-showcase-footer-bar">
-                  <div className="ft-kpi-pills-row">
-                    <div className="ft-mini-stat">
-                      <span className="ft-stat-val">24/7 AI</span>
-                      <span className="ft-stat-lbl">Custom-Trained on Every Property</span>
-                    </div>
-                    <div className="ft-mini-stat">
-                      <span className="ft-stat-val">&lt; 2 Min</span>
-                      <span className="ft-stat-lbl">5-Question Tenant Space Match</span>
-                    </div>
-                    <div className="ft-mini-stat">
-                      <span className="ft-stat-val">120–54K sq ft</span>
-                      <span className="ft-stat-lbl">Office • CoWork • Retail • Industrial</span>
-                    </div>
-                  </div>
-
-                  <div className="ft-footer-cta-group">
-                    <a
-                      href="https://www.teamvisionllc.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-mini-outline"
-                    >
-                      <span>Visit TeamVisionLLC.com</span>
-                      <ExternalLink size={12} />
-                    </a>
-                    <button type="button" className="btn-mini-yellow" onClick={onOpenContact}>
-                      Build a Custom AI Lead Concierge &amp; Site →
                     </button>
                   </div>
                 </div>
@@ -1013,43 +769,26 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
           </div>
         </div>
 
-        {/* ====================================================================
-            LIVE ON-PAGE "60-SECOND WEBSITE AI & SEARCH (GEO) GRADER" BAR
-           ==================================================================== */}
-        <WebsiteAiGraderCard
-          className="home-grader-strip"
-          kicker="INTERACTIVE DIAGNOSTIC // 60-SECOND AI & SEARCH GRADER"
-          titleLead="IS YOUR CURRENT WEBSITE"
-          titleHighlight="INVISIBLE TO AI SEARCH?"
-        />
+          </>
+        )}
 
         {/* ====================================================================
             REAL RECENT WEB & AI CASE STUDIES (FAST TRACK, TEAM VISION & RINGGER LAW)
            ==================================================================== */}
+        {!isDemo && (
         <div className="tricities-casestudies-block" id="case-studies">
           <div className="casestudies-header">
             <span className="eyebrow-tag">
               <MapPin size={14} />
-              <span>PROVEN IN PRODUCTION // BRISTOL TN/VA (HQ) &amp; JACKSON TN (FOUNDED 1999)</span>
+              <span>RECENT WORK</span>
             </span>
-            <h3 className="section-title-tracked">RECENT CLIENT BUILDS &amp; AI MODERNIZATIONS</h3>
-            <p
-              id="casestudies-intro-copy"
-              className={`legends-subtitle m-clamp ${casesIntroOpen ? 'is-open' : ''}`}
-              style={{ '--m-lines': 3 }}
-            >
-              Explore three of our live custom-engineered platforms—spanning{' '}
-              <strong>Fast Track Automotive</strong> and <strong>Team Vision LLC</strong> in Bristol, TN/VA
-              plus <strong>Ringger Law (Est. 1981)</strong> in Jackson, TN (where Wired Digital was founded in 1999)—complete
-              with custom live admin &amp; legal CRM dashboards, 24/7 custom-trained AI concierges, and Generative SEO (GEO).
+            <h3 className="section-title-tracked">REAL BUSINESSES. REAL RESULTS.</h3>
+            <p className="legends-subtitle">
+              Live websites, dashboards and AI tools we&apos;ve built for Tennessee and Virginia
+              businesses.
             </p>
-            <MobileMore
-              open={casesIntroOpen}
-              onToggle={() => setCasesIntroOpen((v) => !v)}
-              controls="casestudies-intro-copy"
-            />
             <span className="m-only m-swipe-hint">
-              Swipe to see all {TRI_CITIES_CASE_STUDIES.length} builds →
+              Swipe to see all {TRI_CITIES_CASE_STUDIES.length} projects →
             </span>
           </div>
 
@@ -1075,8 +814,7 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
               };
 
               return (
-                <article key={cs.id} className="casestudy-ios-card">
-                  {/* Sleek Header Bar */}
+                <article key={cs.id} className="casestudy-ios-card cs-card-slim">
                   <div className="cs-browser-bar">
                     <div className="ios-window-dots">
                       <span className="dot-red" />
@@ -1089,74 +827,43 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                       rel="noopener noreferrer"
                       className="cs-url-pill"
                     >
-                      <span>https://www.{cs.domain}</span>
+                      <span>{cs.domain}</span>
                       <ExternalLink size={12} />
                     </a>
-                    <span className="cs-live-tag">{cs.previewStats.status}</span>
                   </div>
 
-                  {/* Visual Telemetry Preview Banner */}
                   <div className="cs-visual-preview">
-                    <div className="cs-preview-badge">{cs.badge}</div>
+                    <div className="cs-tag-row">
+                      {cs.cardTags.map((t) => (
+                        <span key={t} className="cs-preview-badge">{t}</span>
+                      ))}
+                    </div>
                     <div className="cs-preview-title-row">
                       <div>
-                        <h4>{cs.name}</h4>
+                        <h4>{cs.name.replace(/\s*\(Est\. \d{4}\)/, '')}</h4>
                         <span className="cs-location-sub">
-                          <MapPin size={12} /> {cs.location}
+                          <MapPin size={12} /> {cs.city}
                         </span>
                       </div>
-                      <a
-                        href={cs.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cs-launch-circle"
-                        aria-label={`Visit ${cs.name}`}
-                      >
-                        <ArrowUpRight size={20} />
-                      </a>
                     </div>
 
-                    {/* Interactive Cropped Dual-Screen PiP Deck for Both Fast Track & Team Vision */}
                     {cs.frontendImg && cs.dashboardImg && (
                       <div className="cs-interactive-screen-deck">
-                        <div className="cs-deck-tabs">
-                          <button
-                            type="button"
-                            className={`cs-deck-tab ${isPrimary ? 'active' : ''}`}
-                            onClick={() => toggleCardMode(cs.id, 'primary')}
-                          >
-                            {cs.id === 'team-vision-llc' ? <Bot size={12} /> : <Activity size={12} />}
-                            <span>{cs.primaryTabLabel}</span>
-                          </button>
-                          <button
-                            type="button"
-                            className={`cs-deck-tab ${!isPrimary ? 'active' : ''}`}
-                            onClick={() => toggleCardMode(cs.id, 'secondary')}
-                          >
-                            <Monitor size={12} />
-                            <span>{cs.secondaryTabLabel}</span>
-                          </button>
-                          <button
-                            type="button"
-                            className="cs-deck-expand"
-                            onClick={openCardLightbox}
-                          >
-                            <Maximize2 size={11} />
-                            <span>Zoom</span>
-                          </button>
-                        </div>
-
-                        <div className="cs-layered-screens" onClick={openCardLightbox}>
+                        <div
+                          className="cs-layered-screens"
+                          onClick={openCardLightbox}
+                          title="Click to enlarge"
+                        >
                           <img
                             src={mainImg}
-                            alt={`${cs.name} primary preview`}
+                            alt={`${cs.name} ${isPrimary ? cs.primaryTabLabel : cs.secondaryTabLabel}`}
                             className="cs-primary-screen-img"
                             loading="lazy"
                             decoding="async"
                           />
                           <img
                             src={pipImg}
-                            alt={`${cs.name} secondary preview`}
+                            alt={`${cs.name} ${isPrimary ? cs.secondaryTabLabel : cs.primaryTabLabel}`}
                             className="cs-secondary-pip-img"
                             loading="lazy"
                             decoding="async"
@@ -1164,18 +871,13 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                               e.stopPropagation();
                               toggleCardMode(cs.id, isPrimary ? 'secondary' : 'primary');
                             }}
-                            title={`Click to swap to ${isPrimary ? cs.secondaryTabLabel : cs.primaryTabLabel}`}
+                            title={`Swap to ${isPrimary ? cs.secondaryTabLabel : cs.primaryTabLabel}`}
                           />
-                          <span className="cs-pip-badge">
-                            {isPrimary
-                              ? `Swap to ${cs.secondaryTabLabel} ↗`
-                              : `Swap to ${cs.primaryTabLabel} ↗`}
-                          </span>
+                          <span className="cs-pip-badge" aria-hidden="true">⇄</span>
                         </div>
                       </div>
                     )}
 
-                    {/* Mini Metric Pills */}
                     <div className="cs-metrics-row">
                       {cs.metrics.map((m) => (
                         <div key={m.label} className="cs-metric-pill">
@@ -1186,50 +888,24 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
                     </div>
                   </div>
 
-                  {/* Case Study Details */}
                   <div className="cs-card-content">
-                    <h5 className="cs-headline">{cs.headline}</h5>
-
-                    <div
-                      id={`cs-details-${cs.id}`}
-                      className={`m-collapse ${openCases[cs.id] ? 'is-open' : ''}`}
-                    >
-                      <p className="cs-summary">{cs.summary}</p>
-
-                      <ul className="cs-feature-list">
-                        {cs.features.map((feat) => (
-                          <li key={feat}>
-                            <CheckCircle2 size={15} className="check-yellow" />
-                            <span>{feat}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <MobileMore
-                      open={!!openCases[cs.id]}
-                      onToggle={() => toggleKey(setOpenCases, cs.id)}
-                      moreLabel="Read the full case study"
-                      lessLabel="Hide details"
-                      controls={`cs-details-${cs.id}`}
-                    />
+                    <h5 className="cs-headline">{cs.cardHeadline}</h5>
+                    <p className="cs-summary">{cs.cardSummary}</p>
 
                     <div className="cs-card-actions">
+                      <a href={cs.caseUrl} className="btn-wired-yellow cs-visit-btn">
+                        <span>VIEW CASE STUDY</span>
+                        <ArrowUpRight size={14} />
+                      </a>
                       <a
                         href={cs.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-wired-yellow cs-visit-btn"
-                      >
-                        <span>LAUNCH LIVE SITE ({cs.domain.toUpperCase()})</span>
-                        <ExternalLink size={14} />
-                      </a>
-                      <button
-                        type="button"
                         className="btn-wired-outline cs-inquire-btn"
-                        onClick={onOpenContact}
                       >
-                        BUILD ONE LIKE THIS
-                      </button>
+                        <span>VISIT SITE</span>
+                        <ExternalLink size={13} />
+                      </a>
                     </div>
                   </div>
                 </article>
@@ -1237,73 +913,40 @@ export default function AiSeoDashboardShowcase({ onOpenContact }) {
             })}
           </div>
         </div>
+        )}
 
-        {/* ====================================================================
-            3 CORE AI REVENUE PILLARS + TRI-CITIES LOCAL SEO COVERAGE
-           ==================================================================== */}
-        <div className="ai-pillars-grid-3">
-          {AI_SEO_PILLARS.map((pillar) => (
-            <div key={pillar.id} className="ai-pillar-ios-card">
-              <span className="pillar-tag-mono">{pillar.tag}</span>
-              <h4>{pillar.title}</h4>
-              <p>{pillar.description}</p>
-              <ul
-                id={`pillar-bullets-${pillar.id}`}
-                className={`m-collapse ${openPillars[pillar.id] ? 'is-open' : ''}`}
-              >
-                {pillar.bullets.map((b) => (
-                  <li key={b}>
-                    <Zap size={13} className="text-yellow" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              <MobileMore
-                open={!!openPillars[pillar.id]}
-                onToggle={() => toggleKey(setOpenPillars, pillar.id)}
-                moreLabel="What's included"
-                lessLabel="Show less"
-                controls={`pillar-bullets-${pillar.id}`}
-              />
+        {!isDemo && (
+          <>
+            <div className="ai-pillars-grid-3">
+              {AI_SEO_PILLARS.map((pillar) => (
+                <a key={pillar.id} href={pillar.href} className="ai-pillar-ios-card ai-pillar-link">
+                  <span className="pillar-tag-mono">{pillar.tag}</span>
+                  <h4>{pillar.title}</h4>
+                  <p>{pillar.description}</p>
+                  <ul>
+                    {pillar.bullets.map((b) => (
+                      <li key={b}>
+                        <Zap size={13} className="text-yellow" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <span className="ai-pillar-more">Learn more →</span>
+                </a>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Tri-Cities Local SEO Authority Strip */}
-        <div className="tricities-seo-belt">
-          <div className="seo-belt-top">
-            <div>
-              <span className="eyebrow-tag">REGIONAL DOMINANCE + NATIONAL REACH</span>
-              <h3>TRI-CITIES AI &amp; GENERATIVE SEO COVERAGE</h3>
-            </div>
-            <button type="button" className="btn-wired-yellow" onClick={onOpenContact}>
-              DOMINATE YOUR LOCAL MARKET
-            </button>
-          </div>
-
-          <div
-            id="tricities-cities-grid"
-            className={`tricities-cities-grid m-city-compact ${citiesOpen ? 'is-open' : ''}`}
-          >
-            {TRI_CITIES_MARKETS.map((m) => (
-              <div key={m.city} className="city-seo-card">
-                <div className="city-card-head">
-                  <MapPin size={15} className="text-yellow" />
-                  <h4>{m.city}</h4>
-                </div>
-                <p className="city-focus">{m.focus}</p>
-                <span className="city-highlight">{m.highlight}</span>
-              </div>
-            ))}
-          </div>
-          <MobileMore
-            open={citiesOpen}
-            onToggle={() => setCitiesOpen((v) => !v)}
-            moreLabel="See what we do in each market"
-            lessLabel="Show less"
-            controls="tricities-cities-grid"
-          />
-        </div>
+            <p className="tricities-city-line">
+              <MapPin size={14} className="text-yellow" />
+              <span>
+                Serving <a href="/bristol-tn-va-web-design/">Bristol</a> ·{' '}
+                <a href="/johnson-city-tn-web-design/">Johnson City</a> ·{' '}
+                <a href="/kingsport-tn-web-design/">Kingsport</a> ·{' '}
+                <a href="/abingdon-va-web-design/">Abingdon</a> and clients nationwide.
+              </span>
+            </p>
+          </>
+        )}
       </div>
 
       {/* High-Resolution Image Lightbox Modal for Inspecting Any Project Screen */}

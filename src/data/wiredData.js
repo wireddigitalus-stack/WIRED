@@ -32,6 +32,11 @@ export const TRI_CITIES_CASE_STUDIES = [
     location: '2528 Volunteer Pkwy, Bristol, TN',
     domain: 'fasttrackbristoltn.com',
     url: 'https://www.fasttrackbristoltn.com/',
+    caseUrl: '/work/fast-track-bristol/',
+    city: 'Bristol, TN',
+    cardTags: ['Website', 'Live Dashboard'],
+    cardHeadline: 'A dealership site that shows the owner every shopper in real time.',
+    cardSummary: '47 credit applications in the first 30 days, each one tracked the moment it came in.',
     frontendImg: '/fasttrack-frontend.jpg',
     dashboardImg: '/fasttrack-admin-dash.jpg',
     primaryTabLabel: 'Live Admin Dashboard',
@@ -72,6 +77,11 @@ export const TRI_CITIES_CASE_STUDIES = [
     location: 'Downtown Bristol, TN/VA (State St & 100 5th St)',
     domain: 'teamvisionllc.com',
     url: 'https://www.teamvisionllc.com/',
+    caseUrl: '/work/team-vision/',
+    city: 'Downtown Bristol',
+    cardTags: ['Website', 'AI Assistant'],
+    cardHeadline: 'A commercial real estate site with an AI assistant that helps tenants find space.',
+    cardSummary: 'Prospective tenants get answers and space suggestions any time of day.',
     frontendImg: '/teamvision-frontend.jpg',
     dashboardImg: '/teamvision-ai-advisor.jpg',
     primaryTabLabel: '24/7 AI Space Advisor',
@@ -112,6 +122,11 @@ export const TRI_CITIES_CASE_STUDIES = [
     location: 'Jackson & West Tennessee (Where Wired Digital Was Founded in 1999)',
     domain: 'ringgerlaw.com',
     url: 'https://www.ringgerlaw.com/',
+    caseUrl: '/work/ringger-law/',
+    city: 'Jackson, TN',
+    cardTags: ['Website', 'AI Triage', 'Attorney CRM'],
+    cardHeadline: 'A law firm site that sorts urgent clients and routes them for same-day callbacks.',
+    cardSummary: '3,800+ tracked sessions in a 90-day sample, with every lead triaged in a live attorney dashboard.',
     frontendImg: '/ringgerlaw-frontend.jpg',
     dashboardImg: '/ringgerlaw-admin-dash.jpg',
     primaryTabLabel: 'Live Legal CRM & Admin',
@@ -150,43 +165,40 @@ export const TRI_CITIES_CASE_STUDIES = [
 
 export const AI_SEO_PILLARS = [
   {
-    id: 'geo-seo',
-    tag: '01 // AI-ERA SEARCH & GENERATIVE SEO (GEO)',
-    title: 'Built for How Search Engines Actually Work in the Age of AI',
-    description:
-      'Traditional SEO alone isn’t enough when customers use Google AI Overviews, ChatGPT, Gemini, and Perplexity to choose who to trust. Our high-end SEO and Generative Engine Optimization (GEO) architecture—structured JSON-LD entities, semantic authority hubs, and sub-second speed—is engineered as deep as it gets for maximum search and AI discovery.',
+    id: 'websites',
+    tag: 'WEBSITES',
+    title: 'Websites & Redesigns',
+    description: 'Fast, custom websites that look great on phones and are built to rank on Google and in AI search.',
     bullets: [
-      'Generative Engine Optimization (ChatGPT, Google AI Overviews, Gemini, Perplexity)',
-      'Tri-Cities Hyper-Local Dominance (Bristol VA/TN, Johnson City, Kingsport, Abingdon)',
-      'Automated Schema.org Entity Graphs & Local Business Authority Signals',
-      'Live Search & AI Citation Telemetry Inside Your Custom Dashboard'
-    ]
+      'New sites and rebuilds of outdated ones',
+      'Mobile-first and fast-loading',
+      'Local SEO and AI-search setup included'
+    ],
+    href: '/web-design/'
   },
   {
-    id: 'custom-dashboards',
-    tag: '02 // CUSTOM ADMIN DASHBOARDS & PORTALS',
-    title: 'Replace Clunky Templates With Custom Software Built Around Your Business',
-    description:
-      'Stop fighting bloated WordPress plugins or cookie-cutter Wix pages. We engineer sleek, custom admin dashboards and 24/7 AI concierges that let you track live visitor click streams, manage inventory or properties, capture leads, and publish AI-ready content in seconds from phone or desktop.',
+    id: 'dashboards-ai',
+    tag: 'DASHBOARDS & AI',
+    title: 'Live Dashboards & AI Chatbots',
+    description: 'See every visitor, click and lead in real time, and let an AI assistant answer customers after hours.',
     bullets: [
-      'Bespoke Inventory, Property, or Service Management Portals',
-      'Real-Time Lead Tracking, Financing/Quote Funnels & CRM Sync',
-      'One-Click AI Content & SEO Listing Generators Built Into Your Admin',
-      'Role-Based Client Portals & Automated SMS/Email Notifications'
-    ]
+      'Private dashboard for leads, calls and inventory',
+      'AI chatbot trained on your business',
+      'Instant lead alerts to your phone'
+    ],
+    href: '/custom-dashboards/'
   },
   {
-    id: 'ai-site-modernization',
-    tag: '03 // AI SITE MODERNIZATION & FULL-SERVICE MARKETING',
-    title: 'Modernize Your Website & Scale With Full-Service Marketing',
-    description:
-      'We design brand-new AI-native websites, redesign outdated legacy sites from the ground up, and back them with full-service marketing—combining custom UI artistry, brand identity, ad campaigns, interactive AI concierges, and high-velocity funnels that turn traffic into paying clients.',
+    id: 'seo-marketing',
+    tag: 'SEO & MARKETING',
+    title: 'Local SEO & Marketing',
+    description: 'Show up when Tri-Cities customers search, and turn that traffic into calls with ads and video.',
     bullets: [
-      'Custom AI Website Design, Redesign & Full-Stack Modernization',
-      'Full-Service Marketing, Brand Strategy, Ad Campaigns & Content Funnels',
-      'Interactive Quote Calculators, Booking Engines & 24/7 AI Chat Concierges',
-      '99+ Google PageSpeed & Core Web Vitals — Pure Custom Code You Own'
-    ]
+      'Google Business Profile and map-pack setup',
+      'Visibility in ChatGPT and Google AI answers',
+      'Ad creative and short-form video'
+    ],
+    href: '/marketing/'
   }
 ];
 

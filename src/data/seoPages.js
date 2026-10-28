@@ -66,7 +66,7 @@ export const SEO_PAGES = [
         h2: 'Proven on live Tri-Cities and Tennessee businesses',
         body: [
           'Fast Track Automotive in Bristol, TN logged 2,751+ visits, 1,719 vehicle clicks and 47 online credit applications in its first 30 days, all tracked in a custom admin dashboard we built.',
-          'Team Vision LLC in downtown Bristol uses our custom-trained "Ask VISION" AI advisor to match tenants to commercial spaces in under two minutes, day or night.',
+          'Team Vision LLC in downtown Bristol: a commercial real estate website with an AI assistant that helps tenants find space any time of day.',
           'Ringger Law in Jackson, TN runs on our legal website, 24/7 debt-triage chatbot and live attorney CRM, with 3,800+ tracked sessions in a 90-day sample.'
         ]
       },

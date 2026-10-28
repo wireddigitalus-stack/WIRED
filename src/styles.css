@@ -12872,3 +12872,84 @@ a.island-pill-btn,
 a.mobile-nav-item {
   text-decoration: none;
 }
+
+/* ============================================================================
+   SLIM HOME "RECENT WORK" CARDS, LINKED SERVICE CARDS & CITY LINE
+   ============================================================================ */
+.cs-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cs-tag-row .cs-preview-badge {
+  margin: 0;
+}
+
+.cs-card-slim .cs-headline {
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.cs-card-slim .cs-summary {
+  margin: 8px 0 14px;
+}
+
+.cs-card-slim .cs-pip-badge {
+  font-size: 0.9rem;
+  padding: 3px 8px;
+}
+
+.cs-card-slim .cs-card-actions a {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ai-pillar-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ai-pillar-link:hover {
+  border-color: var(--wired-yellow, #ffee00);
+  transform: translateY(-2px);
+}
+
+.ai-pillar-more {
+  margin-top: auto;
+  padding-top: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--wired-yellow, #ffee00);
+}
+
+.tricities-city-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px auto 8px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.tricities-city-line a {
+  color: var(--wired-yellow, #ffee00);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 238, 0, 0.35);
+}
+
+.tricities-city-line a:hover {
+  border-bottom-color: var(--wired-yellow, #ffee00);
+}

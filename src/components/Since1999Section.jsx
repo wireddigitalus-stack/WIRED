@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Maximize2, Sparkles, Film, TrendingUp, Cpu, Megaphone, ShieldCheck, Layers } from 'lucide-react';
 import { BRAND_INFO } from '../data/wiredData';
-import MobileMore from './MobileMore';
 import useIsMobile from '../utils/useIsMobile';
 
 export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOpenContact }) {
   const videoRef = useRef(null);
   const isMobile = useIsMobile();
   const [isPlaying, setIsPlaying] = useState(true);
-  const [storyOpen, setStoryOpen] = useState(false);
   // Reel loads only after the page itself has finished loading, so it never competes
   // with the hero, fonts or scripts. Phones get a lighter 360p cut (~340 KB),
   // desktop a 720p cut (~930 KB) — both sit under the halftone overlay anyway.
@@ -139,33 +137,14 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
 
             <p
               id="since-manifesto-copy"
-              className={`since-manifesto m-clamp ${storyOpen ? 'is-open' : ''}`}
-              style={{ '--m-lines': 5 }}
+              className="since-manifesto"
             >
-              <strong>Wired Digital Creative</strong> bridges{' '}
-              <strong>rock-and-roll artistry</strong> with{' '}
-              <strong>advanced AI software engineering</strong>. Founded in{' '}
-              <strong>Jackson, TN in 1999</strong> and headquartered in{' '}
-              <strong>Bristol (VA/TN) since 2022</strong>, we specialize in{' '}
-              <span className="highlight-yellow">
-                AI website design, redesign, custom apps, and full-stack modernization
-              </span>
-              —engineered to keep pace with how search engines work in the age of{' '}
-              <strong>ChatGPT, Google AI Overviews, Gemini, and Perplexity</strong>. We pair{' '}
-              <strong>full-service digital marketing</strong> and{' '}
-              <strong>Generative Engine Optimization (GEO + Local SEO)</strong> with{' '}
-              <strong>custom live business dashboards &amp; 24/7 AI lead concierges</strong> across{' '}
-              <strong>Bristol, Johnson City, Kingsport, Abingdon</strong>, and nationwide—while
-              working full-time in the music industry since 2015 delivering{' '}
-              <strong>global remote 4K music &amp; lyric video editing</strong> for major record
-              labels and 34+ Hall-of-Fame catalogs worldwide.
+              Founded in 1999. Based in Bristol, VA/TN since 2022. We build{' '}
+              <span className="highlight-yellow">fast websites, AI chatbots and live dashboards</span>{' '}
+              for local businesses, and since 2015 we&apos;ve edited{' '}
+              <strong>music videos for 34+ legendary artists</strong>. You work directly with Rob,
+              start to finish.
             </p>
-            <MobileMore
-              open={storyOpen}
-              onToggle={() => setStoryOpen((v) => !v)}
-              moreLabel="Read our full story"
-              controls="since-manifesto-copy"
-            />
 
             <div className="since-pillar-pills">
               <button
@@ -174,7 +153,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 onClick={() => onNavigateTab('web')}
               >
                 <Cpu size={14} />
-                <span>AI Site Design, Redesign &amp; Modernization</span>
+                <span>Websites &amp; Redesigns</span>
               </button>
               <button
                 type="button"
@@ -182,7 +161,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 onClick={() => onNavigateTab('web')}
               >
                 <Megaphone size={14} />
-                <span>Full-Service Marketing</span>
+                <span>Marketing</span>
               </button>
               <button
                 type="button"
@@ -190,7 +169,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 onClick={() => onNavigateTab('web')}
               >
                 <TrendingUp size={14} />
-                <span>AI-Era Search &amp; Generative SEO (GEO)</span>
+                <span>Local SEO &amp; AI Search</span>
               </button>
               <button
                 type="button"
@@ -198,7 +177,7 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
                 onClick={() => onNavigateTab('video')}
               >
                 <Film size={14} />
-                <span>Global Remote Video Editing</span>
+                <span>Music Video Editing</span>
               </button>
             </div>
 

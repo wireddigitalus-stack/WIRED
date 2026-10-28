@@ -9,7 +9,7 @@
 export const SITE_BASE = 'https://www.wireddigitalcreative.com';
 
 export const BUSINESS_FACTS = {
-  name: 'Wired Digital Creative',
+  name: 'Wired Digital',
   legalName: 'Wired Digital LLC',
   founder: 'Rob Neilson',
   phone: '731-616-5121',
@@ -327,7 +327,7 @@ export const SEO_PAGES = [
     showIntro: false,
     breadcrumb: 'Video Production',
     serviceType: 'Music video and lyric video editing',
-    title: 'Music Video & Lyric Video Editing | Wired Digital Creative',
+    title: 'Music Video & Lyric Video Editing | Wired Digital',
     description:
       'Remote 4K music video, official lyric video and visualizer editing for labels and artists, including Primary Wave, Alice Cooper and Halestorm. Since 2015.',
     eyebrow: 'Global Remote Video Production',
@@ -377,7 +377,7 @@ export const SEO_PAGES = [
     showIntro: false,
     breadcrumb: 'Legends',
     serviceType: 'Music industry creative services',
-    title: 'Music Clients: Primary Wave, Alice Cooper & More | Wired',
+    title: 'Music Clients: Primary Wave, Alice Cooper | Wired Digital',
     description:
       'Artists, estates and labels Wired Digital Creative has created video and digital work for, including Primary Wave, Alice Cooper, Halestorm and Def Leppard.',
     eyebrow: 'Working With Legends',
@@ -413,7 +413,7 @@ export const SEO_PAGES = [
     showIntro: true,
     breadcrumb: 'Bristol, TN & VA',
     cityName: 'Bristol',
-    title: 'Website Design in Bristol, TN & VA | Wired Digital Creative',
+    title: 'Website Design in Bristol, TN & VA | Wired Digital',
     description:
       'Bristol-based web design studio on the TN/VA state line. Custom websites, AI chatbots, dashboards and local SEO for Bristol businesses. Call 731-616-5121.',
     eyebrow: 'Bristol, TN & Bristol, VA • 37620 • 24201',
@@ -469,7 +469,7 @@ export const SEO_PAGES = [
     showIntro: true,
     breadcrumb: 'Johnson City, TN',
     cityName: 'Johnson City',
-    title: 'Website Design in Johnson City, TN | Wired Digital Creative',
+    title: 'Website Design in Johnson City, TN | Wired Digital',
     description:
       'Custom website design, AI chatbots and local SEO for Johnson City, TN medical practices, contractors and professional firms. Free consultation.',
     eyebrow: 'Johnson City, TN • 37601 • 37604 • 37615',
@@ -524,7 +524,7 @@ export const SEO_PAGES = [
     showIntro: true,
     breadcrumb: 'Kingsport, TN',
     cityName: 'Kingsport',
-    title: 'Website Design in Kingsport, TN | Wired Digital Creative',
+    title: 'Website Design in Kingsport, TN | Wired Digital',
     description:
       'Websites, lead dashboards and local SEO for Kingsport, TN manufacturers, contractors, retailers and service companies. Bristol-based studio.',
     eyebrow: 'Kingsport, TN • 37660 • 37664 • 37663',
@@ -579,7 +579,7 @@ export const SEO_PAGES = [
     showIntro: true,
     breadcrumb: 'Abingdon, VA',
     cityName: 'Abingdon',
-    title: 'Website Design in Abingdon, VA | Wired Digital Creative',
+    title: 'Website Design in Abingdon, VA | Wired Digital',
     description:
       'Website design, redesign and local SEO for Abingdon and Southwest Virginia hospitality, tourism, legal and real estate businesses. Studio 15 min away.',
     eyebrow: 'Abingdon, VA & Southwest Virginia • 24210 • 24211',

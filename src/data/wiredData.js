@@ -84,20 +84,20 @@ export const TRI_CITIES_CASE_STUDIES = [
     cardSummary: 'Prospective tenants get answers and space suggestions any time of day.',
     frontendImg: '/teamvision-frontend.jpg',
     dashboardImg: '/teamvision-ai-advisor.jpg',
-    primaryTabLabel: '24/7 AI Space Advisor',
-    secondaryTabLabel: 'Front-End',
-    primaryTitle: 'Team Vision LLC — Custom-Trained 24/7 "Ask VISION" AI Space Advisor & Portfolio',
-    primarySubtitle: 'Trained on Every Vision LLC Property • Matches Tenants in Under 2 Minutes & Captures Leads 24/7',
-    secondaryTitle: 'Team Vision LLC — Commercial Real Estate Front-End',
-    secondarySubtitle: '#1 Commercial Property Owner in Downtown Bristol • Tri-Cities CRE Authority',
+    primaryTabLabel: 'AI Assistant',
+    secondaryTabLabel: 'Website',
+    primaryTitle: 'Team Vision LLC — AI Tenant Assistant',
+    primarySubtitle: 'Helps prospective tenants find the right space, any time of day',
+    secondaryTitle: 'Team Vision LLC — Commercial Real Estate Website',
+    secondarySubtitle: 'Downtown Bristol, TN/VA',
     badge: 'AI-MODERNIZED CRE PLATFORM + 24/7 CUSTOM-TRAINED AI CHATBOT + GEO',
     headline: 'Commercial Real Estate Platform + Custom-Trained 24/7 "Ask VISION" AI Lead Concierge',
     summary:
       'Engineered for Downtown Bristol’s largest private commercial property developer. Features the custom-trained 24/7 "Ask VISION" AI Space Advisor—trained on every property in Vision LLC’s portfolio (City Centre, Bristol CoWork, The Executive on State St, Centre Point by Hard Rock, Foundation Event Facility & West State Commons)—matching tenants to spaces in under 2 minutes.',
     metrics: [
-      { value: '24/7 AI', label: '"Ask VISION" Lead Concierge' },
-      { value: '< 2 Min', label: 'AI Tenant-to-Space Match' },
-      { value: '120–54K', label: 'Sq. Ft. Portfolio Trained' }
+      { value: '24/7', label: 'AI Assistant for Tenants' },
+      { value: '< 2 Min', label: 'To Suggest a Space' },
+      { value: 'Downtown', label: 'Bristol Properties' }
     ],
     features: [
       '24/7 "Ask VISION" AI Space Advisor Custom-Trained on All Vision LLC Properties',

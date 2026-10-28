@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-28T21:09:16.276Z",
+  "generatedAt": "2026-10-28T21:16:52.119Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
-    "passedCount": 7,
-    "totalChecks": 7,
+    "passedCount": 8,
+    "totalChecks": 8,
     "checks": [
       {
         "id": "assets-exist",
@@ -26,7 +26,7 @@
       {
         "id": "pricing-sync",
         "category": "SYNC MATRIX",
-        "title": "3-Tier flat-rate pricing ($1,850–$3,500 / $3,500–$6,500 / $5,500–$12,000+) synced",
+        "title": "All 3 flat-rate pricing ranges ($1,850–$3,500 / $3,500–$6,500 / $5,500–$12,000+) synced across seoPages, blog & bot",
         "status": "PASS",
         "passed": true,
         "detail": "Local Launch & Website Modernization: $1,850 – $3,500 | Growth Website + 24/7 AI Lead Chatbot: $3,500 – $6,500 | Custom Platform + Live Admin Dashboard: $5,500 – $12,000+"
@@ -62,6 +62,14 @@
         "status": "PASS",
         "passed": true,
         "detail": "14 SEO pages + /blog/ + /blog/website-cost-tri-cities/, /blog/fast-track-automotive-first-30-days/"
+      },
+      {
+        "id": "brain-doc-sync",
+        "category": "BRAIN DOC SYNC",
+        "title": "BRAIN.md file paths and Ring-1 export names verified against real code",
+        "status": "PASS",
+        "passed": true,
+        "detail": "Verified 32 file links & all Ring-1 module exports in BRAIN.md"
       }
     ]
   },
@@ -72,7 +80,7 @@
     "caseStudiesCount": 3,
     "legendsCount": 34,
     "featuredVideosCount": 4,
-    "snapshotsCount": 2
+    "snapshotsCount": 3
   },
   "knowledgeTree": [
     {
@@ -505,8 +513,8 @@
       {
         "file": "src/data/seoPages.js",
         "name": "seoPages.js",
-        "lines": 779,
-        "sizeKb": 34.3
+        "lines": 796,
+        "sizeKb": 34.8
       },
       {
         "file": "src/data/wiredData.js",
@@ -667,14 +675,14 @@
       {
         "file": "scripts/brain-snapshot.mjs",
         "name": "brain-snapshot.mjs",
-        "lines": 146,
-        "sizeKb": 4.9
+        "lines": 169,
+        "sizeKb": 5.5
       },
       {
         "file": "scripts/build-brain.mjs",
         "name": "build-brain.mjs",
-        "lines": 493,
-        "sizeKb": 17.2
+        "lines": 525,
+        "sizeKb": 19
       },
       {
         "file": "scripts/prerender.mjs",
@@ -699,6 +707,55 @@
     ]
   },
   "snapshots": [
+    {
+      "id": "snap-20261028-211628",
+      "label": "Full codebase baseline",
+      "createdAt": "2026-10-28T21:16:28.013Z",
+      "filesCount": 41,
+      "files": [
+        "BRAIN.md",
+        "AGENTS.md",
+        ".cursorrules",
+        "index.html",
+        "package.json",
+        "vite.config.js",
+        "vercel.json",
+        "src/App.jsx",
+        "src/components/AdminDashboardView.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/BlogView.jsx",
+        "src/components/BodyCtaContactCard.jsx",
+        "src/components/ContactModal.jsx",
+        "src/components/LegendsWall.jsx",
+        "src/components/MobileMore.jsx",
+        "src/components/SeoPageIntro.jsx",
+        "src/components/SeoSiteTreeAuthority.jsx",
+        "src/components/Since1999Section.jsx",
+        "src/components/SiteBrainAdminTab.jsx",
+        "src/components/SmartLogo.jsx",
+        "src/components/SpiralHero.jsx",
+        "src/components/VideoLightboxModal.jsx",
+        "src/components/VideoProductionView.jsx",
+        "src/components/WebCreationView.jsx",
+        "src/components/WebsiteAiGraderCard.jsx",
+        "src/components/WiredOrbChatbot.jsx",
+        "src/components/WorkScreeningRoom.jsx",
+        "src/components/YellowFooter.jsx",
+        "src/data/blogPosts.js",
+        "src/data/seoPages.js",
+        "src/data/wiredData.js",
+        "src/main.jsx",
+        "src/styles.css",
+        "src/utils/telemetry.js",
+        "src/utils/useIsMobile.js",
+        "src/utils/websiteDiagnostic.js",
+        "src/utils/wired64Brain.js",
+        "scripts/brain-snapshot.mjs",
+        "scripts/build-brain.mjs",
+        "scripts/prerender.mjs",
+        "scripts/test-wired64.mjs"
+      ]
+    },
     {
       "id": "snap-20261028-210908",
       "label": "Before BRAIN.md accuracy fixes",
@@ -735,6 +792,11 @@
     }
   ],
   "recentCommits": [
+    {
+      "hash": "a3a353f",
+      "date": "2026-10-28",
+      "subject": "BRAIN.md: fix stale export names, pricing sync matrix, and 3-Ring definitions"
+    },
     {
       "hash": "d99f89f",
       "date": "2026-10-28",
@@ -804,11 +866,6 @@
       "hash": "45d4c0d",
       "date": "2026-10-27",
       "subject": "Align entity name to legal/GBP name: Wired Digital (Wired Digital LLC); keep Wired Digital Creative as alternateName"
-    },
-    {
-      "hash": "bcaf5a7",
-      "date": "2026-10-27",
-      "subject": "Link Google Business Profile (CID) in schema sameAs/hasMap and llms.txt"
     }
   ]
 }

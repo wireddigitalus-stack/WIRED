@@ -18,16 +18,33 @@ export const BUSINESS_FACTS = {
   hq: 'Bristol, VA/TN (Tri-Cities)'
 };
 
+export const PRICING_TIERS = [
+  {
+    name: 'Local Launch & Website Modernization',
+    price: '$1,850 – $3,500',
+    timeline: '~2–3 weeks',
+    summary: '5–8 pages, mobile-first custom build, local SEO & AI search schema.'
+  },
+  {
+    name: 'Growth Website + 24/7 AI Lead Chatbot',
+    price: '$3,500 – $6,500',
+    timeline: '~3–5 weeks',
+    summary: '8–15 pages, 24/7 custom-trained AI lead chatbot, city & service pages.'
+  },
+  {
+    name: 'Custom Platform + Live Admin Dashboard',
+    price: '$5,500 – $12,000+',
+    timeline: '~4–6 weeks',
+    summary: 'Live owner telemetry/CRM dashboard, custom calculators & multi-location funnels.'
+  }
+];
+
 const PRICING_SECTION = {
   h2: 'Straightforward, flat-rate pricing',
   body: [
     'Every project is quoted flat-rate after a free consultation, with no forced monthly retainer.'
   ],
-  bullets: [
-    'Local Launch & Website Modernization: $1,850 – $3,500',
-    'Growth Website + 24/7 AI Lead Chatbot: $3,500 – $6,500',
-    'Custom Platform + Live Admin Dashboard: $5,500 – $12,000+'
-  ]
+  bullets: PRICING_TIERS.map((t) => `${t.name}: ${t.price}`)
 };
 
 export const SEO_PAGES = [

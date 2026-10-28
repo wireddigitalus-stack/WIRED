@@ -9,6 +9,7 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
+import * as wiredDataMod from '../src/data/wiredData.js';
 import {
   BRAND_INFO,
   TRI_CITIES_CASE_STUDIES,
@@ -16,36 +17,19 @@ import {
   CLIENT_LOGOS as LEGENDS_VAULT,
   FEATURED_WORK
 } from '../src/data/wiredData.js';
-import { SEO_PAGES, BUSINESS_FACTS } from '../src/data/seoPages.js';
+import * as seoPagesMod from '../src/data/seoPages.js';
+import { SEO_PAGES, BUSINESS_FACTS, PRICING_TIERS } from '../src/data/seoPages.js';
 
-const PRICING_TIERS = [
-  {
-    name: 'Local Launch & Website Modernization',
-    price: '$1,850 – $3,500',
-    timeline: '~2–3 weeks',
-    summary: '5–8 pages, mobile-first custom build, local SEO & AI search schema.'
-  },
-  {
-    name: 'Growth Website + 24/7 AI Lead Chatbot',
-    price: '$3,500 – $6,500',
-    timeline: '~3–5 weeks',
-    summary: '8–15 pages, 24/7 custom-trained AI lead chatbot, city & service pages.'
-  },
-  {
-    name: 'Custom Platform + Live Admin Dashboard',
-    price: '$5,500 – $12,000+',
-    timeline: '~4–6 weeks',
-    summary: 'Live owner telemetry/CRM dashboard, custom calculators & multi-location funnels.'
-  }
-];
 const SOCIAL_URLS = {
   youtube: BRAND_INFO.youtubeUrl,
   instagram: BRAND_INFO.instagramUrl,
   facebook: BRAND_INFO.facebookUrl,
   linkedin: BRAND_INFO.linkedinUrl
 };
-const GBP_URL = 'https://www.google.com/maps?cid=9585866241141725780';
+const GBP_URL = BRAND_INFO.googleBusinessUrl || 'https://www.google.com/maps?cid=9585866241141725780';
+import * as blogPostsMod from '../src/data/blogPosts.js';
 import { BLOG_INDEX, BLOG_POSTS, publishedPosts } from '../src/data/blogPosts.js';
+import * as wired64BrainMod from '../src/utils/wired64Brain.js';
 import {
   wired64Respond,
   WIRED64_INTRO,
@@ -188,17 +172,20 @@ function runDoctorChecks() {
     `Phone: ${BRAND_INFO.phone} • Email: ${BRAND_INFO.email}`
   );
 
+  const normDash = (s) => String(s).replace(/\s*[–-]\s*/g, '–');
+  const normSeo = normDash(seoPagesText);
+  const normBlog = normDash(blogPostsText);
+  const normBrain = normDash(brainText);
   const pricingConsistent =
     PRICING_TIERS.length === 3 &&
-    seoPagesText.includes('$1,850') &&
-    seoPagesText.includes('$3,500') &&
-    seoPagesText.includes('$5,500') &&
-    blogPostsText.includes('$1,850') &&
-    brainText.includes('$1,850');
+    PRICING_TIERS.every((t) => {
+      const p = normDash(t.price);
+      return normSeo.includes(p) && normBlog.includes(p) && normBrain.includes(p);
+    });
   addCheck(
     'pricing-sync',
     'SYNC MATRIX',
-    '3-Tier flat-rate pricing ($1,850–$3,500 / $3,500–$6,500 / $5,500–$12,000+) synced',
+    'All 3 flat-rate pricing ranges ($1,850–$3,500 / $3,500–$6,500 / $5,500–$12,000+) synced across seoPages, blog & bot',
     pricingConsistent,
     PRICING_TIERS.map((t) => `${t.name}: ${t.price}`).join(' | ')
   );
@@ -263,6 +250,51 @@ function runDoctorChecks() {
     `${SEO_PAGES.length} SEO routes + ${pubPosts.length} published blog posts configured`,
     SEO_PAGES.length >= 14 && pubPosts.length >= 2,
     `${SEO_PAGES.length} SEO pages + /blog/ + ${pubPosts.map((p) => `/blog/${p.slug}/`).join(', ')}`
+  );
+
+  // 7. BRAIN.md Accuracy Check (verifies all file links + Ring-1 export names against real code)
+  const brainMdText = fs.readFileSync(path.join(ROOT, 'BRAIN.md'), 'utf8');
+  const linkedPaths = [
+    ...brainMdText.matchAll(/\(file:\/\/\/Users\/robertneilson\/Desktop\/WDC\/([^)#]+)(?:#[^)]*)?\)/g)
+  ].map((m) => m[1]);
+  const missingDocFiles = linkedPaths.filter((rel) => !fs.existsSync(path.join(ROOT, rel)));
+
+  const ring1Modules = {
+    'src/data/wiredData.js': wiredDataMod,
+    'src/data/seoPages.js': seoPagesMod,
+    'src/data/blogPosts.js': blogPostsMod,
+    'src/utils/wired64Brain.js': wired64BrainMod
+  };
+  const missingExports = [];
+  for (const [modPath, modObj] of Object.entries(ring1Modules)) {
+    const rowRe = new RegExp(`\\|\\s*\\[\`${modPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\`\\][^\\n]+`, 'i');
+    const rowMatch = brainMdText.match(rowRe);
+    if (rowMatch) {
+      const cells = rowMatch[0].split('|').map((c) => c.trim());
+      const exportsCell = cells[3] || '';
+      const cleanExportsCell = exportsCell.replace(/\([^)]*\)/g, '');
+      const listedExports = [...cleanExportsCell.matchAll(/`([A-Za-z0-9_]+)`/g)].map((m) => m[1]);
+      for (const expName of listedExports) {
+        if (!(expName in modObj)) {
+          missingExports.push(`${modPath}:${expName}`);
+        }
+      }
+    }
+  }
+
+  const staleNames = ['LEGENDS_VAULT', 'KNOWLEDGE_CARDS', 'QUICK_PROMPTS', 'generateWired64Reply'].filter(
+    (name) => brainMdText.includes(name)
+  );
+  const brainDocValid =
+    missingDocFiles.length === 0 && missingExports.length === 0 && staleNames.length === 0;
+  addCheck(
+    'brain-doc-sync',
+    'BRAIN DOC SYNC',
+    'BRAIN.md file paths and Ring-1 export names verified against real code',
+    brainDocValid,
+    brainDocValid
+      ? `Verified ${linkedPaths.length} file links & all Ring-1 module exports in BRAIN.md`
+      : `Missing files: [${missingDocFiles.join(', ')}] • Missing exports: [${missingExports.join(', ')}] • Stale names: [${staleNames.join(', ')}]`
   );
 
   return checks;

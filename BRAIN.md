@@ -32,7 +32,7 @@
 | File | Controls What | Key Exports |
 | :--- | :--- | :--- |
 | [`src/data/wiredData.js`](file:///Users/robertneilson/Desktop/WDC/src/data/wiredData.js) | Brand contact info, 3 Home case studies, 3 AI/SEO pillars, 34 Legends Vault logos, 4 featured YouTube videos | `BRAND_INFO` (incl. social + `googleBusinessUrl`), `TRI_CITIES_CASE_STUDIES`, `AI_SEO_PILLARS`, `CLIENT_LOGOS` (34 legends), `FEATURED_WORK`, `YOUTUBE_CHANNEL_DATA` |
-| [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js) | All 14 prerendered SEO/GEO landing pages, titles, meta descriptions, FAQs, 3 pricing tiers (internal `PRICING_SECTION` bullets) | `SITE_BASE`, `BUSINESS_FACTS`, `SEO_PAGES`, `getSeoPageById`, `canonicalFor`, `findSeoPageByPath` |
+| [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js) | All 14 prerendered SEO/GEO landing pages, titles, meta descriptions, FAQs, and 3 pricing tiers (`PRICING_TIERS`) | `SITE_BASE`, `BUSINESS_FACTS`, `PRICING_TIERS`, `SEO_PAGES`, `getSeoPageById`, `canonicalFor`, `findSeoPageByPath` |
 | [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js) | Company blog index (`/blog/`) and all blog articles (`/blog/<slug>/`), including `draft: true/false` flag | `BLOG_AUTHOR`, `BLOG_INDEX`, `BLOG_POSTS`, `renderBlogPostHtml` |
 | [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js) | `WIRED-64` chatbot brain: 16 topic handlers, 3-question lead capture state machine, polite sign-off, knowledge cards | `wired64Respond`, `createChatState`, `formatScanSummary`, `WIRED64_INTRO`, `PHONE`, `EMAIL` (topics live in internal `TOPICS` array) |
 
@@ -60,9 +60,8 @@
 ## 3. "If You Change X → Also Update Y" Sync Matrix
 
 1. **Changing Pricing Tiers (`$1,850–$3,500`, `$3,500–$6,500`, `$5,500–$12,000+`)**:
-   - Update `PRICING_SECTION.bullets` in [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js)
+   - Update `PRICING_TIERS` in [`src/data/seoPages.js`](file:///Users/robertneilson/Desktop/WDC/src/data/seoPages.js)
    - Update the `pricing` topic in the `TOPICS` array of [`src/utils/wired64Brain.js`](file:///Users/robertneilson/Desktop/WDC/src/utils/wired64Brain.js)
-   - Update the `PRICING_TIERS` mirror in [`scripts/build-brain.mjs`](file:///Users/robertneilson/Desktop/WDC/scripts/build-brain.mjs) (used by the Guardrail Doctor)
    - Update pricing callout/table in [`src/data/blogPosts.js`](file:///Users/robertneilson/Desktop/WDC/src/data/blogPosts.js) (`website-cost-tri-cities`)
 2. **Changing Phone (`731-616-5121`) or Email (`WiredDigitalUS@gmail.com`)**:
    - Update `BRAND_INFO` in [`src/data/wiredData.js`](file:///Users/robertneilson/Desktop/WDC/src/data/wiredData.js)

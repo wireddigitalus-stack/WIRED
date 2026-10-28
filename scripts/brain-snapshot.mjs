@@ -16,18 +16,41 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SNAP_DIR = path.join(ROOT, '.brain', 'snapshots');
 
-// Ring-1 Data & Brain files backed up in every snapshot
-export const TRACKED_BRAIN_FILES = [
-  'BRAIN.md',
-  'src/data/wiredData.js',
-  'src/data/seoPages.js',
-  'src/data/blogPosts.js',
-  'src/utils/wired64Brain.js',
-  'src/components/Since1999Section.jsx',
-  'src/components/AiSeoDashboardShowcase.jsx',
-  'src/components/WebCreationView.jsx',
-  'index.html'
-];
+function collectFilesInDir(relDir, extRe = /\.(jsx?|mjs|css|json|md)$/) {
+  const absDir = path.join(ROOT, relDir);
+  if (!fs.existsSync(absDir)) return [];
+  const results = [];
+  for (const entry of fs.readdirSync(absDir, { withFileTypes: true })) {
+    const childRel = path.join(relDir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...collectFilesInDir(childRel, extRe));
+    } else if (extRe.test(entry.name)) {
+      results.push(childRel);
+    }
+  }
+  return results.sort();
+}
+
+// Complete source, style, script & brain config inventory backed up in every snapshot
+export function getTrackedBrainFiles() {
+  const rootFiles = [
+    'BRAIN.md',
+    'AGENTS.md',
+    '.cursorrules',
+    'index.html',
+    'package.json',
+    'vite.config.js',
+    'vercel.json'
+  ].filter((f) => fs.existsSync(path.join(ROOT, f)));
+
+  return [
+    ...rootFiles,
+    ...collectFilesInDir('src'),
+    ...collectFilesInDir('scripts')
+  ];
+}
+
+export const TRACKED_BRAIN_FILES = getTrackedBrainFiles();
 
 function ensureDir(p) {
   fs.mkdirSync(p, { recursive: true });
@@ -65,7 +88,7 @@ export function createSnapshot(label = 'Manual studio snapshot') {
   ensureDir(destRoot);
 
   const savedFiles = [];
-  for (const rel of TRACKED_BRAIN_FILES) {
+  for (const rel of getTrackedBrainFiles()) {
     const srcPath = path.join(ROOT, rel);
     if (!fs.existsSync(srcPath)) continue;
     const dstPath = path.join(destRoot, rel);

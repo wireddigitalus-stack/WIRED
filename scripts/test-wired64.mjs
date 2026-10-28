@@ -70,6 +70,29 @@ console.log('Small talk');
   ok(r.topic === 'thanks' && r.state.questionCount === 0, 'thanks counted as a question');
 }
 
+// 2b. Thanks / sign-off / plain no → "You're welcome : )", not counted
+console.log('Thanks & sign-off');
+{
+  for (const [q, topic] of [
+    ['thank you', 'thanks'],
+    ['thanks!', 'thanks'],
+    ['no thank you', 'signoff'],
+    ['no thanks', 'signoff'],
+    ["that's all", 'signoff'],
+    ["I'm good", 'signoff'],
+    ['nothing else', 'signoff'],
+    ['bye', 'signoff'],
+    ['no', 'no'],
+    ['nope', 'no']
+  ]) {
+    const r = wired64Respond(q, createChatState());
+    ok(r.topic === topic, `"${q}" → ${r.topic} (expected ${topic})`);
+    ok(r.state.questionCount === 0, `"${q}" counted as a question`);
+    ok(/: \)/.test(r.reply), `"${q}" reply missing : )`);
+    if (topic !== 'no') ok(/YOU'RE WELCOME/.test(r.reply), `"${q}" missing YOU'RE WELCOME`);
+  }
+}
+
 // 3. Lead flow: 3 questions → name → contact → saved
 console.log('Lead flow');
 {

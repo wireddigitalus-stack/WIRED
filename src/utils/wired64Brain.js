@@ -333,6 +333,10 @@ const FALLBACK = {
 
 const isGreeting = (t) =>
   t.length <= 24 && has(t, ['hi', 'hello', 'hey', 'yo', 'sup', 'howdy', 'good morning', 'good afternoon', 'good evening']);
+const isSignOff = (t) =>
+  t.length <= 60 &&
+  has(t, ["that's all", 'thats all', 'that is all', "i'm good", 'im good', 'i am good', "we're good", 'all good', 'nothing else', 'no thanks', 'no thank you', 'bye', 'goodbye', 'see ya', 'later', 'have a good one']);
+const isPlainNo = (t) => /^(no|nope|nah|no sir|not really)[.!]?$/i.test(t.trim());
 const isThanks = (t) =>
   t.length <= 40 && has(t, ['thanks', 'thank you', 'thx', 'ty', 'cool', 'awesome', 'great', 'perfect', 'ok', 'okay', 'got it']);
 const isDecline = (t) =>
@@ -442,8 +446,20 @@ export function wired64Respond(input, prevState = createChatState()) {
       state
     };
   }
+  if (isSignOff(lower) && !looksLikeQuestion(q) && !url) {
+    return {
+      topic: 'signoff',
+      cartridge: null,
+      reply: `YOU'RE WELCOME //\nThat is literally my only job. : )\nIf anything comes up, Rob's at ${PHONE}.`,
+      chips: [],
+      state
+    };
+  }
   if (isThanks(lower) && !looksLikeQuestion(q) && !url) {
-    return { topic: 'thanks', cartridge: null, reply: 'ANYTIME //\nThat is literally my only job.', chips: [CHIP.pricing, CHIP.contact], state };
+    return { topic: 'thanks', cartridge: null, reply: "YOU'RE WELCOME //\nThat is literally my only job. : )", chips: [CHIP.pricing, CHIP.contact], state };
+  }
+  if (isPlainNo(lower) && !url) {
+    return { topic: 'no', cartridge: null, reply: "NO PROBLEM //\nI'm right here if you need me. : )", chips: [CHIP.pricing, CHIP.contact], state };
   }
 
   // 4. Website address → real site check (component runs the async diagnostic)

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-28T21:16:52.119Z",
+  "generatedAt": "2026-10-29T01:00:27.031Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -80,7 +80,7 @@
     "caseStudiesCount": 3,
     "legendsCount": 34,
     "featuredVideosCount": 4,
-    "snapshotsCount": 3
+    "snapshotsCount": 4
   },
   "knowledgeTree": [
     {
@@ -581,8 +581,8 @@
       {
         "file": "src/components/Since1999Section.jsx",
         "name": "Since1999Section.jsx",
-        "lines": 227,
-        "sizeKb": 7.8
+        "lines": 229,
+        "sizeKb": 7.9
       },
       {
         "file": "src/components/SiteBrainAdminTab.jsx",
@@ -708,6 +708,55 @@
   },
   "snapshots": [
     {
+      "id": "snap-20261029-010017",
+      "label": "Before updating Since 1999 copy to Option 4",
+      "createdAt": "2026-10-29T01:00:17.730Z",
+      "filesCount": 41,
+      "files": [
+        "BRAIN.md",
+        "AGENTS.md",
+        ".cursorrules",
+        "index.html",
+        "package.json",
+        "vite.config.js",
+        "vercel.json",
+        "src/App.jsx",
+        "src/components/AdminDashboardView.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/BlogView.jsx",
+        "src/components/BodyCtaContactCard.jsx",
+        "src/components/ContactModal.jsx",
+        "src/components/LegendsWall.jsx",
+        "src/components/MobileMore.jsx",
+        "src/components/SeoPageIntro.jsx",
+        "src/components/SeoSiteTreeAuthority.jsx",
+        "src/components/Since1999Section.jsx",
+        "src/components/SiteBrainAdminTab.jsx",
+        "src/components/SmartLogo.jsx",
+        "src/components/SpiralHero.jsx",
+        "src/components/VideoLightboxModal.jsx",
+        "src/components/VideoProductionView.jsx",
+        "src/components/WebCreationView.jsx",
+        "src/components/WebsiteAiGraderCard.jsx",
+        "src/components/WiredOrbChatbot.jsx",
+        "src/components/WorkScreeningRoom.jsx",
+        "src/components/YellowFooter.jsx",
+        "src/data/blogPosts.js",
+        "src/data/seoPages.js",
+        "src/data/wiredData.js",
+        "src/main.jsx",
+        "src/styles.css",
+        "src/utils/telemetry.js",
+        "src/utils/useIsMobile.js",
+        "src/utils/websiteDiagnostic.js",
+        "src/utils/wired64Brain.js",
+        "scripts/brain-snapshot.mjs",
+        "scripts/build-brain.mjs",
+        "scripts/prerender.mjs",
+        "scripts/test-wired64.mjs"
+      ]
+    },
+    {
       "id": "snap-20261028-211628",
       "label": "Full codebase baseline",
       "createdAt": "2026-10-28T21:16:28.013Z",
@@ -793,6 +842,11 @@
   ],
   "recentCommits": [
     {
+      "hash": "7a0983c",
+      "date": "2026-10-28",
+      "subject": "Harden Site Brain: single-source PRICING_TIERS, strict 3-tier price sync check, BRAIN.md accuracy guardrail (#8), and full 41-file snapshots"
+    },
+    {
       "hash": "a3a353f",
       "date": "2026-10-28",
       "subject": "BRAIN.md: fix stale export names, pricing sync matrix, and 3-Ring definitions"
@@ -861,11 +915,6 @@
       "hash": "c02bc01",
       "date": "2026-10-27",
       "subject": "Add prerendered company blog (/blog/) with BlogPosting schema; first two posts as noindex drafts: Tri-Cities website cost guide + Fast Track 30-day dashboard case study"
-    },
-    {
-      "hash": "45d4c0d",
-      "date": "2026-10-27",
-      "subject": "Align entity name to legal/GBP name: Wired Digital (Wired Digital LLC); keep Wired Digital Creative as alternateName"
     }
   ]
 }

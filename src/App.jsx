@@ -22,7 +22,6 @@ function parseBlogPath(pathname = '') {
 const LegendsWall = lazy(() => import('./components/LegendsWall'));
 const WorkScreeningRoom = lazy(() => import('./components/WorkScreeningRoom'));
 const BodyCtaContactCard = lazy(() => import('./components/BodyCtaContactCard'));
-const SeoSiteTreeAuthority = lazy(() => import('./components/SeoSiteTreeAuthority'));
 const YellowFooter = lazy(() => import('./components/YellowFooter'));
 const WiredOrbChatbot = lazy(() => import('./components/WiredOrbChatbot'));
 const WebCreationView = lazy(() => import('./components/WebCreationView'));
@@ -485,17 +484,6 @@ export default function App() {
           </Suspense>
         )}
       </main>
-
-      {/* Google Sitelinks, Full Site Tree Architecture & "Website Design Near Me" Authority Hub */}
-      {activeTab !== 'admin' && deferredReady && (
-        <Suspense fallback={null}>
-          <SeoSiteTreeAuthority
-            activeSeoNodeId={activeSeoNodeId}
-            onSelectSeoNode={handleSelectSeoNode}
-            onOpenContact={() => setContactOpen(true)}
-          />
-        </Suspense>
-      )}
 
       {/* Signature Full-Bleed Electric Yellow Footer Finale */}
       {activeTab !== 'admin' && deferredReady && (

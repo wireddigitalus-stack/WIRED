@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-29T01:00:27.031Z",
+  "generatedAt": "2026-10-29T01:45:04.492Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -80,7 +80,7 @@
     "caseStudiesCount": 3,
     "legendsCount": 34,
     "featuredVideosCount": 4,
-    "snapshotsCount": 4
+    "snapshotsCount": 5
   },
   "knowledgeTree": [
     {
@@ -708,6 +708,55 @@
   },
   "snapshots": [
     {
+      "id": "snap-20261029-014453",
+      "label": "Before removing SeoSiteTreeAuthority bar from public pages",
+      "createdAt": "2026-10-29T01:44:53.844Z",
+      "filesCount": 41,
+      "files": [
+        "BRAIN.md",
+        "AGENTS.md",
+        ".cursorrules",
+        "index.html",
+        "package.json",
+        "vite.config.js",
+        "vercel.json",
+        "src/App.jsx",
+        "src/components/AdminDashboardView.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/BlogView.jsx",
+        "src/components/BodyCtaContactCard.jsx",
+        "src/components/ContactModal.jsx",
+        "src/components/LegendsWall.jsx",
+        "src/components/MobileMore.jsx",
+        "src/components/SeoPageIntro.jsx",
+        "src/components/SeoSiteTreeAuthority.jsx",
+        "src/components/Since1999Section.jsx",
+        "src/components/SiteBrainAdminTab.jsx",
+        "src/components/SmartLogo.jsx",
+        "src/components/SpiralHero.jsx",
+        "src/components/VideoLightboxModal.jsx",
+        "src/components/VideoProductionView.jsx",
+        "src/components/WebCreationView.jsx",
+        "src/components/WebsiteAiGraderCard.jsx",
+        "src/components/WiredOrbChatbot.jsx",
+        "src/components/WorkScreeningRoom.jsx",
+        "src/components/YellowFooter.jsx",
+        "src/data/blogPosts.js",
+        "src/data/seoPages.js",
+        "src/data/wiredData.js",
+        "src/main.jsx",
+        "src/styles.css",
+        "src/utils/telemetry.js",
+        "src/utils/useIsMobile.js",
+        "src/utils/websiteDiagnostic.js",
+        "src/utils/wired64Brain.js",
+        "scripts/brain-snapshot.mjs",
+        "scripts/build-brain.mjs",
+        "scripts/prerender.mjs",
+        "scripts/test-wired64.mjs"
+      ]
+    },
+    {
       "id": "snap-20261029-010017",
       "label": "Before updating Since 1999 copy to Option 4",
       "createdAt": "2026-10-29T01:00:17.730Z",
@@ -842,6 +891,11 @@
   ],
   "recentCommits": [
     {
+      "hash": "fed6544",
+      "date": "2026-10-28",
+      "subject": "Update Since 1999 manifesto copy with SEO/GEO search engine focus"
+    },
+    {
       "hash": "7a0983c",
       "date": "2026-10-28",
       "subject": "Harden Site Brain: single-source PRICING_TIERS, strict 3-tier price sync check, BRAIN.md accuracy guardrail (#8), and full 41-file snapshots"
@@ -910,11 +964,6 @@
       "hash": "a9809d1",
       "date": "2026-10-27",
       "subject": "Publish first two blog posts (website cost guide + Fast Track 30-day case study); add to sitemap, llms.txt and footer"
-    },
-    {
-      "hash": "c02bc01",
-      "date": "2026-10-27",
-      "subject": "Add prerendered company blog (/blog/) with BlogPosting schema; first two posts as noindex drafts: Tri-Cities website cost guide + Fast Track 30-day dashboard case study"
     }
   ]
 }

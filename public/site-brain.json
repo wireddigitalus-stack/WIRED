@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-29T06:14:54.486Z",
+  "generatedAt": "2026-10-29T06:29:11.718Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -709,8 +709,8 @@
       {
         "file": "src/styles.css",
         "name": "styles.css",
-        "lines": 13245,
-        "sizeKb": 259.3
+        "lines": 13251,
+        "sizeKb": 259.4
       }
     ]
   },
@@ -997,6 +997,11 @@
   ],
   "recentCommits": [
     {
+      "hash": "3a67530",
+      "date": "2026-10-29",
+      "subject": "Complete final Tri-Cities SEO/GEO polish across all 17 routes, llms.txt pricing, OfferCatalog & FAQPage schemas"
+    },
+    {
       "hash": "35a5b73",
       "date": "2026-10-29",
       "subject": "Update Since 1999 about copy with new Bristol & Google/AI discovery messaging"
@@ -1065,11 +1070,6 @@
       "hash": "1e417bf",
       "date": "2026-10-28",
       "subject": "Widen and scale header nav for large desktops: 1400px+ (15in MacBook), 1800px+ and 2400px+ (27in displays)"
-    },
-    {
-      "hash": "0f09b74",
-      "date": "2026-10-28",
-      "subject": "Remove YouTube/Instagram icons from header nav to give BLOG pill room (socials remain in footer)"
     }
   ]
 }

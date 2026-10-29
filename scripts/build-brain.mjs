@@ -18,7 +18,7 @@ import {
   FEATURED_WORK
 } from '../src/data/wiredData.js';
 import * as seoPagesMod from '../src/data/seoPages.js';
-import { SEO_PAGES, BUSINESS_FACTS, PRICING_TIERS } from '../src/data/seoPages.js';
+import { SITE_BASE, SEO_PAGES, BUSINESS_FACTS, PRICING_TIERS } from '../src/data/seoPages.js';
 
 const SOCIAL_URLS = {
   youtube: BRAND_INFO.youtubeUrl,
@@ -295,6 +295,35 @@ function runDoctorChecks() {
     brainDocValid
       ? `Verified ${linkedPaths.length} file links & all Ring-1 module exports in BRAIN.md`
       : `Missing files: [${missingDocFiles.join(', ')}] • Missing exports: [${missingExports.join(', ')}] • Stale names: [${staleNames.join(', ')}]`
+  );
+
+  // 8. Deep SEO & GEO Completeness (FAQs on all 14 pages, llms.txt pricing, public/sitemap.xml parity)
+  const llmsTxt = fs.readFileSync(path.join(PUBLIC_DIR, 'llms.txt'), 'utf8');
+  const normLlms = normDash(llmsTxt);
+  const sitemapTxt = fs.readFileSync(path.join(PUBLIC_DIR, 'sitemap.xml'), 'utf8');
+  const pagesMissingFaqs = SEO_PAGES.filter((p) => !Array.isArray(p.faqs) || p.faqs.length < 2).map((p) => p.path);
+  const pagesLongMeta = SEO_PAGES.filter((p) => p.title.length > 60 || p.description.length > 155).map((p) => p.path);
+  const llmsHasPricing = PRICING_TIERS.every((t) => normLlms.includes(normDash(t.price)));
+  const expectedUrls = [
+    `${SITE_BASE}/`,
+    ...SEO_PAGES.map((p) => `${SITE_BASE}${p.path}`),
+    `${SITE_BASE}/blog/`,
+    ...pubPosts.map((p) => `${SITE_BASE}/blog/${p.slug}/`)
+  ];
+  const missingInSitemap = expectedUrls.filter((u) => !sitemapTxt.includes(`<loc>${u}</loc>`));
+  const seoGeoComplete =
+    pagesMissingFaqs.length === 0 &&
+    pagesLongMeta.length === 0 &&
+    llmsHasPricing &&
+    missingInSitemap.length === 0;
+  addCheck(
+    'seo-geo-completeness',
+    'SEO & GEO DEPTH',
+    'All 14 SEO pages have 2+ FAQs & valid meta lengths; llms.txt has 3-tier pricing; sitemap.xml has all 17 URLs',
+    seoGeoComplete,
+    seoGeoComplete
+      ? `14/14 SEO pages have FAQPage schema • llms.txt pricing synced • 17/17 URLs in sitemap.xml`
+      : `Missing FAQs: [${pagesMissingFaqs.join(', ')}] • Meta length: [${pagesLongMeta.join(', ')}] • llms pricing: ${llmsHasPricing} • Missing sitemap: [${missingInSitemap.join(', ')}]`
   );
 
   return checks;

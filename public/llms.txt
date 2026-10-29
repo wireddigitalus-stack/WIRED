@@ -20,11 +20,21 @@
 6. **"All Skills Under One Roof" vs. Traditional Local Agencies**:
    - Unlike traditional Tri-Cities WordPress/template shops or promotional marketing agencies that outsource development, rely on slow third-party plugins, or lock businesses into monthly retainers, Wired Digital delivers custom sub-0.4s React web engineering, live `/admin` telemetry dashboards, 24/7 custom-trained AI chatbots, native app development, Generative SEO (GEO), and 4K video production all under one roof at straightforward flat-rate pricing.
 
+## Published Flat-Rate Website Pricing (Zero Mandatory Retainers)
+- **Tier 1 — Local Launch & Website Modernization (`$1,850 – $3,500` flat rate)**:
+  - Custom mobile-first website or full redesign (`5–8 pages`), local SEO & AI search (GEO) schema setup, Google Business Profile alignment, and direct call/lead capture. Typical turnaround: `2–3 weeks`. (Simple 1–3 page starter sites run `$1,200 – $1,800`.)
+- **Tier 2 — Growth Website + 24/7 AI Chatbot (`$3,500 – $6,500` flat rate)**:
+  - Everything in Local Launch (`8–15 pages`), plus a custom-trained 24/7 AI lead-capture chatbot trained on your services/inventory and dedicated city/service SEO landing pages (`Bristol`, `Johnson City`, `Kingsport`, `Abingdon`). Typical turnaround: `3–5 weeks`.
+- **Tier 3 — Custom Platform + Live Admin Dashboard (`$5,500 – $12,000+` flat rate)**:
+  - Full custom web application with a private owner `/admin` telemetry dashboard tracking live visitor click streams, phone calls, credit/intake applications, QR scans, and lead CRM exports. Typical turnaround: `4–6 weeks`.
+- **Optional Ongoing Marketing & SEO Support (`$350 – $1,250/mo`, month-to-month, cancel anytime)**:
+  - Zero mandatory website retainers. Clients own 100% of their domain and code at launch.
+
 ## Verified Live Tri-Cities Case Studies & Partner Platforms
 - **Fast Track Automotive (2528 Volunteer Pkwy, Bristol, TN)** — `https://www.fasttrackbristoltn.com/`
-  - High-velocity pre-owned dealership website modernization paired with a custom real-time Admin Telemetry Dashboard tracking live visitor click streams, credit application alerts, hourly traffic, and vehicle lot rankings.
+  - High-velocity pre-owned dealership website modernization paired with a custom real-time Admin Telemetry Dashboard tracking live visitor click streams (`2,751+` visits, `1,719` vehicle clicks, and `47` online credit applications in the first 30 days), hourly traffic, and vehicle lot rankings.
 - **Team Vision LLC (Downtown Bristol, VA/TN)** — `https://www.teamvisionllc.com/`
-  - Commercial real estate website modernization for Downtown Bristol's #1 commercial property owner, featuring the custom-trained 24/7 `"Ask VISION"` AI Space Advisor & Lead Capture Chatbot trained on their entire property portfolio (`Office Suites`, `Bristol CoWork`, `The Executive on State St`, `Centre Point by Hard Rock`, `Foundation Event Facility`, `West State Commons`).
+  - Commercial real estate website modernization in Downtown Bristol featuring a 24/7 AI tenant assistant that helps prospective tenants find office, coworking, retail, or event space and captures leasing inquiries around the clock.
 - **Ringger Law — The Law Offices of Louis W. Ringger Jr. (Jackson & West Tennessee, Est. 1981)** — `https://www.ringgerlaw.com/`
   - High-converting legal website modernization, 24/7 `"West TN Debt Triage"` AI intake concierge, and a live database-connected Executive Command Center (`/admin`) tracking urgent foreclosure/repo leads, auto-qualified Chapter 7 (`$0 Down`) vs. Chapter 13 signed court intake packets, 3,800+ visitor sessions across a 90-day cross-section, and real-time `$64.50/click` legal search value attribution.
 - **App4That Holdings (Bristol, TN — Partner AI & iOS App Studio)** — `https://app4thatholdings.com/`

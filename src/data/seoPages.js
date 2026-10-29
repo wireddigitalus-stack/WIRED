@@ -312,7 +312,7 @@ export const SEO_PAGES = [
       {
         h2: 'Real examples',
         body: [
-          'Team Vision LLC (downtown Bristol): the "Ask VISION" advisor knows every property in the portfolio, from 120 to 54,000 square feet, and matches tenants to spaces in under two minutes.',
+          'Team Vision LLC (downtown Bristol): a 24/7 AI tenant assistant that helps prospective tenants find matching office, coworking, retail or event space and captures leasing inquiries around the clock.',
           'Ringger Law (Jackson, TN): a 24/7 debt-triage assistant that identifies urgent foreclosure, repossession and garnishment cases and routes them for same-day callbacks.'
         ]
       },
@@ -381,6 +381,10 @@ export const SEO_PAGES = [
       {
         q: 'Do you work with independent artists?',
         a: 'Yes. Independent artists, labels and estates are all welcome; quotes are based on the scope of each track.'
+      },
+      {
+        q: 'How does remote music video or lyric video editing work?',
+        a: 'You upload your master audio, lyrics or camera footage via a secure link, review private frame-accurate preview cuts online, and receive final 4K masters ready for YouTube, VEVO and social platforms.'
       }
     ]
   },
@@ -416,7 +420,16 @@ export const SEO_PAGES = [
         ]
       }
     ],
-    faqs: []
+    faqs: [
+      {
+        q: 'Who edits the music and lyric videos at Wired Digital?',
+        a: 'Every music video, official lyric video and visualizer is edited directly by founder and Creative Director Rob Neilson, who has worked full-time in the music industry since 2015.'
+      },
+      {
+        q: 'Can local businesses get the same video production quality?',
+        a: 'Yes. The same 4K editing, motion graphics and storytelling we deliver for major record labels goes into commercials, reels and brand videos for Tri-Cities businesses.'
+      }
+    ]
   },
 
   // ---------------------------------------------------------------- CITIES
@@ -444,7 +457,7 @@ export const SEO_PAGES = [
         h2: 'Bristol businesses we have built for',
         body: [
           'Fast Track Automotive, 2528 Volunteer Parkway: a new dealership website plus a live admin dashboard that tracked 2,751+ visits, 1,719 vehicle clicks and 47 credit applications in its first 30 days.',
-          'Team Vision LLC, downtown Bristol: a commercial real estate website with the "Ask VISION" AI advisor, trained on properties including Bristol CoWork, The Executive on State St and Centre Point.'
+          'Team Vision LLC, downtown Bristol: a commercial real estate website with a 24/7 AI tenant assistant that helps prospective tenants find space across their downtown properties.'
         ]
       },
       {
@@ -634,6 +647,10 @@ export const SEO_PAGES = [
       {
         q: 'Do you work with seasonal and tourism businesses?',
         a: 'Yes. We build event and booking pages that are easy to update for each season.'
+      },
+      {
+        q: 'How far is Wired Digital from Abingdon, VA?',
+        a: 'Our studio in Bristol is about 15 minutes away on I-81, making in-person planning and launch meetings in Abingdon or Washington County easy.'
       }
     ]
   },
@@ -682,7 +699,16 @@ export const SEO_PAGES = [
         ]
       }
     ],
-    faqs: []
+    faqs: [
+      {
+        q: 'How many leads did the Fast Track Automotive website generate in its first 30 days?',
+        a: 'In the first 30 days after launch, the website and live dashboard recorded 2,751+ visits, 1,719 vehicle clicks, 47 online credit applications and 15 tracked phone calls.'
+      },
+      {
+        q: 'Can Wired Digital build a similar inventory and lead dashboard for another business?',
+        a: 'Yes. We build custom websites and live admin dashboards ($5,500 to $12,000+ flat rate) for dealerships, equipment lots, contractors and service companies across the Tri-Cities.'
+      }
+    ]
   },
   {
     id: 'case-teamvision',
@@ -696,24 +722,24 @@ export const SEO_PAGES = [
     clientName: 'Team Vision LLC',
     clientUrl: 'https://www.teamvisionllc.com/',
     image: '/teamvision-ai-advisor.jpg',
-    title: 'Case Study: Team Vision LLC AI Space Advisor | Wired Digital',
+    title: 'Case Study: Team Vision LLC Bristol Website | Wired Digital',
     description:
-      'A commercial real estate website and custom-trained "Ask VISION" AI advisor that matches tenants to downtown Bristol spaces in under two minutes.',
+      'A commercial real estate website and 24/7 AI tenant assistant that helps prospective tenants find downtown Bristol office, coworking and event space.',
     eyebrow: 'Case Study • Downtown Bristol • teamvisionllc.com',
-    h1: 'Team Vision LLC: Commercial Real Estate Website and 24/7 AI Advisor',
+    h1: 'Team Vision LLC: Commercial Real Estate Website and 24/7 AI Assistant',
     intro: [
-      'Team Vision LLC owns and develops a large portfolio of commercial properties in downtown Bristol, from small office suites to large event and industrial spaces. Prospective tenants needed a faster way to find the right space at any hour.',
-      'We modernized their website and built "Ask VISION," an AI space advisor trained on every property in the portfolio.'
+      'Team Vision LLC owns and develops commercial properties in downtown Bristol, from office suites and coworking space to event and retail buildings. Prospective tenants needed an easy way to explore available spaces at any hour.',
+      'We modernized their website and built a 24/7 AI tenant assistant trained on their downtown property portfolio.'
     ],
     sections: [
       {
-        h2: 'How Ask VISION works',
+        h2: 'How the AI tenant assistant works',
         bullets: [
-          'Asks prospective tenants five short questions about size, use and budget',
-          'Recommends matching spaces in under two minutes',
-          'Covers spaces from 120 to 54,000 square feet',
-          'Captures tenant details for the ownership team, 24/7',
-          'Per-property "Ask VISION about this property" buttons'
+          'Asks prospective tenants a few short questions about size, use and budget',
+          'Recommends matching spaces across their downtown Bristol properties',
+          'Covers office suites, coworking desks, retail storefronts and event venues',
+          'Captures tenant contact details and leasing inquiries 24/7',
+          'Direct property-specific inquiry buttons on each listing'
         ]
       },
       {
@@ -723,7 +749,16 @@ export const SEO_PAGES = [
         ]
       }
     ],
-    faqs: []
+    faqs: [
+      {
+        q: 'What does the AI assistant on the Team Vision website do?',
+        a: 'It answers common leasing questions 24/7, helps prospective tenants find matching office, coworking, retail or event space in downtown Bristol, and sends their contact details directly to the leasing team.'
+      },
+      {
+        q: 'How much does a website with a custom AI chatbot cost?',
+        a: 'A growth website with a custom-trained 24/7 AI lead-capture chatbot typically runs $3,500 to $6,500 flat-rate with no mandatory monthly retainer.'
+      }
+    ]
   },
   {
     id: 'case-ringgerlaw',
@@ -765,7 +800,16 @@ export const SEO_PAGES = [
         ]
       }
     ],
-    faqs: []
+    faqs: [
+      {
+        q: 'How does the Ringger Law AI triage assistant help prospective clients?',
+        a: 'It operates 24/7 to identify urgent foreclosure, repossession or wage-garnishment deadlines, pre-qualifies Chapter 7 vs. Chapter 13 intake details, and flags urgent cases for same-day attorney callbacks.'
+      },
+      {
+        q: 'Can Wired Digital build custom intake and CRM dashboards for law firms or medical practices?',
+        a: 'Yes. We build custom websites, 24/7 intake assistants and private lead-tracking dashboards tailored to law firms, medical practices and professional service firms across Tennessee and Virginia.'
+      }
+    ]
   }
 ];
 

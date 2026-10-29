@@ -437,8 +437,10 @@ function main() {
     console.log(`  ✓ ${doc.path.padEnd(32)} ${String(words).padStart(4)} words${doc.noindex ? '  (noindex draft)' : ''}`);
   }
 
-  fs.writeFileSync(path.join(DIST, 'sitemap.xml'), buildSitemap());
-  console.log('  ✓ /sitemap.xml regenerated\n');
+  const sitemapXml = buildSitemap();
+  fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemapXml);
+  fs.writeFileSync(path.resolve(__dirname, '../public/sitemap.xml'), sitemapXml);
+  console.log('  ✓ /sitemap.xml regenerated (dist + public synced)\n');
 }
 
 if (process.argv.includes('--sitemap-only')) {

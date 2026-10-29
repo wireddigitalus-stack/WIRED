@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-29T01:52:12.940Z",
+  "generatedAt": "2026-10-29T06:14:54.486Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
-    "passedCount": 8,
-    "totalChecks": 8,
+    "passedCount": 9,
+    "totalChecks": 9,
     "checks": [
       {
         "id": "assets-exist",
@@ -70,6 +70,14 @@
         "status": "PASS",
         "passed": true,
         "detail": "Verified 32 file links & all Ring-1 module exports in BRAIN.md"
+      },
+      {
+        "id": "seo-geo-completeness",
+        "category": "SEO & GEO DEPTH",
+        "title": "All 14 SEO pages have 2+ FAQs & valid meta lengths; llms.txt has 3-tier pricing; sitemap.xml has all 17 URLs",
+        "status": "PASS",
+        "passed": true,
+        "detail": "14/14 SEO pages have FAQPage schema • llms.txt pricing synced • 17/17 URLs in sitemap.xml"
       }
     ]
   },
@@ -80,7 +88,7 @@
     "caseStudiesCount": 3,
     "legendsCount": 34,
     "featuredVideosCount": 4,
-    "snapshotsCount": 6
+    "snapshotsCount": 7
   },
   "knowledgeTree": [
     {
@@ -407,8 +415,8 @@
           {
             "id": "case-teamvision",
             "path": "/work/team-vision/",
-            "title": "Case Study: Team Vision LLC AI Space Advisor | Wired Digital",
-            "h1": "Team Vision LLC: Commercial Real Estate Website and 24/7 AI Advisor"
+            "title": "Case Study: Team Vision LLC Bristol Website | Wired Digital",
+            "h1": "Team Vision LLC: Commercial Real Estate Website and 24/7 AI Assistant"
           },
           {
             "id": "case-ringgerlaw",
@@ -513,8 +521,8 @@
       {
         "file": "src/data/seoPages.js",
         "name": "seoPages.js",
-        "lines": 796,
-        "sizeKb": 34.8
+        "lines": 840,
+        "sizeKb": 37.7
       },
       {
         "file": "src/data/wiredData.js",
@@ -681,14 +689,14 @@
       {
         "file": "scripts/build-brain.mjs",
         "name": "build-brain.mjs",
-        "lines": 525,
-        "sizeKb": 19
+        "lines": 554,
+        "sizeKb": 20.6
       },
       {
         "file": "scripts/prerender.mjs",
         "name": "prerender.mjs",
-        "lines": 449,
-        "sizeKb": 14.8
+        "lines": 451,
+        "sizeKb": 15
       },
       {
         "file": "scripts/test-wired64.mjs",
@@ -707,6 +715,55 @@
     ]
   },
   "snapshots": [
+    {
+      "id": "snap-20261029-061031",
+      "label": "pre-final-seo-geo-polish",
+      "createdAt": "2026-10-29T06:10:31.643Z",
+      "filesCount": 41,
+      "files": [
+        "BRAIN.md",
+        "AGENTS.md",
+        ".cursorrules",
+        "index.html",
+        "package.json",
+        "vite.config.js",
+        "vercel.json",
+        "src/App.jsx",
+        "src/components/AdminDashboardView.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/BlogView.jsx",
+        "src/components/BodyCtaContactCard.jsx",
+        "src/components/ContactModal.jsx",
+        "src/components/LegendsWall.jsx",
+        "src/components/MobileMore.jsx",
+        "src/components/SeoPageIntro.jsx",
+        "src/components/SeoSiteTreeAuthority.jsx",
+        "src/components/Since1999Section.jsx",
+        "src/components/SiteBrainAdminTab.jsx",
+        "src/components/SmartLogo.jsx",
+        "src/components/SpiralHero.jsx",
+        "src/components/VideoLightboxModal.jsx",
+        "src/components/VideoProductionView.jsx",
+        "src/components/WebCreationView.jsx",
+        "src/components/WebsiteAiGraderCard.jsx",
+        "src/components/WiredOrbChatbot.jsx",
+        "src/components/WorkScreeningRoom.jsx",
+        "src/components/YellowFooter.jsx",
+        "src/data/blogPosts.js",
+        "src/data/seoPages.js",
+        "src/data/wiredData.js",
+        "src/main.jsx",
+        "src/styles.css",
+        "src/utils/telemetry.js",
+        "src/utils/useIsMobile.js",
+        "src/utils/websiteDiagnostic.js",
+        "src/utils/wired64Brain.js",
+        "scripts/brain-snapshot.mjs",
+        "scripts/build-brain.mjs",
+        "scripts/prerender.mjs",
+        "scripts/test-wired64.mjs"
+      ]
+    },
     {
       "id": "snap-20261029-015205",
       "label": "Before updating Since 1999 about copy",
@@ -940,6 +997,11 @@
   ],
   "recentCommits": [
     {
+      "hash": "35a5b73",
+      "date": "2026-10-29",
+      "subject": "Update Since 1999 about copy with new Bristol & Google/AI discovery messaging"
+    },
+    {
       "hash": "0f306fc",
       "date": "2026-10-28",
       "subject": "Remove technical GOOGLE SITELINKS & AI GEO ARCHITECTURE bar from public pages"
@@ -1008,11 +1070,6 @@
       "hash": "0f09b74",
       "date": "2026-10-28",
       "subject": "Remove YouTube/Instagram icons from header nav to give BLOG pill room (socials remain in footer)"
-    },
-    {
-      "hash": "a3a0713",
-      "date": "2026-10-28",
-      "subject": "Add BLOG to main header nav and mobile menu"
     }
   ]
 }

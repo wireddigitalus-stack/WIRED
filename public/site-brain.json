@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-29T01:45:04.492Z",
+  "generatedAt": "2026-10-29T01:52:12.940Z",
   "masterDocPath": "BRAIN.md",
   "healthStatus": {
     "overall": "HEALTHY",
@@ -80,7 +80,7 @@
     "caseStudiesCount": 3,
     "legendsCount": 34,
     "featuredVideosCount": 4,
-    "snapshotsCount": 5
+    "snapshotsCount": 6
   },
   "knowledgeTree": [
     {
@@ -581,8 +581,8 @@
       {
         "file": "src/components/Since1999Section.jsx",
         "name": "Since1999Section.jsx",
-        "lines": 229,
-        "sizeKb": 7.9
+        "lines": 230,
+        "sizeKb": 8
       },
       {
         "file": "src/components/SiteBrainAdminTab.jsx",
@@ -707,6 +707,55 @@
     ]
   },
   "snapshots": [
+    {
+      "id": "snap-20261029-015205",
+      "label": "Before updating Since 1999 about copy",
+      "createdAt": "2026-10-29T01:52:05.483Z",
+      "filesCount": 41,
+      "files": [
+        "BRAIN.md",
+        "AGENTS.md",
+        ".cursorrules",
+        "index.html",
+        "package.json",
+        "vite.config.js",
+        "vercel.json",
+        "src/App.jsx",
+        "src/components/AdminDashboardView.jsx",
+        "src/components/AiSeoDashboardShowcase.jsx",
+        "src/components/BlogView.jsx",
+        "src/components/BodyCtaContactCard.jsx",
+        "src/components/ContactModal.jsx",
+        "src/components/LegendsWall.jsx",
+        "src/components/MobileMore.jsx",
+        "src/components/SeoPageIntro.jsx",
+        "src/components/SeoSiteTreeAuthority.jsx",
+        "src/components/Since1999Section.jsx",
+        "src/components/SiteBrainAdminTab.jsx",
+        "src/components/SmartLogo.jsx",
+        "src/components/SpiralHero.jsx",
+        "src/components/VideoLightboxModal.jsx",
+        "src/components/VideoProductionView.jsx",
+        "src/components/WebCreationView.jsx",
+        "src/components/WebsiteAiGraderCard.jsx",
+        "src/components/WiredOrbChatbot.jsx",
+        "src/components/WorkScreeningRoom.jsx",
+        "src/components/YellowFooter.jsx",
+        "src/data/blogPosts.js",
+        "src/data/seoPages.js",
+        "src/data/wiredData.js",
+        "src/main.jsx",
+        "src/styles.css",
+        "src/utils/telemetry.js",
+        "src/utils/useIsMobile.js",
+        "src/utils/websiteDiagnostic.js",
+        "src/utils/wired64Brain.js",
+        "scripts/brain-snapshot.mjs",
+        "scripts/build-brain.mjs",
+        "scripts/prerender.mjs",
+        "scripts/test-wired64.mjs"
+      ]
+    },
     {
       "id": "snap-20261029-014453",
       "label": "Before removing SeoSiteTreeAuthority bar from public pages",
@@ -891,6 +940,11 @@
   ],
   "recentCommits": [
     {
+      "hash": "0f306fc",
+      "date": "2026-10-28",
+      "subject": "Remove technical GOOGLE SITELINKS & AI GEO ARCHITECTURE bar from public pages"
+    },
+    {
       "hash": "fed6544",
       "date": "2026-10-28",
       "subject": "Update Since 1999 manifesto copy with SEO/GEO search engine focus"
@@ -959,11 +1013,6 @@
       "hash": "a3a0713",
       "date": "2026-10-28",
       "subject": "Add BLOG to main header nav and mobile menu"
-    },
-    {
-      "hash": "a9809d1",
-      "date": "2026-10-27",
-      "subject": "Publish first two blog posts (website cost guide + Fast Track 30-day case study); add to sitemap, llms.txt and footer"
     }
   ]
 }

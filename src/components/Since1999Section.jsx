@@ -160,13 +160,14 @@ export default function Since1999Section({ onNavigateTab, onOpenVideoModal, onOp
               id="since-manifesto-copy"
               className="since-manifesto"
             >
-              Founded in 1999. Based in Bristol, VA/TN since 2022. We build{' '}
+              Founded in 1999 and proud to call Bristol home since 2022. We build{' '}
               <span className="highlight-yellow">
-                fast websites and SEO/GEO engines that get local businesses found on Google and AI
+                high-speed websites, custom AI chatbots, live dashboards, and search engines
+                optimized for both Google and AI discovery
               </span>
-              , plus <strong>custom AI chatbots and live dashboards</strong>. Since 2015, we&apos;ve
-              also edited <strong>music videos for 34+ legendary artists</strong>. You work directly
-              with Rob, start to finish.
+              . Alongside tech, we&apos;ve edited{' '}
+              <strong>music videos for more than 34 legendary artists</strong> since 2015. No
+              middlemen, no account managers—you work directly with Rob from start to finish.
             </p>
 
             <div className="since-pillar-pills">
